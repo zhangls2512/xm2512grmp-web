@@ -1,0 +1,24 @@
+{
+  "name": "xm2512grmp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "latest",
+    "element-plus": "latest",
+    "unplugin-auto-import": "latest",
+    "unplugin-icons": "latest",
+    "unplugin-vue-components": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "vite": "latest"
+  }
+}
