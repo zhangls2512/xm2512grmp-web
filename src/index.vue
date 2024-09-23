@@ -80,6 +80,12 @@
               </template>
               <el-image src="/wxsphqrcode.jpg" />
             </el-popover>
+            <el-popover width="258">
+              <template #reference>
+                <el-image class="img" src="/xcx.svg"></el-image>
+              </template>
+              <el-image src="/mpxcx.jpg" />
+            </el-popover>
             <a href="https://space.bilibili.com/448824492" target="_blank"><el-image class="img"
                 src="/bili.svg"></el-image></a>
           </el-space>
@@ -91,16 +97,20 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
               target="_blank">黑ICP备2024023054号-3</el-link>
+            <el-avatar class="footer-image" src="/gabeian.png" />
+            <el-link class="footer-text" href="https://beian.mps.gov.cn/#/query/webSearch?code=23060002000214"
+              target="_blank">黑公网安备23060002000214号</el-link>
           </el-space>
         </div>
         <div>
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.0</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-1Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-1Z</el-link>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz" target="_blank">更新日志</el-link>
+            <el-text class="footer-text">Version 1.0.1</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-2Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-2Z</el-link>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
+              target="_blank">更新日志</el-link>
           </el-space>
         </div>
       </el-space>
