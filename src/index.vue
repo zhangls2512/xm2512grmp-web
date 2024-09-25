@@ -88,6 +88,8 @@
             </el-popover>
             <a href="https://space.bilibili.com/448824492" target="_blank"><el-image class="img"
                 src="/bili.svg"></el-image></a>
+            <a href="https://gitcode.com/zhangls2512" target="_blank"><el-image class="img"
+                src="/gitcode.png"></el-image></a>
           </el-space>
         </div>
         <div>
@@ -106,11 +108,13 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.1</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-2Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-2Z</el-link>
+            <el-text class="footer-text">Version 1.0.2</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-3Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-3Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
+            <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
+              target="_blank">Gitcode上查看该项目</el-link>
           </el-space>
         </div>
       </el-space>
