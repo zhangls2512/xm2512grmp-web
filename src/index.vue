@@ -40,6 +40,13 @@
             <div class="main-text">证书编号：TCNdb723c1</div>
           </el-space>
         </el-space>
+        <el-space size="large">
+          <el-image class="zs-image" src="/mchdrjzzq.png" />
+          <el-space size="default" direction="vertical" alignment="normal" wrap>
+            <div class="main-texta">MC活动软件——计算机软件著作权转让合同登记证书</div>
+            <div class="main-text">证书编号：软转登字第0006144号</div>
+          </el-space>
+        </el-space>
       </el-space>
       <div class="main-title">就读学校</div>
       <div class="main-content">小学：大庆龙岗小学（1-4年级）、大庆一中附属机关小学（5年级）</div>
@@ -109,8 +116,8 @@
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
             <el-text class="footer-text">Version 1.0.2</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-3Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-3Z</el-link>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-4Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-4Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
