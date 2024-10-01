@@ -115,7 +115,7 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.2</el-text>
+            <el-text class="footer-text">Version 1.0.3</el-text>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-4Z"
               target="_blank">发布版本备案号：铭懿博版备5W号-4Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
