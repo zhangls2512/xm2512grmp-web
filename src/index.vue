@@ -64,13 +64,20 @@
             <div class="main-text">简介：随时随地记录个人需求，简单、方便、快捷。</div>
           </el-space>
         </el-space>
+        <el-space size="large">
+          <el-image class="cp-image" src="/ssllogo.png" />
+          <el-space size="default" direction="vertical" alignment="normal" wrap>
+            <div class="main-texta">SSL证书申请系统 <el-link href="https://www.dqmybkj.com/#/ssllogin" target="_blank">进入
+                ></el-link></div>
+            <div class="main-text">简介：简单、便捷地申请免费DV SSL证书。</div>
+          </el-space>
+        </el-space>
       </el-space>
       <div class="main-title">联系方式</div>
       <div class="main-content">微信号：gerenyinsi_z07x17m</div>
       <div class="main-content">QQ号：2300990296</div>
       <div class="main-content">邮箱：2300990296@qq.com</div>
     </div>
-
     <div class="footer">
       <el-space class="footer-wz" size="default" direction="vertical" alignment="normal" wrap>
         <div>
@@ -115,9 +122,9 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.3</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-4Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-4Z</el-link>
+            <el-text class="footer-text">Version 1.0.4</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-5Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-5Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
