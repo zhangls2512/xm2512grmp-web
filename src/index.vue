@@ -67,8 +67,16 @@
         <el-space size="large">
           <el-image class="cp-image" src="/ssllogo.png" />
           <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">SSL证书申请系统 <el-link href="https://www.dqmybkj.com/#/ssllogin" target="_blank">进入
-                ></el-link></div>
+            <div class="main-texta">SSL证书申请系统</div>
+            <el-space size="large">
+              <el-link href="https://www.dqmybkj.com/#/ssllogin" target="_blank">网页</el-link>
+              <el-popover width="258">
+                <template #reference>
+                  <el-text>微信小程序</el-text>
+                </template>
+                <el-image src="/sslxcx.jpg" />
+              </el-popover>
+            </el-space>
             <div class="main-text">简介：简单、便捷地申请免费DV SSL证书。</div>
           </el-space>
         </el-space>
@@ -122,9 +130,9 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.4</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-5Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-5Z</el-link>
+            <el-text class="footer-text">Version 1.0.5</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-6Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-6Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
