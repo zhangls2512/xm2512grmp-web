@@ -80,6 +80,13 @@
             <div class="main-text">简介：简单、便捷地申请免费DV SSL证书。</div>
           </el-space>
         </el-space>
+        <el-space size="large">
+          <el-image class="cp-image" src="/xmmtcl.jpg" />
+          <el-space size="default" direction="vertical" alignment="normal" wrap>
+            <div class="main-texta">轩铭媒体处理（微信小程序）</div>
+            <div class="main-text">简介：一个免费无广告、界面简洁、使用便捷高效的图片、视频处理工具小程序。</div>
+          </el-space>
+        </el-space>
       </el-space>
       <div class="main-title">联系方式</div>
       <div class="main-content">微信号：gerenyinsi_z07x17m</div>
@@ -130,9 +137,9 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.6</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-7Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-7Z</el-link>
+            <el-text class="footer-text">Version 1.0.7</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-8Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-8Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
