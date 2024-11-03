@@ -16,7 +16,24 @@
         </el-space>
       </el-space>
       <div class="main-title">个人简介</div>
-      <div class="main-content">张轩铭出生于2004年7月17日，是一个人。</div>
+      <div class="main-content">
+        我出生于2004年7月17日，是一名软件开发工程师，专注于网站、鸿蒙应用与微信小程序的开发。在过去的几年里，我参与并领导了多个项目的开发工作。这些项目让我在实践中积累了宝贵的经验。
+      </div>
+      <div class="main-content">
+        我坚信技术的力量能够改变世界，因此，我总是乐于探索新技术，并将所学应用于实际工作中。在我的个人名片中，我不定期分享项目开发过程中的心得与技巧，希望我的经验能对同行们有所启发和帮助。无论是前端框架的选择，还是后端服务的设计，我都力求做到最佳，同时也享受着解决问题带来的成就感。
+      </div>
+      <div class="main-content">
+        我不仅是一名开发者，还是Gitcode开源社区的一个活跃成员。我深信开源的力量，经常贡献我开发项目的代码，同时也从中学习到了很多。通过与全球的技术爱好者交流，我的视野得到了极大的开阔。
+      </div>
+      <div class="main-content">
+        在业余时间，我喜欢阅读科技文章，关注行业动态，同时也热衷于户外运动，比如徒步和骑行，这不仅让我放松心情，也为我的创造力提供了源源不断的灵感。
+      </div>
+      <div class="main-content">
+        为了充分发挥我所开发项目的商业潜力，我在2024年6月24日注册成立了大庆市铭懿博科技有限公司，将其作为项目运营的法律主体。公司成立后，我的开发团队成员正式成为公司员工，我们齐心协力，共同推动项目的商业成功。
+      </div>
+      <div class="main-content">
+        如果你对我的工作感兴趣或有任何合作机会，欢迎随时联系我。让我们一起用技术创造更美好的未来！
+      </div>
       <div class="main-title">技能证书</div>
       <el-space size="default" direction="vertical" alignment="normal" wrap>
         <el-space size="large">
@@ -48,13 +65,13 @@
           </el-space>
         </el-space>
       </el-space>
-      <div class="main-title">就读学校</div>
+      <div class="main-title">教育经历</div>
       <div class="main-content">小学：大庆龙岗小学（1-4年级）、大庆一中附属机关小学（5年级）</div>
       <div class="main-content">初中：大庆第一中学初中部</div>
       <div class="main-content">高中：大庆第一中学高中部</div>
       <div class="main-content">大学（在读）：哈尔滨工程大学</div>
       <div class="main-title">任职单位</div>
-      <div class="main-content">大庆市铭懿博科技有限公司：法定代表人</div>
+      <div class="main-content">大庆市铭懿博科技有限公司：软件开发工程师</div>
       <div class="main-title">开发项目</div>
       <el-space size="default" direction="vertical" alignment="normal" wrap>
         <el-space size="large">
@@ -137,9 +154,9 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.7</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-8Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-8Z</el-link>
+            <el-text class="footer-text">Version 1.0.8</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-9Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-9Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
