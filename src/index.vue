@@ -64,6 +64,13 @@
             <div class="main-text">证书编号：软转登字第0006144号</div>
           </el-space>
         </el-space>
+        <el-space size="large">
+          <el-image class="zs-image" src="/grxqbwlrjzzq.png" />
+          <el-space size="default" direction="vertical" alignment="normal" wrap>
+            <div class="main-texta">个人需求备忘录软件——计算机软件著作权登记证书</div>
+            <div class="main-text">证书编号：软著登字第14161102号</div>
+          </el-space>
+        </el-space>
       </el-space>
       <div class="main-title">教育经历</div>
       <div class="main-content">小学：大庆龙岗小学（1-4年级）、大庆一中附属机关小学（5年级）</div>
@@ -154,9 +161,9 @@
           <el-space size="default">
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博品备5W号"
               target="_blank">产品备案号：铭懿博品备5W号</el-link>
-            <el-text class="footer-text">Version 1.0.8</el-text>
-            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-9Z"
-              target="_blank">发布版本备案号：铭懿博版备5W号-9Z</el-link>
+            <el-text class="footer-text">Version 1.0.9</el-text>
+            <el-link class="footer-text" href="https://www.dqmybkj.com/#/jqcx?id=铭懿博版备5W号-10Z"
+              target="_blank">发布版本备案号：铭懿博版备5W号-10Z</el-link>
             <el-link class="footer-text" href="https://www.dqmybkj.com/#/gxrzxm2512grmpwz"
               target="_blank">更新日志</el-link>
             <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
