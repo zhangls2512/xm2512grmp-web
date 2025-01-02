@@ -1,153 +1,136 @@
+<script setup>
+import { ref } from 'vue'
+const endyear = ref('')
+const age = ref(0)
+endyear.value = new Date().getFullYear()
+const outputage = () => {
+  let today = new Date()
+  let birthDate = new Date('2004-07-17')
+  let age = today.getFullYear() - birthDate.getFullYear()
+  let monthDiff = today.getMonth() - birthDate.getMonth()
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--
+  }
+  return age
+}
+age.value = outputage()
+</script>
+
 <template>
-  <div class="container">
-    <div class="header">
-      <el-avatar class="avatar" src="/logo.jpg" />
-      <span class="title">轩铭2512个人名片</span>
+  <div class="header">
+    <div class="sp">
+      <img class="tx" src="/logo.jpg" loading="lazy" />
+      <div class="header-title">轩铭2512个人名片</div>
     </div>
-    <div class="main">
-      <el-space size="default" direction="vertical" alignment="normal" wrap>
-        <el-space size="large">
-          <el-image class="tx" src="/tx.jpg" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">张轩铭</div>
-            <div class="main-text">男 20岁 巨蟹座</div>
-            <div class="main-text">黑龙江省大庆市</div>
-          </el-space>
-        </el-space>
-      </el-space>
-      <div class="main-title">个人简介</div>
-      <div class="main-content">
-        我出生于2004年7月17日，是一名软件开发工程师，专注于网站、鸿蒙应用与微信小程序的开发。在过去的几年里，我参与并领导了多个项目的开发工作。这些项目让我在实践中积累了宝贵的经验。
+  </div>
+  <div class="main">
+    <div class="cz">
+      <div class="sp">
+        <img class="tp" src="/tx.jpg" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">张轩铭</div>
+          <div class="large-text">男 {{ age }}岁 巨蟹座</div>
+          <div class="large-text">黑龙江省大庆市</div>
+        </div>
       </div>
-      <div class="main-content">
-        我坚信技术的力量能够改变世界，因此，我总是乐于探索新技术，并将所学应用于实际工作中。在我的个人名片中，我不定期分享项目开发过程中的心得与技巧，希望我的经验能对同行们有所启发和帮助。无论是前端框架的选择，还是后端服务的设计，我都力求做到最佳，同时也享受着解决问题带来的成就感。
+      <div class="title">个人简介</div>
+      <div class="large-text">
+        我是一名软件开发工程师，专注于网页、鸿蒙原生应用、鸿蒙元服务与微信小程序的开发。
       </div>
-      <div class="main-content">
-        我不仅是一名开发者，还是Gitcode开源社区的一个活跃成员。我深信开源的力量，经常贡献我开发项目的代码，同时也从中学习到了很多。通过与全球的技术爱好者交流，我的视野得到了极大的开阔。
+      <div class="title">技能证书</div>
+      <div class="sp">
+        <img class="tp" src="/zsa.jpeg" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">工业和信息化人才岗位能力认证证书</div>
+          <div class="large-text">证书编号：GXRCPJ011202413996</div>
+        </div>
       </div>
-      <div class="main-content">
-        在业余时间，我喜欢阅读科技文章，关注行业动态，同时也热衷于户外运动，比如徒步和骑行，这不仅让我放松心情，也为我的创造力提供了源源不断的灵感。
+      <div class="sp">
+        <img class="tp" src="/zsc.jpg" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">蓝桥杯大赛获奖证书</div>
+          <div class="large-text">证书编号：011504114</div>
+        </div>
       </div>
-      <div class="main-content">
-        为了充分发挥我所开发项目的商业潜力，我在2024年6月24日注册成立了大庆市铭懿博科技有限公司，将其作为项目运营的法律主体。公司成立后，我的开发团队成员正式成为公司员工，我们齐心协力，共同推动项目的商业成功。
+      <div class="sp">
+        <img class="tp" src="/zsb.png" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">华为开发者学堂专业证书——HarmonyOS应用开发者基础认证</div>
+          <div class="large-text">证书编号：TCNdb723c1</div>
+        </div>
       </div>
-      <div class="main-content">
-        如果你对我的工作感兴趣或有任何合作机会，欢迎随时联系我。让我们一起用技术创造更美好的未来！
+      <div class="sp">
+        <img class="tp" src="/mchdrjzzq.png" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">MC活动软件——计算机软件著作权转让合同登记证书</div>
+          <div class="large-text">证书编号：软转登字第0006144号</div>
+        </div>
       </div>
-      <div class="main-title">技能证书</div>
-      <el-space size="default" direction="vertical" alignment="normal" wrap>
-        <el-space size="large">
-          <el-image class="zs-image" src="/zsa.jpeg" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">工业和信息化人才岗位能力认证证书</div>
-            <div class="main-text">证书编号：GXRCPJ011202413996</div>
-          </el-space>
-        </el-space>
-        <el-space size="large">
-          <el-image class="zs-image" src="/zsc.jpg" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">蓝桥杯大赛获奖证书</div>
-            <div class="main-text">证书编号：011504114</div>
-          </el-space>
-        </el-space>
-        <el-space size="large">
-          <el-image class="zs-image" src="/zsb.png" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">华为开发者学堂专业证书——HarmonyOS应用开发者基础认证</div>
-            <div class="main-text">证书编号：TCNdb723c1</div>
-          </el-space>
-        </el-space>
-        <el-space size="large">
-          <el-image class="zs-image" src="/mchdrjzzq.png" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">MC活动软件——计算机软件著作权转让合同登记证书</div>
-            <div class="main-text">证书编号：软转登字第0006144号</div>
-          </el-space>
-        </el-space>
-        <el-space size="large">
-          <el-image class="zs-image" src="/grxqbwlrjzzq.png" />
-          <el-space size="default" direction="vertical" alignment="normal" wrap>
-            <div class="main-texta">个人需求备忘录软件——计算机软件著作权登记证书</div>
-            <div class="main-text">证书编号：软著登字第14161102号</div>
-          </el-space>
-        </el-space>
-      </el-space>
-      <div class="main-title">教育经历</div>
-      <div class="main-content">小学：大庆龙岗小学（1-4年级）、大庆一中附属机关小学（5年级）</div>
-      <div class="main-content">初中：大庆第一中学初中部</div>
-      <div class="main-content">高中：大庆第一中学高中部</div>
-      <div class="main-content">大学（在读）：哈尔滨工程大学</div>
-      <div class="main-title">任职单位</div>
-      <div class="main-content">大庆市铭懿博科技有限公司：软件开发工程师</div>
-      <div class="main-title">联系方式</div>
-      <div class="main-content">微信号：gerenyinsi_z07x17m</div>
-      <div class="main-content">QQ号：2300990296</div>
-      <div class="main-content">邮箱：2300990296@qq.com</div>
+      <div class="sp">
+        <img class="tp" src="/grxqbwlrjzzq.png" loading="lazy" />
+        <div class="cz">
+          <div class="large-bold-text">个人需求备忘录软件——计算机软件著作权登记证书</div>
+          <div class="large-text">证书编号：软著登字第14161102号</div>
+        </div>
+      </div>
+      <div class="title">教育经历</div>
+      <div class="large-text">小学：大庆龙岗小学（1-4年级）、大庆一中附属机关小学（5年级）</div>
+      <div class="large-text">初中：大庆第一中学初中部</div>
+      <div class="large-text">高中：大庆第一中学高中部</div>
+      <div class="large-text">大学（在读）：哈尔滨工程大学</div>
+      <div class="title">联系方式</div>
+      <div class="large-text">微信号：gerenyinsi_z07x17m</div>
+      <div class="large-text">QQ号：2300990296</div>
     </div>
-    <div class="footer">
-      <el-space size="default" direction="vertical" alignment="normal" wrap>
-        <div>
-          <el-space size="default">
-            <el-popover width="258">
-              <template #reference>
-                <el-image class="img" src="/gzh.svg"></el-image>
-              </template>
-              <el-image src="/wxmpqrcode.jpg" />
-            </el-popover>
-            <el-popover width="258">
-              <template #reference>
-                <el-image class="img" src="/sph.svg"></el-image>
-              </template>
-              <el-image src="/wxsphqrcode.jpg" />
-            </el-popover>
-            <el-popover width="258">
-              <template #reference>
-                <el-image class="img" src="/mpxcx.svg"></el-image>
-              </template>
-              <el-image src="/mpxcx.jpg" />
-            </el-popover>
-            <a href="https://space.bilibili.com/448824492" target="_blank"><el-image class="img"
-                src="/bili.svg"></el-image></a>
-            <a href="https://gitcode.com/zhangls2512" target="_blank"><el-image class="img"
-                src="/gitcode.png"></el-image></a>
-          </el-space>
-        </div>
-        <div>
-          <el-text class="footer-text">Copyright © 2024 ZhangXuanming. All Rights Reserved. 张轩铭 版权所有</el-text>
-        </div>
-        <div>
-          <el-space size="default">
-            <el-link class="footer-text" href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
-              target="_blank">黑ICP备2024023054号-8</el-link>
-            <el-avatar class="footer-image" src="/gabeian.png" />
-            <el-link class="footer-text" href="https://beian.mps.gov.cn/#/query/webSearch?code=23060002000214"
-              target="_blank">黑公网安备23060002000214号</el-link>
-          </el-space>
-        </div>
-        <div>
-          <el-space size="default">
-            <el-text class="footer-text">Version 1.0.10</el-text>
-            <el-link class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb"
-              target="_blank">Gitcode上查看该项目</el-link>
-          </el-space>
-        </div>
-      </el-space>
+  </div>
+  <div class="footer">
+    <div class="cz">
+      <div class="sp">
+        <tiny-popover trigger="hover" width="237">
+          <template #reference>
+            <img class="media-image" src="/gzh.svg" loading="lazy" />
+          </template>
+          <img class="tp" src="/wxmpqrcode.jpg" />
+        </tiny-popover>
+        <tiny-popover trigger="hover" width="237">
+          <template #reference>
+            <img class="media-image" src="/sph.svg" loading="lazy" />
+          </template>
+          <img class="tp" src="/wxsphqrcode.jpg" />
+        </tiny-popover>
+        <tiny-popover trigger="hover" width="237">
+          <template #reference>
+            <img class="media-image" src="/mpxcx.svg" loading="lazy" />
+          </template>
+          <img class="tp" src="/mpxcx.jpg" />
+        </tiny-popover>
+        <a href="https://space.bilibili.com/448824492" target="_blank"><img class="media-image"
+            src="/bili.svg"></img></a>
+        <a href="https://gitcode.com/zhangls2512" target="_blank"><img class="media-image" src="/gitcode.png"></img></a>
+      </div>
+      <div class="sp">
+        <a class="footer-text" href="tel:18846496985">联系手机：18846496985</a>
+        <tiny-divider direction="vertical"></tiny-divider>
+        <a class="footer-text" href="mailto:2300990296@qq.com">联系邮箱：2300990296@qq.com</a>
+      </div>
+      <div class="sp">
+        <a class="footer-text" href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
+          target="_blank">黑ICP备2024023054号-8</a>
+        <tiny-divider direction="vertical"></tiny-divider>
+        <img class="logo" src="/gabeian.png" loading="lazy" />
+        <a class="footer-text" href="https://beian.mps.gov.cn/#/query/webSearch?code=23060002000214"
+          target="_blank">黑公网安备23060002000214号</a>
+      </div>
+      <div class="sp">
+        <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <tiny-divider direction="vertical"></tiny-divider>
+        <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.header,
-.footer {
-  display: flex;
-}
-
 .header,
 .main,
 .footer {
@@ -155,67 +138,64 @@
 }
 
 .header {
-  align-items: center;
-  background-color: #409EFF;
-}
-
-.main-title {
-  font-size: 30px;
-  font-weight: bold;
-  margin: 20px 0 20px 0;
-}
-
-.main-content {
-  font-size: 20px;
-  line-height: 2;
-  margin: 10px 0 10px 0;
-}
-
-.main-text,
-.main-texta {
-  font-size: 20px;
-  line-height: 1.5;
-}
-
-.main-texta {
-  font-weight: bold;
-}
-
-.tx {
-  height: 282px;
-  width: 200px;
-}
-
-.zs-image {
-  width: 200px;
+  background-color: #1476ff;
 }
 
 .footer {
-  background-color: #f6f7f8;
-  margin-top: auto;
+  background-color: #fafafa;
 }
 
-.title {
-  color: white;
-  font-size: 40px;
+.sp,
+.cz {
+  display: flex;
+  gap: 10px;
+}
+
+.sp {
+  align-items: center;
+}
+
+.cz {
+  flex-direction: column;
+}
+
+.large-text,
+.large-bold-text {
+  font-size: 20px;
+}
+
+.large-bold-text,
+.title,
+.header-title {
   font-weight: bold;
 }
 
-.avatar {
-  margin: 10px;
+.title {
+  font-size: 30px;
+}
+
+.header-title {
+  color: white;
+  font-size: 40px;
 }
 
 .footer-text {
-  color: #9499a0;
+  color: grey;
 }
 
-.footer-image {
-  height: 20px;
+.tp {
+  width: 200px;
+}
+
+.logo {
   width: 20px;
 }
 
-.img {
-  height: 60px;
+.tx {
+  width: 60px;
+}
+
+.media-image {
   width: 60px;
 }
 </style>

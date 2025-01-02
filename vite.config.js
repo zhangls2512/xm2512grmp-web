@@ -1,21 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import autoImportPlugin from '@opentiny/unplugin-tiny-vue'
 export default defineConfig({
   plugins: [
     vue(),
-    AutoImport({
-      imports: ['vue'],
-      resolvers: [
-        ElementPlusResolver()
-      ]
-    }),
-    Components({
-      resolvers: [
-        ElementPlusResolver()
-      ]
-    })
-  ]
+    autoImportPlugin('vite')
+  ],
+  define: {
+    'process.env': { ...process.env }
+  }
 })
