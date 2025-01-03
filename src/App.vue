@@ -86,19 +86,19 @@ age.value = outputage()
   <div class="footer">
     <div class="cz">
       <div class="sp">
-        <tiny-popover trigger="hover" width="237">
+        <tiny-popover trigger="hover">
           <template #reference>
             <img class="media-image" src="/gzh.svg" loading="lazy" />
           </template>
           <img class="tp" src="/wxmpqrcode.jpg" />
         </tiny-popover>
-        <tiny-popover trigger="hover" width="237">
+        <tiny-popover trigger="hover">
           <template #reference>
             <img class="media-image" src="/sph.svg" loading="lazy" />
           </template>
           <img class="tp" src="/wxsphqrcode.jpg" />
         </tiny-popover>
-        <tiny-popover trigger="hover" width="237">
+        <tiny-popover trigger="hover">
           <template #reference>
             <img class="media-image" src="/mpxcx.svg" loading="lazy" />
           </template>
