@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
   <meta name="application-name" content="轩铭2512个人名片">
   <meta name="author" content="张轩铭">
   <meta name="description" content="轩铭2512的个人名片。">
@@ -24,7 +25,7 @@
     body {
       font-family: "HarmonyOS_Sans_Regular";
       height: 100%;
-      margin: auto;
+      margin: 0;
     }
 
     a {
@@ -33,6 +34,11 @@
 
     a:hover {
       text-decoration: underline;
+    }
+
+    a:link,
+    a:visited {
+      color: #576b95;
     }
   </style>
 </head>

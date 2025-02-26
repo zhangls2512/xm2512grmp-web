@@ -1,0 +1,9 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "latest",
+    "nanoid": "latest",
+    "sm-crypto-v2": "latest",
+    "validator": "latest"
+  }
+}

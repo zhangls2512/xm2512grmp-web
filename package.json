@@ -1,17 +1,25 @@
 {
-  "name": "web",
-  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "npm update && vite",
+    "build": "npm update && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@opentiny/vue": "latest",
-    "vue": "latest"
+    "axios": "latest",
+    "js-cookie": "latest",
+    "moment-timezone": "latest",
+    "qrcode": "latest",
+    "validator": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
     "@opentiny/unplugin-tiny-vue": "latest",
     "@vitejs/plugin-vue": "latest",
-    "vite": "latest"
+    "unplugin-auto-import": "latest",
+    "unplugin-vue-components": "latest",
+    "vite": "latest",
+    "vite-plugin-vue-devtools": "latest"
   }
 }
