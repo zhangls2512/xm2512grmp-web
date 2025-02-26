@@ -2,7 +2,8 @@ import axios from 'axios'
 async function request({ apiPath, body }) {
   const loading = TinyLoading.service({
     lock: true,
-    size: 'large'
+    size: 'large',
+    background: 'rgba(0, 0, 0, 0.5)'
   })
   try {
     const res = await axios.post('https://api.zhangls2512.cn' + apiPath, body)

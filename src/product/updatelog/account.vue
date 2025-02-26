@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.1',
+    releaseDate: '2025-02-26',
+    logs: [
+      {
+        type: 'U',
+        content: '通知管理页面新增 邮箱'
+      },
+      {
+        type: 'U',
+        content: '调整全屏加载动画背景透明度'
+      },
+      {
+        type: 'F',
+        content: '注册账号页面无法输入验证码'
+      },
+      {
+        type: 'F',
+        content: '登录日志页面顶部提示文字中文与数字之间无空格'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0',
     releaseDate: '2025-02-26',
     logs: [

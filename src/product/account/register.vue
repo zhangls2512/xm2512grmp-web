@@ -85,7 +85,7 @@ async function getEmailCode() {
             </div>
           </tiny-form-item>
           <tiny-form-item label="验证码">
-            <tiny-input v-model="code" clearable minlength="8" maxlength="8" autocomplete="one-time-code"
+            <tiny-input v-model="emailcode" clearable minlength="8" maxlength="8" autocomplete="one-time-code"
               placeholder="请输入验证码"></tiny-input>
           </tiny-form-item>
           <tiny-form-item>

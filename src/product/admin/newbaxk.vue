@@ -220,7 +220,12 @@ async function newBaxk() {
       <tiny-form-item v-if="maintype == '1'" label="产品名称">
         <tiny-input v-model="productname" clearable placeholder="请输入产品名称"></tiny-input>
       </tiny-form-item>
-      <tiny-form-item v-if="maintype != '3'" label="具体类型">
+      <tiny-form-item v-if="maintype != '3' && maintype != '1'" label="具体类型">
+        <tiny-base-select v-model="specifictype">
+          <tiny-option v-for="item in specifictypes" :label="item.label" :value="item.value"></tiny-option>
+        </tiny-base-select>
+      </tiny-form-item>
+      <tiny-form-item v-if="maintype == '1'" label="运行平台">
         <tiny-base-select v-model="specifictype">
           <tiny-option v-for="item in specifictypes" :label="item.label" :value="item.value"></tiny-option>
         </tiny-base-select>
