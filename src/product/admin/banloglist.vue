@@ -74,10 +74,10 @@ async function deleteBanlog(t) {
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
-      <tiny-grid-column field="_id" title="记录ID" align="center"></tiny-grid-column>
+      <tiny-grid-column field="_id" title="记录 ID" align="center"></tiny-grid-column>
       <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
-      <tiny-grid-column field="content" title="违规内容" show-overflow align="center"></tiny-grid-column>
-      <tiny-grid-column field="method" title="处罚方式" show-overflow align="center"></tiny-grid-column>
+      <tiny-grid-column field="content" title="违规内容" align="center" show-overflow></tiny-grid-column>
+      <tiny-grid-column field="method" title="处罚方式" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="date" title="时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
@@ -90,7 +90,7 @@ async function deleteBanlog(t) {
         </template>
       </tiny-grid-column>
     </tiny-grid>
-    <tiny-pager mode="number" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]" :current-page="currentpage"
+    <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
   </div>
 </template>

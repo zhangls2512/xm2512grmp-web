@@ -356,7 +356,8 @@ exports.main = async (event) => {
           })
           return {
             errCode: 0,
-            errMsg: '成功'
+            errMsg: '成功',
+            account: data
           }
         }
       } else {
@@ -390,7 +391,8 @@ exports.main = async (event) => {
         } else {
           return {
             errCode: 0,
-            errMsg: '成功'
+            errMsg: '成功',
+            account: data
           }
         }
       } else {

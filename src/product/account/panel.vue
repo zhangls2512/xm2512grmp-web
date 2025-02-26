@@ -41,7 +41,7 @@ const tabs = [
     customIcon: icon.IconWarning()
   },
   {
-    id: 'loginout',
+    id: 'logout',
     label: '退出登录',
     customIcon: icon.IconGoBack()
   }
@@ -63,7 +63,7 @@ if (!cookie.get('accessToken')) {
   getAccountInfo()
 }
 const tabClick = (data) => {
-  if (data.id == 'loginout') {
+  if (data.id == 'logout') {
     TinyModal.confirm({
       status: 'info',
       title: '提示',
@@ -93,5 +93,4 @@ const tabClick = (data) => {
     <tiny-tree-menu :data="tabs" :show-filter="false" @node-click="tabClick"></tiny-tree-menu>
     <router-view class="tab-container"></router-view>
   </div>
-  <div class="empty"></div>
 </template>

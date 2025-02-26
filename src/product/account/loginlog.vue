@@ -33,7 +33,7 @@ getLoginLog()
 <template>
   <div>
     <tiny-alert :closable="false" description="仅展示近30天内的最多10条最新登录日志。"></tiny-alert>
-    <tiny-grid :data="loginlog" :IRadioConfig="{ checkMethod: false }">
+    <tiny-grid :data="loginlog">
       <tiny-grid-column field="verifyType" title="验证方式" align="center"></tiny-grid-column>
       <tiny-grid-column field="ipAddress" title="地点" align="center"></tiny-grid-column>
       <tiny-grid-column field="ip" title="IP" align="center"></tiny-grid-column>

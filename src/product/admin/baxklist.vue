@@ -11,9 +11,9 @@ const pagesize = ref(10)
 const total = ref(0)
 const productnumber = ref('')
 const maintype = ref('')
+const dialog = ref(false)
 const id = ref('')
 const desc = ref('')
-const dialog = ref(false)
 const products = ref([])
 const maintypes = ref([
   {
@@ -104,7 +104,6 @@ async function get() {
     ...item,
     mainType: maintypemap[item.mainType],
     specificType: specificmap[item.mainType][item.specificType]
-
   }))
 }
 async function getProducts() {
@@ -125,11 +124,11 @@ async function getProducts() {
 }
 get()
 getProducts()
-async function currentpageChange(t) {
+function currentpageChange(t) {
   currentpage.value = t
   get()
 }
-async function pagesizeChange(t) {
+function pagesizeChange(t) {
   pagesize.value = t
   get()
 }
@@ -202,7 +201,7 @@ async function deleteBaxk(t) {
       <tiny-grid-column field="mainType" title="类型" align="center"></tiny-grid-column>
       <tiny-grid-column field="productName" title="产品名称" align="center"></tiny-grid-column>
       <tiny-grid-column field="specificType" title="具体类型" align="center"></tiny-grid-column>
-      <tiny-grid-column field="desc" title="描述" show-overflow align="center"></tiny-grid-column>
+      <tiny-grid-column field="desc" title="描述" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="baxkNumber" title="备案/许可号" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column field="date" title="更新时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
@@ -219,7 +218,7 @@ async function deleteBaxk(t) {
         </template>
       </tiny-grid-column>
     </tiny-grid>
-    <tiny-pager mode="number" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]" :current-page="currentpage"
+    <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     <tiny-dialog-box class="dialog" :visible="dialog" title="修改描述" @close="closeDialog">
       <tiny-input v-model="desc" type="textarea" clearable placeholder="请输入描述"></tiny-input>

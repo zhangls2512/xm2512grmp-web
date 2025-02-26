@@ -185,11 +185,11 @@ async function newBaxk() {
     apiPath: '/admin/newBaxk',
     body: {
       accessToken: accesstoken,
-      productNumber: productnumber.value,
       mainType: maintype.value,
-      specificType: specifictype.value,
+      desc: desc.value,
+      productNumber: productnumber.value,
       productName: productname.value,
-      desc: desc.value
+      specificType: specifictype.value
     }
   })
   TinyModal.message({

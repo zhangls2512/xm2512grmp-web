@@ -39,8 +39,8 @@ async function getAccountInfo() {
   const permission = res.data.permission
   validproducts.forEach(item => {
     productszt.value[`${item}ktzt`] = service.includes(item)
-    const haspermission = permission[item] === true || permission[item] === undefined || (typeof (permission[item]) == 'number' && Date.now() > permission[item])
-    productszt.value[`${item}fjzt`] = !haspermission
+    const fjzt = permission[item] === false || (typeof (permission[item]) == 'number' && Date.now() <= permission[item])
+    productszt.value[`${item}fjzt`] = fjzt
   })
 }
 getAccountInfo()

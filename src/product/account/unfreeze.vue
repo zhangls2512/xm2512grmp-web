@@ -118,12 +118,6 @@ async function getEmailCode() {
 </template>
 
 <style scoped>
-.in-container {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
 .title {
   text-align: center;
 }

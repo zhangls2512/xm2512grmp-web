@@ -28,7 +28,7 @@ const tabs = [
     customIcon: icon.IconCheckedTrue()
   },
   {
-    id: 'loginout',
+    id: 'logout',
     label: '退出登录',
     customIcon: icon.IconGoBack()
   }
@@ -50,7 +50,7 @@ if (!cookie.get('accessToken')) {
   getAccountInfo()
 }
 const tabClick = (data) => {
-  if (data.id == 'loginout') {
+  if (data.id == 'logout') {
     TinyModal.confirm({
       status: 'info',
       title: '提示',

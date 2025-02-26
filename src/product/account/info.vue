@@ -58,7 +58,7 @@ async function getAccountInfo() {
   })
 }
 getAccountInfo()
-function loginout() {
+function logOut() {
   cookie.remove('accessToken')
   cookie.remove('email')
   router.push('/product/account/login')
@@ -92,7 +92,7 @@ function closeDialog() {
   refreshbutton.value = false
   deleteaccountbutton.value = false
 }
-function closeqrcodedialog() {
+function closeQrcodeDialog() {
   qrcodedialog.value = false
   qrcodeimg.value = ''
   secret.value = ''
@@ -140,7 +140,7 @@ async function updateEmail() {
     message: '修改成功，请重新登录',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 function setMfaOpen() {
   dialog.value = true
@@ -263,7 +263,7 @@ async function setPassword() {
     message: '修改成功，请重新登录',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 function removePasswordOpen() {
   dialog.value = true
@@ -307,7 +307,7 @@ async function removePassword() {
     message: '修改成功，请重新登录',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 function updateDurationOpen() {
   dialog.value = true
@@ -388,7 +388,7 @@ async function freeze() {
     message: '冻结账号成功',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 function refreshOpen() {
   dialog.value = true
@@ -424,7 +424,7 @@ async function refresh() {
     message: '强制登出成功',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 function deleteAccountOpen() {
   dialog.value = true
@@ -460,7 +460,7 @@ async function deleteAccount() {
     message: '注销成功',
     status: 'success'
   })
-  loginout()
+  logOut()
 }
 async function getEmailCode() {
   await request({
@@ -618,7 +618,7 @@ async function getEmailCodea() {
         <tiny-button v-if="deleteaccountbutton == true" type="danger" @click="deleteAccount">注销账号</tiny-button>
       </template>
     </tiny-dialog-box>
-    <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA" @close="closeqrcodedialog">
+    <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA" @close="closeQrcodeDialog">
       <div class="dialog-cz">
         <div class="text">1. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
         <img class="qrcode" :src="qrcodeimg" loading="lazy" />
@@ -626,7 +626,7 @@ async function getEmailCodea() {
         <div>{{ secret }} </div>
       </div>
       <template #footer>
-        <tiny-button type="danger" @click="closeqrcodedialog">关闭</tiny-button>
+        <tiny-button type="danger" @click="closeQrcodeDialog">关闭</tiny-button>
       </template>
     </tiny-dialog-box>
   </div>

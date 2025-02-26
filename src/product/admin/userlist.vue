@@ -218,14 +218,14 @@ async function updateUserPermission() {
     <tiny-grid :data="data">
       <tiny-grid-column field="_id" title="UID" align="center"></tiny-grid-column>
       <tiny-grid-column field="email" title="邮箱" align="center"></tiny-grid-column>
-      <tiny-grid-column field="service" title="已开通产品/功能" show-overflow align="center"></tiny-grid-column>
+      <tiny-grid-column field="service" title="已开通产品/功能" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
           <tiny-button type="info" @click="openDialog(row)">修改权限</tiny-button>
         </template>
       </tiny-grid-column>
     </tiny-grid>
-    <tiny-pager mode="number" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]" :current-page="currentpage"
+    <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     <tiny-dialog-box class="dialog" :visible="dialog" title="修改权限" @close="closeDialog">
       <div class="dialog-cz">

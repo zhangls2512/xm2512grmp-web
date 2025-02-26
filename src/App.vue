@@ -9,6 +9,12 @@
   min-height: 100vh;
 }
 
+.in-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 .tab-container {
   margin-left: 20px;
   width: 100%;

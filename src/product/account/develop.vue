@@ -5,13 +5,7 @@ import cookie from 'js-cookie'
 import moment from 'moment-timezone'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
-const filter = ref({
-  multi: true,
-  enumable: true
-})
-const selectconfig = {
-  checkField: 'selected'
-}
+const accesskeys = ref([])
 const apis = ref([
   {
     product: '全部产品',
@@ -119,7 +113,13 @@ const apis = ref([
     desc: '注销备案/许可'
   }
 ])
-const accesskeys = ref([])
+const filter = ref({
+  multi: true,
+  enumable: true
+})
+const selectconfig = {
+  checkField: 'selected'
+}
 const newaccesskeydialog = ref(false)
 const updateaccesskeydialog = ref(false)
 const accesskeyname = ref('')
@@ -130,7 +130,7 @@ const ip = ref('')
 let accesskeyapi = []
 const accesskeystatus = ref(false)
 let accesskeyindex = 0
-function formatEndDate(t) {
+function formatEnddate(t) {
   const enddate = t.cellValue
   if (enddate == 0) {
     return '永久'
@@ -155,7 +155,7 @@ getAccessKeys()
 function newAccessKeyOpen() {
   newaccesskeydialog.value = true
 }
-function closenewaccesskeydialog() {
+function newAccessKeyClose() {
   newaccesskeydialog.value = false
   accesskeyname.value = ''
   accesskeyenddate.value = ''
@@ -165,7 +165,7 @@ function closenewaccesskeydialog() {
   accesskeyapi = []
   accesskeystatus.value = false
 }
-function addip() {
+function addIp() {
   if (ip.value === '') {
     TinyModal.message({
       message: '请输入 CIDR 表达式',
@@ -175,10 +175,10 @@ function addip() {
   }
   accesskeyallowip.value.push(ip.value)
 }
-const removeip = (index) => {
+function removeIp(index) {
   accesskeyallowip.value.splice(index, 1)
 }
-const chooseapi = (t) => {
+function chooseApi(t) {
   accesskeyapi = t.selection.map(item => item.name)
 }
 async function newAccessKey() {
@@ -211,7 +211,7 @@ async function newAccessKey() {
       status: accesskeystatus.value
     }
   })
-  closenewaccesskeydialog()
+  newAccessKeyClose()
   TinyModal.alert({
     status: 'success',
     title: '新增成功',
@@ -253,7 +253,7 @@ async function updateAccessKeyOpen(row, index) {
   }))
   accesskeyallowip.value = row.allowIp
 }
-function closeupdateaccesskeydialog() {
+function updateAccessKeyClose() {
   updateaccesskeydialog.value = false
   accesskeyname.value = ''
   accesskeyenddate.value = ''
@@ -292,7 +292,7 @@ async function updateAccessKey() {
       allowIp: accesskeyallowip.value
     }
   })
-  closeupdateaccesskeydialog()
+  updateAccessKeyClose()
   TinyModal.message({
     message: '保存成功',
     status: 'success'
@@ -322,13 +322,13 @@ async function deleteAccessKey(index) {
       <tiny-alert type="warning" :closable="false"
         description="accessKey 是调用 API 的凭证，请勿泄露给他人，防止账号被他人非法使用。为了保证账号安全，建议仅开启必要接口的权限、设置合理的到期时间和 IP 白名单、及时禁用或删除不再使用的 accessKey。"></tiny-alert>
       <div><tiny-button type="info" @click="newAccessKeyOpen">新增</tiny-button></div>
-      <tiny-grid :data="accesskeys" @toolbar-button-click="select">
+      <tiny-grid :data="accesskeys">
         <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
         <tiny-grid-column field="name" title="备注" align="center"></tiny-grid-column>
-        <tiny-grid-column field="endDate" title="到期时间" align="center" :format-text="formatEndDate"
+        <tiny-grid-column field="endDate" title="到期时间" align="center" :format-text="formatEnddate"
           sortable></tiny-grid-column>
-        <tiny-grid-column field="api" title="API 白名单" show-overflow align="center"></tiny-grid-column>
-        <tiny-grid-column field="allowIp" title="IP 白名单" show-overflow align="center"></tiny-grid-column>
+        <tiny-grid-column field="api" title="API 白名单" align="center" show-overflow></tiny-grid-column>
+        <tiny-grid-column field="allowIp" title="IP 白名单" align="center" show-overflow></tiny-grid-column>
         <tiny-grid-column field="status" title="启用" align="center" format-text="boole"></tiny-grid-column>
         <tiny-grid-column field="lastUsedDate" title="最近使用时间" align="center" format-text="longDateTime"
           sortable></tiny-grid-column>
@@ -351,7 +351,7 @@ async function deleteAccessKey(index) {
         </tiny-grid-column>
       </tiny-grid>
     </div>
-    <tiny-dialog-box class="dialog" :visible="newaccesskeydialog" title="新增 accessKey" @close="closenewaccesskeydialog">
+    <tiny-dialog-box class="dialog" :visible="newaccesskeydialog" title="新增 accessKey" @close="newAccessKeyClose">
       <div class="dialog-cz">
         <tiny-input v-model="accesskeyname" clearable minlength="1" maxlength="10" placeholder="请输入备注"></tiny-input>
         <div class="sp">
@@ -361,7 +361,7 @@ async function deleteAccessKey(index) {
           <tiny-switch v-model="accesskeyforever"></tiny-switch>
         </div>
         <div>请勾选允许调用的 API</div>
-        <tiny-grid :data="apis" @select-change="chooseapi" @select-all="chooseapi">
+        <tiny-grid :data="apis" @select-change="chooseApi" @select-all="chooseApi">
           <tiny-grid-column type="selection"></tiny-grid-column>
           <tiny-grid-column field="product" title="产品" align="center" :filter="filter"></tiny-grid-column>
           <tiny-grid-column field="name" title="英文名" align="center"></tiny-grid-column>
@@ -369,11 +369,11 @@ async function deleteAccessKey(index) {
         </tiny-grid>
         <div class="sp">
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
-          <tiny-button type="success" @click="addip">新增</tiny-button>
+          <tiny-button type="success" @click="addIp">新增</tiny-button>
         </div>
         <div v-for="(item, index) in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
-          <tiny-button type="danger" @click="removeip(index)">删除</tiny-button>
+          <tiny-button type="danger" @click="removeIp(index)">删除</tiny-button>
         </div>
         <div class="sp">
           <div>启用</div>
@@ -384,8 +384,7 @@ async function deleteAccessKey(index) {
         <tiny-button type="info" @click="newAccessKey">新增</tiny-button>
       </template>
     </tiny-dialog-box>
-    <tiny-dialog-box class="dialog" :visible="updateaccesskeydialog" title="编辑 accessKey"
-      @close="closeupdateaccesskeydialog">
+    <tiny-dialog-box class="dialog" :visible="updateaccesskeydialog" title="编辑 accessKey" @close="updateAccessKeyClose">
       <div class="dialog-cz">
         <tiny-input v-model="accesskeyname" clearable minlength="1" maxlength="10" placeholder="请输入备注"></tiny-input>
         <div class="sp">
@@ -395,7 +394,7 @@ async function deleteAccessKey(index) {
           <tiny-switch v-model="accesskeyforever"></tiny-switch>
         </div>
         <div>请勾选允许调用的 API</div>
-        <tiny-grid :data="apis" :select-config="selectconfig" @select-change="chooseapi" @select-all="chooseapi">
+        <tiny-grid :data="apis" :select-config="selectconfig" @select-change="chooseApi" @select-all="chooseApi">
           <tiny-grid-column type="selection"></tiny-grid-column>
           <tiny-grid-column field="product" title="产品" align="center" :filter="filter"></tiny-grid-column>
           <tiny-grid-column field="name" title="名称" align="center"></tiny-grid-column>
@@ -403,11 +402,11 @@ async function deleteAccessKey(index) {
         </tiny-grid>
         <div class="sp">
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
-          <tiny-button type="success" @click="addip">新增</tiny-button>
+          <tiny-button type="success" @click="addIp">新增</tiny-button>
         </div>
         <div v-for="(item, index) in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
-          <tiny-button type="danger" @click="removeip(index)">删除</tiny-button>
+          <tiny-button type="danger" @click="removeIp(index)">删除</tiny-button>
         </div>
       </div>
       <template #footer>

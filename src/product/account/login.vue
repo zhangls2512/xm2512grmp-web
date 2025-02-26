@@ -14,7 +14,7 @@ const code = ref('')
 const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
-function routepush() {
+function routePush() {
   const products = ['account', 'admin']
   if (products.includes(product)) {
     router.push('/product/' + product + '/panel')
@@ -23,7 +23,7 @@ function routepush() {
   }
 }
 if (cookie.get('accessToken')) {
-  routepush()
+  routePush()
 }
 async function login() {
   if (!validator.isEmail(email.value)) {
@@ -65,7 +65,7 @@ async function login() {
   const expires = new Date(res.endDate)
   cookie.set('accessToken', res.accessToken, { expires: expires, secure: true, sameSite: 'strict' })
   cookie.set('email', email.value, { expires: expires, secure: true, sameSite: 'strict' })
-  routepush()
+  routePush()
   TinyModal.message({
     message: '登录成功',
     status: 'success'
@@ -151,12 +151,6 @@ async function getEmailCode() {
 </template>
 
 <style scoped>
-.in-container {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
 .sp {
   justify-content: center;
 }

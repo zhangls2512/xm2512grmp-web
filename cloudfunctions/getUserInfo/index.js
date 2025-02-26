@@ -58,6 +58,7 @@ exports.main = async (event) => {
         uid: uid
       }).field({
         _id: false,
+        product: false,
         uid: false
       }).get()
       if (userres.data.length == 0) {
