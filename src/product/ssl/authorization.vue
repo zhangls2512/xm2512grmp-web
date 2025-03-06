@@ -32,7 +32,6 @@ async function get() {
 }
 get()
 async function deactivateAuthorization(url) {
-  console.log(url)
   await callfunction({
     functionName: 'deactivateSslAuthorization',
     data: {
