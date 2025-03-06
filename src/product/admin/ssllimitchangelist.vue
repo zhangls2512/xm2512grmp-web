@@ -95,7 +95,7 @@ function newLimitChange() {
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
-      <tiny-grid-column field="uid" title="用户 ID" align="center"></tiny-grid-column>
+      <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
       <tiny-grid-column field="changeType" title="类型" align="center"></tiny-grid-column>
       <tiny-grid-column field="number" title="数量" align="center"></tiny-grid-column>
       <tiny-grid-column field="reason" title="原因" align="center"></tiny-grid-column>
