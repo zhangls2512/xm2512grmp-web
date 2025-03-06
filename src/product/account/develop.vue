@@ -125,27 +125,27 @@ const apis = ref([
   {
     product: '管理后台',
     name: 'admin_getSslUserCount',
-    desc: '获取SSL 证书用户总数'
+    desc: '获取 SSL 证书用户总数'
   },
   {
     product: '管理后台',
     name: 'admin_getSslUserList',
-    desc: '获取SSL 证书用户列表'
+    desc: '获取 SSL 证书用户列表'
   },
   {
     product: '管理后台',
     name: 'admin_SearchSslUser',
-    desc: '搜索单个SSL 证书用户'
+    desc: '搜索单个 SSL 证书用户'
   },
   {
     product: '管理后台',
     name: 'admin_newSslLimitChange',
-    desc: '新增SSL 证书额度变更'
+    desc: '新增 SSL 证书额度变更'
   },
   {
     product: '管理后台',
     name: 'admin_getSslLimitChangeCount',
-    desc: '获取SSL 证书额度变更总数'
+    desc: '获取 SSL 证书额度变更总数'
   },
   {
     product: '管理后台',
