@@ -25,14 +25,14 @@ const endyear = new Date().getFullYear()
           <tiny-divider direction="vertical"></tiny-divider>
           <a class="footer-text" href="https://pd.qq.com/s/cnx7f1zdm" target="_blank">腾讯频道</a>
         </div>
-        <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备2号-W" target="_blank">轩铭2512品备2号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
           <div class="footer-text">敏感信息收集处理服务许可号：<a href="/product/baxk/jqcx?baxknumber=轩铭2512许2号-1M"
               target="_blank">轩铭2512许2号-1M</a></div>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.1</div>
+          <div class="footer-text">Version 1.0.2</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/account" target="_blank">更新日志</router-link>
         </div>

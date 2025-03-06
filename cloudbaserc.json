@@ -10,7 +10,37 @@
       "installDependency": true
     },
     {
+      "name": "autoDeleteDnsTask",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "autoEndDnsTask",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "autoRefreshSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "closeService",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deactivateAcmeAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deactivateSslAuthorization",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -40,7 +70,43 @@
       "installDependency": true
     },
     {
+      "name": "deleteDnsTask",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteEndStatusDnsTask",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "deleteLoginLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteSslTemplate",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteUselessStatusSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "endDnsTask",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -59,6 +125,12 @@
     },
     {
       "name": "getAccountInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getAcmeAccountInfo",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -100,6 +172,18 @@
       "installDependency": true
     },
     {
+      "name": "getDnsTaskCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getDnsTaskList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getLoginLog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -107,6 +191,78 @@
     },
     {
       "name": "getProductBaList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslLimitChangeCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslLimitChangeList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslOrderAuthorization",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslOrderCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslOrderInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslOrderList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslTemplateInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslTemplateList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslUserCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslUserLimitChangeCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslUserLimitChangeList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getSslUserList",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -148,6 +304,12 @@
       "installDependency": true
     },
     {
+      "name": "newAcmeAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "newBanlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -155,6 +317,36 @@
     },
     {
       "name": "newBaxk",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "newSslLimitChange",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "newSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "newSslTemplate",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "noticeSslCertificateNearexpire",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "noticeSslOrderNearexpire",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -172,6 +364,12 @@
       "installDependency": true
     },
     {
+      "name": "refreshSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "registerAccount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -179,6 +377,24 @@
     },
     {
       "name": "removeMfa",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "respondSslChallenge",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "revokeSslCertificate",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "searchSslUser",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -226,6 +442,12 @@
       "installDependency": true
     },
     {
+      "name": "submitSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "test",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -263,6 +485,30 @@
     },
     {
       "name": "updateNoticeSetting",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateSslTemplate",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateSslUserDns",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateSslUserSetting",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

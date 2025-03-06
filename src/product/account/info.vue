@@ -2,8 +2,8 @@
 document.title = '轩铭2512 - 统一账号 - 账号管理 - 基本信息'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
-import qrcode from 'qrcode'
 import moment from 'moment-timezone'
+import qrcode from 'qrcode'
 import validator from 'validator'
 import request from '../../request'
 import router from '../../router'
@@ -137,10 +137,10 @@ async function updateEmail() {
   })
   closeDialog()
   TinyModal.message({
-    message: '修改成功，请重新登录',
+    message: '修改成功',
     status: 'success'
   })
-  logOut()
+  getAccountInfo()
 }
 function setMfaOpen() {
   dialog.value = true
@@ -260,10 +260,10 @@ async function setPassword() {
   })
   closeDialog()
   TinyModal.message({
-    message: '修改成功，请重新登录',
+    message: '修改成功',
     status: 'success'
   })
-  logOut()
+  getAccountInfo()
 }
 function removePasswordOpen() {
   dialog.value = true
@@ -304,10 +304,10 @@ async function removePassword() {
   })
   closeDialog()
   TinyModal.message({
-    message: '修改成功，请重新登录',
+    message: '修改成功',
     status: 'success'
   })
-  logOut()
+  getAccountInfo()
 }
 function updateDurationOpen() {
   dialog.value = true
@@ -385,7 +385,7 @@ async function freeze() {
   })
   closeDialog()
   TinyModal.message({
-    message: '冻结账号成功',
+    message: '冻结成功',
     status: 'success'
   })
   logOut()
@@ -600,7 +600,7 @@ async function getEmailCodea() {
         <tiny-input v-if="type == 'password'" v-model="code" type="password" clearable minlength="8" maxlength="30"
           autocomplete="current-password" placeholder="请输入密码"></tiny-input>
         <tiny-input v-if="setpasswordbutton == true" v-model="newpassworda" type="password" clearable minlength="8"
-          maxlength="30" autocomplete="new-password" placeholder="请输入新密码"></tiny-input>
+          maxlength="30" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 30 位）"></tiny-input>
         <tiny-input v-if="setpasswordbutton == true" v-model="newpasswordb" type="password" clearable minlength="8"
           maxlength="30" autocomplete="new-password" placeholder="请再次输入新密码"></tiny-input>
         <tiny-input v-if="updatedurationbutton == true" v-model="durationvalue" clearable minlength="1" maxlength="2"

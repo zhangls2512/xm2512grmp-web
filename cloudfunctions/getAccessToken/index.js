@@ -128,13 +128,6 @@ exports.main = async (event) => {
         subject: '轩铭2512统一账号登录提醒',
         text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipconfig.data.address + '（IP：' + event.headers['x-real-ip'] + '）'
       })
-      if (requestdata.verifyType == 'password') {
-        db.collection('account').where({
-          _id: account._id
-        }).update({
-          passwordVerifyTimes: 0
-        })
-      }
       return {
         errCode: 0,
         errMsg: '成功',

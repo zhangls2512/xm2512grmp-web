@@ -315,7 +315,7 @@ exports.main = async (event) => {
             errFix: '启用accessKey'
           }
         }
-        if (!accesskeyinfo.api.includes(event.apiName)) {
+        if (!accesskeyinfo.allowApi.includes(event.apiName)) {
           return {
             errCode: 3053,
             errMsg: 'accessKey无此接口调用权限',

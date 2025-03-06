@@ -19,7 +19,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validservices = ['account', 'admin']
+    const validservices = ['account', 'admin', 'ssl']
     if (!validservices.includes(requestdata.service)) {
       return {
         errCode: 1001,
@@ -83,6 +83,75 @@ exports.main = async (event) => {
         return {
           errCode: 0,
           errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'ssl') {
+        const orderres = await db.collection('sslorder').where({
+          uid: uid
+        }).count()
+        if (orderres.total > 0) {
+          return {
+            errCode: 8000,
+            errMsg: '存在订单',
+            errFix: '清空订单'
+          }
+        } else {
+          const dnstaskres = await db.collection('dnstask').where({
+            uid: uid
+          }).count()
+          if (dnstaskres.total > 0) {
+            return {
+              errCode: 8001,
+              errMsg: '存在DNS自动配置任务',
+              errFix: '清空DNS自动配置任务'
+            }
+          } else {
+            const limitchangeres = await db.collection('ssllimitchange').where({
+              uid: uid
+            }).count()
+            if (limitchangeres.total > 0) {
+              return {
+                errCode: 8002,
+                errMsg: '存在额度变更记录',
+                errFix: '无修复建议'
+              }
+            } else {
+              const userres = await db.collection('productuser').where({
+                product: 'ssl',
+                uid: uid
+              }).get()
+              if (userres.data[0].accountKey.production) {
+                return {
+                  errCode: 8003,
+                  errMsg: '正式ACME账户可用',
+                  errFix: '停用正式ACME账户'
+                }
+              }
+              if (userres.data[0].accountKey.staging) {
+                return {
+                  errCode: 8004,
+                  errMsg: '测试ACME账户可用',
+                  errFix: '停用测试ACME账户'
+                }
+              }
+              await db.collection('ssltemplate').where({
+                uid: uid
+              }).remove()
+              await db.collection('productuser').where({
+                product: 'ssl',
+                uid: uid
+              }).remove()
+              await db.collection('account').where({
+                _id: uid
+              }).update({
+                service: service
+              })
+              return {
+                errCode: 0,
+                errMsg: '成功'
+              }
+            }
+          }
         }
       }
     }

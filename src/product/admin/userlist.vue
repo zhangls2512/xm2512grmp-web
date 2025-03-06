@@ -15,18 +15,18 @@ const account = ref(true)
 const admin = ref(true)
 const password = ref(true)
 const resource = ref(true)
+const resourcecreator = ref(true)
 const smdztj = ref(true)
 const ssl = ref(true)
 const todo = ref(true)
-const xq = ref(true)
 const accountdate = ref('')
 const admindate = ref('')
 const passworddate = ref('')
 const resourcedate = ref('')
+const resourcecreatordate = ref('')
 const smdztjdate = ref('')
 const ssldate = ref('')
 const tododate = ref('')
-const xqdate = ref('')
 async function get() {
   const countres = await request({
     apiPath: '/admin/getUserCount',
@@ -73,6 +73,10 @@ async function search() {
       uid: uid.value
     }
   })
+  TinyModal.message({
+    message: '获取数据成功',
+    status: 'success'
+  })
   data.value = userres.data
 }
 function openDialog(t) {
@@ -93,10 +97,10 @@ function openDialog(t) {
   admin.value = getvalue(t.permission.admin)
   password.value = getvalue(t.permission.password)
   resource.value = getvalue(t.permission.resource)
+  resourcecreator.value = getvalue(t.permission.resourcecreator)
   smdztj.value = getvalue(t.permission.smdztj)
   ssl.value = getvalue(t.permission.ssl)
   todo.value = getvalue(t.permission.todo)
-  xq.value = getvalue(t.permission.xq)
   if (typeof (t.permission.account) == 'number') {
     accountdate.value = new Date(t.permission.account)
   }
@@ -109,6 +113,9 @@ function openDialog(t) {
   if (typeof (t.permission.resource) == 'number') {
     resourcedate.value = new Date(t.permission.resource)
   }
+  if (typeof (t.permission.resourcecreator) == 'number') {
+    resourcecreatordate.value = new Date(t.permission.resourcecreator)
+  }
   if (typeof (t.permission.smdztj) == 'number') {
     smdztjdate.value = new Date(t.permission.smdztj)
   }
@@ -118,9 +125,6 @@ function openDialog(t) {
   if (typeof (t.permission.account) == 'number') {
     tododate.value = new Date(t.permission.todo)
   }
-  if (typeof (t.permission.account) == 'number') {
-    xqdate.value = new Date(t.permission.xq)
-  }
 }
 function closeDialog() {
   dialog.value = false
@@ -129,18 +133,18 @@ function closeDialog() {
   admin.value = true
   password.value = true
   resource.value = true
+  resourcecreator.value = true
   smdztj.value = true
   ssl.value = true
   todo.value = true
-  xq.value = true
   accountdate.value = ''
   admindate.value = ''
   passworddate.value = ''
   resourcedate.value = ''
+  resourcecreatordate.value = ''
   smdztjdate.value = ''
   ssldate.value = ''
   tododate.value = ''
-  xqdate.value = ''
 }
 async function updateUserPermission() {
   let permission = {}
@@ -172,6 +176,11 @@ async function updateUserPermission() {
   } else {
     permission.resource = resourcedate.value.getTime()
   }
+  if (resourcecreator.value === 'true' || resourcecreator.value === 'false') {
+    permission.resourcecreator = boolean(resourcecreator.value)
+  } else {
+    permission.resourcecreator = resourcecreatordate.value.getTime()
+  }
   if (smdztj.value === 'true' || smdztj.value === 'false') {
     permission.smdztj = boolean(smdztj.value)
   } else {
@@ -187,11 +196,6 @@ async function updateUserPermission() {
   } else {
     permission.todo = tododate.value.getTime()
   }
-  if (xq.value === 'true' || xq.value === 'false') {
-    permission.xq = boolean(xq.value)
-  } else {
-    permission.xq = xqdate.value.getTime()
-  }
   await request({
     apiPath: '/admin/updateUserPermission',
     body: {
@@ -205,7 +209,7 @@ async function updateUserPermission() {
     message: '修改成功',
     status: 'success'
   })
-  getUserList()
+  get()
 }
 </script>
 
@@ -270,6 +274,16 @@ async function updateUserPermission() {
           </tiny-radio-group>
         </div>
         <div class="sp">
+          <div>资源分享创作者</div>
+          <tiny-radio-group v-model="resourcecreator">
+            <tiny-radio label="true">正常</tiny-radio>
+            <tiny-radio label="false">永久封禁</tiny-radio>
+            <tiny-radio label="date">封禁至</tiny-radio>
+            <tiny-date-picker v-if="resourcecreator == 'date'" v-model="resourcecreatordate" type="datetime"
+              align="center"></tiny-date-picker>
+          </tiny-radio-group>
+        </div>
+        <div class="sp">
           <div>数码电子推荐</div>
           <tiny-radio-group v-model="smdztj">
             <tiny-radio label="true">正常</tiny-radio>
@@ -296,15 +310,6 @@ async function updateUserPermission() {
             <tiny-radio label="date">封禁至</tiny-radio>
             <tiny-date-picker v-if="todo == 'date'" v-model="tododate" type="datetime"
               align="center"></tiny-date-picker>
-          </tiny-radio-group>
-        </div>
-        <div class="sp">
-          <div>个人需求备忘录</div>
-          <tiny-radio-group v-model="xq">
-            <tiny-radio label="true">正常</tiny-radio>
-            <tiny-radio label="false">永久封禁</tiny-radio>
-            <tiny-radio label="date">封禁至</tiny-radio>
-            <tiny-date-picker v-if="xq == 'date'" v-model="xqdate" type="datetime" align="center"></tiny-date-picker>
           </tiny-radio-group>
         </div>
       </div>

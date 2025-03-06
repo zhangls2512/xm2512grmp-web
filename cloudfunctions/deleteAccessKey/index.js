@@ -42,7 +42,7 @@ exports.main = async (event) => {
     } else {
       const account = res.result.account
       let accesskeys = account.accessKey
-      if (accesskeys.length == 0 || requestdata.index > accesskeys.length) {
+      if (requestdata.index > accesskeys.length - 1) {
         return {
           errCode: 8000,
           errMsg: '不存在索引为index的accessKey',

@@ -15,7 +15,7 @@ const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
 function routePush() {
-  const products = ['account', 'admin']
+  const products = ['account', 'admin', 'ssl']
   if (products.includes(product)) {
     router.push('/product/' + product + '/panel')
   } else {

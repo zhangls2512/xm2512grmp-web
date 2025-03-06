@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.2',
+    releaseDate: '2025-03-06',
+    logs: [
+      {
+        type: 'U',
+        content: '产品管理新增 SSL 证书'
+      },
+      {
+        type: 'U',
+        content: '优化 产品管理页面封禁状态显示'
+      },
+      {
+        type: 'U',
+        content: '优化 通知管理页面接收状态显示'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1',
     releaseDate: '2025-02-26',
     logs: [

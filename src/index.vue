@@ -124,7 +124,7 @@ age = outputage()
         <tiny-divider direction="vertical"></tiny-divider>
         <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备5号-W" target="_blank">轩铭2512品备5号-W</a>
       </div>
-      <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+      <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
       <div class="sp">
         <div class="footer-text">Version 1.0.0</div>
         <tiny-divider direction="vertical"></tiny-divider>

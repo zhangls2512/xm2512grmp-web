@@ -6,6 +6,16 @@ import moment from 'moment-timezone'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
 const accesskeys = ref([])
+const newaccesskeydialog = ref(false)
+const updateaccesskeydialog = ref(false)
+let accesskeyindex = 0
+const accesskeyname = ref('')
+const accesskeyenddate = ref('')
+const accesskeyforever = ref(false)
+let accesskeyallowapi = []
+const ip = ref('')
+const accesskeyallowip = ref([])
+const accesskeystatus = ref(false)
 const apis = ref([
   {
     product: '全部产品',
@@ -111,6 +121,181 @@ const apis = ref([
     product: '管理后台',
     name: 'admin_deleteBaxk',
     desc: '注销备案/许可'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getSslUserCount',
+    desc: '获取SSL 证书用户总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getSslUserList',
+    desc: '获取SSL 证书用户列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_SearchSslUser',
+    desc: '搜索单个SSL 证书用户'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_newSslLimitChange',
+    desc: '新增SSL 证书额度变更'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getSslLimitChangeCount',
+    desc: '获取SSL 证书额度变更总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getSslLimitChangeList',
+    desc: '获取 SSL 证书额度变更列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getLimitChangeCount',
+    desc: '获取额度变更总数'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getLimitChangeList',
+    desc: '获取额度变更列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getAcmeAccountInfo',
+    desc: '获取 ACME 账户信息'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deactivateAcmeAccount',
+    desc: '停用 ACME 账户'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_newAcmeAccount',
+    desc: '创建 ACME 账户'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_newOrder',
+    desc: '新增订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getOrderCount',
+    desc: '获取订单总数'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getOrderList',
+    desc: '获取订单列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getOrderInfo',
+    desc: '获取订单信息'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getOrderAuthorization',
+    desc: '获取订单授权'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_refreshOrder',
+    desc: '刷新订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_submitOrder',
+    desc: '提交订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deleteOrder',
+    desc: '删除订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deleteUselessStatusOrder',
+    desc: '清理无用状态订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deactivateAuthorization',
+    desc: '停用授权'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_respondChallenge',
+    desc: '提交挑战验证'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_revokeCertificate',
+    desc: '吊销证书'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getDnsTaskCount',
+    desc: '获取 DNS 自动配置任务总数'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getDnsTaskList',
+    desc: '获取 DNS 自动配置任务列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_endDnsTask',
+    desc: '结束 DNS 自动配置任务'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deleteDnsTask',
+    desc: '删除 DNS 自动配置任务'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deleteEndStatusDnsTask',
+    desc: '清理结束状态 DNS 自动配置任务'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_newTemplate',
+    desc: '新增模板'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getTemplateList',
+    desc: '获取模板列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getTemplateInfo',
+    desc: '获取模板信息'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_updateTemplate',
+    desc: '修改模板'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deleteTemplate',
+    desc: '删除模板'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_updateUserSetting',
+    desc: '修改用户功能设置'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_updateUserDns',
+    desc: '修改用户 DNS 设置'
   }
 ])
 const filter = ref({
@@ -120,16 +305,6 @@ const filter = ref({
 const selectconfig = {
   checkField: 'selected'
 }
-const newaccesskeydialog = ref(false)
-const updateaccesskeydialog = ref(false)
-const accesskeyname = ref('')
-const accesskeyenddate = ref('')
-const accesskeyforever = ref(false)
-const accesskeyallowip = ref([])
-const ip = ref('')
-let accesskeyapi = []
-const accesskeystatus = ref(false)
-let accesskeyindex = 0
 function formatEnddate(t) {
   const enddate = t.cellValue
   if (enddate == 0) {
@@ -160,12 +335,15 @@ function newAccessKeyClose() {
   accesskeyname.value = ''
   accesskeyenddate.value = ''
   accesskeyforever.value = false
+  accesskeyallowapi = []
   ip.value = ''
   accesskeyallowip.value = []
-  accesskeyapi = []
   accesskeystatus.value = false
 }
-function addIp() {
+function chooseApi(t) {
+  accesskeyallowapi = t.selection.map(item => item.name)
+}
+function add() {
   if (ip.value === '') {
     TinyModal.message({
       message: '请输入 CIDR 表达式',
@@ -174,12 +352,10 @@ function addIp() {
     return
   }
   accesskeyallowip.value.push(ip.value)
+  ip.value = ''
 }
-function removeIp(index) {
+function remove(index) {
   accesskeyallowip.value.splice(index, 1)
-}
-function chooseApi(t) {
-  accesskeyapi = t.selection.map(item => item.name)
 }
 async function newAccessKey() {
   if (accesskeyname.value === '') {
@@ -206,7 +382,7 @@ async function newAccessKey() {
       accessToken: accesstoken,
       name: accesskeyname.value,
       endDate: enddate,
-      api: accesskeyapi,
+      allowApi: accesskeyallowapi,
       allowIp: accesskeyallowip.value,
       status: accesskeystatus.value
     }
@@ -246,21 +422,22 @@ async function updateAccessKeyOpen(row, index) {
   } else {
     accesskeyenddate.value = new Date(row.endDate)
   }
-  accesskeyapi = row.api
+  accesskeyallowapi = row.allowApi
   apis.value = apis.value.map(item => ({
     ...item,
-    selected: row.api.includes(item.name)
+    selected: row.allowApi.includes(item.name)
   }))
-  accesskeyallowip.value = row.allowIp
+  accesskeyallowip.value = [...row.allowIp]
 }
 function updateAccessKeyClose() {
   updateaccesskeydialog.value = false
+  accesskeyindex = 0
   accesskeyname.value = ''
   accesskeyenddate.value = ''
   accesskeyforever.value = false
+  accesskeyallowapi = []
   ip.value = ''
   accesskeyallowip.value = []
-  accesskeyapi = []
 }
 async function updateAccessKey() {
   if (accesskeyname.value === '') {
@@ -288,7 +465,7 @@ async function updateAccessKey() {
       index: accesskeyindex,
       name: accesskeyname.value,
       endDate: enddate,
-      api: accesskeyapi,
+      allowApi: accesskeyallowapi,
       allowIp: accesskeyallowip.value
     }
   })
@@ -320,21 +497,21 @@ async function deleteAccessKey(index) {
     <div class="cz">
       <div class="large-bold-text">accessKey</div>
       <tiny-alert type="warning" :closable="false"
-        description="accessKey 是调用 API 的凭证，请勿泄露给他人，防止账号被他人非法使用。为了保证账号安全，建议仅开启必要接口的权限、设置合理的到期时间和 IP 白名单、及时禁用或删除不再使用的 accessKey。"></tiny-alert>
-      <div><tiny-button type="info" @click="newAccessKeyOpen">新增</tiny-button></div>
+        description="accessKey 是调用 API 的凭证，请勿泄露给他人，防止账号被他人非法使用。为了保证账号安全，建议仅开启必要 API 的权限、设置合理的到期时间和 IP 白名单、及时禁用或删除不再使用的 accessKey。"></tiny-alert>
+      <div><tiny-button type="success" @click="newAccessKeyOpen">新增</tiny-button></div>
       <tiny-grid :data="accesskeys">
         <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
         <tiny-grid-column field="name" title="备注" align="center"></tiny-grid-column>
         <tiny-grid-column field="endDate" title="到期时间" align="center" :format-text="formatEnddate"
           sortable></tiny-grid-column>
-        <tiny-grid-column field="api" title="API 白名单" align="center" show-overflow></tiny-grid-column>
+        <tiny-grid-column field="allowApi" title="API 白名单" align="center" show-overflow></tiny-grid-column>
         <tiny-grid-column field="allowIp" title="IP 白名单" align="center" show-overflow></tiny-grid-column>
         <tiny-grid-column field="status" title="启用" align="center" format-text="boole"></tiny-grid-column>
         <tiny-grid-column field="lastUsedDate" title="最近使用时间" align="center" format-text="longDateTime"
           sortable></tiny-grid-column>
         <tiny-grid-column title="操作" align="center">
           <template #default="{ row, $rowIndex }">
-            <div class="sp">
+            <div class="czsp">
               <tiny-button v-if="row.status == false" type="success"
                 @click="updateAccessKeyStatus($rowIndex, '启用')">启用</tiny-button>
               <tiny-button v-if="row.status == true" type="danger"
@@ -369,11 +546,11 @@ async function deleteAccessKey(index) {
         </tiny-grid>
         <div class="sp">
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
-          <tiny-button type="success" @click="addIp">新增</tiny-button>
+          <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
         <div v-for="(item, index) in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
-          <tiny-button type="danger" @click="removeIp(index)">删除</tiny-button>
+          <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
         </div>
         <div class="sp">
           <div>启用</div>
@@ -381,7 +558,7 @@ async function deleteAccessKey(index) {
         </div>
       </div>
       <template #footer>
-        <tiny-button type="info" @click="newAccessKey">新增</tiny-button>
+        <tiny-button type="success" @click="newAccessKey">新增</tiny-button>
       </template>
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="updateaccesskeydialog" title="编辑 accessKey" @close="updateAccessKeyClose">
@@ -402,11 +579,11 @@ async function deleteAccessKey(index) {
         </tiny-grid>
         <div class="sp">
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
-          <tiny-button type="success" @click="addIp">新增</tiny-button>
+          <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
         <div v-for="(item, index) in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
-          <tiny-button type="danger" @click="removeIp(index)">删除</tiny-button>
+          <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
         </div>
       </div>
       <template #footer>

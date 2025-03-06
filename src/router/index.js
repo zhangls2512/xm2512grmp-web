@@ -25,6 +25,10 @@ const router = createRouter({
         {
           path: 'baxk',
           component: () => import('/src/product/doc/baxk.vue')
+        },
+        {
+          path: 'ssl',
+          component: () => import('/src/product/doc/ssl.vue')
         }
       ]
     },
@@ -51,6 +55,10 @@ const router = createRouter({
         {
           path: 'grmpweb',
           component: () => import('/src/product/updatelog/grmpweb.vue')
+        },
+        {
+          path: 'sslweb',
+          component: () => import('/src/product/updatelog/sslweb.vue')
         }
       ]
     },
@@ -137,6 +145,18 @@ const router = createRouter({
         {
           path: '/product/admin/baxklist',
           component: () => import('/src/product/admin/baxklist.vue')
+        },
+        {
+          path: '/product/admin/ssluserlist',
+          component: () => import('/src/product/admin/ssluserlist.vue')
+        },
+        {
+          path: '/product/admin/ssllimitchangelist',
+          component: () => import('/src/product/admin/ssllimitchangelist.vue')
+        },
+        {
+          path: '/product/admin/sslnewlimitchange',
+          component: () => import('/src/product/admin/sslnewlimitchange.vue')
         }
       ]
     },
@@ -147,6 +167,64 @@ const router = createRouter({
     {
       path: '/product/baxk/jqcx',
       component: () => import('/src/product/baxk/jqcx.vue')
+    },
+    {
+      path: '/product/ssl',
+      component: () => import('/src/product/ssl/panel.vue'),
+    },
+    {
+      path: '/product/ssl/panel',
+      component: () => import('/src/product/ssl/panel.vue'),
+      children: [
+        {
+          path: '/product/ssl/limit',
+          component: () => import('/src/product/ssl/limit.vue')
+        },
+        {
+          path: '/product/ssl/acmeaccount',
+          component: () => import('/src/product/ssl/acmeaccount.vue')
+        },
+        {
+          path: '/product/ssl/neworder',
+          component: () => import('/src/product/ssl/neworder.vue')
+        },
+        {
+          path: '/product/ssl/orderlist',
+          component: () => import('/src/product/ssl/orderlist.vue')
+        },
+        {
+          path: '/product/ssl/orderinfo',
+          component: () => import('/src/product/ssl/orderinfo.vue')
+        },
+        {
+          path: '/product/ssl/authorization',
+          component: () => import('/src/product/ssl/authorization.vue')
+        },
+        {
+          path: '/product/ssl/dnstask',
+          component: () => import('/src/product/ssl/dnstask.vue')
+        },
+        {
+          path: '/product/ssl/newtemplate',
+          component: () => import('/src/product/ssl/newtemplate.vue')
+        },
+        {
+          path: '/product/ssl/templatelist',
+          component: () => import('/src/product/ssl/templatelist.vue')
+        },
+        {
+          path: '/product/ssl/updatetemplate',
+          component: () => import('/src/product/ssl/updatetemplate.vue')
+        },
+        {
+          path: '/product/ssl/notice',
+          component: () => import('/src/product/ssl/notice.vue')
+        },
+        {
+          path: '/product/ssl/setting',
+          component: () => import('/src/product/ssl/setting.vue')
+        }
+      ]
     }
   ]
 })

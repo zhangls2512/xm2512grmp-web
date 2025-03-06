@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 管理后台'
 const data = [
   {
+    versionNumber: '1.1.0',
+    releaseDate: '2025-03-06',
+    logs: [
+      {
+        type: 'A',
+        content: '支持管理产品 SSL 证书'
+      },
+      {
+        type: 'F',
+        content: '用户管理 - 修改权限成功后列表未刷新'
+      },
+      {
+        type: 'F',
+        content: '用户管理 - 搜索 UID 成功后未弹窗'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1',
     releaseDate: '2025-02-26',
     logs: [

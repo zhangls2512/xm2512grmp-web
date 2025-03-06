@@ -25,7 +25,7 @@ async function request({ apiPath, body }) {
       throw new Error('接口调用失败')
     } else {
       TinyModal.message({
-        message: '请求失败',
+        message: '请求失败：' + err.message,
         status: 'error'
       })
       throw err

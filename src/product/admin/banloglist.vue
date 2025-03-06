@@ -67,7 +67,7 @@ async function deleteBanlog(t) {
 
 <template>
   <div class="cz">
-    <div><tiny-button type="info" @click="newBanlog">新增</tiny-button></div>
+    <div><tiny-button type="success" @click="newBanlog">新增</tiny-button></div>
     <div class="sp">
       <tiny-input v-model="id" clearable placeholder="请输入记录 ID"></tiny-input>
       <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>

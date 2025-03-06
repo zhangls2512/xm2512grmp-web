@@ -5,6 +5,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudbase/js-sdk": "^2.9.3",
     "@opentiny/vue": "latest",
     "axios": "latest",
     "js-cookie": "latest",

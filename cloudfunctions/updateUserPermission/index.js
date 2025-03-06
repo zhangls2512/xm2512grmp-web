@@ -58,16 +58,16 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const updateres = await db.collection('account').where({
+      const accountres = await db.collection('account').where({
         _id: requestdata.uid
       }).update({
         permission: requestdata.permission
       })
-      if (updateres.updated == 0) {
+      if (accountres.updated == 0) {
         return {
           errCode: 8000,
           errMsg: '用户不存在或数据无修改',
-          errFix: '传递有效的id或修改数据'
+          errFix: '传递有效的uid或修改数据'
         }
       } else {
         return {

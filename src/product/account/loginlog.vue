@@ -5,12 +5,7 @@ import cookie from 'js-cookie'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
 const loginlog = ref([])
-const typemap = {
-  emailcode: '邮箱验证码',
-  mfa: 'MFA',
-  password: '密码'
-}
-async function getLoginLog() {
+async function get() {
   const res = await request({
     apiPath: '/account/getLoginLog',
     body: {
@@ -21,18 +16,23 @@ async function getLoginLog() {
     message: '获取数据成功',
     status: 'success'
   })
+  const typemap = {
+    emailcode: '邮箱验证码',
+    mfa: 'MFA',
+    password: '密码'
+  }
   const outloginlog = res.data.map(item => ({
     ...item,
     verifyType: typemap[item.verifyType]
   }))
   loginlog.value = outloginlog
 }
-getLoginLog()
+get()
 </script>
 
 <template>
   <div>
-    <tiny-alert :closable="false" description="仅展示近 30 天内的最多 10 条最新登录日志。"></tiny-alert>
+    <tiny-alert :closable="false" description="仅展示近 30 天最多 10 条最新登录日志。"></tiny-alert>
     <tiny-grid :data="loginlog">
       <tiny-grid-column field="verifyType" title="验证方式" align="center"></tiny-grid-column>
       <tiny-grid-column field="ipAddress" title="地点" align="center"></tiny-grid-column>

@@ -22,6 +22,10 @@ const tabs = [
   {
     id: 'grmpweb',
     label: '轩铭2512个人名片（网页）'
+  },
+  {
+    id: 'sslweb',
+    label: 'SSL 证书（网页）'
   }
 ]
 const tabClick = (data) => {
@@ -43,7 +47,7 @@ const tabClick = (data) => {
     </div>
     <div class="empty"></div>
     <div class="footer">
-      <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+      <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
     </div>
   </div>
 </template>

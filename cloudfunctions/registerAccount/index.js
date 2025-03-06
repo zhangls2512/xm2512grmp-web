@@ -67,10 +67,10 @@ exports.main = async (event) => {
             admin: false,
             password: true,
             resource: true,
+            resourcecreator: false,
             smdztj: true,
             ssl: true,
-            todo: true,
-            xq: true
+            todo: true
           },
           service: []
         })

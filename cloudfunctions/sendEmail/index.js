@@ -13,8 +13,9 @@ exports.main = async (event) => {
     }
   }
   try {
+    const product = event.noticeName.split('_')[0]
     const res = await db.collection('productuser').where({
-      product: event.product,
+      product: product,
       uid: event.uid
     }).get()
     if (res.data.length > 0) {

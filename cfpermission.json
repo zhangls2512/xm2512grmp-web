@@ -1,0 +1,38 @@
+{
+  "*": {
+    "invoke": false
+  },
+  "deactivateAcmeAccount": {
+    "invoke": true
+  },
+  "deactivateSslAuthorization": {
+    "invoke": true
+  },
+  "getAcmeAccountInfo": {
+    "invoke": true
+  },
+  "getSslOrderAuthorization": {
+    "invoke": true
+  },
+  "newAcmeAccount": {
+    "invoke": true
+  },
+  "newSslOrder": {
+    "invoke": true
+  },
+  "openService": {
+    "invoke": true
+  },
+  "refreshSslOrder": {
+    "invoke": true
+  },
+  "respondSslChallenge": {
+    "invoke": true
+  },
+  "revokeSslCertificate": {
+    "invoke": true
+  },
+  "submitSslOrder": {
+    "invoke": true
+  }
+}

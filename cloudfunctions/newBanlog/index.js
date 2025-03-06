@@ -82,21 +82,19 @@ exports.main = async (event) => {
           method: requestdata.method,
           uid: requestdata.uid
         })
-        await app.callFunction({
+        app.callFunction({
           name: 'sendEmail',
           data: {
             uid: requestdata.uid,
-            product: 'account',
             noticeName: 'account_email_newbanlog',
             subject: '违规记录新增通知',
             text: '您的账号有新的违规记录，详情如下。\n' + '违规内容：' + requestdata.content + '\n' + '处罚方式：' + requestdata.method + '\n' + '时间：' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
           }
         })
-        await app.callFunction({
+        app.callFunction({
           name: 'sendWebhook',
           data: {
             uid: requestdata.uid,
-            product: 'account',
             data: {
               noticeName: 'account_webhook_newbanlog',
               content: requestdata.content,

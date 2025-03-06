@@ -5,46 +5,10 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment-timezone'
 import request from '../../request'
-import { TinyModal } from '@opentiny/vue'
 const route = useRoute()
 const baxknumber = ref('')
 const visible = ref(false)
 const info = ref({})
-const maintypemap = {
-  '0': '许可',
-  '1': '产品备案',
-  '2': '特殊场景适配备案',
-  '3': '隐私安全备案',
-  '4': '算法备案'
-}
-const specificmap = {
-  '0': {
-    '0': '成人信息服务',
-    '1': '敏感信息收集处理服务'
-  },
-  '1': {
-    '0': '网页',
-    '1': '微信小程序',
-    '2': '鸿蒙原生应用',
-    '3': '鸿蒙元服务'
-  },
-  '2': {
-    '0': '适老化',
-    '1': '未成年',
-    '2': '无障碍',
-    '3': '大小屏',
-    '4': '特殊网络环境',
-    '5': '深色模式',
-    '6': '多语言'
-  },
-  '4': {
-    '0': '个性化推送类',
-    '1': '排序精选类',
-    '2': '检索过滤类',
-    '3': '调度决策类',
-    '4': '生成合成类'
-  }
-}
 if (typeof (route.query.baxknumber) == 'string') {
   baxknumber.value = route.query.baxknumber
 }
@@ -68,6 +32,41 @@ async function getInfo() {
     status: 'success'
   })
   let data = res.data
+  const maintypemap = {
+    '0': '许可',
+    '1': '产品备案',
+    '2': '特殊场景适配备案',
+    '3': '隐私安全备案',
+    '4': '算法备案'
+  }
+  const specificmap = {
+    '0': {
+      '0': '成人信息服务',
+      '1': '敏感信息收集处理服务'
+    },
+    '1': {
+      '0': '网页',
+      '1': '微信小程序',
+      '2': '鸿蒙原生应用',
+      '3': '鸿蒙元服务'
+    },
+    '2': {
+      '0': '适老化',
+      '1': '未成年',
+      '2': '无障碍',
+      '3': '大小屏',
+      '4': '特殊网络环境',
+      '5': '深色模式',
+      '6': '多语言'
+    },
+    '4': {
+      '0': '个性化推送类',
+      '1': '排序精选类',
+      '2': '检索过滤类',
+      '3': '调度决策类',
+      '4': '生成合成类'
+    }
+  }
   data.specificType = specificmap[res.data.mainType][res.data.specificType]
   data.mainType = maintypemap[res.data.mainType]
   data.date = moment(res.data.date).format('YYYY-MM-DD HH:mm:ss')
@@ -129,7 +128,7 @@ async function getInfo() {
           <tiny-divider direction="vertical"></tiny-divider>
           <a class="footer-text" href="https://pd.qq.com/s/cnx7f1zdm" target="_blank">腾讯频道</a>
         </div>
-        <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备4号-W" target="_blank">轩铭2512品备4号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>

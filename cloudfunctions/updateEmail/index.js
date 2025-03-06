@@ -1,9 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
-  const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -88,16 +86,10 @@ exports.main = async (event) => {
             errFix: '使用其他邮箱'
           }
         } else {
-          const account = res.result.account
-          const enddate = Date.now() + account.duration * 86400000
-          const outaccesstoken = account._id + '\0' + nanoid(30)
-          const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
           await db.collection('account').where({
             email: requestdata.email
           }).update({
-            accessToken: accesstoken,
-            email: requestdata.newEmail,
-            endDate: enddate
+            email: requestdata.newEmail
           })
           return {
             errCode: 0,

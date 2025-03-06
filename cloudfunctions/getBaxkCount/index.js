@@ -54,8 +54,8 @@ exports.main = async (event) => {
       return res.result
     } else {
       const baxkres = await db.collection('baxk').where({
-        productNumber: productnumber,
-        mainType: maintype
+        mainType: maintype,
+        productNumber: productnumber
       }).count()
       return {
         errCode: 0,

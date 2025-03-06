@@ -62,13 +62,48 @@ exports.main = async (event) => {
       'admin_getBaxkCount',
       'admin_getBaxkList',
       'admin_updateBaxkDesc',
-      'admin_deleteBaxk'
+      'admin_deleteBaxk',
+      'admin_getSslUserCount',
+      'admin_getSslUserList',
+      'admin_SearchSslUser',
+      'admin_newSslLimitChange',
+      'admin_getSslLimitChangeCount',
+      'admin_getSslLimitChangeList',
+      'ssl_getLimitChangeCount',
+      'ssl_getLimitChangeList',
+      'ssl_getAcmeAccountInfo',
+      'ssl_deactivateAcmeAccount',
+      'ssl_newAcmeAccount',
+      'ssl_newOrder',
+      'ssl_getOrderCount',
+      'ssl_getOrderList',
+      'ssl_getOrderInfo',
+      'ssl_getOrderAuthorization',
+      'ssl_refreshOrder',
+      'ssl_submitOrder',
+      'ssl_deleteOrder',
+      'ssl_deleteUselessStatusOrder',
+      'ssl_deactivateAuthorization',
+      'ssl_respondChallenge',
+      'ssl_revokeCertificate',
+      'ssl_getDnsTaskCount',
+      'ssl_getDnsTaskList',
+      'ssl_endDnsTask',
+      'ssl_deleteDnsTask',
+      'ssl_deleteEndStatusDnsTask',
+      'ssl_newTemplate',
+      'ssl_getTemplateList',
+      'ssl_getTemplateInfo',
+      'ssl_updateTemplate',
+      'ssl_deleteTemplate',
+      'ssl_updateUserSetting',
+      'ssl_updateUserDns'
     ]
-    if (!Array.isArray(requestdata.api) || !requestdata.api.every(item => validapis.includes(item))) {
+    if (!Array.isArray(requestdata.allowApi) || !requestdata.allowApi.every(item => validapis.includes(item))) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的api参数'
+        errFix: '传递有效的allowApi参数'
       }
     }
     if (!Array.isArray(requestdata.allowIp) || !requestdata.allowIp.every(item => new cidr().range(item) !== null)) {
@@ -104,7 +139,7 @@ exports.main = async (event) => {
       let accesskey = accesskeys[requestdata.index]
       accesskey.name = requestdata.name
       accesskey.endDate = requestdata.endDate
-      accesskey.api = requestdata.api
+      accesskey.allowApi = requestdata.allowApi
       accesskey.allowIp = requestdata.allowIp
       accesskeys[requestdata.index] = accesskey
       await db.collection('account').where({

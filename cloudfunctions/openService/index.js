@@ -1,18 +1,29 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const acme = require('nodejs-acmeclient')
   const { nanoid } = await import('nanoid')
   const app = tcb.init()
+  const auth = app.auth()
+  const issdk = auth.getUserInfo().isAnonymous
   const db = app.database()
-  if (event.httpMethod != 'POST') {
-    return {
-      errCode: 1000,
-      errMsg: '请求方法错误',
-      errFix: '使用POST方法请求'
+  let requestdata = ''
+  let requestip = ''
+  if (issdk) {
+    requestdata = event
+    requestip = auth.getClientIP()
+  } else {
+    requestdata = JSON.parse(event.body)
+    requestip = event.headers['x-real-ip']
+    if (event.httpMethod != 'POST') {
+      return {
+        errCode: 1000,
+        errMsg: '请求方法错误',
+        errFix: '使用POST方法请求'
+      }
     }
   }
   try {
-    const requestdata = JSON.parse(event.body)
     if (typeof (requestdata.accessToken) != 'string' && typeof (requestdata.accessKey) != 'string') {
       return {
         errCode: 1001,
@@ -20,7 +31,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validservices = ['account', 'admin']
+    const validservices = ['account', 'admin', 'ssl']
     if (!validservices.includes(requestdata.service)) {
       return {
         errCode: 1001,
@@ -43,7 +54,7 @@ exports.main = async (event) => {
         type: type,
         data: {
           code: code,
-          requestIp: event.headers['x-real-ip']
+          requestIp: requestip
         },
         permission: ['account', requestdata.service],
         service: [],
@@ -87,6 +98,74 @@ exports.main = async (event) => {
           product: 'admin',
           webhookToken: nanoid(15) + uid + nanoid(15),
           webhookUrl: '',
+          uid: uid
+        })
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'ssl') {
+        const productionprivatekey = acme.crypto.generateECDSAKeyPair('secp384r1').privateKey
+        const stagingprivatekey = acme.crypto.generateECDSAKeyPair('secp384r1').privateKey
+        try {
+          await acme.api.newAccount({
+            directoryUrl: 'https://acme-v02.api.letsencrypt.org/directory',
+            accountKey: productionprivatekey
+          })
+          await acme.api.newAccount({
+            directoryUrl: 'https://acme-staging-v02.api.letsencrypt.org/directory',
+            accountKey: stagingprivatekey
+          })
+        } catch (err) {
+          return {
+            errCode: 8001,
+            errMsg: 'CA返回错误，错误信息：' + err.detail,
+            errFix: '联系客服'
+          }
+        }
+        await db.collection('productuser').add({
+          accountKey: {
+            production: productionprivatekey,
+            staging: stagingprivatekey
+          },
+          dns: [
+            {
+              platform: 'aliyun',
+              keyId: '',
+              keySecret: '',
+              domains: []
+            },
+            {
+              platform: 'tencentcloud',
+              keyId: '',
+              keySecret: '',
+              domains: []
+            }
+          ],
+          noticeSetting: [],
+          product: 'ssl',
+          productionLimit: 8,
+          setting: {
+            autoSetDns: false,
+            autoSubmitChallengeVerify: 'afterverify',
+            autoSubmitOrder: false
+          },
+          stagingLimit: 5,
+          webhookToken: nanoid(15) + uid + nanoid(15),
+          webhookUrl: '',
+          uid: uid
+        })
+        await db.collection('ssllimitchange').add({
+          changeType: 'add',
+          date: Date.now(),
+          number: 8,
+          reason: String(new Date().getFullYear()) + '年免费',
           uid: uid
         })
         await db.collection('account').where({

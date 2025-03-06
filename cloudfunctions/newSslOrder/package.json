@@ -1,0 +1,8 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "latest",
+    "nodejs-acmeclient": "latest",
+    "validator": "latest"
+  }
+}

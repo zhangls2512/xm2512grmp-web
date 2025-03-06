@@ -5,8 +5,9 @@ exports.main = async (event) => {
   const app = tcb.init()
   const db = app.database()
   try {
+    const product = event.noticeName.split('_')[0]
     const res = await db.collection('productuser').where({
-      product: event.product,
+      product: product,
       uid: event.uid
     }).get()
     if (res.data.length > 0) {
@@ -20,12 +21,20 @@ exports.main = async (event) => {
       }
       const webhookurl = res.data[0].webhookUrl
       if (webhookurl) {
-        await axios.post(webhookurl, event.data, {
-          timeout: 20000
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+        try {
+          await axios.post(webhookurl, event.data, {
+            timeout: 20000
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        } catch {
+          return {
+            errCode: 8001,
+            errMsg: '请求webhookurl失败',
+            errFix: '无修复建议'
+          }
         }
       }
     } else {

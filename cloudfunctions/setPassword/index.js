@@ -2,9 +2,7 @@
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const argon2 = require('argon2')
-  const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
-  const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -92,14 +90,9 @@ exports.main = async (event) => {
       if (passwordhash) {
         passwordhash = await argon2.hash(requestdata.newPassword)
       }
-      const enddate = Date.now() + account.duration * 86400000
-      const outaccesstoken = account._id + '\0' + nanoid(30)
-      const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
       await db.collection('account').where({
         _id: account._id
       }).update({
-        accessToken: accesstoken,
-        endDate: enddate,
         password: passwordhash,
         passwordVerifyTimes: 0
       })

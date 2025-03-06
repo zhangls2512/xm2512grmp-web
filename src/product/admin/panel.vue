@@ -28,6 +28,23 @@ const tabs = [
     customIcon: icon.IconCheckedTrue()
   },
   {
+    id: '',
+    label: 'SSL 证书管理',
+    customIcon: icon.IconCheckedTrue(),
+    children: [
+      {
+        id: 'ssluserlist',
+        label: '用户管理',
+        customIcon: icon.IconGroup()
+      },
+      {
+        id: 'ssllimitchangelist',
+        label: '额度管理',
+        customIcon: icon.IconTotal()
+      }
+    ]
+  },
+  {
     id: 'logout',
     label: '退出登录',
     customIcon: icon.IconGoBack()
@@ -90,11 +107,11 @@ const tabClick = (data) => {
     <div class="empty"></div>
     <div class="footer">
       <div class="cz">
-        <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备3号-W" target="_blank">轩铭2512品备3号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.1</div>
+          <div class="footer-text">Version 1.1.0</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/admin" target="_blank">更新日志</router-link>
         </div>

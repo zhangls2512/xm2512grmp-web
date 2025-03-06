@@ -2,6 +2,8 @@
 document.title = '轩铭2512 - 统一账号 - 产品管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
+import moment from 'moment-timezone'
+import callfunction from '../../callfunction'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
 const products = [
@@ -16,12 +18,18 @@ const products = [
     logo: '/logo.jpg',
     title: '管理后台',
     desc: '一个后台即可管理轩铭2512全部产品，方便、快捷。'
+  },
+  {
+    name: 'ssl',
+    logo: '/logossl.png',
+    title: 'SSL 证书',
+    desc: '简单、便捷地申请免费 DV SSL 证书。'
   }
 ]
 const validproducts = products.map(item => item.name)
 const productszt = ref(validproducts.reduce((out, item) => {
-  out[`${item}ktzt`] = ''
-  out[`${item}fjzt`] = ''
+  out[`${item}ktzt`] = false
+  out[`${item}fjzt`] = false
   return out
 }, {}))
 async function getAccountInfo() {
@@ -39,23 +47,19 @@ async function getAccountInfo() {
   const permission = res.data.permission
   validproducts.forEach(item => {
     productszt.value[`${item}ktzt`] = service.includes(item)
-    const fjzt = permission[item] === false || (typeof (permission[item]) == 'number' && Date.now() <= permission[item])
-    productszt.value[`${item}fjzt`] = fjzt
+    if (permission[item] === false) {
+      productszt.value[`${item}fjzt`] = true
+    }
+    if (typeof (permission[item]) == 'number' && Date.now() <= permission[item]) {
+      productszt.value[`${item}fjzt`] = moment(permission[item]).format('YYYY-MM-DD HH:mm:ss')
+    }
   })
 }
 getAccountInfo()
 async function open(product) {
-  const validproducts = ['account', 'admin']
-  if (validproducts.includes(product) == false) {
-    TinyModal.message({
-      message: '暂未上线，敬请期待',
-      status: 'info'
-    })
-    return
-  }
-  await request({
-    apiPath: '/account/openService',
-    body: {
+  await callfunction({
+    functionName: 'openService',
+    data: {
       accessToken: accesstoken,
       service: product
     }
@@ -93,7 +97,9 @@ async function close(product) {
           </div>
           <div class="sp">
             <tiny-tag type="success">已开通</tiny-tag>
-            <tiny-tag v-if="productszt.accountfjzt == true" type="danger">封禁中</tiny-tag>
+            <tiny-tag v-if="productszt.accountfjzt === true" type="danger">永久封禁</tiny-tag>
+            <tiny-tag v-if="typeof (productszt.accountfjzt) == 'string'" type="danger">封禁至 {{ productszt.accountfjzt
+            }}</tiny-tag>
           </div>
           <div class="text">一个账号即可使用轩铭2512全部产品，方便、快捷。</div>
           <tiny-alert :closable="false" description="如需取消开通，请注销账号"></tiny-alert>
@@ -108,7 +114,9 @@ async function close(product) {
           <div class="sp">
             <tiny-tag v-if="productszt[`${item.name}ktzt`] == false" type="danger">未开通</tiny-tag>
             <tiny-tag v-if="productszt[`${item.name}ktzt`] == true" type="success">已开通</tiny-tag>
-            <tiny-tag v-if="productszt[`${item.name}fjzt`] == true" type="danger">封禁中</tiny-tag>
+            <tiny-tag v-if="productszt[`${item.name}fjzt`] === true" type="danger">永久封禁</tiny-tag>
+            <tiny-tag v-if="typeof (productszt[`${item.name}fjzt`]) == 'string'" type="danger">封禁至 {{
+              productszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
           <div class="text">{{ item.desc }}</div>
           <tiny-button v-if="productszt[`${item.name}ktzt`] == false" type="success"

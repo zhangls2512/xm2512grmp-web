@@ -78,7 +78,7 @@ async function setWebhookUrl() {
       <tiny-alert :closable="false"
         description="设置后，服务器会向地址发送 HTTP POST 请求推送通知，请求体为 JSON 对象，含有 noticeName 和其他字段，其他字段因通知类型不同有差异。"></tiny-alert>
       <div class="sp">
-        <div class="text">地址：<span v-if="!webhookurl">未设置</span><span v-if="webhookurl">{{ webhookurl }}</span>
+        <div class="text">推送地址：<span v-if="!webhookurl">未设置</span><span v-if="webhookurl">{{ webhookurl }}</span>
         </div>
         <tiny-button type="info" @click="openWebhookDialog">设置</tiny-button>
       </div>
@@ -89,7 +89,7 @@ async function setWebhookUrl() {
           <div class="text">webhookToken：{{ webhooktoken }}</div>
           <tiny-button type="info" @click="copy">复制</tiny-button>
         </div>
-        <tiny-input v-model="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS ）"></tiny-input>
+        <tiny-input v-model="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS）"></tiny-input>
         <div class="text">提示：</div>
         <div class="text">1. 在输入的 Webhook 推送地址目录下新建一个名为 admin 的文件夹，在其中放置一个名为 xm2512webhooktoken.txt 、内容为 webhookToken 的
           TXT 文本文件。</div>

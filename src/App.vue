@@ -49,6 +49,13 @@
   gap: 10px;
 }
 
+.czsp {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 .cz {
   display: flex;
   flex-direction: column;

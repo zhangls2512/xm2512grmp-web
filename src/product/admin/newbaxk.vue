@@ -196,7 +196,7 @@ async function newBaxk() {
     message: '新增成功',
     status: 'success'
   })
-  router.push('/admin/baxklist')
+  router.push('/product/admin/baxklist')
 }
 </script>
 
@@ -231,10 +231,10 @@ async function newBaxk() {
         </tiny-base-select>
       </tiny-form-item>
       <tiny-form-item label="描述">
-        <tiny-input v-model="desc" type="textarea" clearable placeholder="请输入描述"></tiny-input>
+        <tiny-input v-model="desc" type="textarea" autosize clearable placeholder="请输入描述"></tiny-input>
       </tiny-form-item>
       <tiny-form-item>
-        <tiny-button type="info" @click="newBaxk">新增</tiny-button>
+        <tiny-button type="success" @click="newBaxk">新增</tiny-button>
       </tiny-form-item>
     </tiny-form>
   </div>

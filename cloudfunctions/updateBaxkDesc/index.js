@@ -58,13 +58,13 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const updateres = await db.collection('baxk').where({
+      const baxkres = await db.collection('baxk').where({
         _id: requestdata.id
       }).update({
         date: Date.now(),
         desc: requestdata.desc
       })
-      if (updateres.updated == 0) {
+      if (baxkres.updated == 0) {
         return {
           errCode: 8000,
           errMsg: '备案/许可不存在或数据无修改',

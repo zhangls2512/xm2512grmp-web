@@ -19,7 +19,26 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validnoticenames = ['account_email_newbanlog', 'account_webhook_newbanlog']
+    const validnoticenames = [
+      'account_email_newbanlog',
+      'account_webhook_newbanlog',
+      'ssl_email_limitchange',
+      'ssl_webhook_limitchange',
+      'ssl_email_limitempty',
+      'ssl_webhook_limitempty',
+      'ssl_email_autoneworderresult',
+      'ssl_webhook_autoneworderresult',
+      'ssl_email_autosubmitorderresult',
+      'ssl_webhook_autosubmitorderresult',
+      'ssl_email_orderstatuschange',
+      'ssl_webhook_orderstatuschange',
+      'ssl_email_autodnstaskstatuschange',
+      'ssl_webhook_autodnstaskstatuschange',
+      'ssl_email_ordernearexpire',
+      'ssl_webhook_ordernearexpire',
+      'ssl_email_certificatenearexpire',
+      'ssl_webhook_certificatenearexpire'
+    ]
     if (!validnoticenames.includes(requestdata.noticeName)) {
       return {
         errCode: 1001,

@@ -34,13 +34,16 @@ const endyear = new Date().getFullYear()
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/logossl.png" loading="lazy" />
-              <div class="large-bold-text">SSL证书</div>
-              <tiny-popover trigger="hover">
-                <template #reference>
-                  <a>微信小程序</a>
-                </template>
-                <img class="tp" src="/qrcodessl.jpg" loading="lazy" />
-              </tiny-popover>
+              <div class="large-bold-text">SSL 证书</div>
+              <div class="sp">
+                <router-link to="/product/ssl" target="_blank">网页</router-link>
+                <tiny-popover trigger="hover">
+                  <template #reference>
+                    <a>微信小程序</a>
+                  </template>
+                  <img class="tp" src="/qrcodessl.jpg" loading="lazy" />
+                </tiny-popover>
+              </div>
             </div>
           </div>
           <div class="kuang">
@@ -158,13 +161,13 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备1号-W" target="_blank">轩铭2512品备1号-W</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Copyright © 2024-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有
+          <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有
           </div>
           <tiny-divider direction="vertical"></tiny-divider>
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.0</div>
+          <div class="footer-text">Version 1.0.1</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
