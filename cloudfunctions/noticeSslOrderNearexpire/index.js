@@ -7,7 +7,7 @@ exports.main = async () => {
   const res = await db.collection('sslorder').where({
     isNoticeOrderNearexpire: false,
     orderEndDate: db.command.lte(startdate),
-    status: db.command.in['pending', 'ready']
+    status: db.command.in(['pending', 'ready'])
   }).get()
   res.data.forEach(async (item) => {
     await db.collection('sslorder').where({

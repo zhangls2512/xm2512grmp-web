@@ -5,7 +5,7 @@ exports.main = async () => {
   const db = app.database()
   const startdate = Date.now() - 3600000
   const res = await db.collection('dnstask').where({
-    status: db.command.in['setpending', 'submitpending'],
+    status: db.command.in(['setpending', 'submitpending']),
     updateDate: db.command.lte(startdate)
   }).get()
   res.data.forEach(async (item) => {

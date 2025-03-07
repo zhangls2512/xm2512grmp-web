@@ -195,6 +195,10 @@ const endyear = new Date().getFullYear()
   width: 150px;
 }
 
+.text {
+  text-align: center;
+}
+
 .large-bold-text {
   text-align: center;
 }
