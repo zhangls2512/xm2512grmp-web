@@ -10,6 +10,8 @@ const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
+const updatedescdialog = ref(false)
+const desc = ref('')
 const updateautoneworderdialog = ref(false)
 const autoneworder = ref('')
 const revokecertificatedialog = ref(false)
@@ -35,6 +37,8 @@ async function get() {
   resdata.createDate = moment(resdata.createDate).format('YYYY-MM-DD HH:mm:ss')
   resdata.orderEndDate = moment(resdata.orderEndDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = resdata
+  desc.value = resdata.desc
+  autoneworder.value = resdata.autoNewOrder
 }
 get()
 async function refresh() {
@@ -62,13 +66,34 @@ function download(url) {
   link.click()
   document.body.removeChild(link)
 }
+function openUpdateDescDialog() {
+  updatedescdialog.value = true
+}
+function closeUpdateDescDialog() {
+  updatedescdialog.value = false
+}
+async function updateDesc() {
+  await request({
+    apiPath: '/ssl/updateOrder',
+    body: {
+      accessToken: accesstoken,
+      id: id,
+      desc: desc.value,
+      autoNewOrder: autoneworder.value
+    }
+  })
+  TinyModal.message({
+    message: '修改成功',
+    status: 'success'
+  })
+  closeUpdateDescDialog()
+  get()
+}
 function openUpdateAutoNewOrderDialog() {
   updateautoneworderdialog.value = true
-  autoneworder.value = data.value.autoNewOrder
 }
 function closeUpdateAutoNewOrderDialog() {
   updateautoneworderdialog.value = false
-  autoneworder.value = ''
 }
 async function updateAutoNewOrder() {
   await request({
@@ -76,6 +101,7 @@ async function updateAutoNewOrder() {
     body: {
       accessToken: accesstoken,
       id: id,
+      desc: desc.value,
       autoNewOrder: autoneworder.value
     }
   })
@@ -128,6 +154,12 @@ async function revokeCertificate() {
     <div class="sp">
       <div class="bold-text">域名 / IP 地址</div>
       <tiny-tag v-for="item in data.domains" type="info">{{ item }}</tiny-tag>
+    </div>
+    <div class="sp">
+      <div class="bold-text">备注</div>
+      <div>{{ data.desc }}</div>
+      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
+        type="info" @click="openUpdateDescDialog">修改</tiny-button>
     </div>
     <div class="sp">
       <div class="bold-text">密钥类型</div>
@@ -222,8 +254,14 @@ async function revokeCertificate() {
       <div class="bold-text">CA 建议续期截止时间</div>
       <div>{{ data.ariEndDate }}</div>
     </div>
-    <tiny-dialog-box class="dialog" :visible="updateautoneworderdialog" title="自动新增续期订单设置"
-      @close="closeUpdateAutoNewOrderDialog">'
+    <tiny-dialog-box class="dialog" :visible="updatedescdialog" title="修改备注" @close="closeUpdateDescDialog">
+      <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
+      <template #footer>
+        <tiny-button type="info" @click="updateDesc">保存</tiny-button>
+      </template>
+    </tiny-dialog-box>
+    <tiny-dialog-box class="dialog" :visible="updateautoneworderdialog" title="修改自动新增续期订单设置"
+      @close="closeUpdateAutoNewOrderDialog">
       <tiny-radio-group v-model="autoneworder">
         <tiny-radio label="ari">CA 建议</tiny-radio>
         <tiny-radio label="nearexpire">即将到期</tiny-radio>
@@ -234,7 +272,7 @@ async function revokeCertificate() {
       </template>
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="revokecertificatedialog" title="选择吊销原因"
-      @close="closeRevokeCertificateDialog">'
+      @close="closeRevokeCertificateDialog">
       <tiny-radio-group v-model="reason">
         <tiny-radio label="0">不指定</tiny-radio>
         <tiny-radio label="1">私钥泄露</tiny-radio>

@@ -80,7 +80,7 @@ exports.main = async (event) => {
       if (requestdata.webhookUrl) {
         try {
           const { data } = await axios.get(requestdata.webhookUrl + '/' + requestdata.product + '/xm2512webhooktoken.txt', {
-            timeout: 20000
+            timeout: 5000
           })
           if (data != webhooktoken) {
             return {

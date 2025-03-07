@@ -20,7 +20,7 @@ const data = [
       <div class="large-bold-text">Version {{ item.versionNumber }}（发布日期：{{ item.releaseDate }}）</div>
       <div v-for="(item, index) in item.logs" class="cz">
         <div class="sp">
-          <div class="text">{{ index + 1 }}.</div>
+          <div>{{ index + 1 }}.</div>
           <tiny-tag v-if="item.type == 'A'" type="success">A</tiny-tag>
           <tiny-tag v-if="item.type == 'U'" type="info">U</tiny-tag>
           <tiny-tag v-if="item.type == 'F'" color="grey">F</tiny-tag>

@@ -129,11 +129,24 @@ async function changeWebhookNewbanlog(zt) {
       </div>
       <div class="large-bold-text">接收状态</div>
       <div class="sp">
-        <div class="bold-text">违规记录新增</div>
-        <tiny-switch v-model="emailnewbanlog" @change="changeEmailNewbanlog"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="webhooknewbanlog" @change="changeWebhookNewbanlog"></tiny-switch>
-        <div>Webhook</div>
+        <div class="item">
+          <div class="bold-text">名称</div>
+        </div>
+        <div class="item">
+          <div class="bold-text">邮箱</div>
+        </div>
+        <div class="item">
+          <div class="bold-text">Webhook</div>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="item">违规记录新增</div>
+        <div class="item">
+          <tiny-switch v-model="emailnewbanlog" @change="changeEmailNewbanlog"></tiny-switch>
+        </div>
+        <div class="item">
+          <tiny-switch v-model="webhooknewbanlog" @change="changeWebhookNewbanlog"></tiny-switch>
+        </div>
       </div>
     </div>
     <tiny-dialog-box class="dialog" :visible="webhookdialog" title="设置 Webhook 推送地址" @close="closeWebhookDialog">
@@ -143,14 +156,14 @@ async function changeWebhookNewbanlog(zt) {
           <tiny-button type="info" @click="copy">复制</tiny-button>
         </div>
         <tiny-input v-model="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS）"></tiny-input>
-        <div class="text">提示：</div>
+        <div>提示：</div>
         <div class="text">1. 在输入的 Webhook 推送地址目录下新建一个名为 account 的文件夹，在其中放置一个名为 xm2512webhooktoken.txt 、内容为 webhookToken
           的 TXT 文本文件。</div>
         <div class="text">2. 点击“设置”按钮向服务器发送设置请求。</div>
         <div class="text">3. 服务器收到设置请求后会向输入的 Webhook 推送地址/account/xm2512webhooktoken.txt 发送 HTTP GET 请求，检查响应体是否是正确的
           webhookToken。</div>
         <div class="text">4. 如输入的 Webhook 推送地址限制入站 IP ，须放行验证服务器 IP：81.68.129.229，以免因验证请求被阻止导致验证失败。</div>
-        <div class="text">5. 服务器发送验证请求后等待 20 秒，如果未收到响应即验证失败。请保证输入的 Webhook 推送地址网络通畅，以免因验证请求超时导致验证失败。</div>
+        <div class="text">5. 服务器发送验证请求后等待 5 秒，如果未收到响应即验证失败。请保证输入的 Webhook 推送地址网络通畅，以免因验证请求超时导致验证失败。</div>
       </div>
       <template #footer>
         <tiny-button type="info" @click="setWebhookUrl">设置</tiny-button>
@@ -158,3 +171,10 @@ async function changeWebhookNewbanlog(zt) {
     </tiny-dialog-box>
   </div>
 </template>
+
+<style scoped>
+.item {
+  text-align: center;
+  width: 33%;
+}
+</style>

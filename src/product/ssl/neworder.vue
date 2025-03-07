@@ -7,6 +7,7 @@ import callfunction from '../../callfunction'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
+const orderdesc = ref('')
 const type = ref('classic')
 const csr = ref('')
 const template = ref([])
@@ -20,7 +21,7 @@ const environmenttype = ref('production')
 const certificatetype = ref('classic')
 const autoneworder = ref('ari')
 const autonewtemplate = ref(false)
-const desc = ref('')
+const templatedesc = ref('')
 async function getTemplate() {
   const res = await request({
     apiPath: '/ssl/getTemplateList',
@@ -37,7 +38,6 @@ function add() {
       message: '最多添加 100 个域名 / IP 地址',
       status: 'warning'
     })
-    return
     return
   }
   if (!validator.isFQDN(domain.value, {
@@ -103,6 +103,7 @@ async function newOrder() {
     functionName: 'newSslOrder',
     data: {
       accessToken: accesstoken,
+      desc: orderdesc.value,
       csr: csrused,
       domains: domainsused,
       keyType: keytypeused,
@@ -122,7 +123,7 @@ async function newOrder() {
       body: {
         accessToken: accesstoken,
         domains: domainsused,
-        desc: desc.value
+        desc: templatedesc.value
       }
     })
   }
@@ -164,7 +165,7 @@ async function newOrder() {
           <tiny-button type="danger" @click="close">隐藏</tiny-button>
           <tiny-grid :data="template">
             <tiny-grid-column field="domains" title="域名、IP 地址" align="center" show-overflow></tiny-grid-column>
-            <tiny-grid-column field="desc" title="描述" align="center" show-overflow></tiny-grid-column>
+            <tiny-grid-column field="desc" title="备注" align="center" show-overflow></tiny-grid-column>
             <tiny-grid-column title="操作" align="center">
               <template #default="{ row }">
                 <tiny-button type="info" @click="input(row.domains)">填入</tiny-button>
@@ -176,8 +177,11 @@ async function newOrder() {
       <tiny-form-item v-if="type == 'classic'" label="存入模板">
         <tiny-switch v-model="autonewtemplate"></tiny-switch>
       </tiny-form-item>
-      <tiny-form-item v-if="type == 'classic' && autonewtemplate == true" label="描述">
-        <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入描述（可选）"></tiny-input>
+      <tiny-form-item v-if="type == 'classic' && autonewtemplate == true" label="模板备注">
+        <tiny-input v-model="templatedesc" clearable maxlength="20" placeholder="请输入模板备注（可选）"></tiny-input>
+      </tiny-form-item>
+      <tiny-form-item label="订单备注">
+        <tiny-input v-model="orderdesc" clearable maxlength="20" placeholder="请输入订单备注（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic'" label="密钥类型">
         <tiny-radio-group v-model="keytype">
@@ -194,8 +198,8 @@ async function newOrder() {
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic' && keytype == 'ecdsa'" label="密钥曲线">
         <tiny-radio-group v-model="ecdsakeysize">
-          <tiny-radio label="prime256v1">prime256v1（256位）</tiny-radio>
-          <tiny-radio label="secp384r1">secp384r1（384位）</tiny-radio>
+          <tiny-radio label="prime256v1">prime256v1（256 位）</tiny-radio>
+          <tiny-radio label="secp384r1">secp384r1（384 位）</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item label="环境类型">

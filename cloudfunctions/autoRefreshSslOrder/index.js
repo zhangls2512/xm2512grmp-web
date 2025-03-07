@@ -29,26 +29,28 @@ exports.main = async () => {
     if (acmeorderres.status == 'invalid') {
       statuswz = '已失效'
     }
-    app.callFunction({
-      name: 'sendEmail',
-      data: {
-        uid: item.uid,
-        noticeName: 'ssl_email_orderstatuschange',
-        subject: 'SSL证书订单状态变更通知',
-        text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
-      }
-    })
-    app.callFunction({
-      name: 'sendWebhook',
-      data: {
-        uid: item.uid,
+    if (statuswz) {
+      app.callFunction({
+        name: 'sendEmail',
         data: {
-          noticeName: 'ssl_webhook_orderstatuschange',
-          orderId: item._id,
-          status: acmeorderres.status
+          uid: item.uid,
+          noticeName: 'ssl_email_orderstatuschange',
+          subject: 'SSL证书订单状态变更通知',
+          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
         }
-      }
-    })
+      })
+      app.callFunction({
+        name: 'sendWebhook',
+        data: {
+          uid: item.uid,
+          data: {
+            noticeName: 'ssl_webhook_orderstatuschange',
+            orderId: item._id,
+            status: acmeorderres.status
+          }
+        }
+      })
+    }
     if (acmeorderres.status == 'ready') {
       const userres = await db.collection('productuser').where({
         product: 'ssl',
@@ -191,26 +193,28 @@ exports.main = async () => {
       if (acmeorderres.status == 'invalid') {
         statuswz = '已失效'
       }
-      app.callFunction({
-        name: 'sendEmail',
-        data: {
-          uid: item.uid,
-          noticeName: 'ssl_email_orderstatuschange',
-          subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
-        }
-      })
-      app.callFunction({
-        name: 'sendWebhook',
-        data: {
-          uid: item.uid,
+      if (statuswz) {
+        app.callFunction({
+          name: 'sendEmail',
           data: {
-            noticeName: 'ssl_webhook_orderstatuschange',
-            orderId: item._id,
-            status: acmeorderres.status
+            uid: item.uid,
+            noticeName: 'ssl_email_orderstatuschange',
+            subject: 'SSL证书订单状态变更通知',
+            text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
           }
-        }
-      })
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: item.uid,
+            data: {
+              noticeName: 'ssl_webhook_orderstatuschange',
+              orderId: item._id,
+              status: acmeorderres.status
+            }
+          }
+        })
+      }
     }
     if (acmeorderres.status == 'valid') {
       const certificatesres = await acme.api.getOrderCertificate(item.orderUrl)

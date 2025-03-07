@@ -28,6 +28,48 @@ const noticenames = ref([
   'ssl_webhook_certificatenearexpire'
 ])
 const noticeszt = ref({})
+const notices = ref([
+  {
+    name: '订单额度变更',
+    emailname: 'ssl_email_limitchange',
+    webhookname: 'ssl_webhook_limitchange'
+  },
+  {
+    name: '订单额度耗尽',
+    emailname: 'ssl_email_limitempty',
+    webhookname: 'ssl_webhook_limitempty'
+  },
+  {
+    name: '自动新增订单结果',
+    emailname: 'ssl_email_autoneworderresult',
+    webhookname: 'ssl_webhook_autoneworderresult'
+  },
+  {
+    name: '自动提交订单结果',
+    emailname: 'ssl_email_autosubmitorderresult',
+    webhookname: 'ssl_webhook_autosubmitorderresult'
+  },
+  {
+    name: '订单状态变更',
+    emailname: 'ssl_email_orderstatuschange',
+    webhookname: 'ssl_webhook_orderstatuschange'
+  },
+  {
+    name: 'DNS 自动配置任务状态变更',
+    emailname: 'ssl_email_autodnstaskstatuschange',
+    webhookname: 'ssl_webhook_autodnstaskstatuschange'
+  },
+  {
+    name: '订单即将过期',
+    emailname: 'ssl_email_ordernearexpire',
+    webhookname: 'ssl_webhook_ordernearexpire'
+  },
+  {
+    name: '证书即将过期',
+    emailname: 'ssl_email_certificatenearexpire',
+    webhookname: 'ssl_webhook_certificatenearexpire'
+  }
+])
 async function getUserInfo() {
   const res = await request({
     apiPath: '/product/getUserInfo',
@@ -129,76 +171,25 @@ async function change(noticename, zt) {
       </div>
       <div class="large-bold-text">接收状态</div>
       <div class="sp">
-        <div class="bold-text">订单额度变更</div>
-        <tiny-switch v-model="noticeszt['ssl_email_limitchange']"
-          @change="(zt) => change('ssl_email_limitchange', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_limitchange']"
-          @change="(zt) => change('ssl_webhook_limitchange', zt)"></tiny-switch>
-        <div>Webhook</div>
+        <div class="item">
+          <div class="bold-text">名称</div>
+        </div>
+        <div class="item">
+          <div class="bold-text">邮箱</div>
+        </div>
+        <div class="item">
+          <div class="bold-text">Webhook</div>
+        </div>
       </div>
-      <div class="sp">
-        <div class="bold-text">订单额度耗尽</div>
-        <tiny-switch v-model="noticeszt['ssl_email_limitempty']"
-          @change="(zt) => change('ssl_email_limitempty', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_limitempty']"
-          @change="(zt) => change('ssl_webhook_limitempty', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">自动新增订单结果</div>
-        <tiny-switch v-model="noticeszt['ssl_email_autoneworderresult']"
-          @change="(zt) => change('ssl_email_autoneworderresult', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_autoneworderresult']"
-          @change="(zt) => change('ssl_webhook_autoneworderresult', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">自动提交订单结果</div>
-        <tiny-switch v-model="noticeszt['ssl_email_autosubmitorderresult']"
-          @change="(zt) => change('ssl_email_autosubmitorderresult', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_autosubmitorderresult']"
-          @change="(zt) => change('ssl_webhook_autosubmitorderresult', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">订单状态变更</div>
-        <tiny-switch v-model="noticeszt['ssl_email_orderstatuschange']"
-          @change="(zt) => change('ssl_email_orderstatuschange', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_orderstatuschange']"
-          @change="(zt) => change('ssl_webhook_orderstatuschange', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">自动配置 DNS 任务状态变更</div>
-        <tiny-switch v-model="noticeszt['ssl_email_autodnstaskstatuschange']"
-          @change="(zt) => change('ssl_email_autodnstaskstatuschange', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_autodnstaskstatuschange']"
-          @change="(zt) => change('ssl_webhook_autodnstaskstatuschange', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">订单即将到期</div>
-        <tiny-switch v-model="noticeszt['ssl_email_ordernearexpire']"
-          @change="(zt) => change('ssl_email_ordernearexpire', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_ordernearexpire']"
-          @change="(zt) => change('ssl_webhook_ordernearexpire', zt)"></tiny-switch>
-        <div>Webhook</div>
-      </div>
-      <div class="sp">
-        <div class="bold-text">证书即将到期</div>
-        <tiny-switch v-model="noticeszt['ssl_email_certificatenearexpire']"
-          @change="(zt) => change('ssl_email_certificatenearexpire', zt)"></tiny-switch>
-        <div>邮箱</div>
-        <tiny-switch v-model="noticeszt['ssl_webhook_certificatenearexpire']"
-          @change="(zt) => change('ssl_webhook_certificatenearexpire', zt)"></tiny-switch>
-        <div>Webhook</div>
+      <div v-for="item in notices" class="sp">
+        <div class="item">{{ item.name }}</div>
+        <div class="item">
+          <tiny-switch v-model="noticeszt[item.emailname]" @change="(zt) => change(item.emailname, zt)"></tiny-switch>
+        </div>
+        <div class="item">
+          <tiny-switch v-model="noticeszt[item.webhookname]"
+            @change="(zt) => change(item.webhookname, zt)"></tiny-switch>
+        </div>
       </div>
     </div>
     <tiny-dialog-box class="dialog" :visible="webhookdialog" title="设置 Webhook 推送地址" @close="closeWebhookDialog">
@@ -208,14 +199,14 @@ async function change(noticename, zt) {
           <tiny-button type="info" @click="copy">复制</tiny-button>
         </div>
         <tiny-input v-model="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS）"></tiny-input>
-        <div class="text">提示：</div>
+        <div>提示：</div>
         <div class="text">1. 在输入的 Webhook 推送地址目录下新建一个名为 ssl 的文件夹，在其中放置一个名为 xm2512webhooktoken.txt 、内容为 webhookToken
           的 TXT 文本文件。</div>
         <div class="text">2. 点击“设置”按钮向服务器发送设置请求。</div>
         <div class="text">3. 服务器收到设置请求后会向输入的 Webhook 推送地址/ssl/xm2512webhooktoken.txt 发送 HTTP GET 请求，检查响应体是否是正确的
           webhookToken。</div>
         <div class="text">4. 如输入的 Webhook 推送地址限制入站 IP ，须放行验证服务器 IP：81.68.129.229，以免因验证请求被阻止导致验证失败。</div>
-        <div class="text">5. 服务器发送验证请求后等待 20 秒，如果未收到响应即验证失败。请保证输入的 Webhook 推送地址网络通畅，以免因验证请求超时导致验证失败。</div>
+        <div class="text">5. 服务器发送验证请求后等待 5 秒，如果未收到响应即验证失败。请保证输入的 Webhook 推送地址网络通畅，以免因验证请求超时导致验证失败。</div>
       </div>
       <template #footer>
         <tiny-button type="info" @click="setWebhookUrl">设置</tiny-button>
@@ -223,3 +214,10 @@ async function change(noticename, zt) {
     </tiny-dialog-box>
   </div>
 </template>
+
+<style scoped>
+.item {
+  text-align: center;
+  width: 33%;
+}
+</style>

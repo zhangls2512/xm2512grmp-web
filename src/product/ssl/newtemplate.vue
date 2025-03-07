@@ -33,13 +33,6 @@ async function newTemplate() {
     })
     return
   }
-  if (desc.value.length > 20) {
-    TinyModal.message({
-      message: '描述长度不能超过 20 个字符',
-      status: 'warning'
-    })
-    return
-  }
   await request({
     apiPath: '/ssl/newTemplate',
     body: {
@@ -75,8 +68,8 @@ async function newTemplate() {
           </div>
         </div>
       </tiny-form-item>
-      <tiny-form-item label="描述">
-        <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入描述（可选）"></tiny-input>
+      <tiny-form-item label="备注">
+        <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item>
         <tiny-button type="success" @click="newTemplate">新增</tiny-button>

@@ -111,6 +111,7 @@ function pagesizeChange(t) {
     </div>
     <tiny-alert :closable="false" description="选择使用测试环境新增订单时消耗。仅供测试使用，用完即无，不支持提高。"></tiny-alert>
     <div class="large-bold-text">变更记录</div>
+    <tiny-alert :closable="false" description="仅展示正式的变更记录。"></tiny-alert>
     <div class="sp">
       <tiny-base-select v-model="changetype">
         <tiny-option v-for="item in changetypes" :value="item.value" :label="item.label"></tiny-option>

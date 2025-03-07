@@ -15,6 +15,22 @@ const endyear = new Date().getFullYear()
       <div class="cz">
         <div class="title">产品</div>
         <div class="sp" style="align-items: stretch">
+          <router-link to="/product/account" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy" />
+                <div class="large-bold-text">统一账号</div>
+              </div>
+            </div>
+          </router-link>
+          <router-link to="/product/admin" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy" />
+                <div class="large-bold-text">管理后台</div>
+              </div>
+            </div>
+          </router-link>
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/logo.jpg" loading="lazy" />
@@ -22,49 +38,38 @@ const endyear = new Date().getFullYear()
               <div class="sp">
                 <router-link to="/" target="_blank">网页</router-link>
                 <tiny-divider direction="vertical"></tiny-divider>
-                <tiny-popover trigger="hover">
-                  <template #reference>
-                    <a>微信小程序</a>
-                  </template>
-                  <img class="tp" src="/qrcodemp.jpg" loading="lazy" />
-                </tiny-popover>
+                <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
               </div>
             </div>
           </div>
+        </div>
+        <div class="sp" style="align-items: stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/logossl.png" loading="lazy" />
               <div class="large-bold-text">SSL 证书</div>
               <div class="sp">
                 <router-link to="/product/ssl" target="_blank">网页</router-link>
-                <tiny-popover trigger="hover">
-                  <template #reference>
-                    <a>微信小程序</a>
-                  </template>
-                  <img class="tp" src="/qrcodessl.jpg" loading="lazy" />
-                </tiny-popover>
+                <router-link to="/qrcodessl.jpg" target="_blank">微信小程序</router-link>
               </div>
             </div>
           </div>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/logomedia.png" loading="lazy" />
-              <div class="large-bold-text">媒体处理</div>
-              <tiny-popover trigger="hover">
-                <template #reference>
-                  <a>微信小程序</a>
-                </template>
-                <img class="tp" src="/qrcodemedia.jpg" loading="lazy" />
-              </tiny-popover>
+          <router-link to="/qrcodemedia.jpg" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logomedia.png" loading="lazy" />
+                <div class="large-bold-text">媒体处理</div>
+              </div>
             </div>
-          </div>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/gitcode.png" loading="lazy" />
-              <div class="large-bold-text">nodejs-acmeclient</div>
-              <a href="https://www.npmjs.com/package/nodejs-acmeclient" target="_blank">npm</a>
+          </router-link>
+          <a href="https://www.npmjs.com/package/nodejs-acmeclient" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/gitcode.png" loading="lazy" />
+                <div class="large-bold-text">nodejs-acmeclient</div>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="title">成员</div>
         <div class="sp" style="align-items: stretch">
@@ -129,10 +134,6 @@ const endyear = new Date().getFullYear()
     <div class="footer">
       <div class="cz">
         <div class="sp">
-          <router-link class="footer-text" to="/product/account" target="_blank">统一账号</router-link>
-          <tiny-divider direction="vertical"></tiny-divider>
-          <router-link class="footer-text" to="/product/admin" target="_blank">管理后台</router-link>
-          <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/doc" target="_blank">文档中心</router-link>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog" target="_blank">更新日志</router-link>
@@ -167,7 +168,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.1</div>
+          <div class="footer-text">Version 1.0.2</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>

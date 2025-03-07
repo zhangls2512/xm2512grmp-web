@@ -95,7 +95,7 @@ function error(error) {
           <div class="bold-text">状态</div>
           <tiny-tag v-if="item.status == 'pending'" type="info">待完成</tiny-tag>
           <tiny-tag v-if="item.status == 'valid'" type="success">已通过</tiny-tag>
-          <tiny-tag v-if="item.status == 'invalid'" type="danger">未通过</tiny-tag>
+          <tiny-tag v-if="item.status == 'invalid'" type="danger">不通过</tiny-tag>
           <tiny-tag v-if="item.status == 'deactivated'" type="danger">已停用</tiny-tag>
           <tiny-tag v-if="item.status == 'expired'" type="warning">已过期</tiny-tag>
           <tiny-tag v-if="item.status == 'revoked'" type="danger">被停用</tiny-tag>
@@ -129,13 +129,13 @@ function error(error) {
               <tiny-tag v-if="row.status == 'pending'" type="info">待验证</tiny-tag>
               <tiny-tag v-if="row.status == 'processing'" type="warning">验证中</tiny-tag>
               <tiny-tag v-if="row.status == 'valid'" type="success">已通过</tiny-tag>
-              <tiny-tag v-if="row.status == 'invalid'" type="danger">未通过</tiny-tag>
+              <tiny-tag v-if="row.status == 'invalid'" type="danger">不通过</tiny-tag>
             </template>
           </tiny-grid-column>
           <tiny-grid-column title="操作" align="center">
             <template #default="{ row }">
               <div class="czsp">
-                <tiny-popconfirm v-if="row.status == 'pending'" title="提示" message="只有一次验证机会，确定提交？" type="warning"
+                <tiny-popconfirm v-if="row.status == 'pending'" title="提示" message="只有一次验证机会，确定验证？" type="warning"
                   trigger="hover" @confirm="respondChallenge(row.url)">
                   <template #reference>
                     <tiny-button type="info">验证</tiny-button>

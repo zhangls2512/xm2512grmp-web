@@ -506,7 +506,7 @@ async function deleteAccessKey(index) {
           sortable></tiny-grid-column>
         <tiny-grid-column field="allowApi" title="API 白名单" align="center" show-overflow></tiny-grid-column>
         <tiny-grid-column field="allowIp" title="IP 白名单" align="center" show-overflow></tiny-grid-column>
-        <tiny-grid-column field="status" title="启用" align="center" format-text="boole"></tiny-grid-column>
+        <tiny-grid-column field="status" title="是否启用" align="center" format-text="boole"></tiny-grid-column>
         <tiny-grid-column field="lastUsedDate" title="最近使用时间" align="center" format-text="longDateTime"
           sortable></tiny-grid-column>
         <tiny-grid-column title="操作" align="center">

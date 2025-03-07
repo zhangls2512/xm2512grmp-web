@@ -26,6 +26,13 @@ exports.main = async (event) => {
         errFix: '传递有效的id参数'
       }
     }
+    if (typeof (requestdata.desc) != 'string' || requestdata.desc.length > 20) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的desc参数'
+      }
+    }
     const validautoneworder = ['ari', 'nearexpire', 'close']
     if (!validautoneworder.includes(requestdata.autoNewOrder)) {
       return {
@@ -89,14 +96,15 @@ exports.main = async (event) => {
         if (requestdata.autoNewOrder == 'ari' && data.ariEndDate && data.ariEndDate < Date.now()) {
           return {
             errCode: 8003,
-            errMsg: 'ARI续期结束时间已过，不可修改为ARI',
+            errMsg: '已过CA建议续期截止时间，不可修改为CA建议',
             errFix: '修改为其他续期方式'
           }
         }
         await db.collection('sslorder').where({
           _id: requestdata.id
         }).update({
-          autoNewOrder: requestdata.autoNewOrder
+          autoNewOrder: requestdata.autoNewOrder,
+          desc: requestdata.desc
         })
         return {
           errCode: 0,

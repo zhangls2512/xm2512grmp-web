@@ -140,6 +140,7 @@ async function deleteOrder(id) {
     </div>
     <tiny-grid :data="data">
       <tiny-grid-column field="domains" title="域名、IP 地址" align="center" show-overflow></tiny-grid-column>
+      <tiny-grid-column field="desc" title="备注" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column title="状态" align="center">
         <template #default="{ row }">
           <tiny-tag v-if="row.status == 'pending'" type="info">待授权</tiny-tag>

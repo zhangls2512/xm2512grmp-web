@@ -32,12 +32,16 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
+    let csr = ''
     let domains = []
+    let desc = ''
     let keytype = ''
     let keysize = ''
-    let csr = ''
+    if (typeof (requestdata.desc) == 'string' && requestdata.desc.length <= 20) {
+      desc = requestdata.desc
+    }
     if (typeof (requestdata.csr) != 'string' || requestdata.csr === '') {
-      if (!Array.isArray(requestdata.domains) || requestdata.domains.length == 0) {
+      if (!Array.isArray(requestdata.domains) || requestdata.domains.length == 0 || requestdata.domains.length > 100) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
@@ -83,6 +87,14 @@ exports.main = async (event) => {
     } else {
       const csrres = acme.crypto.getCsrInfo(requestdata.csr)
       domains = [...new Set([...csrres.subjectAltName, csrres.commonName])]
+      if (domains.length == 0 || domains.length > 100) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的csr参数'
+        }
+      }
+      csr = requestdata.csr
       const keyres = acme.crypto.getKeyInfo(csrres.publicKey)
       keytype = keyres.keyType.toLowerCase()
       if (keyres.keyType == 'RSA') {
@@ -91,7 +103,6 @@ exports.main = async (event) => {
       if (keyres.keyType == 'ECDSA') {
         keysize = keyres.curveName
       }
-      csr = requestdata.csr
     }
     const validenvironmenttypes = ['production', 'staging']
     if (!validenvironmenttypes.includes(requestdata.environmentType)) {
@@ -202,6 +213,7 @@ exports.main = async (event) => {
         certificateType: requestdata.certificateType,
         createDate: Date.now(),
         csr: csr,
+        desc: desc,
         domains: domains,
         environmentType: requestdata.environmentType,
         isAutoNewOrder: false,

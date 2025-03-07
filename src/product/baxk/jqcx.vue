@@ -154,7 +154,7 @@ async function getInfo() {
 }
 
 .grid {
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(2, auto);
 }
 
 .grid-item-left {

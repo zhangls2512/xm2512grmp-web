@@ -56,6 +56,9 @@ async function getAccountInfo() {
   })
 }
 getAccountInfo()
+function use(product) {
+  window.open('/product/' + product, '_blank')
+}
 async function open(product) {
   await callfunction({
     functionName: 'openService',
@@ -119,10 +122,14 @@ async function close(product) {
               productszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
           <div class="text">{{ item.desc }}</div>
-          <tiny-button v-if="productszt[`${item.name}ktzt`] == false" type="success"
-            :disabled="productszt[`${item.name}fjzt`]" @click="open(item.name)">开通</tiny-button>
-          <tiny-button v-if="productszt[`${item.name}ktzt`] == true" type="danger"
-            @click="close(item.name)">取消开通</tiny-button>
+          <div class="sp">
+            <tiny-button v-if="productszt[`${item.name}ktzt`] == true && productszt[`${item.name}fjzt`] == false"
+              type="info" @click="use(item.name)">去使用</tiny-button>
+            <tiny-button v-if="productszt[`${item.name}ktzt`] == false" type="success"
+              :disabled="productszt[`${item.name}fjzt`]" @click="open(item.name)">开通</tiny-button>
+            <tiny-button v-if="productszt[`${item.name}ktzt`] == true" type="danger"
+              @click="close(item.name)">取消开通</tiny-button>
+          </div>
         </div>
       </div>
     </div>

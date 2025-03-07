@@ -5,7 +5,7 @@ exports.main = async () => {
   const db = app.database()
   const startdate = Date.now() - 2592000000
   await db.collection('loginlog').where({
-    date: db.command.lt(startdate)
+    date: db.command.lte(startdate)
   }).remove()
   return 'success'
 }

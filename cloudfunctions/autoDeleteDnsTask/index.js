@@ -5,7 +5,7 @@ exports.main = async () => {
   const db = app.database()
   const startdate = Date.now() - 604800000
   await db.collection('dnstask').where({
-    updateDate: db.command.lt(startdate)
+    updateDate: db.command.lte(startdate)
   }).remove()
   return 'success'
 }

@@ -44,11 +44,11 @@ async function deleteTemplate(id) {
 
 <template>
   <div class="cz">
-    <tiny-alert :closable="false" description="可将常用域名、IP 地址组合新增成为模板，新增订单时可快速填入。"></tiny-alert>
+    <tiny-alert :closable="false" description="可将常用域名、IP 地址组合存为模板，新增订单时可快速填入。目前支持保存最多 10 个。"></tiny-alert>
     <div><tiny-button type="success" @click="newTemplate">新增</tiny-button></div>
     <tiny-grid :data="template">
       <tiny-grid-column field="domains" title="域名、IP 地址" align="center" show-overflow></tiny-grid-column>
-      <tiny-grid-column field="desc" title="描述" align="center"></tiny-grid-column>
+      <tiny-grid-column field="desc" title="备注" align="center"></tiny-grid-column>
       <tiny-grid-column field="updateDate" title="更新时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
