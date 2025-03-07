@@ -37,13 +37,6 @@ exports.main = async (event) => {
         errFix: '传递有效的orderId参数'
       }
     }
-    if (!Number.isInteger(requestdata.index) || requestdata.index < 0) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的index参数'
-      }
-    }
     const validreasons = [0, 1, 4, 5]
     let reason = 0
     if (validreasons.includes(requestdata.reason)) {
@@ -86,13 +79,6 @@ exports.main = async (event) => {
         }
       } else {
         let data = orderres.data[0]
-        if (requestdata.index > data.certificate.length - 1) {
-          return {
-            errCode: 8001,
-            errMsg: '不存在索引为index的证书',
-            errFix: '传递有效的index'
-          }
-        }
         const userres = await db.collection('productuser').where({
           product: 'ssl',
           uid: res.result.account._id
@@ -108,7 +94,7 @@ exports.main = async (event) => {
           accountkey = userres.data[0].accountKey.staging
         }
         const certificateres = await app.downloadFile({
-          fileID: data.certificate[requestdata.index].value
+          fileID: data.certificate[0].value
         })
         try {
           await acme.api.revokeCertificate({
@@ -124,14 +110,14 @@ exports.main = async (event) => {
             errFix: '联系客服'
           }
         }
+        const certificates = data.certificate.map(item => item.value)
         await app.deleteFile({
-          fileList: [data.certificate[requestdata.index].value]
+          fileList: certificates
         })
-        data.certificate.splice(requestdata.index, 1)
         await db.collection('sslorder').where({
           _id: requestdata.orderId
         }).update({
-          certificate: data.certificate
+          certificate: []
         })
         return {
           errCode: 0,

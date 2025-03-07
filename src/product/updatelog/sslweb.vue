@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（网页）'
 const data = [
   {
+    versionNumber: '1.0.2',
+    releaseDate: '2025-03-07',
+    logs: [
+      {
+        type: 'U',
+        content: '订单详情页面支持复制订单 ID'
+      },
+      {
+        type: 'U',
+        content: '优化 订单详情页面'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1',
     releaseDate: '2025-03-07',
     logs: [

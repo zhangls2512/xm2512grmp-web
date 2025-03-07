@@ -9,13 +9,12 @@ import request from '../../request'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
-const data = ref([])
+const data = ref({})
 const updatedescdialog = ref(false)
 const desc = ref('')
 const updateautoneworderdialog = ref(false)
 const autoneworder = ref('')
 const revokecertificatedialog = ref(false)
-const certificateindex = ref(0)
 const reason = ref('0')
 async function get() {
   const res = await request({
@@ -57,6 +56,13 @@ async function refresh() {
     })
   }
   get()
+}
+function copy() {
+  navigator.clipboard.writeText(data.value._id)
+  TinyModal.message({
+    message: '内容已复制',
+    status: 'success'
+  })
 }
 function download(url) {
   const link = document.createElement('a')
@@ -112,13 +118,11 @@ async function updateAutoNewOrder() {
   closeUpdateAutoNewOrderDialog()
   get()
 }
-function openRevokeCertificateDialog(index) {
+function openRevokeCertificateDialog() {
   revokecertificatedialog.value = true
-  certificateindex.value = index
 }
 function closeRevokeCertificateDialog() {
   revokecertificatedialog.value = false
-  certificateindex.value = 0
   reason.value = '0'
 }
 async function revokeCertificate() {
@@ -127,7 +131,6 @@ async function revokeCertificate() {
     data: {
       accessToken: accesstoken,
       orderId: id,
-      index: certificateindex.value,
       reason: Number(reason.value)
     }
   })
@@ -148,10 +151,6 @@ async function revokeCertificate() {
     </tiny-breadcrumb>
     <div><tiny-button type="info" @click="refresh">刷新</tiny-button></div>
     <div class="sp">
-      <div class="bold-text">订单 ID</div>
-      <div>{{ data._id }}</div>
-    </div>
-    <div class="sp">
       <div class="bold-text">域名 / IP 地址</div>
       <tiny-tag v-for="item in data.domains" type="info">{{ item }}</tiny-tag>
     </div>
@@ -160,6 +159,62 @@ async function revokeCertificate() {
       <div>{{ data.desc }}</div>
       <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
         type="info" @click="openUpdateDescDialog">修改</tiny-button>
+    </div>
+    <div class="sp">
+      <div class="bold-text">状态</div>
+      <tiny-tag v-if="data.status == 'pending'" type="info">待授权</tiny-tag>
+      <tiny-tag v-if="data.status == 'ready'" type="info">待提交</tiny-tag>
+      <tiny-tag v-if="data.status == 'invalid'" type="danger">已失效</tiny-tag>
+      <tiny-tag v-if="data.status == 'processing'" type="warning">签发中</tiny-tag>
+      <tiny-tag v-if="data.status == 'valid'" type="success">已签发</tiny-tag>
+      <tiny-tag v-if="data.status == 'expired'" type="warning">已过期</tiny-tag>
+    </div>
+    <div v-if="data.privateKey != ''" class="sp">
+      <div class="bold-text">私钥</div>
+      <tiny-button type="success" @click="download(data.privateKey)">下载</tiny-button>
+      <div>下载链接有效期 5 分钟，刷新页面可获取新的下载链接</div>
+    </div>
+    <div v-if="data.certificate.length > 0" class="sp">
+      <div class="bold-text">证书</div>
+      <tiny-popconfirm title="提示" message="吊销后无法恢复，确定吊销？" type="warning" trigger="hover"
+        @confirm="openRevokeCertificateDialog">
+        <template #reference>
+          <tiny-button type="danger">吊销</tiny-button>
+        </template>
+      </tiny-popconfirm>
+      <div>下载链接有效期 5 分钟，刷新页面可获取新的下载链接</div>
+    </div>
+    <tiny-grid v-if="data.certificate.length > 0" :data="data.certificate">
+      <tiny-grid-column field="chain" title="证书链" align="center"></tiny-grid-column>
+      <tiny-grid-column title="操作" align="center">
+        <template #default="{ row }">
+          <tiny-button type="success" @click="download(row.value)">下载</tiny-button>
+        </template>
+      </tiny-grid-column>
+    </tiny-grid>
+    <tiny-alert v-if="data.certificate.length == 0 && (data.status == 'valid' || data.status == 'expired')" type="error"
+      :closable="false" description="证书已吊销"></tiny-alert>
+    <div v-if="data.certificate.length > 0" class="sp">
+      <div class="bold-text">证书颁发时间</div>
+      <div>{{ data.certificateStartDate }}</div>
+    </div>
+    <div v-if="data.certificate.length > 0" class="sp">
+      <div class="bold-text">证书到期时间</div>
+      <div>{{ data.certificateEndDate }}</div>
+    </div>
+    <div class="sp">
+      <div class="bold-text">自动新增续期订单</div>
+      <div v-if="data.autoNewOrder == 'ari'">CA 建议</div>
+      <div v-if="data.autoNewOrder == 'nearexpire'">即将到期</div>
+      <div v-if="data.autoNewOrder == 'close'">关闭</div>
+      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
+        type="info" @click="openUpdateAutoNewOrderDialog">修改</tiny-button>
+    </div>
+    <tiny-divider></tiny-divider>
+    <div class="sp">
+      <div class="bold-text">订单 ID</div>
+      <div>{{ data._id }}</div>
+      <tiny-button type="info" @click="copy">复制</tiny-button>
     </div>
     <div class="sp">
       <div class="bold-text">密钥类型</div>
@@ -186,28 +241,6 @@ async function revokeCertificate() {
       <div v-if="data.certificateType == 'tlsserver'">TLS 服务器</div>
     </div>
     <div class="sp">
-      <div class="bold-text">自动新增续期订单</div>
-      <div v-if="data.autoNewOrder == 'ari'">CA 建议</div>
-      <div v-if="data.autoNewOrder == 'nearexpire'">即将到期</div>
-      <div v-if="data.autoNewOrder == 'close'">关闭</div>
-      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
-        type="info" @click="openUpdateAutoNewOrderDialog">修改</tiny-button>
-    </div>
-    <div v-if="data.status == 'valid' && data.autoNewOrder != 'close'" class="sp">
-      <div class="bold-text">是否已自动新增续期订单</div>
-      <div v-if="data.isAutoNewOrder == true">是</div>
-      <div v-if="data.isAutoNewOrder == false">否</div>
-    </div>
-    <div class="sp">
-      <div class="bold-text">状态</div>
-      <tiny-tag v-if="data.status == 'pending'" type="info">待授权</tiny-tag>
-      <tiny-tag v-if="data.status == 'ready'" type="info">待提交</tiny-tag>
-      <tiny-tag v-if="data.status == 'invalid'" type="danger">已失效</tiny-tag>
-      <tiny-tag v-if="data.status == 'processing'" type="warning">签发中</tiny-tag>
-      <tiny-tag v-if="data.status == 'valid'" type="success">已签发</tiny-tag>
-      <tiny-tag v-if="data.status == 'expired'" type="warning">已过期</tiny-tag>
-    </div>
-    <div class="sp">
       <div class="bold-text">订单创建时间</div>
       <div>{{ data.createDate }}</div>
     </div>
@@ -215,42 +248,16 @@ async function revokeCertificate() {
       <div class="bold-text">订单截止时间</div>
       <div>{{ data.orderEndDate }}</div>
     </div>
-    <div v-if="data.status == 'valid' && data.privateKey != ''" class="sp">
-      <div class="bold-text">私钥</div>
-      <tiny-button type="success" @click="download(data.privateKey)">下载</tiny-button>
+    <div v-if="data.status == 'valid'" class="sp">
+      <div class="bold-text">是否已自动新增续期订单</div>
+      <div v-if="data.isAutoNewOrder == true">是</div>
+      <div v-if="data.isAutoNewOrder == false">否</div>
     </div>
-    <div v-if="data.status == 'valid'" class="cz">
-      <div class="bold-text">证书</div>
-      <tiny-grid :data="data.certificate">
-        <tiny-grid-column field="chain" title="证书链" align="center"></tiny-grid-column>
-        <tiny-grid-column title="操作" align="center">
-          <template #default="{ row, rowIndex }">
-            <div class="czsp">
-              <tiny-button type="success" @click="download(row.value)">下载</tiny-button>
-              <tiny-popconfirm title="提示" message="吊销后无法恢复，确定吊销？" type="warning" trigger="hover"
-                @confirm="openRevokeCertificateDialog(rowIndex)">
-                <template #reference>
-                  <tiny-button type="danger">吊销</tiny-button>
-                </template>
-              </tiny-popconfirm>
-            </div>
-          </template>
-        </tiny-grid-column>
-      </tiny-grid>
-    </div>
-    <div v-if="data.status == 'valid' || data.status == 'expired'" class="sp">
-      <div class="bold-text">证书颁发时间</div>
-      <div>{{ data.certificateStartDate }}</div>
-    </div>
-    <div v-if="data.status == 'valid' || data.status == 'expired'" class="sp">
-      <div class="bold-text">证书到期时间</div>
-      <div>{{ data.certificateEndDate }}</div>
-    </div>
-    <div v-if="data.status == 'valid' || data.status == 'expired'" class="sp">
+    <div v-if="data.status == 'valid'" class="sp">
       <div class="bold-text">CA 建议续期开始时间</div>
       <div>{{ data.ariStartDate }}</div>
     </div>
-    <div v-if="data.status == 'valid' || data.status == 'expired'" class="sp">
+    <div v-if="data.status == 'valid'" class="sp">
       <div class="bold-text">CA 建议续期截止时间</div>
       <div>{{ data.ariEndDate }}</div>
     </div>
