@@ -239,7 +239,8 @@ exports.main = async (event) => {
           date: Date.now(),
           desc: requestdata.desc,
           mainType: '3',
-          productNumber: requestdata.productNumber
+          productNumber: requestdata.productNumber,
+          specificType: '0'
         })
         return {
           errCode: 0,
