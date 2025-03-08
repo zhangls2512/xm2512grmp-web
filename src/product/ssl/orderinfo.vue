@@ -262,7 +262,7 @@ async function revokeCertificate() {
       <div>{{ data.ariEndDate }}</div>
     </div>
     <tiny-dialog-box class="dialog" :visible="updatedescdialog" title="修改备注" @close="closeUpdateDescDialog">
-      <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
+      <tiny-input v-model="desc" clearable show-word-limit maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
       <template #footer>
         <tiny-button type="info" @click="updateDesc">保存</tiny-button>
       </template>

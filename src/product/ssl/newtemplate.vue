@@ -69,7 +69,7 @@ async function newTemplate() {
         </div>
       </tiny-form-item>
       <tiny-form-item label="备注">
-        <tiny-input v-model="desc" clearable maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
+        <tiny-input v-model="desc" clearable show-word-limit maxlength="20" placeholder="请输入备注（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item>
         <tiny-button type="success" @click="newTemplate">新增</tiny-button>

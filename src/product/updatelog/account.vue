@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.4',
+    releaseDate: '2025-03-08',
+    logs: [
+      {
+        type: 'U',
+        content: '部分文本输入框支持显示已输入字数'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3',
     releaseDate: '2025-03-07',
     logs: [

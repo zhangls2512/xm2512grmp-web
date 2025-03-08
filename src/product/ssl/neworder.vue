@@ -178,10 +178,11 @@ async function newOrder() {
         <tiny-switch v-model="autonewtemplate"></tiny-switch>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic' && autonewtemplate == true" label="模板备注">
-        <tiny-input v-model="templatedesc" clearable maxlength="20" placeholder="请输入模板备注（可选）"></tiny-input>
+        <tiny-input v-model="templatedesc" clearable show-word-limit maxlength="20"
+          placeholder="请输入模板备注（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="订单备注">
-        <tiny-input v-model="orderdesc" clearable maxlength="20" placeholder="请输入订单备注（可选）"></tiny-input>
+        <tiny-input v-model="orderdesc" clearable show-word-limit maxlength="20" placeholder="请输入订单备注（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic'" label="密钥类型">
         <tiny-radio-group v-model="keytype">

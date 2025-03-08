@@ -530,7 +530,8 @@ async function deleteAccessKey(index) {
     </div>
     <tiny-dialog-box class="dialog" :visible="newaccesskeydialog" title="新增 accessKey" @close="newAccessKeyClose">
       <div class="dialog-cz">
-        <tiny-input v-model="accesskeyname" clearable minlength="1" maxlength="10" placeholder="请输入备注"></tiny-input>
+        <tiny-input v-model="accesskeyname" clearable show-word-limit minlength="1" maxlength="10"
+          placeholder="请输入备注"></tiny-input>
         <div class="sp">
           <tiny-date-picker v-model="accesskeyenddate" type="datetime" align="center"
             placeholder="请选择到期时间"></tiny-date-picker>
@@ -563,7 +564,8 @@ async function deleteAccessKey(index) {
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="updateaccesskeydialog" title="编辑 accessKey" @close="updateAccessKeyClose">
       <div class="dialog-cz">
-        <tiny-input v-model="accesskeyname" clearable minlength="1" maxlength="10" placeholder="请输入备注"></tiny-input>
+        <tiny-input v-model="accesskeyname" clearable show-word-limit minlength="1" maxlength="10"
+          placeholder="请输入备注"></tiny-input>
         <div class="sp">
           <tiny-date-picker v-model="accesskeyenddate" type="datetime" align="center"
             placeholder="请选择到期时间"></tiny-date-picker>

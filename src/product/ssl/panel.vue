@@ -112,7 +112,7 @@ const tabClick = (data) => {
           <div class="footer-text">敏感信息收集处理服务许可号：<a href="/product/baxk/jqcx?baxknumber=轩铭2512许6号-1M"
               target="_blank">轩铭2512许6号-1M</a></div>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.3</div>
+          <div class="footer-text">Version 1.0.4</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/doc/ssl" target="_blank">文档中心</router-link>
           <tiny-divider direction="vertical"></tiny-divider>
