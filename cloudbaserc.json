@@ -22,7 +22,25 @@
       "installDependency": true
     },
     {
+      "name": "autoNewSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "autoRefreshSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "autoRespondSslChallenge",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "autoSetDnsRecord",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

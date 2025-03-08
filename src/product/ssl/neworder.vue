@@ -117,7 +117,7 @@ async function newOrder() {
     message: '新增成功',
     status: 'success'
   })
-  if (autonewtemplate && type.value == 'classic') {
+  if (autonewtemplate.value && type.value == 'classic') {
     request({
       apiPath: '/ssl/newTemplate',
       body: {

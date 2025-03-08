@@ -5,6 +5,8 @@ exports.main = async () => {
   const db = app.database()
   const startdate = Date.now() + 86400000
   const res = await db.collection('sslorder').where({
+    autoNewOrder: db.command.neq('nearexpire'),
+    isAutoNewOrder: false,
     isNoticeCertificateNearexpire: false,
     certificateEndDate: db.command.lte(startdate),
     status: 'valid'

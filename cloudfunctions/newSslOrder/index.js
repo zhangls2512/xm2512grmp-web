@@ -280,7 +280,7 @@ exports.main = async (event) => {
               if (dnsdomain && authorizationdomain.endsWith(dnsdomain) && dnsitem.keyId && dnsitem.keySecret) {
                 dnstasks.push({
                   accountKey: accountkey,
-                  allowStartDate: 0,
+                  allowStartDate: Date.now(),
                   authorization: authorizations[index],
                   directoryUrl: directoryurl,
                   dnsConfig: dnsitem,

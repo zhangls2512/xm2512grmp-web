@@ -1,0 +1,11 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "@alicloud/alidns20150109": "latest",
+    "@alicloud/openapi-client": "latest",
+    "@alicloud/tea-util": "latest",
+    "@cloudbase/node-sdk": "latest",
+    "nodejs-acmeclient": "latest",
+    "tencentcloud-sdk-nodejs": "latest"
+  }
+}

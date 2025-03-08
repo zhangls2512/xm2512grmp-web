@@ -211,11 +211,11 @@ exports.main = async (event) => {
         }
         if (data.status == 'processing') {
           const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
-          if (acmeorderres.status == 'valid' || acmeorderres.status == 'invalid') {
+          if (acmeorderres.status == 'invalid') {
             await db.collection('sslorder').where({
               _id: requestdata.id
             }).update({
-              status: acmeorderres.status
+              status: 'invalid'
             })
           }
           if (acmeorderres.status == 'valid') {
@@ -252,7 +252,8 @@ exports.main = async (event) => {
               ariStartDate: new Date(arires.suggestedWindow.start).getTime(),
               certificate: certificate,
               certificateEndDate: certificateenddate,
-              certificateStartDate: certificatestartdate
+              certificateStartDate: certificatestartdate,
+              status: 'valid'
             })
             return {
               errCode: 0,

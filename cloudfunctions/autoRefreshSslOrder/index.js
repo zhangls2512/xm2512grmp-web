@@ -180,48 +180,39 @@ exports.main = async () => {
   }).orderBy('createDate', 'asc').get()
   processingordersres.data.forEach(async (item) => {
     const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
-    if (acmeorderres.status == 'valid' || acmeorderres.status == 'invalid') {
+    if (acmeorderres.status == 'invalid') {
       await db.collection('sslorder').where({
         _id: item._id
       }).update({
-        status: acmeorderres.status
+        status: 'invalid'
       })
-      let statuswz = ''
-      if (acmeorderres.status == 'valid') {
-        statuswz = '已签发'
-      }
-      if (acmeorderres.status == 'invalid') {
-        statuswz = '已失效'
-      }
-      if (statuswz) {
-        app.callFunction({
-          name: 'sendEmail',
+      app.callFunction({
+        name: 'sendEmail',
+        data: {
+          uid: item.uid,
+          noticeName: 'ssl_email_orderstatuschange',
+          subject: 'SSL证书订单状态变更通知',
+          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已失效。'
+        }
+      })
+      app.callFunction({
+        name: 'sendWebhook',
+        data: {
+          uid: item.uid,
           data: {
-            uid: item.uid,
-            noticeName: 'ssl_email_orderstatuschange',
-            subject: 'SSL证书订单状态变更通知',
-            text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
+            noticeName: 'ssl_webhook_orderstatuschange',
+            orderId: item._id,
+            status: 'invalid'
           }
-        })
-        app.callFunction({
-          name: 'sendWebhook',
-          data: {
-            uid: item.uid,
-            data: {
-              noticeName: 'ssl_webhook_orderstatuschange',
-              orderId: item._id,
-              status: acmeorderres.status
-            }
-          }
-        })
-      }
+        }
+      })
     }
     if (acmeorderres.status == 'valid') {
       const certificatesres = await acme.api.getOrderCertificate(item.orderUrl)
-      const promise = certificatesres.map(async (item, index) => {
+      const promise = certificatesres.map(async (certificateitem, index) => {
         const certificateres = await app.uploadFile({
           cloudPath: 'sslorder/' + item._id + '/' + item.domains[0] + '_' + index + '.crt',
-          fileContent: Buffer.from(item)
+          fileContent: Buffer.from(certificateitem)
         })
         return certificateres.fileID
       })
@@ -250,14 +241,35 @@ exports.main = async () => {
         directoryUrl: directoryurl,
         certificate: leafcertificate
       })
-      db.collection('sslorder').where({
+      await db.collection('sslorder').where({
         _id: item._id
       }).update({
         ariStartDate: new Date(arires.suggestedWindow.start).getTime(),
         ariEndDate: new Date(arires.suggestedWindow.end).getTime(),
         certificate: certificate,
         certificateEndDate: certificateenddate,
-        certificateStartDate: certificatestartdate
+        certificateStartDate: certificatestartdate,
+        status: 'valid'
+      })
+      app.callFunction({
+        name: 'sendEmail',
+        data: {
+          uid: item.uid,
+          noticeName: 'ssl_email_orderstatuschange',
+          subject: 'SSL证书订单状态变更通知',
+          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已签发。'
+        }
+      })
+      app.callFunction({
+        name: 'sendWebhook',
+        data: {
+          uid: item.uid,
+          data: {
+            noticeName: 'ssl_webhook_orderstatuschange',
+            orderId: item._id,
+            status: 'valid'
+          }
+        }
       })
     }
   })
@@ -267,8 +279,8 @@ exports.main = async () => {
   validordersres.data.forEach(async (item) => {
     if (item.certificateEndDate < Date.now()) {
       let deletefiles = []
-      if (data.privateKey) {
-        deletefiles.push(data.privateKey)
+      if (item.privateKey) {
+        deletefiles.push(item.privateKey)
       }
       const certificatefiles = item.certificate.map(item => item.value)
       certificatefiles.forEach(item => {

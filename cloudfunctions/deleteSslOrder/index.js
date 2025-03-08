@@ -74,7 +74,7 @@ exports.main = async (event) => {
           return {
             errCode: 8002,
             errMsg: '订单下有证书',
-            errFix: '吊销所有证书或等待订单状态变为已过期'
+            errFix: '吊销证书或等待订单状态变为已过期'
           }
         }
         const dnstaskres = await db.collection('dnstask').where({
