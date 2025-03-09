@@ -65,7 +65,7 @@ const endyear = new Date().getFullYear()
           <a href="https://www.npmjs.com/package/nodejs-acmeclient" target="_blank">
             <div class="kuang">
               <div class="cz">
-                <img class="image" src="/gitcode.png" loading="lazy" />
+                <img class="image" src="/npm.png" loading="lazy" />
                 <div class="large-bold-text">nodejs-acmeclient</div>
               </div>
             </div>
@@ -104,29 +104,30 @@ const endyear = new Date().getFullYear()
         </div>
         <div class="title">媒体</div>
         <div class="sp" style="align-items: stretch">
-          <div class="kuang" style="width:166px">
-            <div class="cz">
-              <img class="image" src="/gzh.svg" loading="lazy" />
-              <tiny-popover trigger="hover">
-                <template #reference>
-                  <a class="large-bold-text">公众号</a>
-                </template>
-                <img class="tp" src="/qrcodegzh.jpg" loading="lazy" />
-              </tiny-popover>
+          <router-link to="/qrcodegzh.jpg" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/gzh.svg" loading="lazy" />
+                <div class="large-bold-text">公众号</div>
+              </div>
             </div>
-          </div>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/sph.svg" loading="lazy" />
-              <a class="large-bold-text" href="/qrcodesph.jpg" target="_blank">视频号</a>
+          </router-link>
+          <router-link to="/qrcodesph.jpg" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/sph.svg" loading="lazy" />
+                <div class="large-bold-text">视频号</div>
+              </div>
             </div>
-          </div>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/bili.svg" loading="lazy" />
-              <a class="large-bold-text" href="https://space.bilibili.com/448824492" target="_blank">哔哩哔哩</a>
+          </router-link>
+          <a href="https://space.bilibili.com/448824492" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/bili.svg" loading="lazy" />
+                <div class="large-bold-text">哔哩哔哩</div>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -168,7 +169,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.3</div>
+          <div class="footer-text">Version 1.0.4</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>

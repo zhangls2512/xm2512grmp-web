@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.4',
+    releaseDate: '2025-03-09',
+    logs: [
+      {
+        type: 'U',
+        content: '更新 nodejs-acmeclient 产品 logo'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3',
     releaseDate: '2025-03-09',
     logs: [
