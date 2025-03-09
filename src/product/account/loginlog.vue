@@ -19,7 +19,8 @@ async function get() {
   const typemap = {
     emailcode: '邮箱验证码',
     mfa: 'MFA',
-    password: '密码'
+    password: '密码',
+    sslwxxcx: 'SSL 证书（微信小程序）'
   }
   const outloginlog = res.data.map(item => ({
     ...item,

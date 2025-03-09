@@ -3,6 +3,7 @@
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
     "argon2": "latest",
+    "axios": "latest",
     "ipaddr.js": "latest",
     "nodemailer": "latest",
     "sm-crypto-v2": "latest",

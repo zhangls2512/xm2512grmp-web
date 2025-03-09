@@ -49,6 +49,14 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyCode参数'
       }
     }
+    const validplatforms = ['sslwxxcx']
+    if (!validplatforms.includes(requestdata.platform)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的platform参数'
+      }
+    }
     const res = await app.callFunction({
       name: 'authCheck',
       data: {
@@ -63,43 +71,26 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const account = res.result.account
-      if (account.service.length > 0) {
+      const uid = res.result.account._id
+      const externalaccountres = await db.collection('externalaccount').where({
+        platform: requestdata.platform,
+        uid: uid
+      }).get()
+      if (externalaccountres.data.length == 0) {
         return {
           errCode: 8000,
-          errMsg: '存在已开通的产品/功能',
-          errFix: '取消开通所有产品/功能'
+          errMsg: '账号未绑定此外部平台',
+          errFix: '无需解绑'
         }
-      }
-      if (!Object.values(account.permission).every(value => value === true || value === undefined || (typeof (value) == 'number' && Date.now() > value))) {
+      } else {
+        await db.collection('externalaccount').where({
+          platform: requestdata.platform,
+          uid: uid
+        }).remove()
         return {
-          errCode: 8001,
-          errMsg: '存在被封禁的权限',
-          errFix: '联系客服'
+          errCode: 0,
+          errMsg: '成功'
         }
-      }
-      const banres = await db.collection('banlog').where({
-        uid: account._id
-      }).count()
-      if (banres.total > 0) {
-        return {
-          errCode: 8002,
-          errMsg: '存在违规记录',
-          errFix: '联系客服'
-        }
-      }
-      await db.collection('loginlog').where({
-        uid: account._id
-      }).remove()
-      await db.collection('externalaccount').where({
-        uid: account._id
-      })
-      await db.collection('account').where({
-        _id: account._id
-      }).remove()
-      return {
-        errCode: 0,
-        errMsg: '成功'
       }
     }
   } catch {

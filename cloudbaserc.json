@@ -46,6 +46,12 @@
       "installDependency": true
     },
     {
+      "name": "bindExternalAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "closeService",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -197,6 +203,12 @@
     },
     {
       "name": "getDnsTaskList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getExternalAccount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -467,6 +479,12 @@
     },
     {
       "name": "test",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "unbindExternalAccount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

@@ -26,6 +26,10 @@ const tabs = [
   {
     id: 'sslweb',
     label: 'SSL 证书（网页）'
+  },
+  {
+    id: 'mtcl',
+    label: '媒体处理'
   }
 ]
 const tabClick = (data) => {

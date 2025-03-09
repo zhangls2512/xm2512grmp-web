@@ -59,6 +59,10 @@ const router = createRouter({
         {
           path: 'sslweb',
           component: () => import('/src/product/updatelog/sslweb.vue')
+        },
+        {
+          path: 'mtcl',
+          component: () => import('/src/product/updatelog/mtcl.vue')
         }
       ]
     },

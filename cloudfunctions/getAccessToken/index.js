@@ -26,14 +26,7 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的email参数'
-      }
-    }
-    const validtypes = ['emailcode', 'mfa', 'password']
+    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx']
     if (!validtypes.includes(requestdata.verifyType)) {
       return {
         errCode: 1001,
@@ -51,6 +44,9 @@ exports.main = async (event) => {
     if (requestdata.verifyType == 'password') {
       verifytypetext = '密码'
     }
+    if (requestdata.verifyType == 'sslwxxcx') {
+      verifytypetext = 'SSL证书（微信小程序）'
+    }
     if (typeof (requestdata.verifyCode) != 'string') {
       return {
         errCode: 1001,
@@ -58,25 +54,36 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyCode参数'
       }
     }
-    if (requestdata.verifyType == 'emailcode' && requestdata.verifyCode.length != 8) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的verifyCode参数'
+    let email = ''
+    if (requestdata.verifyType != 'sslwxxcx') {
+      if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的email参数'
+        }
       }
-    }
-    if (requestdata.verifyType == 'mfa' && requestdata.verifyCode.length != 6) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的verifyCode参数'
+      email = requestdata.email
+      if (requestdata.verifyType == 'emailcode' && requestdata.verifyCode.length != 8) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的verifyCode参数'
+        }
       }
-    }
-    if (requestdata.verifyType == 'password' && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 30)) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的verifyCode参数'
+      if (requestdata.verifyType == 'mfa' && requestdata.verifyCode.length != 6) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的verifyCode参数'
+        }
+      }
+      if (requestdata.verifyType == 'password' && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 30)) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的verifyCode参数'
+        }
       }
     }
     const res = await app.callFunction({
@@ -84,7 +91,7 @@ exports.main = async (event) => {
       data: {
         type: requestdata.verifyType,
         data: {
-          email: requestdata.email,
+          email: email,
           code: requestdata.verifyCode
         },
         permission: []
@@ -122,9 +129,12 @@ exports.main = async (event) => {
         ua: event.headers['user-agent'],
         uid: account._id
       })
+      if (!email) {
+        email = account.email
+      }
       await nodemailer.createTransport(mailerconfig).sendMail({
         from: 'zhangls2512@vip.qq.com',
-        to: requestdata.email,
+        to: email,
         subject: '轩铭2512统一账号登录提醒',
         text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipconfig.data.address + '（IP：' + event.headers['x-real-ip'] + '）'
       })

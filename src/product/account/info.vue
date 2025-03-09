@@ -10,6 +10,7 @@ import router from '../../router'
 const accesstoken = cookie.get('accessToken')
 const email = cookie.get('email')
 const accountinfo = ref({})
+const externalaccount = ref([])
 const type = ref('')
 const code = ref('')
 const dialog = ref(false)
@@ -22,6 +23,7 @@ const newpassworda = ref('')
 const newpasswordb = ref('')
 const duration = ref(2)
 const durationvalue = ref('')
+let platform = ''
 const updateemailbutton = ref(false)
 const setmfabutton = ref(false)
 const removemfabutton = ref(false)
@@ -31,6 +33,7 @@ const updatedurationbutton = ref(false)
 const freezebutton = ref(false)
 const refreshbutton = ref(false)
 const deleteaccountbutton = ref(false)
+const unbindexternalaccountbutton = ref(false)
 const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
@@ -57,7 +60,30 @@ async function getAccountInfo() {
     duration.value = String(accountinfo.value.duration)
   })
 }
-getAccountInfo()
+async function getExternalAccount() {
+  const res = await request({
+    apiPath: '/account/getExternalAccount',
+    body: {
+      accessToken: accesstoken
+    }
+  })
+  TinyModal.message({
+    message: '获取数据成功',
+    status: 'success'
+  })
+  const platformmap = {
+    sslwxxcx: 'SSL 证书（微信小程序）'
+  }
+  externalaccount.value = res.data.map(item => ({
+    ...item,
+    platformwz: platformmap[item.platform]
+  }))
+}
+async function get() {
+  await getAccountInfo()
+  getExternalAccount()
+}
+get()
 function logOut() {
   cookie.remove('accessToken')
   cookie.remove('email')
@@ -91,6 +117,7 @@ function closeDialog() {
   freezebutton.value = false
   refreshbutton.value = false
   deleteaccountbutton.value = false
+  unbindexternalaccountbutton.value = false
 }
 function closeQrcodeDialog() {
   qrcodedialog.value = false
@@ -462,6 +489,44 @@ async function deleteAccount() {
   })
   logOut()
 }
+function unbindExternalAccountOpen(platforminput) {
+  dialog.value = true
+  yzmmfatext.value = true
+  unbindexternalaccountbutton.value = true
+  type.value = 'mfa'
+  platform = platforminput
+}
+async function unbindExternalAccount() {
+  if (type.value == 'mfa' && code.value.length != 6) {
+    TinyModal.message({
+      message: '请输入有效的 MFA',
+      status: 'warning'
+    })
+    return
+  }
+  if (type.value == 'emailcode' && code.value.length != 8) {
+    TinyModal.message({
+      message: '请输入有效的邮箱验证码',
+      status: 'warning'
+    })
+    return
+  }
+  await request({
+    apiPath: '/account/unbindExternalAccount',
+    body: {
+      email: email,
+      verifyType: type.value,
+      verifyCode: code.value,
+      platform: platform
+    }
+  })
+  closeDialog()
+  TinyModal.message({
+    message: '解绑成功',
+    status: 'success'
+  })
+  getExternalAccount()
+}
 async function getEmailCode() {
   await request({
     apiPath: '/account/sendEmailCode',
@@ -563,6 +628,22 @@ async function getEmailCodea() {
           </template>
         </tiny-popconfirm>
       </div>
+      <div class="large-bold-text">外部账号</div>
+      <tiny-alert :closable="false" description="你可以使用绑定的外部账号直接登录账号，无需使用邮箱验证码、MFA 、密码验证。"></tiny-alert>
+      <tiny-grid :data="externalaccount">
+        <tiny-grid-column field="platformwz" title="外部平台名称" align="center"></tiny-grid-column>
+        <tiny-grid-column field="openid" title="外部账号 ID" align="center"></tiny-grid-column>
+        <tiny-grid-column title="操作" align="center">
+          <template #default="{ row }">
+            <tiny-popconfirm title="提示" message="解绑后需重新绑定才可直接登录账号，确定解绑？" type="warning" trigger="hover"
+              @confirm="unbindExternalAccountOpen(row.platform)">
+              <template #reference>
+                <tiny-button type="danger">解绑</tiny-button>
+              </template>
+            </tiny-popconfirm>
+          </template>
+        </tiny-grid-column>
+      </tiny-grid>
     </div>
     <tiny-dialog-box class="dialog" :visible="dialog" title="身份验证" @close="closeDialog">
       <div class="dialog-cz">
@@ -616,6 +697,8 @@ async function getEmailCodea() {
         <tiny-button v-if="freezebutton == true" type="info" @click="freeze">冻结账号</tiny-button>
         <tiny-button v-if="refreshbutton == true" type="danger" @click="refresh">强制登出</tiny-button>
         <tiny-button v-if="deleteaccountbutton == true" type="danger" @click="deleteAccount">注销账号</tiny-button>
+        <tiny-button v-if="unbindexternalaccountbutton == true" type="danger"
+          @click="unbindExternalAccount">解绑</tiny-button>
       </template>
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA" @close="closeQrcodeDialog">

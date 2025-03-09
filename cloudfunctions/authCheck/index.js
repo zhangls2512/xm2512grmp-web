@@ -2,6 +2,7 @@
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const argon2 = require('argon2')
+  const axios = require('axios')
   const ipaddr = require('ipaddr.js')
   const nodemailer = require('nodemailer')
   const { sm4 } = require('sm-crypto-v2')
@@ -75,19 +76,10 @@ exports.main = async (event) => {
           }).get()
           if (res.data.length > 0) {
             const data = res.data[0]
-            const permission = data.permission
-            if (!event.permission.every(item => permission[item] === true || permission[item] === undefined || (typeof (permission[item]) == 'number' && Date.now() > permission[item]))) {
-              return {
-                errCode: 3003,
-                errMsg: '权限被封禁',
-                errFix: '联系客服'
-              }
-            } else {
-              return {
-                errCode: 0,
-                errMsg: '成功',
-                account: data
-              }
+            return {
+              errCode: 0,
+              errMsg: '成功',
+              account: data
             }
           } else {
             return {
@@ -131,19 +123,10 @@ exports.main = async (event) => {
             errFix: '传递正确的MFA'
           }
         }
-        const permission = data.permission
-        if (!event.permission.every(item => permission[item] === true || permission[item] === undefined || (typeof (permission[item]) == 'number' && Date.now() > permission[item]))) {
-          return {
-            errCode: 3003,
-            errMsg: '权限被封禁',
-            errFix: '联系客服'
-          }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: data
-          }
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          account: data
         }
       } else {
         return {
@@ -196,19 +179,10 @@ exports.main = async (event) => {
             errFix: '传递正确的密码'
           }
         }
-        const permission = data.permission
-        if (!event.permission.every(item => permission[item] === true || permission[item] === undefined || (typeof (permission[item]) == 'number' && Date.now() > permission[item]))) {
-          return {
-            errCode: 3003,
-            errMsg: '权限被封禁',
-            errFix: '联系客服'
-          }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: data
-          }
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          account: data
         }
       } else {
         return {
@@ -400,6 +374,38 @@ exports.main = async (event) => {
           errCode: 3000,
           errMsg: '账号不存在',
           errFix: '传递有效的uid'
+        }
+      }
+    }
+    if (event.type == 'sslwxxcx') {
+      const wxres = await axios.get('https://api.weixin.qq.com/sns/jscode2session?appid=wxd46f84216a1a856e&secret=' + process.env.sslappsecret + '&js_code=' + checkdata.code + '&grant_type=authorization_code')
+      if (wxres.data.errcode) {
+        return {
+          errCode: 3060,
+          errMsg: 'code校验错误，错误信息：' + wxres.data.errmsg,
+          errFix: '传递有效的code参数'
+        }
+      } else {
+        const externalaccount = await db.collection('externalaccount').where({
+          openid: wxres.data.openid,
+          platform: 'sslwxxcx'
+        }).get()
+        if (externalaccount.data.length == 0) {
+          return {
+            errCode: 3061,
+            errMsg: '此外部平台账号未绑定账号',
+            errFix: '传递绑定账号的外部平台账号的code'
+          }
+        } else {
+          const uid = externalaccount.data[0].uid
+          const accountres = await db.collection('account').where({
+            _id: uid
+          }).get()
+          return {
+            errCode: 0,
+            errMsg: '成功',
+            account: accountres.data[0]
+          }
         }
       }
     }
