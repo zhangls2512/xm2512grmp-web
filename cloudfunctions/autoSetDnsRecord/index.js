@@ -10,7 +10,6 @@ exports.main = async () => {
   const app = tcb.init()
   const db = app.database()
   const res = await db.collection('dnstask').where({
-    allowStartDate: db.command.lte(Date.now()),
     status: 'setpending'
   }).orderBy('updateDate', 'asc').get()
   const uniquemap = new Map()
@@ -21,6 +20,13 @@ exports.main = async () => {
   })
   const uniquearray = Array.from(uniquemap.values())
   uniquearray.forEach(async (item) => {
+    const countres = await db.collection('dnstask').where({
+      domain: item.domain,
+      status: 'submitpending'
+    }).count()
+    if (countres.total > 0) {
+      return
+    }
     const challenge = item.authorization.challenges.find(item => item.type = 'dns-01')
     const value = acme.api.getChallengeKeyAuthorization({
       challenge: challenge,
@@ -100,13 +106,6 @@ exports.main = async () => {
         }).update({
           status: 'submitpending',
           updateDate: Date.now()
-        })
-        await db.collection('dnstask').where({
-          _id: db.command.neq(item._id),
-          domain: item.domain,
-          status: 'setpending'
-        }).update({
-          allowStartDate: Date.now() + 3600000
         })
         app.callFunction({
           name: 'sendEmail',
@@ -200,13 +199,6 @@ exports.main = async () => {
         }).update({
           status: 'submitpending',
           updateDate: Date.now()
-        })
-        await db.collection('dnstask').where({
-          _id: db.command.neq(item._id),
-          domain: item.domain,
-          status: 'setpending'
-        }).update({
-          allowStartDate: Date.now() + 3600000
         })
         app.callFunction({
           name: 'sendEmail',

@@ -20,12 +20,6 @@ exports.main = async () => {
         status: 'autoend',
         updateDate: Date.now()
       })
-      await db.collection('dnstask').where({
-        domain: item.domain,
-        status: 'setpending'
-      }).update({
-        allowStartDate: Date.now()
-      })
       app.callFunction({
         name: 'sendEmail',
         data: {
@@ -63,12 +57,6 @@ exports.main = async () => {
           status: 'submitfail',
           updateDate: Date.now()
         })
-        await db.collection('dnstask').where({
-          domain: item.domain,
-          status: 'setpending'
-        }).update({
-          allowStartDate: Date.now()
-        })
         app.callFunction({
           name: 'sendEmail',
           data: {
@@ -96,12 +84,6 @@ exports.main = async () => {
       }).update({
         status: 'submitsuccess',
         updateDate: Date.now()
-      })
-      await db.collection('dnstask').where({
-        domain: item.domain,
-        status: 'setpending'
-      }).update({
-        allowStartDate: Date.now()
       })
       app.callFunction({
         name: 'sendEmail',
@@ -146,12 +128,6 @@ exports.main = async () => {
             status: 'submitfail',
             updateDate: Date.now()
           })
-          await db.collection('dnstask').where({
-            domain: item.domain,
-            status: 'setpending'
-          }).update({
-            allowStartDate: Date.now()
-          })
           app.callFunction({
             name: 'sendEmail',
             data: {
@@ -179,12 +155,6 @@ exports.main = async () => {
         }).update({
           status: 'submitsuccess',
           updateDate: Date.now()
-        })
-        await db.collection('dnstask').where({
-          domain: item.domain,
-          status: 'setpending'
-        }).update({
-          allowStartDate: Date.now()
         })
         app.callFunction({
           name: 'sendEmail',

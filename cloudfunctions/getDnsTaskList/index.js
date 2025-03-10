@@ -62,7 +62,6 @@ exports.main = async (event) => {
         uid: res.result.account._id
       }).orderBy('updateDate', 'desc').skip(skip).limit(limit).field({
         accountKey: false,
-        allowStartDate: false,
         authorization: false,
         directoryUrl: false,
         dnsConfig: false,
