@@ -4,7 +4,7 @@ exports.main = async (event) => {
   const acme = require('nodejs-acmeclient')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = auth.getUserInfo().isAnonymous
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   let requestdata = ''
   let requestip = ''
@@ -61,7 +61,7 @@ exports.main = async (event) => {
           code: code,
           requestIp: requestip
         },
-        permission: [],
+        permission: ['account', 'ssl'],
         service: ['ssl'],
         apiName: 'ssl_respondChallenge'
       }

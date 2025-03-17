@@ -22,6 +22,12 @@ exports.main = async (event) => {
     const validnoticenames = [
       'account_email_newbanlog',
       'account_webhook_newbanlog',
+      'admin_email_newresourcetask',
+      'admin_webhook_newresourcetask',
+      'resource_email_versionupdate',
+      'resource_webhook_versionupdate',
+      'resourcecreator_email_result',
+      'resourcecreator_webhook_result',
       'ssl_email_limitchange',
       'ssl_webhook_limitchange',
       'ssl_email_limitempty',

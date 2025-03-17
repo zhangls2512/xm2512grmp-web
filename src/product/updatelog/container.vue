@@ -21,11 +21,19 @@ const tabs = [
   },
   {
     id: 'grmpweb',
-    label: '轩铭2512个人名片（网页）'
+    label: '个人名片（网页）'
+  },
+  {
+    id: 'resource',
+    label: '资源'
   },
   {
     id: 'sslweb',
     label: 'SSL 证书（网页）'
+  },
+  {
+    id: 'sslwxxcx',
+    label: 'SSL 证书（微信小程序）'
   },
   {
     id: 'mtcl',

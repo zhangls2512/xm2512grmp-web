@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - 轩铭2512个人名片（网页）'
+document.title = '轩铭2512 - 更新日志 - 个人名片（网页）'
 const data = [
   {
     versionNumber: '1.0.0',

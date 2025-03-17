@@ -124,6 +124,46 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_getResourceCount',
+    desc: '获取资源总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getResourceList',
+    desc: '获取资源列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getResourceInfo',
+    desc: '获取资源信息'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_banResource',
+    desc: '封禁资源'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_unbanResource',
+    desc: '解封资源'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_updateResourceUvwr',
+    desc: '修改资源免审更新版本号设置'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getProcessingReviewResource',
+    desc: '获取待审资源'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_updateResourceReviewResult',
+    desc: '修改资源审核版本审核结果'
+  },
+  {
+    product: '管理后台',
     name: 'admin_getSslUserCount',
     desc: '获取 SSL 证书用户总数'
   },
@@ -151,6 +191,101 @@ const apis = ref([
     product: '管理后台',
     name: 'admin_getSslLimitChangeList',
     desc: '获取 SSL 证书额度变更列表'
+  },
+  {
+    product: '资源',
+    name: 'resource_newAddResource',
+    desc: '添加资源'
+  },
+  {
+    product: '资源',
+    name: 'resource_getAddResourceCount',
+    desc: '获取添加资源总数'
+  },
+  {
+    product: '资源',
+    name: 'resource_getAddResourceList',
+    desc: '获取添加资源列表'
+  },
+  {
+    product: '资源',
+    name: 'resource_updateAddResource',
+    desc: '修改添加资源'
+  },
+  {
+    product: '资源',
+    name: 'resource_syncAddResourceInfo',
+    desc: '同步添加资源信息'
+  },
+  {
+    product: '资源',
+    name: 'resource_deleteAddResource',
+    desc: '删除添加资源'
+  },
+  {
+    product: '资源',
+    name: 'resource_checkResourceAdded',
+    desc: '检查资源是否添加'
+  },
+  {
+    product: '资源',
+    name: 'resource_updateResourceUserSetting',
+    desc: '修改用户功能设置'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_newResource',
+    desc: '新增资源'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_getResourceCount',
+    desc: '获取资源总数'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_getResourceList',
+    desc: '获取资源列表'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_getResourceInfo',
+    desc: '获取资源信息'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_releaseResource',
+    desc: '上架资源'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_unreleaseResource',
+    desc: '下架资源'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_updateResourceVersion',
+    desc: '更新资源版本号'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_submitReviewResource',
+    desc: '提交资源审核'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_unsubmitReviewResource',
+    desc: '撤回资源审核'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_updateReviewResource',
+    desc: '修改资源审核版本'
+  },
+  {
+    product: '资源投稿',
+    name: 'resourcecreator_deleteResource',
+    desc: '删除资源'
   },
   {
     product: 'SSL 证书',
@@ -211,6 +346,11 @@ const apis = ref([
     product: 'SSL 证书',
     name: 'ssl_submitOrder',
     desc: '提交订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_updateOrder',
+    desc: '修改订单'
   },
   {
     product: 'SSL 证书',

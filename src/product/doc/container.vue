@@ -8,6 +8,10 @@ const tabs = [
     label: '备案许可'
   },
   {
+    id: 'resource',
+    label: '资源'
+  },
+  {
     id: 'ssl',
     label: 'SSL 证书'
   }

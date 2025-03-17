@@ -27,6 +27,10 @@ const router = createRouter({
           component: () => import('/src/product/doc/baxk.vue')
         },
         {
+          path: 'resource',
+          component: () => import('/src/product/doc/resource.vue')
+        },
+        {
           path: 'ssl',
           component: () => import('/src/product/doc/ssl.vue')
         }
@@ -53,12 +57,20 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/admin.vue')
         },
         {
+          path: 'resource',
+          component: () => import('/src/product/updatelog/resource.vue')
+        },
+        {
           path: 'grmpweb',
           component: () => import('/src/product/updatelog/grmpweb.vue')
         },
         {
           path: 'sslweb',
           component: () => import('/src/product/updatelog/sslweb.vue')
+        },
+        {
+          path: 'sslwxxcx',
+          component: () => import('/src/product/updatelog/sslwxxcx.vue')
         },
         {
           path: 'mtcl',
@@ -120,7 +132,7 @@ const router = createRouter({
     },
     {
       path: '/product/admin',
-      component: () => import('/src/product/admin/panel.vue'),
+      component: () => import('/src/product/admin/panel.vue')
     },
     {
       path: '/product/admin/panel',
@@ -151,16 +163,28 @@ const router = createRouter({
           component: () => import('/src/product/admin/baxklist.vue')
         },
         {
+          path: '/product/admin/resourcelist',
+          component: () => import('/src/product/admin/resourcelist.vue')
+        },
+        {
+          path: '/product/admin/resourceinfo',
+          component: () => import('/src/product/admin/resourceinfo.vue')
+        },
+        {
+          path: '/product/admin/reviewresource',
+          component: () => import('/src/product/admin/reviewresource.vue')
+        },
+        {
           path: '/product/admin/ssluserlist',
           component: () => import('/src/product/admin/ssluserlist.vue')
         },
         {
-          path: '/product/admin/ssllimitchangelist',
-          component: () => import('/src/product/admin/ssllimitchangelist.vue')
-        },
-        {
           path: '/product/admin/sslnewlimitchange',
           component: () => import('/src/product/admin/sslnewlimitchange.vue')
+        },
+        {
+          path: '/product/admin/ssllimitchangelist',
+          component: () => import('/src/product/admin/ssllimitchangelist.vue')
         }
       ]
     },
@@ -173,8 +197,82 @@ const router = createRouter({
       component: () => import('/src/product/baxk/jqcx.vue')
     },
     {
+      path: '/product/resource',
+      component: () => import('/src/product/resource/container.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('/src/product/resource/index.vue')
+        },
+        {
+          path: 'index',
+          component: () => import('/src/product/resource/index.vue')
+        },
+        {
+          path: 'search',
+          component: () => import('/src/product/resource/search.vue')
+        },
+        {
+          path: 'resourceinfo',
+          component: () => import('/src/product/resource/resourceinfo.vue')
+        },
+        {
+          path: 'panel',
+          component: () => import('/src/product/resource/panel.vue'),
+          children: [
+            {
+              path: '/product/resource/addlist',
+              component: () => import('/src/product/resource/addlist.vue')
+            },
+            {
+              path: '/product/resource/service',
+              component: () => import('/src/product/resource/service.vue')
+            },
+            {
+              path: '/product/resource/notice',
+              component: () => import('/src/product/resource/notice.vue')
+            },
+            {
+              path: '/product/resource/setting',
+              component: () => import('/src/product/resource/setting.vue')
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '/product/resourcecreator',
+      component: () => import('/src/product/resourcecreator/panel.vue')
+    },
+    {
+      path: '/product/resourcecreator/panel',
+      component: () => import('/src/product/resourcecreator/panel.vue'),
+      children: [
+        {
+          path: '/product/resourcecreator/newresource',
+          component: () => import('/src/product/resourcecreator/newresource.vue')
+        },
+        {
+          path: '/product/resourcecreator/resourcelist',
+          component: () => import('/src/product/resourcecreator/resourcelist.vue')
+        },
+        {
+          path: '/product/resourcecreator/resourceinfo',
+          component: () => import('/src/product/resourcecreator/resourceinfo.vue')
+        },
+        {
+          path: '/product/resourcecreator/updateresource',
+          component: () => import('/src/product/resourcecreator/updateresource.vue')
+        },
+        {
+          path: '/product/resourcecreator/notice',
+          component: () => import('/src/product/resourcecreator/notice.vue')
+        }
+      ]
+    },
+    {
       path: '/product/ssl',
-      component: () => import('/src/product/ssl/panel.vue'),
+      component: () => import('/src/product/ssl/panel.vue')
     },
     {
       path: '/product/ssl/panel',

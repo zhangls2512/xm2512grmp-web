@@ -6,7 +6,7 @@ exports.main = async (event) => {
   const validator = require('validator')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = auth.getUserInfo().isAnonymous
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   let requestdata = ''
   let requestip = ''

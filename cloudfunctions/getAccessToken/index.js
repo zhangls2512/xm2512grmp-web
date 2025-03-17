@@ -7,8 +7,6 @@ exports.main = async (event) => {
   const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
   const { nanoid } = await import('nanoid')
-  const app = tcb.init()
-  const db = app.database()
   const mailerconfig = {
     host: 'smtp.qq.com',
     secure: true,
@@ -17,15 +15,30 @@ exports.main = async (event) => {
       pass: process.env.mailtoken
     }
   }
-  if (event.httpMethod != 'POST') {
-    return {
-      errCode: 1000,
-      errMsg: '请求方法错误',
-      errFix: '使用POST方法请求'
+  const app = tcb.init()
+  const auth = app.auth()
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
+  const db = app.database()
+  let requestdata = ''
+  let requestip = ''
+  let useragent = ''
+  if (issdk) {
+    requestdata = event
+    requestip = auth.getClientIP()
+    useragent = event.userAgent
+  } else {
+    requestdata = JSON.parse(event.body)
+    requestip = event.headers['x-real-ip']
+    useragent = event.headers['user-agent']
+    if (event.httpMethod != 'POST') {
+      return {
+        errCode: 1000,
+        errMsg: '请求方法错误',
+        errFix: '使用POST方法请求'
+      }
     }
   }
   try {
-    const requestdata = JSON.parse(event.body)
     const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx']
     if (!validtypes.includes(requestdata.verifyType)) {
       return {
@@ -120,13 +133,13 @@ exports.main = async (event) => {
         accessToken: accesstoken,
         endDate: enddate
       })
-      const ipconfig = await axios.get('https://www.ip.cn/api/index?ip=' + event.headers['x-real-ip'] + '&type=1')
+      const ipconfig = await axios.get('https://www.ip.cn/api/index?ip=' + requestip + '&type=1')
       await db.collection('loginlog').add({
         date: Date.now(),
-        ip: event.headers['x-real-ip'],
+        ip: requestip,
         ipAddress: ipconfig.data.address,
         verifyType: requestdata.verifyType,
-        ua: event.headers['user-agent'],
+        ua: useragent,
         uid: account._id
       })
       if (!email) {
@@ -136,7 +149,7 @@ exports.main = async (event) => {
         from: 'zhangls2512@vip.qq.com',
         to: email,
         subject: '轩铭2512统一账号登录提醒',
-        text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipconfig.data.address + '（IP：' + event.headers['x-real-ip'] + '）'
+        text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipconfig.data.address + '（IP：' + requestip + '）'
       })
       return {
         errCode: 0,

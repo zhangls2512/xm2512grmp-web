@@ -58,7 +58,7 @@ exports.main = async (event) => {
           code: code,
           requestIp: event.headers['x-real-ip']
         },
-        permission: [],
+        permission: ['account', 'ssl'],
         service: ['ssl'],
         apiName: 'ssl_updateOrder'
       }

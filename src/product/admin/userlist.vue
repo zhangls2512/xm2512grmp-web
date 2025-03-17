@@ -264,7 +264,7 @@ async function updateUserPermission() {
           </tiny-radio-group>
         </div>
         <div class="sp">
-          <div>资源分享</div>
+          <div>资源</div>
           <tiny-radio-group v-model="resource">
             <tiny-radio label="true">正常</tiny-radio>
             <tiny-radio label="false">永久封禁</tiny-radio>
@@ -274,7 +274,7 @@ async function updateUserPermission() {
           </tiny-radio-group>
         </div>
         <div class="sp">
-          <div>资源分享创作者</div>
+          <div>资源投稿</div>
           <tiny-radio-group v-model="resourcecreator">
             <tiny-radio label="true">正常</tiny-radio>
             <tiny-radio label="false">永久封禁</tiny-radio>

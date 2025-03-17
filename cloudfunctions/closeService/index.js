@@ -19,7 +19,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validservices = ['account', 'admin', 'ssl']
+    const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
     if (!validservices.includes(requestdata.service)) {
       return {
         errCode: 1001,
@@ -83,6 +83,58 @@ exports.main = async (event) => {
         return {
           errCode: 0,
           errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'resource') {
+        const resourceaddres = await db.collection('resourceadd').where({
+          uid: uid
+        }).count()
+        if (resourceaddres.total > 0) {
+          return {
+            errCode: 8000,
+            errMsg: '我的添加存在资源',
+            errFix: '我的添加清空资源'
+          }
+        } else {
+          await db.collection('productuser').where({
+            product: 'resource',
+            uid: uid
+          }).remove()
+          await db.collection('account').where({
+            _id: uid
+          }).update({
+            service: service
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        }
+      }
+      if (requestdata.service == 'resourcecreator') {
+        const resourceres = await db.collection('resource').where({
+          uid: uid
+        }).count()
+        if (resourceres.total > 0) {
+          return {
+            errCode: 8000,
+            errMsg: '存在投稿资源',
+            errFix: '清空投稿资源'
+          }
+        } else {
+          await db.collection('productuser').where({
+            product: 'resourcecreator',
+            uid: uid
+          }).remove()
+          await db.collection('account').where({
+            _id: uid
+          }).update({
+            service: service
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
         }
       }
       if (requestdata.service == 'ssl') {

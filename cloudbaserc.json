@@ -46,7 +46,19 @@
       "installDependency": true
     },
     {
+      "name": "banResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "bindExternalAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "checkResourceAdded",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -82,6 +94,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteAddResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "deleteBanlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -107,6 +125,12 @@
     },
     {
       "name": "deleteLoginLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -160,6 +184,36 @@
       "installDependency": true
     },
     {
+      "name": "getAddResourceCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getAddResourceList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getAdminResourceCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getAdminResourceInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getAdminResourceList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getBanlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -196,6 +250,24 @@
       "installDependency": true
     },
     {
+      "name": "getCreatorResourceCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getCreatorResourceInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getCreatorResourceList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getDnsTaskCount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -220,7 +292,19 @@
       "installDependency": true
     },
     {
+      "name": "getProcessingReviewResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getProductBaList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getRandomResourceList",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -328,6 +412,24 @@
       "installDependency": true
     },
     {
+      "name": "getUserResourceCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getUserResourceInfo",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getUserResourceList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "newAccessKey",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -340,6 +442,12 @@
       "installDependency": true
     },
     {
+      "name": "newAddResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "newBanlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -347,6 +455,12 @@
     },
     {
       "name": "newBaxk",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "newResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -401,6 +515,12 @@
     },
     {
       "name": "registerAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "releaseResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -472,7 +592,19 @@
       "installDependency": true
     },
     {
+      "name": "submitReviewResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "submitSslOrder",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "syncAddResourceInfo",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -484,7 +616,25 @@
       "installDependency": true
     },
     {
+      "name": "unbanResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "unbindExternalAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "unreleaseResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "unsubmitReviewResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -497,6 +647,12 @@
     },
     {
       "name": "updateAccessKeyStatus",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateAddResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -521,6 +677,36 @@
     },
     {
       "name": "updateNoticeSetting",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResourceReviewResult",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResourceUserSetting",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResourceUvwr",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResourceVersion",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateReviewResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

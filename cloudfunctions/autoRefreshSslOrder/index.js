@@ -274,50 +274,49 @@ exports.main = async () => {
     }
   })
   const validordersres = await db.collection('sslorder').where({
+    certificateEndDate: db.command.lte(Date.now()),
     status: 'valid'
   }).orderBy('createDate', 'asc').get()
   validordersres.data.forEach(async (item) => {
-    if (item.certificateEndDate < Date.now()) {
-      let deletefiles = []
-      if (item.privateKey) {
-        deletefiles.push(item.privateKey)
-      }
-      const certificatefiles = item.certificate.map(item => item.value)
-      certificatefiles.forEach(item => {
-        deletefiles.push(item)
-      })
-      if (deletefiles.length != 0) {
-        await app.deleteFile({
-          fileList: deletefiles
-        })
-      }
-      await db.collection('sslorder').where({
-        _id: item._id
-      }).update({
-        certificate: '',
-        privateKey: '',
-        status: 'expired'
-      })
-      app.callFunction({
-        name: 'sendEmail',
-        data: {
-          uid: item.uid,
-          noticeName: 'ssl_email_orderstatuschange',
-          subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已过期。'
-        }
-      })
-      app.callFunction({
-        name: 'sendWebhook',
-        data: {
-          uid: item.uid,
-          data: {
-            noticeName: 'ssl_webhook_orderstatuschange',
-            orderId: item._id,
-            status: 'expired'
-          }
-        }
+    let deletefiles = []
+    if (item.privateKey) {
+      deletefiles.push(item.privateKey)
+    }
+    const certificatefiles = item.certificate.map(item => item.value)
+    certificatefiles.forEach(item => {
+      deletefiles.push(item)
+    })
+    if (deletefiles.length != 0) {
+      await app.deleteFile({
+        fileList: deletefiles
       })
     }
+    await db.collection('sslorder').where({
+      _id: item._id
+    }).update({
+      certificate: '',
+      privateKey: '',
+      status: 'expired'
+    })
+    app.callFunction({
+      name: 'sendEmail',
+      data: {
+        uid: item.uid,
+        noticeName: 'ssl_email_orderstatuschange',
+        subject: 'SSL证书订单状态变更通知',
+        text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已过期。'
+      }
+    })
+    app.callFunction({
+      name: 'sendWebhook',
+      data: {
+        uid: item.uid,
+        data: {
+          noticeName: 'ssl_webhook_orderstatuschange',
+          orderId: item._id,
+          status: 'expired'
+        }
+      }
+    })
   })
 }

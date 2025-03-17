@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.5',
+    releaseDate: '2025-03-18',
+    logs: [
+      {
+        type: 'U',
+        content: '首页 - 产品新增 资源'
+      },
+      {
+        type: 'U',
+        content: '文档中心新增 资源'
+      },
+      {
+        type: 'U',
+        content: '更新日志新增 资源、SSL 证书（微信小程序）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.4',
     releaseDate: '2025-03-09',
     logs: [

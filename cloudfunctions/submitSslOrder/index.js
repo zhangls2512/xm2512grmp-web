@@ -4,7 +4,7 @@ exports.main = async (event) => {
   const acme = require('nodejs-acmeclient')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = auth.getUserInfo().isAnonymous
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   let requestdata = ''
   let requestip = ''
@@ -54,7 +54,7 @@ exports.main = async (event) => {
           code: code,
           requestIp: requestip
         },
-        permission: [],
+        permission: ['account', 'ssl'],
         service: ['ssl'],
         apiName: 'ssl_refreshOrder'
       }
@@ -84,7 +84,7 @@ exports.main = async (event) => {
         const userres = await db.collection('productuser').where({
           product: 'ssl',
           uid: res.result.account._id
-        })
+        }).get()
         const userdata = userres.data[0]
         let directoryurl = ''
         if (data.environmentType == 'production') {
@@ -95,10 +95,10 @@ exports.main = async (event) => {
         }
         const accountkey = userdata.accountKey[data.environmentType]
         let csr = ''
+        let privatekey = ''
         if (data.csr) {
           csr = data.csr
         } else {
-          let privatekey = ''
           if (data.keyType == 'rsa') {
             privatekey = acme.crypto.generateRSAKeyPair(data.keySize).privateKey
           }

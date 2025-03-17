@@ -8,6 +8,9 @@
   "deactivateSslAuthorization": {
     "invoke": true
   },
+  "getAccessToken": {
+    "invoke": true
+  },
   "getAcmeAccountInfo": {
     "invoke": true
   },

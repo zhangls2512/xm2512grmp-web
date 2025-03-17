@@ -5,7 +5,7 @@ exports.main = async (event) => {
   const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = auth.getUserInfo().isAnonymous
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   let requestdata = ''
   let requestip = ''
@@ -31,7 +31,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validservices = ['account', 'admin', 'ssl']
+    const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
     if (!validservices.includes(requestdata.service)) {
       return {
         errCode: 1001,
@@ -96,6 +96,45 @@ exports.main = async (event) => {
         await db.collection('productuser').add({
           noticeSetting: [],
           product: 'admin',
+          webhookToken: nanoid(15) + uid + nanoid(15),
+          webhookUrl: '',
+          uid: uid
+        })
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'resource') {
+        await db.collection('productuser').add({
+          noticeSetting: [],
+          product: 'resource',
+          setting: {
+            tag: []
+          },
+          webhookToken: nanoid(15) + uid + nanoid(15),
+          webhookUrl: '',
+          uid: uid
+        })
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'resourcecreator') {
+        await db.collection('productuser').add({
+          noticeSetting: [],
+          product: 'resourcecreator',
           webhookToken: nanoid(15) + uid + nanoid(15),
           webhookUrl: '',
           uid: uid

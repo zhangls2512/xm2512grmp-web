@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
 import validator from 'validator'
+import callfunction from '../../callfunction'
 import request from '../../request'
 import router from '../../router'
 const route = useRoute()
@@ -15,7 +16,7 @@ const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
 function routePush() {
-  const products = ['account', 'admin', 'ssl']
+  const products = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
   if (products.includes(product)) {
     router.push('/product/' + product + '/panel')
   } else {
@@ -54,12 +55,13 @@ async function login() {
     })
     return
   }
-  const res = await request({
-    apiPath: '/account/getAccessToken',
-    body: {
+  const res = await callfunction({
+    functionName: 'getAccessToken',
+    data: {
       email: email.value,
       verifyType: type.value,
-      verifyCode: code.value
+      verifyCode: code.value,
+      userAgent: navigator.userAgent
     }
   })
   const expires = new Date(res.endDate)

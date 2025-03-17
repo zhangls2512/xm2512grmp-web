@@ -49,6 +49,32 @@ exports.main = async () => {
           accountKey: item.accountKey,
           challengeUrl: challengeurl
         })
+        await db.collection('dnstask').where({
+          _id: item._id
+        }).update({
+          status: 'submitsuccess',
+          updateDate: Date.now()
+        })
+        app.callFunction({
+          name: 'sendEmail',
+          data: {
+            uid: item.uid,
+            noticeName: 'ssl_email_autodnstaskstatuschange',
+            subject: 'SSL证书DNS自动配置任务状态变更通知',
+            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为已提交挑战验证。'
+          }
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: item.uid,
+            data: {
+              noticeName: 'ssl_webhook_autodnstaskstatuschange',
+              dnstaskId: item._id,
+              status: 'submitsuccess'
+            }
+          }
+        })
       } catch (err) {
         await db.collection('dnstask').where({
           _id: item._id
@@ -79,32 +105,6 @@ exports.main = async () => {
           }
         })
       }
-      await db.collection('dnstask').where({
-        _id: item._id
-      }).update({
-        status: 'submitsuccess',
-        updateDate: Date.now()
-      })
-      app.callFunction({
-        name: 'sendEmail',
-        data: {
-          uid: item.uid,
-          noticeName: 'ssl_email_autodnstaskstatuschange',
-          subject: 'SSL证书DNS自动配置任务状态变更通知',
-          text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为已提交挑战验证。'
-        }
-      })
-      app.callFunction({
-        name: 'sendWebhook',
-        data: {
-          uid: item.uid,
-          data: {
-            noticeName: 'ssl_webhook_autodnstaskstatuschange',
-            dnstaskId: item._id,
-            status: 'submitsuccess'
-          }
-        }
-      })
     }
     if (setting == 'afterverify') {
       const verifyres = await acme.verify.verify({
@@ -119,6 +119,32 @@ exports.main = async () => {
             directoryUrl: item.directoryUrl,
             accountKey: item.accountKey,
             challengeUrl: challengeurl
+          })
+          await db.collection('dnstask').where({
+            _id: item._id
+          }).update({
+            status: 'submitsuccess',
+            updateDate: Date.now()
+          })
+          app.callFunction({
+            name: 'sendEmail',
+            data: {
+              uid: item.uid,
+              noticeName: 'ssl_email_autodnstaskstatuschange',
+              subject: 'SSL证书DNS自动配置任务状态变更通知',
+              text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为已提交挑战验证。'
+            }
+          })
+          app.callFunction({
+            name: 'sendWebhook',
+            data: {
+              uid: item.uid,
+              data: {
+                noticeName: 'ssl_webhook_autodnstaskstatuschange',
+                dnstaskId: item._id,
+                status: 'submitsuccess'
+              }
+            }
           })
         } catch (err) {
           await db.collection('dnstask').where({
@@ -150,32 +176,6 @@ exports.main = async () => {
             }
           })
         }
-        await db.collection('dnstask').where({
-          _id: item._id
-        }).update({
-          status: 'submitsuccess',
-          updateDate: Date.now()
-        })
-        app.callFunction({
-          name: 'sendEmail',
-          data: {
-            uid: item.uid,
-            noticeName: 'ssl_email_autodnstaskstatuschange',
-            subject: 'SSL证书DNS自动配置任务状态变更通知',
-            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为已提交挑战验证。'
-          }
-        })
-        app.callFunction({
-          name: 'sendWebhook',
-          data: {
-            uid: item.uid,
-            data: {
-              noticeName: 'ssl_webhook_autodnstaskstatuschange',
-              dnstaskId: item._id,
-              status: 'submitsuccess'
-            }
-          }
-        })
       }
     }
   })

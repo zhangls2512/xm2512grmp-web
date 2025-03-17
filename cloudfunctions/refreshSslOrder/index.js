@@ -5,7 +5,7 @@ exports.main = async (event) => {
   const acme = require('nodejs-acmeclient')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = auth.getUserInfo().isAnonymous
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   let requestdata = ''
   let requestip = ''
@@ -97,104 +97,9 @@ exports.main = async (event) => {
           }).update({
             status: acmeorderres.status
           })
-          if (acmeorderres.status == 'ready') {
-            const userres = await db.collection('productuser').where({
-              product: 'ssl',
-              uid: res.result.account._id
-            }).get()
-            const userdata = userres.data[0]
-            if (userdata.setting.autoSubmitOrder) {
-              const accountkey = userdata.accountKey[data.environmentType]
-              let csr = ''
-              let privatekey = ''
-              if (data.csr) {
-                csr = data.csr
-              } else {
-                if (data.keyType == 'rsa') {
-                  privatekey = acme.crypto.generateRSAKeyPair(data.keySize).privateKey
-                }
-                if (data.keyType == 'ecdsa') {
-                  privatekey = acme.crypto.generateECDSAKeyPair(data.keySize).privateKey
-                }
-                csr = acme.crypto.generateCsr({
-                  subjectAltName: data.domains,
-                  privateKey: privatekey
-                })
-              }
-              try {
-                await acme.api.finalizeOrder({
-                  directoryUrl: directoryurl,
-                  accountKey: accountkey,
-                  orderUrl: data.orderUrl,
-                  csr: csr
-                })
-              } catch (err) {
-                app.callFunction({
-                  name: 'sendEmail',
-                  data: {
-                    uid: res.result.account._id,
-                    noticeName: 'ssl_email_autosubmitorderresult',
-                    subject: 'SSL证书自动提交订单结果',
-                    text: '您的账号SSL证书产品订单（ID：' + requestdata.id + '）自动提交订单失败。'
-                  }
-                })
-                app.callFunction({
-                  name: 'sendWebhook',
-                  data: {
-                    uid: res.result.account._id,
-                    data: {
-                      noticeName: 'ssl_webhook_autosubmitorderresult',
-                      orderId: requestdata.id,
-                      status: 'fail'
-                    }
-                  }
-                })
-                return {
-                  errCode: 8002,
-                  errMsg: 'CA返回错误，错误信息：' + err.detail,
-                  errFix: '联系客服'
-                }
-              }
-              const uploadres = await app.uploadFile({
-                cloudPath: 'sslorder/' + requestdata.id + '/' + data.domains[0] + '.key',
-                fileContent: Buffer.from(privatekey)
-              })
-              await db.collection('sslorder').where({
-                _id: requestdata.id
-              }).update({
-                privateKey: uploadres.fileID,
-                status: 'processing'
-              })
-              app.callFunction({
-                name: 'sendEmail',
-                data: {
-                  uid: res.result.account._id,
-                  noticeName: 'ssl_email_autosubmitorderresult',
-                  subject: 'SSL证书自动提交订单结果',
-                  text: '您的账号SSL证书产品订单（ID：' + requestdata.id + '）自动提交订单成功。'
-                }
-              })
-              app.callFunction({
-                name: 'sendWebhook',
-                data: {
-                  uid: res.result.account._id,
-                  data: {
-                    noticeName: 'ssl_webhook_autosubmitorderresult',
-                    orderId: requestdata.id,
-                    status: 'success'
-                  }
-                }
-              })
-            }
-            return {
-              errCode: 0,
-              errMsg: '成功'
-            }
-          } else {
-            return {
-              errCode: 0,
-              errMsg: '成功'
-            }
+          return {
+            errCode: 0,
+            errMsg: '成功'
           }
         }
         if (data.status == 'ready') {

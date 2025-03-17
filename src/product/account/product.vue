@@ -20,6 +20,12 @@ const products = [
     desc: '一个后台即可管理轩铭2512全部产品，方便、快捷。'
   },
   {
+    name: 'resource',
+    logo: '/logo.jpg',
+    title: '资源',
+    desc: '获取优质、安全、实用、易用的资源并快捷使用。'
+  },
+  {
     name: 'ssl',
     logo: '/logossl.png',
     title: 'SSL 证书',

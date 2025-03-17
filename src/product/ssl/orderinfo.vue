@@ -9,7 +9,9 @@ import request from '../../request'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
-const data = ref({})
+const data = ref({
+  certificate: []
+})
 const updatedescdialog = ref(false)
 const desc = ref('')
 const updateautoneworderdialog = ref(false)

@@ -42,6 +42,14 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </div>
+          <router-link to="/product/resource" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy" />
+                <div class="large-bold-text">资源</div>
+              </div>
+            </div>
+          </router-link>
         </div>
         <div class="sp" style="align-items: stretch">
           <div class="kuang">
@@ -169,7 +177,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.4</div>
+          <div class="footer-text">Version 1.0.5</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
