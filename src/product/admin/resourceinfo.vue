@@ -14,7 +14,7 @@ const releasebanreason = ref('')
 const reviewstatus = ref('')
 const reviewinvalidreason = ref('')
 let date = ''
-async function getInfo() {
+async function get() {
   const res = await request({
     apiPath: '/admin/getResourceInfo',
     body: {
@@ -45,7 +45,7 @@ async function getInfo() {
   }
   reviewinvalidreason.value = dataout.reviewInvalidReason
 }
-getInfo()
+get()
 function copy() {
   navigator.clipboard.writeText(data.value._id)
   TinyModal.message({
@@ -65,7 +65,7 @@ async function updateUvwr(wz) {
     message: wz + '成功',
     status: 'success'
   })
-  getInfo()
+  get()
 }
 async function updateReleaseStatus() {
   if (releasestatus.value == 'ban' && !releasebanreason.value) {
@@ -88,7 +88,7 @@ async function updateReleaseStatus() {
       message: '封禁成功',
       status: 'success'
     })
-    getInfo()
+    get()
   }
   if (releasestatus.value == 'unban') {
     await request({
@@ -102,7 +102,7 @@ async function updateReleaseStatus() {
       message: '解封成功',
       status: 'success'
     })
-    getInfo()
+    get()
   }
 }
 async function updateReviewResult() {
@@ -127,7 +127,7 @@ async function updateReviewResult() {
     message: '提交成功',
     status: 'success'
   })
-  getInfo()
+  get()
 }
 </script>
 
@@ -187,7 +187,8 @@ async function updateReviewResult() {
         <div>{{ data.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in data.location" class="sp">
+      <div v-for="(item, index) in data.location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>
@@ -245,7 +246,8 @@ async function updateReviewResult() {
         <div>{{ data.reviewInfo.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in data.reviewInfo.location" class="sp">
+      <div v-for="(item, index) in data.reviewInfo.location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>

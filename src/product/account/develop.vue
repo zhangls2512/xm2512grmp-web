@@ -195,37 +195,37 @@ const apis = ref([
   {
     product: '资源',
     name: 'resource_newAddResource',
-    desc: '添加资源'
+    desc: '添加资源到我的资源'
   },
   {
     product: '资源',
     name: 'resource_getAddResourceCount',
-    desc: '获取添加资源总数'
+    desc: '获取我的资源总数'
   },
   {
     product: '资源',
     name: 'resource_getAddResourceList',
-    desc: '获取添加资源列表'
+    desc: '获取我的资源列表'
   },
   {
     product: '资源',
     name: 'resource_updateAddResource',
-    desc: '修改添加资源'
+    desc: '修改我的资源'
   },
   {
     product: '资源',
     name: 'resource_syncAddResourceInfo',
-    desc: '同步添加资源信息'
+    desc: '同步我的资源信息'
   },
   {
     product: '资源',
     name: 'resource_deleteAddResource',
-    desc: '删除添加资源'
+    desc: '删除我的资源'
   },
   {
     product: '资源',
     name: 'resource_checkResourceAdded',
-    desc: '检查资源是否添加'
+    desc: '检查资源是否添加到我的资源'
   },
   {
     product: '资源',

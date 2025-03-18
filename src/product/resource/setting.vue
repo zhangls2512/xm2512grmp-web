@@ -90,17 +90,17 @@ function removeTag(index) {
         <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
       </div>
     </div>
-    <tiny-dialog-box class="dialog" :visible="dialog" title="编辑" @close="closeDialog">
+    <tiny-dialog-box class="dialog" :visible="dialog" title="编辑标签" @close="closeDialog">
       <div class="dialog-cz">
         <div class="sp">
           <tiny-input v-model="intag" clearable placeholder="请输入内容"></tiny-input>
-          <tiny-button type="success" @click="addIntag">添加</tiny-button>
+          <tiny-button type="success" @click="addIntag">添加单标签</tiny-button>
         </div>
         <div v-for="(item, index) in tag" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeIntag(index)">删除</tiny-button>
         </div>
-        <tiny-button type="success" @click="addTag">添加</tiny-button>
+        <tiny-button type="success" @click="addTag">添加标签组</tiny-button>
         <div v-for="(item, index) in inputtags" class="sp">
           <div class="sp">
             <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>

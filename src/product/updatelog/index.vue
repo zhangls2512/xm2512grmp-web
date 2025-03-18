@@ -7,15 +7,15 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品新增 资源'
+        content: '首页 - 产品 新增 资源'
       },
       {
         type: 'U',
-        content: '文档中心新增 资源'
+        content: '文档中心 新增 资源'
       },
       {
         type: 'U',
-        content: '更新日志新增 资源、SSL 证书（微信小程序）'
+        content: '更新日志 新增 资源、SSL 证书（微信小程序）'
       }
     ]
   },
@@ -35,7 +35,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '更新日志新增 媒体处理'
+        content: '更新日志 新增 媒体处理'
       }
     ]
   },
@@ -45,7 +45,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品新增 统一账号、管理后台'
+        content: '首页 - 产品 新增 统一账号、管理后台'
       }
     ]
   },
@@ -55,15 +55,15 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品 - SSL 证书新增 网页'
+        content: '首页 - 产品 - SSL 证书 新增 网页'
       },
       {
         type: 'U',
-        content: '文档中心新增 SSL 证书'
+        content: '文档中心 新增 SSL 证书'
       },
       {
         type: 'U',
-        content: '更新日志新增 SSL 证书（网页）'
+        content: '更新日志 新增 SSL 证书（网页）'
       }
     ]
   },

@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 资源 - 服务管理'
+document.title = '轩铭2512 - 资源 - 功能管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import moment from 'moment-timezone'
@@ -94,6 +94,8 @@ async function close(service) {
               serviceszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
           <div class="text">{{ item.desc }}</div>
+          <tiny-alert v-if="serviceszt[`${item.name}fjzt`] != false" :closable="false"
+            description="如需开通，请联系客服"></tiny-alert>
           <div class="sp">
             <tiny-button v-if="serviceszt[`${item.name}ktzt`] == true && serviceszt[`${item.name}fjzt`] == false"
               type="info" @click="use(item.name)">去使用</tiny-button>

@@ -45,7 +45,7 @@ function pagesizeChange(t) {
   <div class="cz">
     <tiny-alert :closable="false" description="如有异议，可联系客服申诉。"></tiny-alert>
     <tiny-grid :data="data">
-      <tiny-grid-column field="_id" title="记录 ID" align="center"></tiny-grid-column>
+      <tiny-grid-column field="_id" title="ID" align="center"></tiny-grid-column>
       <tiny-grid-column field="content" title="违规内容" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="method" title="处罚方式" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="date" title="时间" align="center" format-text="longDateTime"></tiny-grid-column>

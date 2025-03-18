@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 资源 - 我的添加'
+document.title = '轩铭2512 - 资源 - 我的资源'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
@@ -45,7 +45,7 @@ async function get() {
   })
   data.value = res.data.map(item => {
     if (item.latestVersion !== undefined) {
-      if (item.version == item.latestVersion || item.latestVersion == '') {
+      if (item.version == item.latestVersion || !item.latestVersion) {
         return {
           ...item,
           versionUpdate: false
@@ -76,6 +76,7 @@ async function getTag() {
     mytag.value = res.data.setting.tag
   }
 }
+get()
 getTag()
 function currentpageChange(t) {
   currentpage.value = t
@@ -191,6 +192,8 @@ async function deleteAddResource(resourceid) {
 <template>
   <div class="main">
     <div class="cz">
+      <tiny-alert :closable="false"
+        description="名称、版本号不随原资源名称、版本号更新而更新，保持添加时原资源的名称、版本号不变。如需更新名称、版本号为原资源更新后的名称、版本号，请使用同步功能。"></tiny-alert>
       <tiny-form>
         <tiny-form-item label="名称">
           <tiny-input v-model="keyword" placeholder="请输入名称"></tiny-input>
@@ -225,30 +228,41 @@ async function deleteAddResource(resourceid) {
           <tiny-button type="info" @click="get">搜索</tiny-button>
         </tiny-form-item>
       </tiny-form>
-      <div v-if="checkversionupdate == true" class="sp">
+      <div v-if="checkversionupdate == true && data.length > 0" class="sp">
         <div>仅显示有更新</div>
         <tiny-switch v-model="onlyshowversionupdate"></tiny-switch>
       </div>
-      <tiny-button v-if="data.length > 0" type="success" @click="syncAll">全部同步</tiny-button>
+      <tiny-button v-if="data.length > 0" type="success" @click="syncAll">同步此页</tiny-button>
+      <div v-if="data.length == 0">
+        <tiny-divider></tiny-divider>
+        <div class="large-bold-text" style="text-align: center">暂无数据</div>
+      </div>
       <div v-for="item in data">
         <div v-if="item.versionUpdate != false || onlyshowversionupdate == false" class="cz">
           <tiny-divider></tiny-divider>
-          <div class="bold-text" style="cursor: pointer" @click="info(item._id)">{{ item.name }}</div>
           <div class="sp">
-            <tiny-tag v-for="item in item.tag" type="info">{{ item }}</tiny-tag>
-          </div>
-          <div v-if="item.versionUpdate !== ''">
-            <tiny-alert v-if="item.versionUpdate == false" :closable="false" description="无更新"></tiny-alert>
-            <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
-              <template #description>
-                <div>有新版本：{{ item.latestVersion }}</div>
-              </template>
-            </tiny-alert>
-          </div>
-          <div class="sp" style="justify-content: center">
-            <tiny-button type="success" @click="syncSingle(item._id)">同步</tiny-button>
-            <tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button>
-            <tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button>
+            <tiny-alert v-if="item.name == null" style="flex-grow:1" type="error" :closable="false"
+              description="资源已失效"></tiny-alert>
+            <div v-if="item.name != null" class="cz" style="cursor: pointer;flex-grow:1" @click="info(item.resourceId)">
+              <div class="bold-text">{{ item.name }}</div>
+              <div v-if="item.version != ''">当前版本：{{ item.version }}</div>
+              <div class="sp">
+                <tiny-tag v-for="item in item.tag" type="info">{{ item }}</tiny-tag>
+              </div>
+              <div v-if="item.versionUpdate !== ''">
+                <tiny-alert v-if="item.versionUpdate == false" :closable="false" description="无更新"></tiny-alert>
+                <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
+                  <template #description>
+                    <div>有新版本：{{ item.latestVersion }}</div>
+                  </template>
+                </tiny-alert>
+              </div>
+            </div>
+            <div class="sp">
+              <tiny-button type="success" @click="syncSingle(item._id)">同步</tiny-button>
+              <tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button>
+              <tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button>
+            </div>
           </div>
         </div>
       </div>
@@ -272,9 +286,3 @@ async function deleteAddResource(resourceid) {
     </tiny-dialog-box>
   </div>
 </template>
-
-<style scoped>
-.cz {
-  width: 100%;
-}
-</style>

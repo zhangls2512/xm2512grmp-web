@@ -60,6 +60,7 @@ function info(id) {
           <tiny-radio label="20">20</tiny-radio>
         </tiny-radio-group>
       </div>
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">暂无数据</div>
       <div v-if="type == 'grid'" class="grid">
         <div v-for="item in data" class="kuang" style="cursor: pointer" @click="info(item._id)">
           <div class="cz">
@@ -84,10 +85,6 @@ function info(id) {
 </template>
 
 <style scoped>
-.cz {
-  width: 100%;
-}
-
 .top {
   display: flex;
   gap: 10px;

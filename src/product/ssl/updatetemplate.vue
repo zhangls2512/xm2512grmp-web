@@ -12,7 +12,7 @@ const accesstoken = cookie.get('accessToken')
 const domains = ref([])
 const domain = ref('')
 const desc = ref('')
-async function getInfo() {
+async function get() {
   const res = await request({
     apiPath: '/ssl/getTemplateInfo',
     body: {
@@ -27,7 +27,7 @@ async function getInfo() {
   domains.value = res.data.domains
   desc.value = res.data.desc
 }
-getInfo()
+get()
 function add() {
   if (!validator.isFQDN(domain.value, {
     allow_wildcard: true

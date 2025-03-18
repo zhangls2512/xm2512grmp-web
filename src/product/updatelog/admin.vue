@@ -18,14 +18,6 @@ const data = [
       {
         type: 'A',
         content: '支持管理产品 SSL 证书'
-      },
-      {
-        type: 'F',
-        content: '用户管理 - 修改权限成功后列表未刷新'
-      },
-      {
-        type: 'F',
-        content: '用户管理 - 搜索 UID 成功后未弹窗'
       }
     ]
   },
@@ -35,11 +27,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '通知管理页面新增 邮箱'
-      },
-      {
-        type: 'F',
-        content: '新增备案许可页面类型选择“产品备案”时显示“具体类型”非“运行平台”'
+        content: '通知管理 新增 邮箱'
       }
     ]
   },

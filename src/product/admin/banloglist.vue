@@ -69,12 +69,12 @@ async function deleteBanlog(t) {
   <div class="cz">
     <div><tiny-button type="success" @click="newBanlog">新增</tiny-button></div>
     <div class="sp">
-      <tiny-input v-model="id" clearable placeholder="请输入记录 ID"></tiny-input>
+      <tiny-input v-model="id" clearable placeholder="请输入 ID"></tiny-input>
       <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
-      <tiny-grid-column field="_id" title="记录 ID" align="center"></tiny-grid-column>
+      <tiny-grid-column field="_id" title="ID" align="center"></tiny-grid-column>
       <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
       <tiny-grid-column field="content" title="违规内容" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="method" title="处罚方式" align="center" show-overflow></tiny-grid-column>

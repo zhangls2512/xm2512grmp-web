@@ -12,7 +12,7 @@ const reviewinvalidreason = ref('')
 let date = ''
 const aftersubmit = ref('getnext')
 const type = ref('sorted')
-async function getInfo() {
+async function get() {
   const res = await request({
     apiPath: '/admin/getProcessingReviewResource',
     body: {
@@ -29,7 +29,7 @@ async function getInfo() {
   dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
 }
-getInfo()
+get()
 function copy() {
   navigator.clipboard.writeText(data.value._id)
   TinyModal.message({
@@ -60,7 +60,7 @@ async function updateReviewResult() {
     status: 'success'
   })
   if (aftersubmit.value == 'getnext') {
-    getInfo()
+    get()
   }
   if (aftersubmit.value == 'exit') {
     router.push('/product/admin/resourcelist')
@@ -129,8 +129,8 @@ async function updateReviewResult() {
         <tiny-radio label="random">随机</tiny-radio>
       </tiny-radio-group>
     </div>
-    <tiny-button v-if="type == 'sorted'" type="info" @click="getInfo">刷新</tiny-button>
-    <tiny-button v-if="type == 'random'" type="info" @click="getInfo">换一个</tiny-button>
+    <tiny-button v-if="type == 'sorted'" type="info" @click="get">刷新</tiny-button>
+    <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
     <tiny-divider></tiny-divider>
     <tiny-radio-group v-model="reviewstatus">
       <tiny-radio label="valid"

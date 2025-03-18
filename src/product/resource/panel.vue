@@ -8,12 +8,12 @@ const accesstoken = cookie.get('accessToken')
 const tabs = [
   {
     id: 'addlist',
-    label: '我的添加',
+    label: '我的资源',
     customIcon: icon.IconAddCircle()
   },
   {
     id: 'service',
-    label: '服务管理',
+    label: '功能管理',
     customIcon: icon.IconApp()
   },
   {

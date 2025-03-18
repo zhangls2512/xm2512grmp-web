@@ -133,11 +133,12 @@ exports.main = async (event) => {
         accessToken: accesstoken,
         endDate: enddate
       })
-      const ipconfig = await axios.get('https://www.ip.cn/api/index?ip=' + requestip + '&type=1')
+      const ipconfig = await axios.get('https://api.qjqq.cn/api/district?ip=' + requestip)
+      const ipaddress = ipconfig.data.data.continent + ' ' + ipconfig.data.data.country + ' ' + ipconfig.data.data.prov + ' ' + ipconfig.data.data.city + ' ' + ipconfig.data.data.isp
       await db.collection('loginlog').add({
         date: Date.now(),
         ip: requestip,
-        ipAddress: ipconfig.data.address,
+        ipAddress: ipaddress,
         verifyType: requestdata.verifyType,
         ua: useragent,
         uid: account._id
@@ -149,7 +150,7 @@ exports.main = async (event) => {
         from: 'zhangls2512@vip.qq.com',
         to: email,
         subject: '轩铭2512统一账号登录提醒',
-        text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipconfig.data.address + '（IP：' + requestip + '）'
+        text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipaddress + '（IP：' + requestip + '）'
       })
       return {
         errCode: 0,

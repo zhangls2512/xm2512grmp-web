@@ -87,7 +87,7 @@ exports.main = async (event) => {
     } else {
       const account = res.result.account
       let passwordhash = requestdata.newPassword
-      if (passwordhash) {
+      if (requestdata.newPassword) {
         passwordhash = await argon2.hash(requestdata.newPassword)
       }
       await db.collection('account').where({

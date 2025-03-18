@@ -19,7 +19,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    let keyword = db.command.neq(null)
+    let keyword = db.command.neq({})
     if (typeof (requestdata.keyword) == 'string' && requestdata.keyword) {
       keyword = db.RegExp({
         regexp: requestdata.keyword

@@ -92,8 +92,8 @@ exports.main = async (event) => {
         if (resourceaddres.total > 0) {
           return {
             errCode: 8000,
-            errMsg: '我的添加存在资源',
-            errFix: '我的添加清空资源'
+            errMsg: '我的资源未清空',
+            errFix: '清空我的资源'
           }
         } else {
           await db.collection('productuser').where({

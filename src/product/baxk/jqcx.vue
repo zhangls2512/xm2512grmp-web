@@ -12,7 +12,7 @@ const info = ref({})
 if (typeof (route.query.baxknumber) == 'string') {
   baxknumber.value = route.query.baxknumber
 }
-async function getInfo() {
+async function get() {
   visible.value = false
   if (baxknumber.value === '') {
     TinyModal.message({
@@ -90,7 +90,7 @@ async function getInfo() {
       <div class="cz">
         <div class="sp">
           <tiny-input v-model="baxknumber" clearable placeholder="请输入备案/许可号"></tiny-input>
-          <tiny-button type="info" @click="getInfo">查询</tiny-button>
+          <tiny-button type="info" @click="get">查询</tiny-button>
         </div>
         <div v-if="visible == true">
           <div class="cz">

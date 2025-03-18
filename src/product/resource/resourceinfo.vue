@@ -27,14 +27,16 @@ async function get() {
     status: 'success'
   })
   data.value = res.data
-  const addres = await request({
-    apiPath: '/resource/checkResourceAdded',
-    body: {
-      accessToken: accesstoken,
-      resourceId: id
-    }
-  })
-  added.value = addres.added
+  if (accesstoken) {
+    const addres = await request({
+      apiPath: '/resource/checkResourceAdded',
+      body: {
+        accessToken: accesstoken,
+        resourceId: id
+      }
+    })
+    added.value = addres.added
+  }
 }
 get()
 function copy() {
@@ -104,12 +106,6 @@ async function deleteAdd() {
 <template>
   <div class="main">
     <div class="cz">
-      <div>
-        <tiny-alert v-if="added === false" :closable="false"
-          description="添加后可在首页 - 个人中心 - 我的添加中查看，还可使用检查版本更新、订阅版本更新通知功能。"></tiny-alert>
-        <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加</tiny-button>
-        <tiny-button v-if="added === true" type="danger" @click="deleteAdd">取消添加</tiny-button>
-      </div>
       <div class="sp">
         <div class="bold-text">名称</div>
         <div>{{ data.name }}</div>
@@ -121,7 +117,8 @@ async function deleteAdd() {
         <div>{{ data.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in data.location" class="sp">
+      <div v-for="(item, index) in data.location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>
@@ -143,13 +140,17 @@ async function deleteAdd() {
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </template>
       </tiny-alert>
-      <tiny-divider></tiny-divider>
       <div class="sp">
         <div class="bold-text">ID</div>
         <div>{{ data._id }}</div>
         <tiny-button type="info" @click="copy">复制</tiny-button>
       </div>
-      <tiny-alert :closable="false" description="如果发现以上信息与实际不符或涉嫌违规，请联系客服举报。"></tiny-alert>
+      <tiny-alert :closable="false" description="如果发现以上信息与实际不符或涉嫌违规，可联系客服举报。"></tiny-alert>
+      <tiny-divider></tiny-divider>
+      <div>
+        <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
+        <tiny-button v-if="added === true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>
+      </div>
     </div>
     <tiny-dialog-box class="dialog" :visible="dialog" title="设置标签" @close="newAddClose">
       <div class="dialog-cz">
@@ -169,9 +170,3 @@ async function deleteAdd() {
     </tiny-dialog-box>
   </div>
 </template>
-
-<style scoped>
-.cz {
-  width: 100%;
-}
-</style>

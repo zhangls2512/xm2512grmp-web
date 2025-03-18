@@ -222,7 +222,7 @@ async function newResource() {
               <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
             </tiny-base-select>
             <tiny-input v-model="locationtagvalue" clearable placeholder="请输入内容"></tiny-input>
-            <tiny-button type="success" @click="addLocationTag">添加</tiny-button>
+            <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
           </div>
           <div v-for="(item, index) in locationtag" class="sp">
             <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>

@@ -14,9 +14,6 @@ const keyword = ref('')
 const tags = ref([])
 const tag = ref('')
 const mytag = ref([])
-if (typeof (route.query.keyword) == 'string') {
-  keyword.value = route.query.keyword
-}
 async function get() {
   const countres = await request({
     apiPath: '/resource/getResourceCount',
@@ -43,6 +40,10 @@ async function get() {
     ...item,
     shortDesc: item.desc.slice(0, 50)
   }))
+}
+if (typeof (route.query.keyword) == 'string') {
+  keyword.value = route.query.keyword
+  get()
 }
 async function getTag() {
   if (accesstoken) {
@@ -120,6 +121,7 @@ function inputTag(inputtags) {
           <tiny-button type="info" @click="get">搜索</tiny-button>
         </tiny-form-item>
       </tiny-form>
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">暂无数据</div>
       <div v-for="item in data" class="cz" style="cursor: pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
@@ -133,9 +135,3 @@ function inputTag(inputtags) {
     </div>
   </div>
 </template>
-
-<style scoped>
-.cz {
-  width: 100%;
-}
-</style>

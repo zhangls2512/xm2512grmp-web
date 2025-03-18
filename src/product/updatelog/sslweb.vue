@@ -7,7 +7,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '部分文本输入框支持显示已输入字数'
+        content: '部分文本输入框显示已输入字数、最大可输入字数'
       }
     ]
   },
@@ -17,7 +17,7 @@ const data = [
     logs: [
       {
         type: 'F',
-        content: '修复 新增订单页面“存入模板”开关关闭仍存入模板'
+        content: '修复 新增订单页面“存入模板”开关关闭时仍存入模板'
       }
     ]
   },
@@ -28,10 +28,6 @@ const data = [
       {
         type: 'U',
         content: '订单详情页面支持复制订单 ID'
-      },
-      {
-        type: 'U',
-        content: '优化 订单详情页面'
       }
     ]
   },
@@ -42,10 +38,6 @@ const data = [
       {
         type: 'U',
         content: '订单支持设置备注'
-      },
-      {
-        type: 'U',
-        content: '优化 通知管理页面接收状态显示'
       }
     ]
   },

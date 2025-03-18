@@ -9,7 +9,7 @@ const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref({})
-async function getInfo() {
+async function get() {
   const res = await request({
     apiPath: '/resourcecreator/getResourceInfo',
     body: {
@@ -26,7 +26,7 @@ async function getInfo() {
   dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
 }
-getInfo()
+get()
 function copy() {
   navigator.clipboard.writeText(data.value._id)
   TinyModal.message({
@@ -83,7 +83,8 @@ function copy() {
         <div>{{ data.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in data.location" class="sp">
+      <div v-for="(item, index) in data.location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>
@@ -133,7 +134,8 @@ function copy() {
         <div>{{ data.reviewInfo.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in data.reviewInfo.location" class="sp">
+      <div v-for="(item, index) in data.reviewInfo.location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>

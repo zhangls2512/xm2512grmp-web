@@ -214,7 +214,7 @@ async function revokeCertificate() {
     </div>
     <tiny-divider></tiny-divider>
     <div class="sp">
-      <div class="bold-text">订单 ID</div>
+      <div class="bold-text">ID</div>
       <div>{{ data._id }}</div>
       <tiny-button type="info" @click="copy">复制</tiny-button>
     </div>

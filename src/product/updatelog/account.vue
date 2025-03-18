@@ -2,12 +2,22 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.7',
+    releaseDate: '2025-03-18',
+    logs: [
+      {
+        type: 'U',
+        content: '注册账号 新增 密码'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.6',
     releaseDate: '2025-03-18',
     logs: [
       {
         type: 'U',
-        content: '产品管理新增 资源'
+        content: '产品管理 新增 资源'
       }
     ]
   },
@@ -17,7 +27,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '账号管理 - 基本信息新增 外部账号'
+        content: '账号管理 - 基本信息 新增 外部账号'
       }
     ]
   },
@@ -27,7 +37,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '部分文本输入框支持显示已输入字数'
+        content: '部分文本输入框显示已输入字数、最大可输入字数'
       }
     ]
   },
@@ -37,11 +47,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品管理 - 已开通产品新增 去使用'
-      },
-      {
-        type: 'U',
-        content: '优化 通知管理页面接收状态显示'
+        content: '产品管理页面已开通的产品 新增 去使用'
       }
     ]
   },
@@ -51,15 +57,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品管理新增 SSL 证书'
-      },
-      {
-        type: 'U',
-        content: '优化 产品管理页面封禁状态显示'
-      },
-      {
-        type: 'U',
-        content: '优化 通知管理页面接收状态显示'
+        content: '产品管理 新增 SSL 证书'
       }
     ]
   },
@@ -69,19 +67,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '通知管理页面新增 邮箱'
-      },
-      {
-        type: 'U',
-        content: '调整全屏加载动画背景透明度'
+        content: '通知管理 新增 邮箱'
       },
       {
         type: 'F',
         content: '注册账号页面无法输入验证码'
-      },
-      {
-        type: 'F',
-        content: '登录日志页面顶部提示文字中文与数字之间无空格'
       }
     ]
   },

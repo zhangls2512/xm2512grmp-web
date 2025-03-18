@@ -1,6 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const argon2 = require('argon2')
   const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
   const { nanoid } = await import('nanoid')
@@ -29,6 +30,10 @@ exports.main = async (event) => {
         errFix: '传递有效的emailCode参数'
       }
     }
+    let password = ''
+    if (typeof (requestdata.password) == 'string' && requestdata.password.length >= 8 && requestdata.password.length <= 30) {
+      password = requestdata.password
+    }
     const res = await app.callFunction({
       name: 'authCheck',
       data: {
@@ -53,6 +58,10 @@ exports.main = async (event) => {
           errFix: '使用其他邮箱'
         }
       } else {
+        let passwordhash = password
+        if (password) {
+          passwordhash = await argon2.hash(password)
+        }
         const res = await db.collection('account').add({
           accessKey: [],
           accessToken: '',
@@ -60,7 +69,7 @@ exports.main = async (event) => {
           email: requestdata.email,
           endDate: 0,
           mfa: '',
-          password: '',
+          password: passwordhash,
           passwordVerifyTimes: 0,
           permission: {
             account: true,

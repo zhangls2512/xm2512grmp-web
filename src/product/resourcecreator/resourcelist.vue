@@ -196,7 +196,8 @@ async function deleteResource(id) {
       <tiny-base-select v-model="reviewstatus">
         <tiny-option v-for="item in reviewstatuss" :value="item.value" :label="item.label"></tiny-option>
       </tiny-base-select>
-      <tiny-search v-model="keyword" clearable placeholder="名称" @search="get"></tiny-search>
+      <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
+      <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
       <tiny-grid-column field="name" title="名称" align="center"></tiny-grid-column>

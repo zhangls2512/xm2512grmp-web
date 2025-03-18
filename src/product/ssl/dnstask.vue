@@ -130,7 +130,7 @@ async function deleteDnsTask(id) {
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
-      <tiny-grid-column field="_id" title="任务 ID" align="center"></tiny-grid-column>
+      <tiny-grid-column field="_id" title="ID" align="center"></tiny-grid-column>
       <tiny-grid-column field="domain" title="域名" align="center"></tiny-grid-column>
       <tiny-grid-column title="状态" align="center">
         <template #default="{ row }">
