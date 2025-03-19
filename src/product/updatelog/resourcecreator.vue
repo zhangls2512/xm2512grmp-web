@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - 资源'
+document.title = '轩铭2512 - 更新日志 - 资源投稿'
 const data = [
   {
     versionNumber: '1.0.2',
@@ -7,15 +7,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '优化了一些页面的细节体验'
-      },
-      {
-        type: 'U',
-        content: '首页 下线 我要投稿'
-      },
-      {
-        type: 'U',
-        content: '个人中心 下线 功能管理'
+        content: '新增资源、修改资源审核版本 新增 允许审核人员修改信息、直接提交审核'
       }
     ]
   },

@@ -32,7 +32,7 @@ const endyear = new Date().getFullYear()
           <div class="footer-text">敏感信息收集处理服务许可号：<a href="/product/baxk/jqcx?baxknumber=轩铭2512许2号-1M"
               target="_blank">轩铭2512许2号-1M</a></div>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.7</div>
+          <div class="footer-text">Version 1.0.8</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/account" target="_blank">更新日志</router-link>
         </div>

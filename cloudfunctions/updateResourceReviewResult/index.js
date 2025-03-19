@@ -1,6 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const lodash = require('lodash')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -98,79 +99,79 @@ exports.main = async (event) => {
             errFix: '重新获取审核版本信息'
           }
         }
+        let reviewinfo = data.reviewInfo
+        if ((typeof (requestdata.name) == 'string' && requestdata.name) && reviewinfo.name != requestdata.name) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.name = requestdata.name
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
+        if (typeof (requestdata.desc) == 'string' && reviewinfo.desc != requestdata.desc) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.desc = requestdata.desc
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
+        if (typeof (requestdata.version) == 'string' && reviewinfo.version != requestdata.version) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.version = requestdata.version
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
+        if ((Array.isArray(requestdata.location) && requestdata.location.length > 0) && !lodash.isEqual(reviewinfo.location, requestdata.location)) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.location = requestdata.location
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
+        if (Array.isArray(requestdata.tag) && !lodash.isEqual(reviewinfo.tag, requestdata.tag)) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.tag = requestdata.tag
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
+        if (Array.isArray(requestdata.info) && !lodash.isEqual(reviewinfo.info, requestdata.info)) {
+          if (data.allowReviewerUpdate) {
+            reviewinfo.info = requestdata.info
+          } else {
+            return {
+              errCode: 8003,
+              errMsg: '未允许审核人员修改信息',
+              errFix: '不修改信息'
+            }
+          }
+        }
         if (requestdata.status == 'valid') {
           if (data.reviewStatus == 'valid') {
             return {
-              errCode: 8003,
+              errCode: 8004,
               errMsg: '审核版本已审核通过',
               errFix: '无需重复通过审核'
-            }
-          }
-          let reviewinfo = data.reviewInfo
-          if ((typeof (requestdata.name) == 'string' && requestdata.name) && reviewinfo.name != requestdata.name) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.name = requestdata.name
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
-            }
-          }
-          if (typeof (requestdata.desc) == 'string' && reviewinfo.desc != requestdata.desc) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.desc = requestdata.desc
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
-            }
-          }
-          if (typeof (requestdata.version) == 'string' && reviewinfo.version != requestdata.version) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.version = requestdata.version
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
-            }
-          }
-          if ((Array.isArray(requestdata.location) && requestdata.location.length > 0) && reviewinfo.location != requestdata.location) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.location = requestdata.location
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
-            }
-          }
-          if (Array.isArray(requestdata.tag) && reviewinfo.tag != requestdata.tag) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.tag = requestdata.tag
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
-            }
-          }
-          if (Array.isArray(requestdata.info) && reviewinfo.info != requestdata.info) {
-            if (data.allowReviewerUpdate) {
-              reviewinfo.info = requestdata.info
-            } else {
-              return {
-                errCode: 8004,
-                errMsg: '未允许审核人员修改信息',
-                errFix: '不修改信息'
-              }
             }
           }
           await db.collection('resource').where({

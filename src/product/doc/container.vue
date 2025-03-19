@@ -12,6 +12,10 @@ const tabs = [
     label: '资源'
   },
   {
+    id: 'resourcecreator',
+    label: '资源投稿'
+  },
+  {
     id: 'ssl',
     label: 'SSL 证书'
   }

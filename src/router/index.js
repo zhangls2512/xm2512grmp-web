@@ -31,6 +31,10 @@ const router = createRouter({
           component: () => import('/src/product/doc/resource.vue')
         },
         {
+          path: 'resourcecreator',
+          component: () => import('/src/product/doc/resourcecreator.vue')
+        },
+        {
           path: 'ssl',
           component: () => import('/src/product/doc/ssl.vue')
         }
@@ -59,6 +63,10 @@ const router = createRouter({
         {
           path: 'resource',
           component: () => import('/src/product/updatelog/resource.vue')
+        },
+        {
+          path: 'resourcecreator',
+          component: () => import('/src/product/updatelog/resourcecreator.vue')
         },
         {
           path: 'grmpweb',
@@ -223,10 +231,6 @@ const router = createRouter({
             {
               path: '/product/resource/addlist',
               component: () => import('/src/product/resource/addlist.vue')
-            },
-            {
-              path: '/product/resource/service',
-              component: () => import('/src/product/resource/service.vue')
             },
             {
               path: '/product/resource/notice',

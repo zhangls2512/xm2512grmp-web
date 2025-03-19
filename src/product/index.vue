@@ -31,22 +31,19 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/logo.jpg" loading="lazy" />
-              <div class="large-bold-text">个人名片</div>
-              <div class="sp">
-                <router-link to="/" target="_blank">网页</router-link>
-                <tiny-divider direction="vertical"></tiny-divider>
-                <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
-              </div>
-            </div>
-          </div>
           <router-link to="/product/resource" target="_blank">
             <div class="kuang">
               <div class="cz">
                 <img class="image" src="/logo.jpg" loading="lazy" />
                 <div class="large-bold-text">资源</div>
+              </div>
+            </div>
+          </router-link>
+          <router-link to="/product/resourcecreator" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy" />
+                <div class="large-bold-text">资源投稿</div>
               </div>
             </div>
           </router-link>
@@ -78,6 +75,17 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </a>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/logo.jpg" loading="lazy" />
+              <div class="large-bold-text">个人名片</div>
+              <div class="sp">
+                <router-link to="/" target="_blank">网页</router-link>
+                <tiny-divider direction="vertical"></tiny-divider>
+                <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="title">成员</div>
         <div class="sp" style="align-items: stretch">
@@ -177,7 +185,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.5</div>
+          <div class="footer-text">Version 1.0.6</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>

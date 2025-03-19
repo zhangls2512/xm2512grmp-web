@@ -12,11 +12,6 @@ const tabs = [
     customIcon: icon.IconAddCircle()
   },
   {
-    id: 'service',
-    label: '功能管理',
-    customIcon: icon.IconApp()
-  },
-  {
     id: 'notice',
     label: '通知管理',
     customIcon: icon.IconPublicNotice()

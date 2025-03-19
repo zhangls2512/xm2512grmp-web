@@ -39,9 +39,6 @@ function info(id) {
         <router-link to="/product/resource/panel" target="_blank">
           <tiny-button type="info">个人中心</tiny-button>
         </router-link>
-        <router-link to="/product/resourcecreator" target="_blank">
-          <tiny-button type="info">我要投稿</tiny-button>
-        </router-link>
       </div>
       <div class="sp">
         <tiny-button type="info" @click="get">刷新</tiny-button>

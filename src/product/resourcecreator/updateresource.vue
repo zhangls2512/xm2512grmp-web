@@ -241,6 +241,12 @@ async function update() {
       <tiny-breadcrumb-item :to="{ path: '/product/resourcecreator/updateresource' }"
         label="修改资源审核版本"></tiny-breadcrumb-item>
     </tiny-breadcrumb>
+    <tiny-alert :closable="false">
+      <template #description>
+        <div>因审核严格，为了提高过审率，强烈建议在投稿前认真阅读<a href="https://docs.qq.com/doc/p/9cdd406b1baf3818877edcaf02f7317adcb793ee"
+            target="_blank">《审核标准》</a>并严格按照其中的要求、说明填写信息，谢谢。</div>
+      </template>
+    </tiny-alert>
     <tiny-form>
       <tiny-form-item label="名称">
         <tiny-input v-model="name" clearable placeholder="请输入名称"></tiny-input>

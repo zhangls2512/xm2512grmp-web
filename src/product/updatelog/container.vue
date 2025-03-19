@@ -20,12 +20,12 @@ const tabs = [
     label: '备案许可'
   },
   {
-    id: 'grmpweb',
-    label: '个人名片（网页）'
-  },
-  {
     id: 'resource',
     label: '资源'
+  },
+  {
+    id: 'resourcecreator',
+    label: '资源投稿'
   },
   {
     id: 'sslweb',
@@ -38,6 +38,10 @@ const tabs = [
   {
     id: 'mtcl',
     label: '媒体处理'
+  },
+  {
+    id: 'grmpweb',
+    label: '个人名片（网页）'
   }
 ]
 const tabClick = (data) => {

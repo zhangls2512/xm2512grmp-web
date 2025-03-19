@@ -11,25 +11,36 @@ const products = [
     name: 'account',
     logo: '/logo.jpg',
     title: '统一账号高级功能',
-    desc: '管理账号通知设置。'
+    desc: '管理账号通知设置。',
+    defaultallow: true
   },
   {
     name: 'admin',
     logo: '/logo.jpg',
     title: '管理后台',
-    desc: '一个后台即可管理轩铭2512全部产品，方便、快捷。'
+    desc: '一个后台即可管理轩铭2512全部产品，方便、快捷。',
+    defaultallow: false
   },
   {
     name: 'resource',
     logo: '/logo.jpg',
     title: '资源',
-    desc: '获取优质、安全、实用、易用的资源并快捷使用。'
+    desc: '获取优质、安全、实用、易用的资源并快捷使用。',
+    defaultallow: true
+  },
+  {
+    name: 'resourcecreator',
+    logo: '/logo.jpg',
+    title: '资源投稿',
+    desc: '投稿优质、安全、实用、易用的资源。',
+    defaultallow: false
   },
   {
     name: 'ssl',
     logo: '/logossl.png',
     title: 'SSL 证书',
-    desc: '简单、便捷地申请免费 DV SSL 证书。'
+    desc: '简单、便捷地申请免费 DV SSL 证书。',
+    defaultallow: true
   }
 ]
 const validproducts = products.map(item => item.name)
@@ -108,7 +119,7 @@ async function close(product) {
             <tiny-tag type="success">已开通</tiny-tag>
             <tiny-tag v-if="productszt.accountfjzt === true" type="danger">永久封禁</tiny-tag>
             <tiny-tag v-if="typeof (productszt.accountfjzt) == 'string'" type="danger">封禁至 {{ productszt.accountfjzt
-            }}</tiny-tag>
+              }}</tiny-tag>
           </div>
           <div>一个账号即可使用轩铭2512全部产品，方便、快捷。</div>
           <tiny-alert :closable="false" description="如需取消开通，请注销账号"></tiny-alert>
@@ -128,6 +139,9 @@ async function close(product) {
               productszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
           <div>{{ item.desc }}</div>
+          <tiny-alert
+            v-if="item.defaultallow == false && productszt[`${item.name}fjzt`] != false && productszt[`${item.name}ktzt`] == false"
+            :closable="false" description="如需开通，请联系客服"></tiny-alert>
           <div class="sp">
             <tiny-button v-if="productszt[`${item.name}ktzt`] == true && productszt[`${item.name}fjzt`] == false"
               type="info" @click="use(item.name)">去使用</tiny-button>

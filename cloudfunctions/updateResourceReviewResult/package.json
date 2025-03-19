@@ -1,6 +1,7 @@
 {
   "main": "index.js",
   "dependencies": {
-    "@cloudbase/node-sdk": "latest"
+    "@cloudbase/node-sdk": "latest",
+    "lodash": "latest"
   }
 }
