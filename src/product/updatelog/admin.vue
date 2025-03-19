@@ -6,7 +6,7 @@ const data = [
     releaseDate: '2025-03-19',
     logs: [
       {
-        type: 'A',
+        type: 'U',
         content: '资源管理 - 资源审核 新增 进度、预览（修改）'
       }
     ]
