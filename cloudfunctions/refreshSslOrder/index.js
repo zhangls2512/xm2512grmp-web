@@ -1,7 +1,6 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const crypto = require('crypto')
   const acme = require('nodejs-acmeclient')
   const app = tcb.init()
   const auth = app.auth()
@@ -142,13 +141,12 @@ exports.main = async (event) => {
                 value: item
               }
             })
-            const leafcertificate = acme.crypto.extractCertificates(certificatesres[0])[0]
-            const leafcertificateinfo = new crypto.X509Certificate(leafcertificate)
-            const certificatestartdate = new Date(leafcertificateinfo.validFrom).getTime()
-            const certificateenddate = new Date(leafcertificateinfo.validTo).getTime()
+            const leafcertificateinfo = acme.crypto.getCertificateInfo(certificatesres[0])[0]
+            const certificatestartdate = (leafcertificateinfo.startDate).getTime()
+            const certificateenddate = (leafcertificateinfo.endDate).getTime()
             const arires = await acme.api.getCertificateRenewalInfo({
               directoryUrl: directoryurl,
-              certificate: leafcertificate
+              certificate: certificatesres[0]
             })
             await db.collection('sslorder').where({
               _id: requestdata.id

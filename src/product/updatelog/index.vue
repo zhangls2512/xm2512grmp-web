@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.7',
+    releaseDate: '2025-03-20',
+    logs: [
+      {
+        type: 'U',
+        content: '首页 - 成员 新增 于梓浩、郭怡航'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.6',
     releaseDate: '2025-03-19',
     logs: [
