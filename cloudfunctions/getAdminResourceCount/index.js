@@ -68,8 +68,7 @@ exports.main = async (event) => {
         _id: id,
         name: keyword,
         releaseStatus: releasestatus,
-        reviewStatus: reviewstatus,
-        uid: res.result.account._id
+        reviewStatus: reviewstatus
       }).count()
       return {
         errCode: 0,

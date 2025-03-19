@@ -165,10 +165,8 @@ async function updateReviewResult() {
         <tiny-tag v-if="data.releaseStatus == 'unrelease'" type="info">未上架</tiny-tag>
         <tiny-tag v-if="data.releaseStatus == 'ban'" type="danger">已封禁</tiny-tag>
       </div>
-      <div v-if="data.releaseStatus == 'ban'" class="sp">
-        <div class="bold-text">封禁原因</div>
-        <div>{{ data.releaseBanReason }}</div>
-      </div>
+      <div v-if="data.releaseStatus == 'ban'" class="bold-text">封禁原因</div>
+      <div v-if="data.releaseStatus == 'ban'">{{ data.releaseBanReason }}</div>
       <tiny-radio-group v-model="releasestatus">
         <tiny-radio label="ban">封禁</tiny-radio>
         <tiny-radio label="unban" :disabled="data.releaseStatus != 'ban'">解封</tiny-radio>
@@ -181,7 +179,7 @@ async function updateReviewResult() {
         <div>{{ data.name }}</div>
       </div>
       <div class="bold-text">简介</div>
-      <div class="text">{{ data.desc }}</div>
+      <div>{{ data.desc }}</div>
       <div class="sp">
         <div class="bold-text">版本号</div>
         <div>{{ data.version }}</div>
@@ -219,10 +217,8 @@ async function updateReviewResult() {
         <tiny-tag v-if="data.reviewStatus == 'valid'" type="success">审核通过</tiny-tag>
         <tiny-tag v-if="data.reviewStatus == 'invalid'" type="danger">审核不通过</tiny-tag>
       </div>
-      <div v-if="data.reviewStatus == 'invalid'" class="sp">
-        <div class="bold-text">不通过原因</div>
-        <div>{{ data.reviewInvalidReason }}</div>
-      </div>
+      <div v-if="data.reviewStatus == 'invalid'" class="bold-text">不通过原因</div>
+      <div v-if="data.reviewStatus == 'invalid'">{{ data.reviewInvalidReason }}</div>
       <tiny-radio-group v-if="data.reviewStatus != 'pending'" v-model="reviewstatus">
         <tiny-radio label="valid"
           :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
@@ -240,7 +236,7 @@ async function updateReviewResult() {
         <div>{{ data.reviewInfo.name }}</div>
       </div>
       <div class="bold-text">简介</div>
-      <div class="text">{{ data.reviewInfo.desc }}</div>
+      <div>{{ data.reviewInfo.desc }}</div>
       <div class="sp">
         <div class="bold-text">版本号</div>
         <div>{{ data.reviewInfo.version }}</div>

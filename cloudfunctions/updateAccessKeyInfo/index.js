@@ -70,6 +70,7 @@ exports.main = async (event) => {
       'admin_unbanResource',
       'admin_updateResourceUvwr',
       'admin_getProcessingReviewResource',
+      'admin_getProcessingReviewResourceCount',
       'admin_updateResourceReviewResult',
       'admin_getSslUserCount',
       'admin_getSslUserList',

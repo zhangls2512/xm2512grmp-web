@@ -110,7 +110,7 @@ async function close(product) {
             <tiny-tag v-if="typeof (productszt.accountfjzt) == 'string'" type="danger">封禁至 {{ productszt.accountfjzt
             }}</tiny-tag>
           </div>
-          <div class="text">一个账号即可使用轩铭2512全部产品，方便、快捷。</div>
+          <div>一个账号即可使用轩铭2512全部产品，方便、快捷。</div>
           <tiny-alert :closable="false" description="如需取消开通，请注销账号"></tiny-alert>
         </div>
       </div>
@@ -127,7 +127,7 @@ async function close(product) {
             <tiny-tag v-if="typeof (productszt[`${item.name}fjzt`]) == 'string'" type="danger">封禁至 {{
               productszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
-          <div class="text">{{ item.desc }}</div>
+          <div>{{ item.desc }}</div>
           <div class="sp">
             <tiny-button v-if="productszt[`${item.name}ktzt`] == true && productszt[`${item.name}fjzt`] == false"
               type="info" @click="use(item.name)">去使用</tiny-button>

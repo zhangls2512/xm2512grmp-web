@@ -7,10 +7,7 @@ import request from '../../request'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
-const data = ref({
-  tag: [],
-  info: []
-})
+const data = ref({})
 const added = ref('')
 const dialog = ref(false)
 const tags = ref([])
@@ -111,7 +108,7 @@ async function deleteAdd() {
         <div>{{ data.name }}</div>
       </div>
       <div v-if="data.desc != ''" class="bold-text">简介</div>
-      <div v-if="data.desc != ''" class="text">{{ data.desc }}</div>
+      <div v-if="data.desc != ''">{{ data.desc }}</div>
       <div v-if="data.version != ''" class="sp">
         <div class="bold-text">版本号</div>
         <div>{{ data.version }}</div>

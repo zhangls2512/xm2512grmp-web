@@ -36,7 +36,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_orderstatuschange',
           subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
+          text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）状态已变更为' + statuswz + '。'
         }
       })
       app.callFunction({
@@ -89,7 +89,7 @@ exports.main = async () => {
               uid: item.uid,
               noticeName: 'ssl_email_autosubmitorderresult',
               subject: 'SSL证书自动提交订单结果',
-              text: '您的账号SSL证书产品订单（ID：' + item._id + '）自动提交订单失败。'
+              text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单失败。'
             }
           })
           app.callFunction({
@@ -125,7 +125,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autosubmitorderresult',
             subject: 'SSL证书自动提交订单结果',
-            text: '您的账号SSL证书产品订单（ID：' + item._id + '）自动提交订单成功。'
+            text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单成功。'
           }
         })
         app.callFunction({
@@ -159,7 +159,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_orderstatuschange',
           subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已失效。'
+          text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）状态已变更为已失效。'
         }
       })
       app.callFunction({
@@ -192,7 +192,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_orderstatuschange',
           subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已失效。'
+          text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）状态已变更为已失效。'
         }
       })
       app.callFunction({
@@ -257,7 +257,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_orderstatuschange',
           subject: 'SSL证书订单状态变更通知',
-          text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已签发。'
+          text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）状态已变更为已签发。'
         }
       })
       app.callFunction({
@@ -304,7 +304,7 @@ exports.main = async () => {
         uid: item.uid,
         noticeName: 'ssl_email_orderstatuschange',
         subject: 'SSL证书订单状态变更通知',
-        text: '您的账号SSL证书产品订单（ID：' + item._id + '）状态已变更为已过期。'
+        text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）状态已变更为已过期。'
       }
     })
     app.callFunction({

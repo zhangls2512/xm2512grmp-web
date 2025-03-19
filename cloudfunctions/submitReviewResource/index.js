@@ -86,7 +86,7 @@ exports.main = async (event) => {
               uid: item._id,
               noticeName: 'admin_email_newresourcetask',
               subject: '资源待审提醒',
-              text: '有新资源等待审核。'
+              text: '有新资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）等待审核。'
             }
           })
           app.callFunction({

@@ -85,28 +85,28 @@ const endyear = new Date().getFullYear()
             <div class="cz">
               <div class="large-bold-text">张轩铭</div>
               <div>工号：00001</div>
-              <div class="text">设计、研发、测试、审核、客服</div>
+              <div style="text-align: center">设计、研发、测试、审核、客服</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">宋佳懿</div>
               <div>工号：00007</div>
-              <div>设计、研发、测试</div>
+              <div style="text-align: center">设计、研发、测试</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">代昊博</div>
               <div>工号：00008</div>
-              <div>研发、测试</div>
+              <div style="text-align: center">研发、测试</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">朱子轩</div>
               <div>工号：00011</div>
-              <div>审核</div>
+              <div style="text-align: center">审核</div>
             </div>
           </div>
         </div>
@@ -202,10 +202,6 @@ const endyear = new Date().getFullYear()
   flex: 1;
   justify-content: center;
   width: 150px;
-}
-
-.text {
-  text-align: center;
 }
 
 .large-bold-text {

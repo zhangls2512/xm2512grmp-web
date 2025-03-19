@@ -61,6 +61,13 @@ exports.main = async (event) => {
         errFix: '传递有效的info参数'
       }
     }
+    if (typeof (requestdata.allowReviewerUpdate) != 'boolean') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的allowReviewerUpdate参数'
+      }
+    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -87,7 +94,8 @@ exports.main = async (event) => {
       return res.result
     } else {
       const uid = res.result.account._id
-      await db.collection('resource').add({
+      const addres = await db.collection('resource').add({
+        allowReviewerUpdate: requestdata.allowReviewerUpdate,
         createDate: Date.now(),
         desc: '',
         info: [],
@@ -113,7 +121,8 @@ exports.main = async (event) => {
       })
       return {
         errCode: 0,
-        errMsg: '成功'
+        errMsg: '成功',
+        id: addres.id
       }
     }
   } catch {

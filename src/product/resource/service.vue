@@ -93,7 +93,7 @@ async function close(service) {
             <tiny-tag v-if="typeof (serviceszt[`${item.name}fjzt`]) == 'string'" type="danger">封禁至 {{
               serviceszt[`${item.name}fjzt`] }}</tiny-tag>
           </div>
-          <div class="text">{{ item.desc }}</div>
+          <div>{{ item.desc }}</div>
           <tiny-alert v-if="serviceszt[`${item.name}fjzt`] != false" :closable="false"
             description="如需开通，请联系客服"></tiny-alert>
           <div class="sp">

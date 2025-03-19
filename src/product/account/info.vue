@@ -703,9 +703,9 @@ async function getEmailCodea() {
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA" @close="closeQrcodeDialog">
       <div class="dialog-cz">
-        <div class="text">1. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
+        <div>1. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
         <img class="qrcode" :src="qrcodeimg" loading="lazy" />
-        <div class="text">2. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）手动输入下方密钥添加 MFA 。</div>
+        <div>2. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）手动输入下方密钥添加 MFA 。</div>
         <div>{{ secret }} </div>
       </div>
       <template #footer>

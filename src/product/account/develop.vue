@@ -159,6 +159,11 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_getProcessingReviewResourceCount',
+    desc: '获取待审资源总数'
+  },
+  {
+    product: '管理后台',
     name: 'admin_updateResourceReviewResult',
     desc: '修改资源审核版本审核结果'
   },

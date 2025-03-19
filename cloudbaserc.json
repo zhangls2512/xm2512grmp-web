@@ -298,6 +298,12 @@
       "installDependency": true
     },
     {
+      "name": "getProcessingReviewResourceCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getProductBaList",
       "timeout": 60,
       "runtime": "Nodejs18.15",

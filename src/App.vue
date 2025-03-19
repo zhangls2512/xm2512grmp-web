@@ -91,24 +91,17 @@
   row-gap: 10px;
 }
 
-.text {
-  word-break: break-all;
-}
-
 .large-text {
   font-size: 20px;
-  word-break: break-all;
 }
 
 .bold-text {
   font-weight: bold;
-  word-break: break-all;
 }
 
 .large-bold-text {
   font-size: 20px;
   font-weight: bold;
-  word-break: break-all;
 }
 
 .title {

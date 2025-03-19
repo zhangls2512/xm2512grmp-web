@@ -12,7 +12,7 @@ const total = ref(0)
 const id = ref('')
 const keyword = ref('')
 const releasestatus = ref('')
-const reviewstatus = ref([])
+const reviewstatus = ref('')
 const releasestatuss = ref([
   {
     value: '',

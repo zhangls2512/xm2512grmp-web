@@ -65,7 +65,7 @@ function info(id) {
         <div v-for="item in data" class="kuang" style="cursor: pointer" @click="info(item._id)">
           <div class="cz">
             <div class="bold-text">{{ item.name }}</div>
-            <div class="text">{{ item.ashortDesc }}</div>
+            <div>{{ item.ashortDesc }}</div>
             <div class="sp">
               <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
             </div>
@@ -75,7 +75,7 @@ function info(id) {
       <div v-for="item in data" v-if="type == 'list'" class="cz" style="cursor: pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
-        <div class="text">{{ item.bshortDesc }}</div>
+        <div>{{ item.bshortDesc }}</div>
         <div class="sp">
           <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
         </div>

@@ -90,7 +90,7 @@ const data = [
           <tiny-tag v-if="item.type == 'A'" type="success">A</tiny-tag>
           <tiny-tag v-if="item.type == 'U'" type="info">U</tiny-tag>
           <tiny-tag v-if="item.type == 'F'" color="grey">F</tiny-tag>
-          <div class="text">{{ item.content }}</div>
+          <div>{{ item.content }}</div>
         </div>
       </div>
     </div>

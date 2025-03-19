@@ -81,7 +81,7 @@ exports.main = async (event) => {
             uid: data.uid,
             noticeName: 'resourcecreator_email_result',
             subject: '资源封禁通知',
-            text: '您的账号资源产品的资源（ID：' + data._id + '）已封禁。\n封禁原因：' + requestdata.reason
+            text: '您的账号资源产品的资源“' + data.name + '”（ID：' + data._id + '）已封禁。\n封禁原因：' + requestdata.reason
           }
         })
         app.callFunction({

@@ -23,6 +23,8 @@ const infoname = ref('')
 const infotype = ref('text')
 const infovalue = ref('')
 const infocolor = ref('simple')
+const allowreviewerupdate = ref(false)
+const submitreview = ref(false)
 const typeas = ref([
   {
     value: 'text',
@@ -172,7 +174,7 @@ async function newResource() {
     })
     return
   }
-  await request({
+  const res = await request({
     apiPath: '/resourcecreator/newResource',
     body: {
       accessToken: accesstoken,
@@ -181,13 +183,27 @@ async function newResource() {
       version: version.value,
       location: location.value,
       tag: tag.value,
-      info: info.value
+      info: info.value,
+      allowReviewerUpdate: allowreviewerupdate.value
     }
   })
   TinyModal.message({
     message: '新增成功',
     status: 'success'
   })
+  if (submitreview) {
+    await request({
+      apiPath: '/resourcecreator/submitReviewResource',
+      body: {
+        accessToken: accesstoken,
+        id: res.id
+      }
+    })
+    TinyModal.message({
+      message: '提交审核成功',
+      status: 'success'
+    })
+  }
   router.push('/product/resourcecreator/resourcelist')
 }
 </script>
@@ -203,8 +219,7 @@ async function newResource() {
         <tiny-input v-model="name" clearable placeholder="请输入名称"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="简介">
-        <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
-          placeholder="请输入简介（可选）"></tiny-input>
+        <tiny-input v-model="desc" type="textarea" autosize clearable placeholder="请输入简介（可选）"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="版本号">
         <tiny-input v-model="version" clearable placeholder="请输入版本号（可选）"></tiny-input>
@@ -215,8 +230,7 @@ async function newResource() {
           <tiny-base-select v-model="locationtype">
             <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
           </tiny-base-select>
-          <tiny-input v-model="locationvalue" type="textarea" autosize clearable show-word-limit maxlength="500"
-            placeholder="请输入地址"></tiny-input>
+          <tiny-input v-model="locationvalue" type="textarea" autosize clearable placeholder="请输入地址"></tiny-input>
           <div class="sp">
             <tiny-base-select v-model="locationtagtype">
               <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
@@ -231,6 +245,7 @@ async function newResource() {
           <tiny-button type="success" @click="addLocation">添加</tiny-button>
           <div v-for="(item, index) in location" class="sp">
             <div class="sp">
+              <div>{{ index + 1 }}.</div>
               <div>
                 <span v-if="item.name != ''">{{ item.name }}：</span>
                 <span v-if="item.type == 'text'">{{ item.value }}</span>
@@ -268,8 +283,7 @@ async function newResource() {
           <tiny-base-select v-model="infotype">
             <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
           </tiny-base-select>
-          <tiny-input v-model="infovalue" type="textarea" autosize clearable show-word-limit maxlength="500"
-            placeholder="请输入内容"></tiny-input>
+          <tiny-input v-model="infovalue" type="textarea" autosize clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addInfo">添加</tiny-button>
           <div v-for="(item, index) in info" class="sp">
             <tiny-alert :closable="false" :type="item.color">
@@ -280,6 +294,20 @@ async function newResource() {
               </template>
             </tiny-alert>
             <tiny-button type="danger" @click="removeInfo(index)">删除</tiny-button>
+          </div>
+        </div>
+      </tiny-form-item>
+      <tiny-form-item label="设置">
+        <div class="cz">
+          <tiny-alert v-if="allowreviewerupdate == false" :closable="false"
+            description="开启“允许审核人员修改信息”后，审核人员可以修改信息细节使其符合审核标准，有助于提高过审率。审核人员仅会修改信息细节，不会改变信息含义，请知悉。如果关闭，会提高因信息细节不符合审核标准导致审核不通过的概率。"></tiny-alert>
+          <div class="sp">
+            <div>允许审核人员修改信息</div>
+            <tiny-switch v-model="allowreviewerupdate"></tiny-switch>
+          </div>
+          <div class="sp">
+            <div>直接提交审核</div>
+            <tiny-switch v-model="submitreview"></tiny-switch>
           </div>
         </div>
       </tiny-form-item>

@@ -68,6 +68,13 @@ exports.main = async (event) => {
         errFix: '传递有效的info参数'
       }
     }
+    if (typeof (requestdata.allowReviewerUpdate) != 'boolean') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的allowReviewerUpdate参数'
+      }
+    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -116,6 +123,7 @@ exports.main = async (event) => {
         await db.collection('resource').where({
           _id: requestdata.id
         }).update({
+          allowReviewerUpdate: requestdata.allowReviewerUpdate,
           reviewInfo: {
             desc: requestdata.desc,
             info: requestdata.info,

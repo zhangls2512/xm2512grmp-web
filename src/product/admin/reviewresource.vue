@@ -6,12 +6,90 @@ import cookie from 'js-cookie'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
-const data = ref({})
 const reviewstatus = ref('valid')
 const reviewinvalidreason = ref('')
 let date = ''
 const aftersubmit = ref('getnext')
 const type = ref('sorted')
+const update = ref(false)
+const allowupdate = ref(false)
+const total = ref(0)
+const count = ref(0)
+const id = ref('')
+const submitreviewdate = ref(0)
+const name = ref('')
+const desc = ref('')
+const version = ref('')
+const location = ref([])
+const tag = ref([])
+const info = ref([])
+const percent = ref(0)
+const locationname = ref('')
+const locationtype = ref('text')
+const locationvalue = ref('')
+const locationtag = ref([])
+const locationtagtype = ref('')
+const locationtagvalue = ref('')
+const tagtype = ref('')
+const tagvalue = ref('')
+const infoname = ref('')
+const infotype = ref('text')
+const infovalue = ref('')
+const infocolor = ref('simple')
+const typeas = ref([
+  {
+    value: 'text',
+    label: '文本'
+  },
+  {
+    value: 'url',
+    label: '链接'
+  }
+])
+const typebs = ref([
+  {
+    value: '',
+    label: '白'
+  },
+  {
+    value: 'info',
+    label: '蓝'
+  },
+  {
+    value: 'success',
+    label: '绿'
+  },
+  {
+    value: 'warning',
+    label: '橙'
+  },
+  {
+    value: 'danger',
+    label: '红'
+  }
+])
+const typecs = ref([
+  {
+    value: 'simple',
+    label: '白'
+  },
+  {
+    value: 'info',
+    label: '蓝'
+  },
+  {
+    value: 'success',
+    label: '绿'
+  },
+  {
+    value: 'warning',
+    label: '橙'
+  },
+  {
+    value: 'error',
+    label: '红'
+  }
+])
 async function get() {
   const res = await request({
     apiPath: '/admin/getProcessingReviewResource',
@@ -27,11 +105,120 @@ async function get() {
   let dataout = res.data
   date = res.data.submitReviewDate
   dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
-  data.value = dataout
+  id.value = dataout._id
+  submitreviewdate.value = dataout.submitReviewDate
+  name.value = dataout.reviewInfo.name
+  desc.value = dataout.reviewInfo.desc
+  version.value = dataout.reviewInfo.version
+  location.value = dataout.reviewInfo.location
+  tag.value = dataout.reviewInfo.tag
+  info.value = dataout.reviewInfo.info
+  allowupdate.value = dataout.allowReviewerUpdate
+  if (dataout.allowReviewerUpdate == false) {
+    update.value = false
+  }
+  const countres = await request({
+    apiPath: '/admin/getProcessingReviewResourceCount',
+    body: {
+      accessToken: accesstoken
+    }
+  })
+  count.value = total.value - countres.count
+  percent.value = ((count.value / total.value) * 100).toFixed(0)
+}
+async function getTotal() {
+  const totalres = await request({
+    apiPath: '/admin/getProcessingReviewResourceCount',
+    body: {
+      accessToken: accesstoken
+    }
+  })
+  total.value = totalres.count
 }
 get()
+getTotal()
+function addLocationTag() {
+  if (!locationtagvalue.value) {
+    TinyModal.message({
+      message: '请输入内容',
+      status: 'warning'
+    })
+    return
+  }
+  locationtag.value.push({
+    type: locationtagtype.value,
+    value: locationtagvalue.value
+  })
+  locationtagtype.value = ''
+  locationtagvalue.value = ''
+}
+function removeLocationTag(index) {
+  locationtag.value.splice(index, 1)
+}
+function addLocation() {
+  if (!locationvalue.value) {
+    TinyModal.message({
+      message: '请输入地址',
+      status: 'warning'
+    })
+    return
+  }
+  location.value.push({
+    name: locationname.value,
+    type: locationtype.value,
+    value: locationvalue.value,
+    tag: locationtag.value
+  })
+  locationname.value = ''
+  locationtype.value = 'text'
+  locationvalue.value = ''
+  locationtag.value = []
+}
+function removeLocation(index) {
+  location.value.splice(index, 1)
+}
+function addTag() {
+  if (!tagvalue.value) {
+    TinyModal.message({
+      message: '请输入内容',
+      status: 'warning'
+    })
+    return
+  }
+  tag.value.push({
+    type: tagtype.value,
+    value: tagvalue.value
+  })
+  tagtype.value = ''
+  tagvalue.value = ''
+}
+function removeTag(index) {
+  tag.value.splice(index, 1)
+}
+function addInfo() {
+  if (!infovalue.value) {
+    TinyModal.message({
+      message: '请输入内容',
+      status: 'warning'
+    })
+    return
+  }
+  info.value.push({
+    name: infoname.value,
+    type: infotype.value,
+    value: infovalue.value,
+    color: infocolor.value
+  })
+  infoname.value = ''
+  infotype.value = 'text'
+  infovalue.value = ''
+  infocolor.value = 'simple'
+}
+function removeInfo(index) {
+  info.value.splice(index, 1)
+}
 function copy() {
-  navigator.clipboard.writeText(data.value._id)
+  navigator.clipboard.writeText(id.value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'
@@ -49,10 +236,16 @@ async function updateReviewResult() {
     apiPath: '/admin/updateResourceReviewResult',
     body: {
       accessToken: accesstoken,
-      id: data.value._id,
+      id: id.value,
       status: reviewstatus.value,
       reason: reviewinvalidreason.value,
-      date: date
+      date: date,
+      name: name.value,
+      desc: desc.value,
+      version: version.value,
+      location: location.value,
+      tag: tag.value,
+      info: info.value
     }
   })
   TinyModal.message({
@@ -70,72 +263,174 @@ async function updateReviewResult() {
 
 <template>
   <div class="cz">
+    <tiny-progress :percentage="percent"></tiny-progress>
     <div class="sp">
-      <div class="bold-text">名称</div>
-      <div>{{ data.reviewInfo.name }}</div>
-    </div>
-    <div class="bold-text">简介</div>
-    <div class="text">{{ data.reviewInfo.desc }}</div>
-    <div class="sp">
-      <div class="bold-text">版本号</div>
-      <div>{{ data.reviewInfo.version }}</div>
-    </div>
-    <div class="bold-text">地址</div>
-    <div v-for="item in data.reviewInfo.location" class="sp">
-      <div>
-        <span v-if="item.name != ''">{{ item.name }}：</span>
-        <span v-if="item.type == 'text'">{{ item.value }}</span>
-        <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
-      </div>
-      <div class="sp">
-        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-      </div>
+      <div class="bold-text">进度</div>
+      <div>{{ count }} / {{ total }}</div>
     </div>
     <div class="sp">
-      <div class="bold-text">标签</div>
-      <tiny-tag v-for="item in data.reviewInfo.tag" :type="item.type">{{ item.value }}</tiny-tag>
-    </div>
-    <div class="bold-text">更多信息</div>
-    <tiny-alert v-for="item in data.reviewInfo.info" :closable="false" :type="item.color">
-      <template #description>
-        <span v-if="item.name != ''">{{ item.name }}：</span>
-        <span v-if="item.type == 'text'">{{ item.value }}</span>
-        <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
-      </template>
-    </tiny-alert>
-    <tiny-divider></tiny-divider>
-    <div class="large-bold-text">更多信息</div>
-    <div class="sp">
-      <div class="bold-text">ID</div>
-      <div>{{ data._id }}</div>
-      <tiny-button type="info" @click="copy">复制</tiny-button>
-    </div>
-    <div class="sp">
-      <div class="bold-text">提交审核时间</div>
-      <div>{{ data.submitReviewDate }}</div>
-    </div>
-    <tiny-divider></tiny-divider>
-    <div class="sp">
-      <div>提交后</div>
+      <div class="bold-text">提交后</div>
       <tiny-radio-group v-model="aftersubmit">
         <tiny-radio label="getnext">审核下一个</tiny-radio>
         <tiny-radio label="exit">退出</tiny-radio>
       </tiny-radio-group>
     </div>
     <div class="sp">
-      <div>获取方式</div>
+      <div class="bold-text">获取方式</div>
       <tiny-radio-group v-model="type">
         <tiny-radio label="sorted">提交审核时间从早到晚</tiny-radio>
         <tiny-radio label="random">随机</tiny-radio>
       </tiny-radio-group>
     </div>
-    <tiny-button v-if="type == 'sorted'" type="info" @click="get">刷新</tiny-button>
-    <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
+    <div>
+      <tiny-button v-if="type == 'sorted'" type="info" @click="get">刷新</tiny-button>
+      <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
+    </div>
+    <tiny-divider></tiny-divider>
+    <div v-if="allowupdate == true">
+      <tiny-switch v-model="update" show-text>
+        <template #open>
+          <span>修改</span>
+        </template>
+        <template #close>
+          <span>预览</span>
+        </template>
+      </tiny-switch>
+    </div>
+    <div v-if="update == false" class="cz">
+      <div class="sp">
+        <div class="bold-text">名称</div>
+        <div>{{ name }}</div>
+      </div>
+      <div class="bold-text">简介</div>
+      <div>{{ desc }}</div>
+      <div class="sp">
+        <div class="bold-text">版本号</div>
+        <div>{{ version }}</div>
+      </div>
+      <div class="bold-text">地址</div>
+      <div v-for="item in location" class="sp">
+        <div>
+          <span v-if="item.name != ''">{{ item.name }}：</span>
+          <span v-if="item.type == 'text'">{{ item.value }}</span>
+          <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+        </div>
+        <div class="sp">
+          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="bold-text">标签</div>
+        <tiny-tag v-for="item in tag" :type="item.type">{{ item.value }}</tiny-tag>
+      </div>
+      <div class="bold-text">更多信息</div>
+      <tiny-alert v-for="item in info" :closable="false" :type="item.color">
+        <template #description>
+          <span v-if="item.name != ''">{{ item.name }}：</span>
+          <span v-if="item.type == 'text'">{{ item.value }}</span>
+          <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+        </template>
+      </tiny-alert>
+    </div>
+    <div v-if="update == true">
+      <tiny-form>
+        <tiny-form-item label="名称">
+          <tiny-input v-model="name" clearable placeholder="请输入名称"></tiny-input>
+        </tiny-form-item>
+        <tiny-form-item label="简介">
+          <tiny-input v-model="desc" type="textarea" autosize clearable placeholder="请输入简介（可选）"></tiny-input>
+        </tiny-form-item>
+        <tiny-form-item label="版本号">
+          <tiny-input v-model="version" clearable placeholder="请输入版本号（可选）"></tiny-input>
+        </tiny-form-item>
+        <tiny-form-item label="地址">
+          <div class="cz">
+            <tiny-input v-model="locationname" clearable placeholder="请输入名称（可选）"></tiny-input>
+            <tiny-base-select v-model="locationtype">
+              <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
+            </tiny-base-select>
+            <tiny-input v-model="locationvalue" type="textarea" autosize clearable placeholder="请输入地址"></tiny-input>
+            <div class="sp">
+              <tiny-base-select v-model="locationtagtype">
+                <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
+              </tiny-base-select>
+              <tiny-input v-model="locationtagvalue" clearable placeholder="请输入内容"></tiny-input>
+              <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
+            </div>
+            <div v-for="(item, index) in locationtag" class="sp">
+              <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+              <tiny-button type="danger" @click="removeLocationTag(index)">删除</tiny-button>
+            </div>
+            <tiny-button type="success" @click="addLocation">添加</tiny-button>
+            <div v-for="(item, index) in location" class="sp">
+              <div class="sp">
+                <div>{{ index + 1 }}.</div>
+                <div>
+                  <span v-if="item.name != ''">{{ item.name }}：</span>
+                  <span v-if="item.type == 'text'">{{ item.value }}</span>
+                  <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+                </div>
+                <div class="sp">
+                  <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
+                </div>
+              </div>
+              <tiny-button type="danger" @click="removeLocation(index)">删除</tiny-button>
+            </div>
+          </div>
+        </tiny-form-item>
+        <tiny-form-item label="标签">
+          <div class="cz">
+            <div class="sp">
+              <tiny-base-select v-model="tagtype">
+                <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
+              </tiny-base-select>
+              <tiny-input v-model="tagvalue" clearable placeholder="请输入内容"></tiny-input>
+              <tiny-button type="success" @click="addTag">添加</tiny-button>
+            </div>
+            <div v-for="(item, index) in tag" class="sp">
+              <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+              <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
+            </div>
+          </div>
+        </tiny-form-item>
+        <tiny-form-item label="更多信息">
+          <div class="cz">
+            <tiny-base-select v-model="infocolor">
+              <tiny-option v-for="item in typecs" :value="item.value" :label="item.label"></tiny-option>
+            </tiny-base-select>
+            <tiny-input v-model="infoname" clearable placeholder="请输入名称（可选）"></tiny-input>
+            <tiny-base-select v-model="infotype">
+              <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
+            </tiny-base-select>
+            <tiny-input v-model="infovalue" type="textarea" autosize clearable placeholder="请输入内容"></tiny-input>
+            <tiny-button type="success" @click="addInfo">添加</tiny-button>
+            <div v-for="(item, index) in info" class="sp">
+              <tiny-alert :closable="false" :type="item.color">
+                <template #description>
+                  <span v-if="item.name != ''">{{ item.name }}：</span>
+                  <span v-if="item.type == 'text'">{{ item.value }}</span>
+                  <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+                </template>
+              </tiny-alert>
+              <tiny-button type="danger" @click="removeInfo(index)">删除</tiny-button>
+            </div>
+          </div>
+        </tiny-form-item>
+      </tiny-form>
+    </div>
+    <div class="sp">
+      <div class="bold-text">ID</div>
+      <div>{{ id }}</div>
+      <tiny-button type="info" @click="copy">复制</tiny-button>
+    </div>
+    <div class="sp">
+      <div class="bold-text">提交审核时间</div>
+      <div>{{ submitreviewdate }}</div>
+    </div>
     <tiny-divider></tiny-divider>
     <tiny-radio-group v-model="reviewstatus">
-      <tiny-radio label="valid"
-        :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
-      <tiny-radio label="invalid" :disabled="data.releaseStatus == 'pending'">不通过</tiny-radio>
+      <tiny-radio label="valid">通过</tiny-radio>
+      <tiny-radio label="invalid">不通过</tiny-radio>
     </tiny-radio-group>
     <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
       placeholder="请输入不通过原因"></tiny-input>

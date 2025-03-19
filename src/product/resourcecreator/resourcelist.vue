@@ -11,7 +11,7 @@ const pagesize = ref(10)
 const total = ref(0)
 const keyword = ref('')
 const releasestatus = ref('')
-const reviewstatus = ref([])
+const reviewstatus = ref('')
 const releasestatuss = ref([
   {
     value: '',
@@ -226,7 +226,7 @@ async function deleteResource(id) {
               @click="releaseb(row._id)">上架</tiny-button>
             <tiny-button v-if="row.releaseStatus == 'release'" type="danger"
               @click="unrelease(row._id)">下架</tiny-button>
-            <tiny-button v-if="row.reviewStatus == 'pending'" type="success"
+            <tiny-button v-if="row.reviewStatus != 'processing'" type="success"
               @click="submitReview(row._id)">提交审核</tiny-button>
             <tiny-button v-if="row.reviewStatus == 'processing'" type="danger"
               @click="unsubmitReview(row._id)">撤回审核</tiny-button>

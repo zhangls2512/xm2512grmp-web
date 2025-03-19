@@ -19,34 +19,6 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    let id = db.command.neq('')
-    let keyword = db.command.neq(null)
-    let releasestatus = db.command.neq('')
-    let reviewstatus = db.command.neq('')
-    if (typeof (requestdata.id) == 'string' && requestdata.id) {
-      id = requestdata.id
-    }
-    if (typeof (requestdata.keyword) == 'string' && requestdata.keyword) {
-      keyword = db.RegExp({
-        regexp: requestdata.keyword
-      })
-    }
-    const validreleasestatus = ['release', 'unrelease', 'ban']
-    const validreviewstatus = ['pending', 'processing', 'valid', 'invalid']
-    if (validreleasestatus.includes(requestdata.releaseStatus)) {
-      releasestatus = requestdata.releaseStatus
-    }
-    if (validreviewstatus.includes(requestdata.reviewStatus)) {
-      reviewstatus = requestdata.reviewStatus
-    }
-    let skip = 0
-    let limit = 10
-    if (Number.isInteger(requestdata.skip)) {
-      skip = requestdata.skip
-    }
-    if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
-      limit = requestdata.limit
-    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -66,22 +38,19 @@ exports.main = async (event) => {
         },
         permission: ['account', 'admin'],
         service: ['admin'],
-        apiName: 'admin_getResourceList'
+        apiName: 'admin_getProcessingReviewResourceCount'
       }
     })
     if (res.result.errCode != 0) {
       return res.result
     } else {
       const resourceres = await db.collection('resource').where({
-        _id: id,
-        name: keyword,
-        releaseStatus: releasestatus,
-        reviewStatus: reviewstatus
-      }).orderBy('createDate', 'desc').skip(skip).limit(limit).get()
+        reviewStatus: 'processing'
+      }).count()
       return {
         errCode: 0,
         errMsg: '成功',
-        data: resourceres.data
+        count: resourceres.total
       }
     }
   } catch {
