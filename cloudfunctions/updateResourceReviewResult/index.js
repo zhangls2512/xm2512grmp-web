@@ -27,6 +27,13 @@ exports.main = async (event) => {
         errFix: '传递有效的id参数'
       }
     }
+    if (!Number.isInteger(requestdata.date)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的date参数'
+      }
+    }
     const validstatuss = ['valid', 'invalid']
     if (!validstatuss.includes(requestdata.status)) {
       return {
@@ -42,11 +49,11 @@ exports.main = async (event) => {
         errFix: '传递有效的reason参数'
       }
     }
-    if (!Number.isInteger(requestdata.date)) {
+    if (requestdata.status == 'invalid' && typeof (requestdata.disallowUpdateReview) != 'boolean') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的date参数'
+        errFix: '传递有效的disallowUpdateReview参数'
       }
     }
     let type = ''
@@ -177,6 +184,7 @@ exports.main = async (event) => {
           await db.collection('resource').where({
             _id: requestdata.id
           }).update({
+            disallowUpdateReview: false,
             reviewInfo: reviewinfo,
             reviewInvalidReason: '',
             reviewStatus: 'valid'
@@ -210,6 +218,8 @@ exports.main = async (event) => {
           await db.collection('resource').where({
             _id: requestdata.id
           }).update({
+            disallowUpdateReview: requestdata.disallowUpdateReview,
+            reviewInfo: reviewinfo,
             reviewInvalidReason: requestdata.reason,
             reviewStatus: 'invalid'
           })

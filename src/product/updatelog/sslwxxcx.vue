@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（微信小程序）'
 const data = [
   {
+    versionNumber: '2.0.2',
+    releaseDate: '2025-03-20',
+    logs: [
+      {
+        type: 'U',
+        content: '优化了一些页面的细节体验'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.1',
     releaseDate: '2025-03-18',
     logs: [

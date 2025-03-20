@@ -1,8 +1,7 @@
 {
   "scripts": {
     "dev": "npm update && vite",
-    "build": "npm update && vite build",
-    "release": "tcb hosting deploy ./dist -e zhangls2512-5ggbio7hc46f4036"
+    "release": "npm update && vite build && tcb hosting deploy ./dist -e zhangls2512-5ggbio7hc46f4036"
   },
   "dependencies": {
     "@cloudbase/js-sdk": "^2.9.3",

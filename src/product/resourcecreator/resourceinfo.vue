@@ -106,6 +106,8 @@ function copy() {
       </tiny-alert>
       <tiny-divider></tiny-divider>
       <div class="large-bold-text">审核版本信息</div>
+      <tiny-alert v-if="data.disallowUpdateReview == true" type="error" :closable="false"
+        description="禁止修改，如有疑问请联系客服"></tiny-alert>
       <div class="sp">
         <div class="bold-text">状态</div>
         <tiny-tag v-if="data.reviewStatus == 'pending'" type="info">待提交审核</tiny-tag>

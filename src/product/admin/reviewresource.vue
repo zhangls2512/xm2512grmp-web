@@ -7,15 +7,17 @@ import sortable from 'sortablejs'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
-const reviewstatus = ref('valid')
-const reviewinvalidreason = ref('')
 let date = ''
-const aftersubmit = ref('getnext')
-const type = ref('sorted')
-const update = ref(false)
-const allowupdate = ref(false)
 const total = ref(0)
 const count = ref(0)
+const percent = ref(0)
+const aftersubmit = ref('getnext')
+const type = ref('sorted')
+const allowupdate = ref(false)
+const update = ref(false)
+const reviewstatus = ref('valid')
+const reviewinvalidreason = ref('')
+const disallowupdatereview = ref(false)
 const id = ref('')
 const submitreviewdate = ref(0)
 const name = ref('')
@@ -24,7 +26,6 @@ const version = ref('')
 const location = ref([])
 const tag = ref([])
 const info = ref([])
-const percent = ref(0)
 const locationname = ref('')
 const locationtype = ref('text')
 const locationvalue = ref('')
@@ -98,6 +99,9 @@ const typecs = ref([
   }
 ])
 async function get() {
+  reviewstatus.value = 'valid'
+  reviewinvalidreason.value = ''
+  disallowupdatereview.value = false
   const res = await request({
     apiPath: '/admin/getProcessingReviewResource',
     body: {
@@ -110,10 +114,10 @@ async function get() {
     status: 'success'
   })
   let dataout = res.data
-  date = res.data.submitReviewDate
-  dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   id.value = dataout._id
-  submitreviewdate.value = dataout.submitReviewDate
+  disallowupdatereview.value = dataout.disallowUpdateReview
+  date = res.data.submitReviewDate
+  submitreviewdate.value = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   name.value = dataout.reviewInfo.name
   desc.value = dataout.reviewInfo.desc
   version.value = dataout.reviewInfo.version
@@ -246,6 +250,7 @@ async function updateReviewResult() {
       id: id.value,
       status: reviewstatus.value,
       reason: reviewinvalidreason.value,
+      disallowUpdateReview: disallowupdatereview.value,
       date: date,
       name: name.value,
       desc: desc.value,
@@ -476,6 +481,10 @@ async function updateReviewResult() {
     </tiny-radio-group>
     <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
       placeholder="请输入不通过原因"></tiny-input>
+    <div v-if="reviewstatus == 'invalid'" class="sp">
+      <div class="bold-text">禁止修改审核版本</div>
+      <tiny-switch v-model="disallowupdatereview"></tiny-switch>
+    </div>
     <tiny-button type="info" @click="updateReviewResult">提交</tiny-button>
   </div>
 </template>

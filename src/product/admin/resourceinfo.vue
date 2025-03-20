@@ -9,11 +9,12 @@ const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref({})
+let date = ''
 const releasestatus = ref('')
 const releasebanreason = ref('')
 const reviewstatus = ref('')
 const reviewinvalidreason = ref('')
-let date = ''
+const disallowupdatereview = ref(false)
 async function get() {
   const res = await request({
     apiPath: '/admin/getResourceInfo',
@@ -27,8 +28,9 @@ async function get() {
     status: 'success'
   })
   let dataout = res.data
-  date = res.data.submitReviewDate
   dataout.createDate = moment(res.data.createDate).format('YYYY-MM-DD HH:mm:ss')
+  disallowupdatereview.value = dataout.disallowUpdateReview
+  date = res.data.submitReviewDate
   dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
   if (dataout.releaseStatus == 'ban') {
@@ -120,6 +122,7 @@ async function updateReviewResult() {
       id: id,
       status: reviewstatus.value,
       reason: reviewinvalidreason.value,
+      disallowUpdateReview: disallowupdatereview.value,
       date: date
     }
   })
@@ -210,6 +213,8 @@ async function updateReviewResult() {
       </tiny-alert>
       <tiny-divider></tiny-divider>
       <div class="large-bold-text">审核版本信息</div>
+      <tiny-alert v-if="data.disallowUpdateReview == true" type="error" :closable="false"
+        description="禁止修改"></tiny-alert>
       <div class="sp">
         <div class="bold-text">状态</div>
         <tiny-tag v-if="data.reviewStatus == 'pending'" type="info">待提交审核</tiny-tag>
@@ -226,6 +231,10 @@ async function updateReviewResult() {
       </tiny-radio-group>
       <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
         placeholder="请输入不通过原因"></tiny-input>
+      <div v-if="reviewstatus == 'invalid'" class="sp">
+        <div class="bold-text">禁止修改审核版本</div>
+        <tiny-switch v-model="disallowupdatereview"></tiny-switch>
+      </div>
       <tiny-button v-if="data.reviewStatus != 'pending'" type="info" @click="updateReviewResult">提交</tiny-button>
       <div v-if="data.reviewStatus != 'pending'" class="sp">
         <div class="bold-text">提交审核时间</div>

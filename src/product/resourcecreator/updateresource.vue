@@ -9,6 +9,7 @@ import router from '../../router'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
+const reviewinvalidreason = ref('')
 const name = ref('')
 const desc = ref('')
 const version = ref('')
@@ -102,6 +103,7 @@ async function get() {
     status: 'success'
   })
   const data = res.data.reviewInfo
+  reviewinvalidreason.value = res.data.reviewInvalidReason
   name.value = data.name
   desc.value = data.desc
   version.value = data.version
@@ -254,6 +256,8 @@ async function update() {
             target="_blank">《审核标准》</a>并严格按照其中的要求、说明填写信息，谢谢。</div>
       </template>
     </tiny-alert>
+    <tiny-alert v-if="reviewinvalidreason != ''" type="error" size="large" :closable="false" title="不通过原因"
+      :description="reviewinvalidreason"></tiny-alert>
     <tiny-form>
       <tiny-form-item label="名称">
         <tiny-input v-model="name" clearable placeholder="请输入名称"></tiny-input>

@@ -98,6 +98,7 @@ exports.main = async (event) => {
         allowReviewerUpdate: requestdata.allowReviewerUpdate,
         createDate: Date.now(),
         desc: '',
+        disallowUpdateReview: false,
         info: [],
         location: [],
         name: '',

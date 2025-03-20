@@ -120,6 +120,13 @@ exports.main = async (event) => {
             errFix: '撤回审核'
           }
         }
+        if (data.disallowUpdateReview == true) {
+          return {
+            errCode: 8002,
+            errMsg: '禁止更新审核版本',
+            errFix: '联系客服'
+          }
+        }
         await db.collection('resource').where({
           _id: requestdata.id
         }).update({
