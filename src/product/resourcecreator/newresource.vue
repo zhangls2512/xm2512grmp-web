@@ -326,7 +326,7 @@ async function newResource() {
           <tiny-button type="success" @click="addInfo">添加</tiny-button>
           <tiny-grid :data="info" :drop-config="dropconfig" row-key>
             <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
-            <tiny-grid-column title="地址" align="center">
+            <tiny-grid-column title="更多信息" align="center">
               <template #default="{ row }">
                 <tiny-alert :closable="false" :type="row.color">
                   <template #description>
