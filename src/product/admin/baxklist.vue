@@ -138,6 +138,13 @@ function pagesizeChange(t) {
 function newBaxk() {
   router.push('/product/admin/newbaxk')
 }
+function copy(value) {
+  navigator.clipboard.writeText(value)
+  TinyModal.message({
+    message: '内容已复制',
+    status: 'success'
+  })
+}
 function openDialog(row) {
   dialog.value = true
   id.value = row._id
@@ -205,7 +212,13 @@ async function deleteBaxk(t) {
       <tiny-grid-column field="productName" title="产品名称" align="center"></tiny-grid-column>
       <tiny-grid-column field="specificType" title="具体类型" align="center"></tiny-grid-column>
       <tiny-grid-column field="desc" title="描述" align="center" show-overflow></tiny-grid-column>
-      <tiny-grid-column field="baxkNumber" title="备案/许可号" align="center" format-text="longDateTime"></tiny-grid-column>
+      <tiny-grid-column title="备案/许可号" align="center" format-text="longDateTime">
+        <template #default="{ row }">
+          <tiny-tooltip content="点击复制" placement="top">
+            <div style="cursor: pointer" @click="copy(row.baxkNumber)">{{ row.baxkNumber }}</div>
+          </tiny-tooltip>
+        </template>
+      </tiny-grid-column>
       <tiny-grid-column field="date" title="更新时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">

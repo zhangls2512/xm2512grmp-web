@@ -2,6 +2,7 @@
 document.title = '轩铭2512 - 资源投稿 - 新增资源'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
+import sortable from 'sortablejs'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
@@ -25,6 +26,12 @@ const infovalue = ref('')
 const infocolor = ref('simple')
 const allowreviewerupdate = ref(false)
 const submitreview = ref(false)
+const dropconfig = ref({
+  plugin: sortable,
+  row: true,
+  rowHandle: 'index',
+  column: false
+})
 const typeas = ref([
   {
     value: 'text',
@@ -244,25 +251,42 @@ async function newResource() {
             <tiny-input v-model="locationtagvalue" clearable placeholder="请输入内容"></tiny-input>
             <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
           </div>
-          <div v-for="(item, index) in locationtag" class="sp">
-            <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
-            <tiny-button type="danger" @click="removeLocationTag(index)">删除</tiny-button>
-          </div>
+          <tiny-grid :data="locationtag" :drop-config="dropconfig" row-key>
+            <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+            <tiny-grid-column title="标签" align="center">
+              <template #default="{ row }">
+                <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
+              </template>
+            </tiny-grid-column>
+            <tiny-grid-column title="操作" align="center">
+              <template #default="{ $rowIndex }">
+                <tiny-button type="danger" @click="removeLocationTag($rowIndex)">删除</tiny-button>
+              </template>
+            </tiny-grid-column>
+          </tiny-grid>
           <tiny-button type="success" @click="addLocation">添加</tiny-button>
-          <div v-for="(item, index) in location" class="sp">
-            <div class="sp">
-              <div>{{ index + 1 }}.</div>
-              <div>
-                <span v-if="item.name != ''">{{ item.name }}：</span>
-                <span v-if="item.type == 'text'">{{ item.value }}</span>
-                <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
-              </div>
-              <div class="sp">
-                <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-              </div>
-            </div>
-            <tiny-button type="danger" @click="removeLocation(index)">删除</tiny-button>
-          </div>
+          <tiny-grid :data="location" :drop-config="dropconfig" row-key>
+            <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+            <tiny-grid-column title="地址" align="center">
+              <template #default="{ row }">
+                <div class="sp">
+                  <div>
+                    <span v-if="row.name != ''">{{ row.name }}：</span>
+                    <span v-if="row.type == 'text'">{{ row.value }}</span>
+                    <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
+                  </div>
+                  <div class="sp">
+                    <tiny-tag v-for="item in row.tag" :type="item.type">{{ item.value }}</tiny-tag>
+                  </div>
+                </div>
+              </template>
+            </tiny-grid-column>
+            <tiny-grid-column title="操作" align="center">
+              <template #default="{ $rowIndex }">
+                <tiny-button type="danger" @click="removeLocation($rowIndex)">删除</tiny-button>
+              </template>
+            </tiny-grid-column>
+          </tiny-grid>
         </div>
       </tiny-form-item>
       <tiny-form-item label="标签">
@@ -274,10 +298,19 @@ async function newResource() {
             <tiny-input v-model="tagvalue" clearable placeholder="请输入内容"></tiny-input>
             <tiny-button type="success" @click="addTag">添加</tiny-button>
           </div>
-          <div v-for="(item, index) in tag" class="sp">
-            <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
-            <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
-          </div>
+          <tiny-grid :data="tag" :drop-config="dropconfig" row-key>
+            <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+            <tiny-grid-column title="标签" align="center">
+              <template #default="{ row }">
+                <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
+              </template>
+            </tiny-grid-column>
+            <tiny-grid-column title="操作" align="center">
+              <template #default="{ $rowIndex }">
+                <tiny-button type="danger" @click="removeTag($rowIndex)">删除</tiny-button>
+              </template>
+            </tiny-grid-column>
+          </tiny-grid>
         </div>
       </tiny-form-item>
       <tiny-form-item label="更多信息">
@@ -291,16 +324,25 @@ async function newResource() {
           </tiny-base-select>
           <tiny-input v-model="infovalue" type="textarea" autosize clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addInfo">添加</tiny-button>
-          <div v-for="(item, index) in info" class="sp">
-            <tiny-alert :closable="false" :type="item.color">
-              <template #description>
-                <span v-if="item.name != ''">{{ item.name }}：</span>
-                <span v-if="item.type == 'text'">{{ item.value }}</span>
-                <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+          <tiny-grid :data="info" :drop-config="dropconfig" row-key>
+            <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+            <tiny-grid-column title="地址" align="center">
+              <template #default="{ row }">
+                <tiny-alert :closable="false" :type="row.color">
+                  <template #description>
+                    <span v-if="row.name != ''">{{ row.name }}：</span>
+                    <span v-if="row.type == 'text'">{{ row.value }}</span>
+                    <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
+                  </template>
+                </tiny-alert>
               </template>
-            </tiny-alert>
-            <tiny-button type="danger" @click="removeInfo(index)">删除</tiny-button>
-          </div>
+            </tiny-grid-column>
+            <tiny-grid-column title="操作" align="center">
+              <template #default="{ $rowIndex }">
+                <tiny-button type="danger" @click="removeInfo($rowIndex)">删除</tiny-button>
+              </template>
+            </tiny-grid-column>
+          </tiny-grid>
         </div>
       </tiny-form-item>
       <tiny-form-item label="设置">

@@ -120,7 +120,7 @@ function error(error) {
           <tiny-grid-column title="验证值" align="center">
             <template #default="{ row }">
               <tiny-tooltip content="点击复制" placement="top">
-                <div @click="copy(row.token)">{{ row.token }}</div>
+                <div style="cursor: pointer" @click="copy(row.token)">{{ row.token }}</div>
               </tiny-tooltip>
             </template>
           </tiny-grid-column>

@@ -11,6 +11,7 @@
     "js-cookie": "latest",
     "moment-timezone": "latest",
     "qrcode": "latest",
+    "sortablejs": "latest",
     "validator": "latest",
     "vue": "latest",
     "vue-router": "latest"

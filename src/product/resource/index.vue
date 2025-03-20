@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import request from '../../request'
 const data = ref([])
-const count = ref('12')
-const type = ref('grid')
 const keyword = ref('')
+const type = ref('grid')
+const count = ref('12')
 async function get() {
   const res = await request({
     apiPath: '/resource/getRandomResourceList',
