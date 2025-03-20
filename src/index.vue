@@ -32,9 +32,7 @@ age = outputage()
         </div>
       </div>
       <div class="title">个人简介</div>
-      <div class="large-text">
-        我是一名软件开发工程师，专注于网页、鸿蒙原生应用、鸿蒙元服务与微信小程序的开发。
-      </div>
+      <div class="large-text">我是一名软件开发工程师，专注于网页、鸿蒙原生应用、鸿蒙元服务与微信小程序的开发。</div>
       <div class="title">技能证书</div>
       <div class="sp">
         <img class="tp" src="/zsa.jpeg" loading="lazy" />
