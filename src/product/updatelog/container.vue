@@ -42,6 +42,10 @@ const tabs = [
   {
     id: 'grmpweb',
     label: '个人名片（网页）'
+  },
+  {
+    id: 'grmpwxxcx',
+    label: '个人名片（微信小程序）'
   }
 ]
 const tabClick = (data) => {

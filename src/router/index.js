@@ -49,10 +49,6 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/index.vue')
         },
         {
-          path: 'baxk',
-          component: () => import('/src/product/updatelog/baxk.vue')
-        },
-        {
           path: 'account',
           component: () => import('/src/product/updatelog/account.vue')
         },
@@ -61,16 +57,16 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/admin.vue')
         },
         {
+          path: 'baxk',
+          component: () => import('/src/product/updatelog/baxk.vue')
+        },
+        {
           path: 'resource',
           component: () => import('/src/product/updatelog/resource.vue')
         },
         {
           path: 'resourcecreator',
           component: () => import('/src/product/updatelog/resourcecreator.vue')
-        },
-        {
-          path: 'grmpweb',
-          component: () => import('/src/product/updatelog/grmpweb.vue')
         },
         {
           path: 'sslweb',
@@ -83,6 +79,14 @@ const router = createRouter({
         {
           path: 'mtcl',
           component: () => import('/src/product/updatelog/mtcl.vue')
+        },
+        {
+          path: 'grmpweb',
+          component: () => import('/src/product/updatelog/grmpweb.vue')
+        },
+        {
+          path: 'grmpwxxcx',
+          component: () => import('/src/product/updatelog/grmpwxxcx.vue')
         }
       ]
     },
