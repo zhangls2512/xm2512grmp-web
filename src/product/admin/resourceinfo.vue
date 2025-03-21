@@ -175,7 +175,7 @@ async function updateReviewResult() {
         <tiny-radio label="unban" :disabled="data.releaseStatus != 'ban'">解封</tiny-radio>
       </tiny-radio-group>
       <tiny-input v-if="releasestatus == 'ban'" v-model="releasebanreason" type="textarea" autosize clearable
-        placeholder="请输入封禁原因"></tiny-input>
+        show-word-limit maxlength="500" placeholder="请输入封禁原因"></tiny-input>
       <tiny-button type="info" @click="updateReleaseStatus">提交</tiny-button>
       <div class="sp">
         <div class="bold-text">名称</div>
@@ -195,9 +195,7 @@ async function updateReviewResult() {
           <span v-if="item.type == 'text'">{{ item.value }}</span>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
-        <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-        </div>
+        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
       </div>
       <div class="sp">
         <div class="bold-text">标签</div>
@@ -230,9 +228,9 @@ async function updateReviewResult() {
         <tiny-radio label="invalid">不通过</tiny-radio>
       </tiny-radio-group>
       <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
-        placeholder="请输入不通过原因"></tiny-input>
+        show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
       <div v-if="reviewstatus == 'invalid'" class="sp">
-        <div class="bold-text">禁止修改审核版本</div>
+        <div class="bold-text">禁止修改</div>
         <tiny-switch v-model="disallowupdatereview"></tiny-switch>
       </div>
       <tiny-button v-if="data.reviewStatus != 'pending'" type="info" @click="updateReviewResult">提交</tiny-button>
@@ -258,9 +256,7 @@ async function updateReviewResult() {
           <span v-if="item.type == 'text'">{{ item.value }}</span>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
-        <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-        </div>
+        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
       </div>
       <div class="sp">
         <div class="bold-text">标签</div>

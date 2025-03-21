@@ -221,8 +221,8 @@ const router = createRouter({
           component: () => import('/src/product/resource/search.vue')
         },
         {
-          path: 'resourceinfo',
-          component: () => import('/src/product/resource/resourceinfo.vue')
+          path: 'info',
+          component: () => import('/src/product/resource/info.vue')
         },
         {
           path: 'panel',

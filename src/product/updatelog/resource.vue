@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 资源'
 const data = [
   {
+    versionNumber: '1.0.3',
+    releaseDate: '2025-03-21',
+    logs: [
+      {
+        type: 'U',
+        content: '支持点击复制文本类型地址内容、更多信息内容'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2',
     releaseDate: '2025-03-19',
     logs: [

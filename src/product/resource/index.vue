@@ -27,7 +27,7 @@ function search() {
   window.open('/product/resource/search?keyword=' + keyword.value, '_blank')
 }
 function info(id) {
-  window.open('/product/resource/resourceinfo?id=' + id, '_blank')
+  window.open('/product/resource/info?id=' + id, '_blank')
 }
 </script>
 

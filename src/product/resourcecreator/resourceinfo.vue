@@ -88,9 +88,7 @@ function copy() {
           <span v-if="item.type == 'text'">{{ item.value }}</span>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
-        <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-        </div>
+        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
       </div>
       <div class="sp">
         <div class="bold-text">标签</div>
@@ -144,9 +142,7 @@ function copy() {
           <span v-if="item.type == 'text'">{{ item.value }}</span>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
-        <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-        </div>
+        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
       </div>
       <div class="sp">
         <div class="bold-text">标签</div>

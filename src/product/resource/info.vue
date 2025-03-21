@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 资源 - 资源详情'
+document.title = '轩铭2512 - 资源 - 详情'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
@@ -36,8 +36,8 @@ async function get() {
   }
 }
 get()
-function copy() {
-  navigator.clipboard.writeText(data.value._id)
+function copy(value) {
+  navigator.clipboard.writeText(value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'
@@ -118,12 +118,12 @@ async function deleteAdd() {
         <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
-          <span v-if="item.type == 'text'">{{ item.value }}</span>
+          <tiny-tooltip v-if="item.type == 'text'" content="点击复制" placement="top">
+            <span style="cursor: pointer" @click="copy(item.value)">{{ item.value }}</span>
+          </tiny-tooltip>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
-        <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
-        </div>
+        <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
       </div>
       <div v-if="data.tag.length > 0" class="sp">
         <div class="bold-text">标签</div>
@@ -133,17 +133,19 @@ async function deleteAdd() {
       <tiny-alert v-for="item in data.info" v-if="data.info.length > 0" :closable="false" :type="item.color">
         <template #description>
           <span v-if="item.name != ''">{{ item.name }}：</span>
-          <span v-if="item.type == 'text'">{{ item.value }}</span>
+          <tiny-tooltip v-if="item.type == 'text'" content="点击复制" placement="top">
+            <span style="cursor: pointer" @click="copy(item.value)">{{ item.value }}</span>
+          </tiny-tooltip>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </template>
       </tiny-alert>
       <div class="sp">
         <div class="bold-text">ID</div>
         <div>{{ data._id }}</div>
-        <tiny-button type="info" @click="copy">复制</tiny-button>
+        <tiny-button type="info" @click="copy(data._id)">复制</tiny-button>
       </div>
       <tiny-alert :closable="false" description="如果发现以上信息与实际不符或涉嫌违规，可联系客服举报。"></tiny-alert>
-      <tiny-divider></tiny-divider>
+      <tiny-divider v-if="added !== ''"></tiny-divider>
       <div>
         <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
         <tiny-button v-if="added === true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>

@@ -347,26 +347,30 @@ async function updateReviewResult() {
     <div v-if="update == true">
       <tiny-form>
         <tiny-form-item label="名称">
-          <tiny-input v-model="name" clearable placeholder="请输入名称"></tiny-input>
+          <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
         </tiny-form-item>
         <tiny-form-item label="简介">
-          <tiny-input v-model="desc" type="textarea" autosize clearable placeholder="请输入简介（可选）"></tiny-input>
+          <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
+            placeholder="请输入简介（可选）"></tiny-input>
         </tiny-form-item>
         <tiny-form-item label="版本号">
-          <tiny-input v-model="version" clearable placeholder="请输入版本号（可选）"></tiny-input>
+          <tiny-input v-model="version" clearable show-word-limit maxlength="30" placeholder="请输入版本号（可选）"></tiny-input>
         </tiny-form-item>
         <tiny-form-item label="地址">
           <div class="cz">
-            <tiny-input v-model="locationname" clearable placeholder="请输入名称（可选）"></tiny-input>
+            <tiny-input v-model="locationname" clearable show-word-limit maxlength="30"
+              placeholder="请输入名称（可选）"></tiny-input>
             <tiny-base-select v-model="locationtype">
               <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
             </tiny-base-select>
-            <tiny-input v-model="locationvalue" type="textarea" autosize clearable placeholder="请输入地址"></tiny-input>
+            <tiny-input v-model="locationvalue" type="textarea" autosize clearable show-word-limit maxlength="500"
+              placeholder="请输入地址"></tiny-input>
             <div class="sp">
               <tiny-base-select v-model="locationtagtype">
                 <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
               </tiny-base-select>
-              <tiny-input v-model="locationtagvalue" clearable placeholder="请输入内容"></tiny-input>
+              <tiny-input v-model="locationtagvalue" clearable show-word-limit maxlength="30"
+                placeholder="请输入内容"></tiny-input>
               <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
             </div>
             <tiny-grid :data="locationtag" :drop-config="dropconfig" row-key>
@@ -413,7 +417,7 @@ async function updateReviewResult() {
               <tiny-base-select v-model="tagtype">
                 <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
               </tiny-base-select>
-              <tiny-input v-model="tagvalue" clearable placeholder="请输入内容"></tiny-input>
+              <tiny-input v-model="tagvalue" clearable show-word-limit maxlength="30" placeholder="请输入内容"></tiny-input>
               <tiny-button type="success" @click="addTag">添加</tiny-button>
             </div>
             <tiny-grid :data="tag" :drop-config="dropconfig" row-key>
@@ -436,11 +440,13 @@ async function updateReviewResult() {
             <tiny-base-select v-model="infocolor">
               <tiny-option v-for="item in typecs" :value="item.value" :label="item.label"></tiny-option>
             </tiny-base-select>
-            <tiny-input v-model="infoname" clearable placeholder="请输入名称（可选）"></tiny-input>
+            <tiny-input v-model="infoname" clearable show-word-limit maxlength="30"
+              placeholder="请输入名称（可选）"></tiny-input>
             <tiny-base-select v-model="infotype">
               <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
             </tiny-base-select>
-            <tiny-input v-model="infovalue" type="textarea" autosize clearable placeholder="请输入内容"></tiny-input>
+            <tiny-input v-model="infovalue" type="textarea" autosize clearable show-word-limit maxlength="500"
+              placeholder="请输入内容"></tiny-input>
             <tiny-button type="success" @click="addInfo">添加</tiny-button>
             <tiny-grid :data="info" :drop-config="dropconfig" row-key>
               <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
@@ -480,9 +486,9 @@ async function updateReviewResult() {
       <tiny-radio label="invalid">不通过</tiny-radio>
     </tiny-radio-group>
     <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
-      placeholder="请输入不通过原因"></tiny-input>
+      show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
     <div v-if="reviewstatus == 'invalid'" class="sp">
-      <div class="bold-text">禁止修改审核版本</div>
+      <div class="bold-text">禁止修改</div>
       <tiny-switch v-model="disallowupdatereview"></tiny-switch>
     </div>
     <tiny-button type="info" @click="updateReviewResult">提交</tiny-button>

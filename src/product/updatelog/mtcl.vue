@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 媒体处理'
 const data = [
   {
+    versionNumber: '1.0.3',
+    releaseDate: '2025-03-21',
+    logs: [
+      {
+        type: 'U',
+        content: '优化了一些页面的细节体验'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2',
     releaseDate: '2025-03-09',
     logs: [
