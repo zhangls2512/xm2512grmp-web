@@ -78,26 +78,34 @@ exports.main = async (event) => {
           uid: res.result.account._id
         }).get()
         const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
-        const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
-        let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
-        authorization = authorization.map((item, index) => ({
-          ...item,
-          url: acmeorderres.authorizations[index],
-          identifier: item.identifier.value,
-          expires: new Date(item.expires).getTime(),
-          challenges: item.challenges.map(item => ({
+        try {
+          const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
+          let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
+          authorization = authorization.map((item, index) => ({
             ...item,
-            token: acme.api.getChallengeKeyAuthorization({
-              challenge: item,
-              accountKey: accountkey
-            }),
-            validated: new Date(item.validated).getTime()
+            url: acmeorderres.authorizations[index],
+            identifier: item.identifier.value,
+            expires: new Date(item.expires).getTime(),
+            challenges: item.challenges.map(item => ({
+              ...item,
+              token: acme.api.getChallengeKeyAuthorization({
+                challenge: item,
+                accountKey: accountkey
+              }),
+              validated: new Date(item.validated).getTime()
+            }))
           }))
-        }))
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          authorization: authorization
+          return {
+            errCode: 0,
+            errMsg: '成功',
+            authorization: authorization
+          }
+        } catch (err) {
+          return {
+            errCode: 8001,
+            errMsg: 'CA返回错误，错误信息：' + err.detail,
+            errFix: '联系客服'
+          }
         }
       }
     }
