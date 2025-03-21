@@ -21,7 +21,7 @@ exports.main = async () => {
         uid: item.uid,
         noticeName: 'ssl_email_ordernearexpire',
         subject: 'SSL证书订单即将到期提醒',
-        text: '您的账号SSL证书产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）将于1天内到期。'
+        text: '您的账号“SSL证书”产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）将于1天内到期。'
       }
     })
     app.callFunction({

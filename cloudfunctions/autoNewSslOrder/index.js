@@ -36,7 +36,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：额度耗尽。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：额度耗尽。'
           }
         })
         app.callFunction({
@@ -59,7 +59,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：额度耗尽。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：额度耗尽。'
           }
         })
         app.callFunction({
@@ -106,7 +106,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
           }
         })
         app.callFunction({
@@ -167,7 +167,7 @@ exports.main = async () => {
               uid: item.uid,
               noticeName: 'ssl_email_limitempty',
               subject: 'SSL证书产品额度耗尽通知',
-              text: '您的账号SSL证书产品额度已耗尽。'
+              text: '您的账号“SSL证书”产品额度已耗尽。'
             }
           })
           app.callFunction({
@@ -228,7 +228,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
           }
         })
         app.callFunction({
@@ -254,7 +254,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
           }
         })
         app.callFunction({
@@ -276,7 +276,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_autoneworderresult',
           subject: 'SSL证书产品自动新增续期订单结果',
-          text: '您的账号SSL证书产品自动新增续期订单失败，原因：' + authres.result.errMsg + '。'
+          text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：' + authres.result.errMsg + '。'
         }
       })
       app.callFunction({
@@ -323,7 +323,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：额度耗尽。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：额度耗尽。'
           }
         })
         app.callFunction({
@@ -346,7 +346,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：额度耗尽。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：额度耗尽。'
           }
         })
         app.callFunction({
@@ -386,7 +386,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
           }
         })
         app.callFunction({
@@ -447,7 +447,7 @@ exports.main = async () => {
               uid: item.uid,
               noticeName: 'ssl_email_limitempty',
               subject: 'SSL证书产品额度耗尽通知',
-              text: '您的账号SSL证书产品额度已耗尽。'
+              text: '您的账号“SSL证书”产品额度已耗尽。'
             }
           })
           app.callFunction({
@@ -508,7 +508,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
           }
         })
         app.callFunction({
@@ -534,7 +534,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autoneworderresult',
             subject: 'SSL证书产品自动新增续期订单结果',
-            text: '您的账号SSL证书产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
+            text: '您的账号“SSL证书”产品自动新增续期订单成功，新订单ID：' + orderres.id + '。'
           }
         })
         app.callFunction({
@@ -556,7 +556,7 @@ exports.main = async () => {
           uid: item.uid,
           noticeName: 'ssl_email_autoneworderresult',
           subject: 'SSL证书产品自动新增续期订单结果',
-          text: '您的账号SSL证书产品自动新增续期订单失败，原因：' + authres.result.errMsg + '。'
+          text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：' + authres.result.errMsg + '。'
         }
       })
       app.callFunction({

@@ -113,7 +113,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autodnstaskstatuschange',
             subject: 'SSL证书DNS自动配置任务状态变更通知',
-            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为待提交挑战验证。'
+            text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为待提交挑战验证。'
           }
         })
         app.callFunction({
@@ -141,7 +141,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autodnstaskstatuschange',
             subject: 'SSL证书DNS自动配置任务状态变更通知',
-            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为配置解析记录失败。'
+            text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为配置解析记录失败。'
           }
         })
         app.callFunction({
@@ -206,7 +206,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autodnstaskstatuschange',
             subject: 'SSL证书DNS自动配置任务状态变更通知',
-            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为待提交挑战验证。'
+            text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为待提交挑战验证。'
           }
         })
         app.callFunction({
@@ -234,7 +234,7 @@ exports.main = async () => {
             uid: item.uid,
             noticeName: 'ssl_email_autodnstaskstatuschange',
             subject: 'SSL证书DNS自动配置任务状态变更通知',
-            text: '您的账号SSL证书产品DNS自动配置任务（ID：' + item._id + '）状态已变更为配置解析记录失败。'
+            text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为配置解析记录失败。'
           }
         })
         app.callFunction({

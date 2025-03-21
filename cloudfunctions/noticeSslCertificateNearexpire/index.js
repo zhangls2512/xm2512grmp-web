@@ -23,7 +23,7 @@ exports.main = async () => {
         uid: item.uid,
         noticeName: 'ssl_email_certificatenearexpire',
         subject: 'SSL证书证书即将到期提醒',
-        text: '您的账号SSL证书产品证书（订单ID：' + item._id + '，首域名：' + item.domains[0] + '）' + '将于1天内到期。'
+        text: '您的账号“SSL证书”产品证书（订单ID：' + item._id + '，首域名：' + item.domains[0] + '）' + '将于1天内到期。'
       }
     })
     app.callFunction({

@@ -248,7 +248,7 @@ exports.main = async (event) => {
               uid: res.result.account._id,
               noticeName: 'ssl_email_limitempty',
               subject: 'SSL证书产品额度耗尽通知',
-              text: '您的账号SSL证书产品额度已耗尽。'
+              text: '您的账号“SSL证书”产品额度已耗尽。'
             }
           })
           app.callFunction({

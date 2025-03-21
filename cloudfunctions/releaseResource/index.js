@@ -102,7 +102,7 @@ exports.main = async (event) => {
                   uid: item.uid,
                   noticeName: 'resource_email_versionupdate',
                   subject: '资源版本更新通知',
-                  text: '您的账号资源产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + data.reviewInfo.version + '。'
+                  text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + data.reviewInfo.version + '。'
                 }
               })
               app.callFunction({
