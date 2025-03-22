@@ -177,7 +177,8 @@ async function updateReviewResult() {
       </div>
       <div class="sp">
         <div class="bold-text">免审更新版本号</div>
-        <div>{{ data.updateVersionWithoutReview }}</div>
+        <div v-if="data.updateVersionWithoutReview == ''">未设置</div>
+        <div v-if="data.updateVersionWithoutReview != ''">{{ data.updateVersionWithoutReview }}</div>
         <tiny-button type="info" @click="updateUvwrOpen">修改</tiny-button>
       </div>
       <tiny-divider></tiny-divider>
@@ -295,7 +296,7 @@ async function updateReviewResult() {
         <tiny-button type="info" @click="updateAuu">保存</tiny-button>
       </template>
     </tiny-dialog-box>
-    <tiny-dialog-box class="dialog" :visible="uvwrdialog" title="免审更新版本号设置" @close="updateAuuClose">
+    <tiny-dialog-box class="dialog" :visible="uvwrdialog" title="免审更新版本号设置" @close="updateUvwrClose">
       <tiny-input v-model="uvwr" clearable placeholder="请输入 UID"></tiny-input>
       <template #footer>
         <tiny-button type="info" @click="updateUvwr">保存</tiny-button>
