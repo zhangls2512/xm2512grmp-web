@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
 import request from '../../request'
-import router from '../../router'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
@@ -100,7 +99,7 @@ async function deleteAdd() {
   get()
 }
 function update() {
-  router.push('/product/resourcecreator/updateresource?id=' + id)
+  window.open('/product/resourcecreator/updateresource?id=' + id, '_blank')
 }
 </script>
 
@@ -162,7 +161,7 @@ function update() {
           <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addTag">添加</tiny-button>
         </div>
-        <tiny-button type="info" @click="inputTag">添加自带标签</tiny-button>
+        <tiny-button v-if="data.tag.length > 0" type="info" @click="inputTag">添加自带标签</tiny-button>
         <div v-for="(item, index) in tags" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>

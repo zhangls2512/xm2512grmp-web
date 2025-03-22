@@ -5,6 +5,7 @@ const data = ref([])
 const keyword = ref('')
 const type = ref('grid')
 const count = ref('12')
+const showdesc = ref(false)
 async function get() {
   const res = await request({
     apiPath: '/resource/getRandomResourceList',
@@ -16,11 +17,7 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  data.value = res.data.map(item => ({
-    ...item,
-    ashortDesc: item.desc.slice(0, 25),
-    bshortDesc: item.desc.slice(0, 50)
-  }))
+  data.value = res.data
 }
 get()
 function search() {
@@ -56,13 +53,16 @@ function info(id) {
           <tiny-radio label="16">16</tiny-radio>
           <tiny-radio label="20">20</tiny-radio>
         </tiny-radio-group>
+        <tiny-divider direction="vertical"></tiny-divider>
+        <div>显示简介</div>
+        <tiny-switch v-model="showdesc"></tiny-switch>
       </div>
-      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">暂无数据</div>
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">无数据</div>
       <div v-if="type == 'grid'" class="grid">
         <div v-for="item in data" class="kuang" style="cursor: pointer" @click="info(item._id)">
           <div class="cz">
             <div class="bold-text">{{ item.name }}</div>
-            <div>{{ item.ashortDesc }}</div>
+            <div v-if="showdesc == true">{{ item.desc }}</div>
             <div class="sp">
               <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
             </div>
@@ -72,11 +72,12 @@ function info(id) {
       <div v-for="item in data" v-if="type == 'list'" class="cz" style="cursor: pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
-        <div>{{ item.bshortDesc }}</div>
+        <div v-if="showdesc == true">{{ item.desc }}</div>
         <div class="sp">
           <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
         </div>
       </div>
+      <tiny-divider v-if="type == 'list'"></tiny-divider>
     </div>
   </div>
 </template>

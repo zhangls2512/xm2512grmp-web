@@ -101,6 +101,7 @@ const typecs = ref([
 ])
 async function get() {
   reviewstatus.value = 'valid'
+  release.value = false
   reviewinvalidreason.value = ''
   disallowupdate.value = false
   const res = await request({

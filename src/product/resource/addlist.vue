@@ -235,7 +235,7 @@ async function deleteAddResource(resourceid) {
       <tiny-button v-if="data.length > 0" type="success" @click="syncAll">同步此页</tiny-button>
       <div v-if="data.length == 0">
         <tiny-divider></tiny-divider>
-        <div class="large-bold-text" style="text-align: center">暂无数据</div>
+        <div class="large-bold-text" style="text-align: center">无数据</div>
       </div>
       <div v-for="item in data">
         <div v-if="item.versionUpdate != false || onlyshowversionupdate == false" class="cz">
@@ -250,10 +250,11 @@ async function deleteAddResource(resourceid) {
                 <tiny-tag v-for="item in item.tag" type="info">{{ item }}</tiny-tag>
               </div>
               <div v-if="item.versionUpdate !== ''">
-                <tiny-alert v-if="item.versionUpdate == false" :closable="false" description="无更新"></tiny-alert>
+                <tiny-alert v-if="item.versionUpdate == false" type="success" :closable="false"
+                  description="已是更新"></tiny-alert>
                 <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
                   <template #description>
-                    <div>有新版本：{{ item.latestVersion }}</div>
+                    <div>存在新版本：{{ item.latestVersion }}</div>
                   </template>
                 </tiny-alert>
               </div>
@@ -266,6 +267,7 @@ async function deleteAddResource(resourceid) {
           </div>
         </div>
       </div>
+      <tiny-divider v-if="data.length > 0"></tiny-divider>
       <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
         :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     </div>

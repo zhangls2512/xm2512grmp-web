@@ -14,6 +14,7 @@ const keyword = ref('')
 const tags = ref([])
 const tag = ref('')
 const mytag = ref([])
+const showdesc = ref(false)
 async function get() {
   const countres = await request({
     apiPath: '/resource/getResourceCount',
@@ -36,10 +37,7 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  data.value = res.data.map(item => ({
-    ...item,
-    shortDesc: item.desc.slice(0, 50)
-  }))
+  data.value = res.data
 }
 if (typeof (route.query.keyword) == 'string') {
   keyword.value = route.query.keyword
@@ -121,15 +119,20 @@ function inputTag(inputtags) {
           <tiny-button type="info" @click="get">搜索</tiny-button>
         </tiny-form-item>
       </tiny-form>
-      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">暂无数据</div>
+      <div class="sp">
+        <div class="bold-text">显示简介</div>
+        <tiny-switch v-model="showdesc"></tiny-switch>
+      </div>
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">无数据</div>
       <div v-for="item in data" class="cz" style="cursor: pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
-        <div>{{ item.shortDesc }}</div>
+        <div v-if="showdesc == true">{{ item.desc }}</div>
         <div class="sp">
           <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
         </div>
       </div>
+      <tiny-divider v-if="data.length > 0"></tiny-divider>
       <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
         :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     </div>
