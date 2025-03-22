@@ -58,9 +58,9 @@ exports.main = async (event) => {
         }).orderBy('submitReviewDate', 'asc').limit(1).get()
         if (resourceres.data.length == 0) {
           return {
-            errCode: 8000,
-            errMsg: '无待审资源',
-            errFix: '无修复建议'
+            errCode: 0,
+            errMsg: '成功',
+            data: ''
           }
         } else {
           return {
@@ -78,9 +78,9 @@ exports.main = async (event) => {
         }).end()
         if (resourceres.data.length == 0) {
           return {
-            errCode: 8000,
-            errMsg: '无待审资源',
-            errFix: '无修复建议'
+            errCode: 0,
+            errMsg: '成功',
+            data: ''
           }
         } else {
           return {

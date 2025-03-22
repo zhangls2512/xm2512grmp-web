@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 管理后台'
 const data = [
   {
+    versionNumber: '1.2.6',
+    releaseDate: '2025-03-22',
+    logs: [
+      {
+        type: 'U',
+        content: '优化了审核资源的体验'
+      }
+    ]
+  },
+  {
     versionNumber: '1.2.5',
     releaseDate: '2025-03-22',
     logs: [

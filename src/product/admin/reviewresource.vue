@@ -100,6 +100,7 @@ const typecs = ref([
   }
 ])
 async function get() {
+  id.value = ''
   reviewstatus.value = 'valid'
   release.value = false
   reviewinvalidreason.value = ''
@@ -116,16 +117,23 @@ async function get() {
     status: 'success'
   })
   let dataout = res.data
-  id.value = dataout._id
-  releasestatus.value = dataout.releaseStatus
-  date = res.data.submitReviewDate
-  submitreviewdate.value = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
-  name.value = dataout.reviewInfo.name
-  desc.value = dataout.reviewInfo.desc
-  version.value = dataout.reviewInfo.version
-  location.value = dataout.reviewInfo.location
-  tag.value = dataout.reviewInfo.tag
-  info.value = dataout.reviewInfo.info
+  if (res.data) {
+    id.value = dataout._id
+    releasestatus.value = dataout.releaseStatus
+    date = res.data.submitReviewDate
+    submitreviewdate.value = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+    name.value = dataout.reviewInfo.name
+    desc.value = dataout.reviewInfo.desc
+    version.value = dataout.reviewInfo.version
+    location.value = dataout.reviewInfo.location
+    tag.value = dataout.reviewInfo.tag
+    info.value = dataout.reviewInfo.info
+  } else {
+    TinyModal.message({
+      message: '无待审任务',
+      status: 'info'
+    })
+  }
   const countres = await request({
     apiPath: '/admin/getProcessingReviewResourceCount',
     body: {
@@ -310,201 +318,205 @@ async function updateReviewResult() {
       <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
     </div>
     <tiny-divider></tiny-divider>
-    <tiny-switch v-model="update" show-text>
-      <template #open>
-        <span>修改</span>
-      </template>
-      <template #close>
-        <span>预览</span>
-      </template>
-    </tiny-switch>
-    <div v-if="update == false" class="cz">
-      <div class="sp">
-        <div class="bold-text">名称</div>
-        <div>{{ name }}</div>
-      </div>
-      <div class="bold-text">简介</div>
-      <div>{{ desc }}</div>
-      <div class="sp">
-        <div class="bold-text">版本号</div>
-        <div>{{ version }}</div>
-      </div>
-      <div class="bold-text">地址</div>
-      <div v-for="(item, index) in location" class="sp">
-        <div>{{ index + 1 }}.</div>
-        <div>
-          <span v-if="item.name != ''">{{ item.name }}：</span>
-          <span v-if="item.type == 'text'">{{ item.value }}</span>
-          <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+    <div v-if="id != ''" class="cz">
+      <tiny-switch v-model="update" show-text>
+        <template #open>
+          <span>修改</span>
+        </template>
+        <template #close>
+          <span>预览</span>
+        </template>
+      </tiny-switch>
+      <div v-if="update == false" class="cz">
+        <div class="sp">
+          <div class="bold-text">名称</div>
+          <div>{{ name }}</div>
+        </div>
+        <div class="bold-text">简介</div>
+        <div>{{ desc }}</div>
+        <div class="sp">
+          <div class="bold-text">版本号</div>
+          <div>{{ version }}</div>
+        </div>
+        <div class="bold-text">地址</div>
+        <div v-for="(item, index) in location" class="sp">
+          <div>{{ index + 1 }}.</div>
+          <div>
+            <span v-if="item.name != ''">{{ item.name }}：</span>
+            <span v-if="item.type == 'text'">{{ item.value }}</span>
+            <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+          </div>
+          <div class="sp">
+            <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
+          </div>
         </div>
         <div class="sp">
-          <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
+          <div class="bold-text">标签</div>
+          <tiny-tag v-for="item in tag" :type="item.type">{{ item.value }}</tiny-tag>
         </div>
+        <div class="bold-text">更多信息</div>
+        <tiny-alert v-for="item in info" :closable="false" :type="item.color">
+          <template #description>
+            <span v-if="item.name != ''">{{ item.name }}：</span>
+            <span v-if="item.type == 'text'">{{ item.value }}</span>
+            <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
+          </template>
+        </tiny-alert>
+      </div>
+      <div v-if="update == true">
+        <tiny-form>
+          <tiny-form-item label="名称">
+            <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
+          </tiny-form-item>
+          <tiny-form-item label="简介">
+            <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
+              placeholder="请输入简介（可选）"></tiny-input>
+          </tiny-form-item>
+          <tiny-form-item label="版本号">
+            <tiny-input v-model="version" clearable show-word-limit maxlength="30"
+              placeholder="请输入版本号（可选）"></tiny-input>
+          </tiny-form-item>
+          <tiny-form-item label="地址">
+            <div class="cz">
+              <tiny-input v-model="locationname" clearable show-word-limit maxlength="30"
+                placeholder="请输入名称（可选）"></tiny-input>
+              <tiny-base-select v-model="locationtype">
+                <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
+              </tiny-base-select>
+              <tiny-input v-model="locationvalue" type="textarea" autosize clearable show-word-limit maxlength="500"
+                placeholder="请输入地址"></tiny-input>
+              <div class="sp">
+                <tiny-base-select v-model="locationtagtype">
+                  <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
+                </tiny-base-select>
+                <tiny-input v-model="locationtagvalue" clearable show-word-limit maxlength="30"
+                  placeholder="请输入内容"></tiny-input>
+                <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
+              </div>
+              <tiny-grid :data="locationtag" :drop-config="dropconfig" row-key>
+                <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+                <tiny-grid-column title="标签" align="center">
+                  <template #default="{ row }">
+                    <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
+                  </template>
+                </tiny-grid-column>
+                <tiny-grid-column title="操作" align="center">
+                  <template #default="{ $rowIndex }">
+                    <tiny-button type="danger" @click="removeLocationTag($rowIndex)">删除</tiny-button>
+                  </template>
+                </tiny-grid-column>
+              </tiny-grid>
+              <tiny-button type="success" @click="addLocation">添加</tiny-button>
+              <tiny-grid :data="location" :drop-config="dropconfig" row-key>
+                <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+                <tiny-grid-column title="地址" align="center">
+                  <template #default="{ row }">
+                    <div class="sp">
+                      <div>
+                        <span v-if="row.name != ''">{{ row.name }}：</span>
+                        <span v-if="row.type == 'text'">{{ row.value }}</span>
+                        <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
+                      </div>
+                      <div class="sp">
+                        <tiny-tag v-for="item in row.tag" :type="item.type">{{ item.value }}</tiny-tag>
+                      </div>
+                    </div>
+                  </template>
+                </tiny-grid-column>
+                <tiny-grid-column title="操作" align="center">
+                  <template #default="{ $rowIndex }">
+                    <tiny-button type="danger" @click="removeLocation($rowIndex)">删除</tiny-button>
+                  </template>
+                </tiny-grid-column>
+              </tiny-grid>
+            </div>
+          </tiny-form-item>
+          <tiny-form-item label="标签">
+            <div class="cz">
+              <div class="sp">
+                <tiny-base-select v-model="tagtype">
+                  <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
+                </tiny-base-select>
+                <tiny-input v-model="tagvalue" clearable show-word-limit maxlength="30"
+                  placeholder="请输入内容"></tiny-input>
+                <tiny-button type="success" @click="addTag">添加</tiny-button>
+              </div>
+              <tiny-grid :data="tag" :drop-config="dropconfig" row-key>
+                <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+                <tiny-grid-column title="标签" align="center">
+                  <template #default="{ row }">
+                    <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
+                  </template>
+                </tiny-grid-column>
+                <tiny-grid-column title="操作" align="center">
+                  <template #default="{ $rowIndex }">
+                    <tiny-button type="danger" @click="removeTag($rowIndex)">删除</tiny-button>
+                  </template>
+                </tiny-grid-column>
+              </tiny-grid>
+            </div>
+          </tiny-form-item>
+          <tiny-form-item label="更多信息">
+            <div class="cz">
+              <tiny-base-select v-model="infocolor">
+                <tiny-option v-for="item in typecs" :value="item.value" :label="item.label"></tiny-option>
+              </tiny-base-select>
+              <tiny-input v-model="infoname" clearable show-word-limit maxlength="30"
+                placeholder="请输入名称（可选）"></tiny-input>
+              <tiny-base-select v-model="infotype">
+                <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
+              </tiny-base-select>
+              <tiny-input v-model="infovalue" type="textarea" autosize clearable show-word-limit maxlength="500"
+                placeholder="请输入内容"></tiny-input>
+              <tiny-button type="success" @click="addInfo">添加</tiny-button>
+              <tiny-grid :data="info" :drop-config="dropconfig" row-key>
+                <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
+                <tiny-grid-column title="更多信息" align="center">
+                  <template #default="{ row }">
+                    <tiny-alert :closable="false" :type="row.color">
+                      <template #description>
+                        <span v-if="row.name != ''">{{ row.name }}：</span>
+                        <span v-if="row.type == 'text'">{{ row.value }}</span>
+                        <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
+                      </template>
+                    </tiny-alert>
+                  </template>
+                </tiny-grid-column>
+                <tiny-grid-column title="操作" align="center">
+                  <template #default="{ $rowIndex }">
+                    <tiny-button type="danger" @click="removeInfo($rowIndex)">删除</tiny-button>
+                  </template>
+                </tiny-grid-column>
+              </tiny-grid>
+            </div>
+          </tiny-form-item>
+        </tiny-form>
       </div>
       <div class="sp">
-        <div class="bold-text">标签</div>
-        <tiny-tag v-for="item in tag" :type="item.type">{{ item.value }}</tiny-tag>
+        <div class="bold-text">ID</div>
+        <div>{{ id }}</div>
+        <tiny-button type="info" @click="copy">复制</tiny-button>
       </div>
-      <div class="bold-text">更多信息</div>
-      <tiny-alert v-for="item in info" :closable="false" :type="item.color">
-        <template #description>
-          <span v-if="item.name != ''">{{ item.name }}：</span>
-          <span v-if="item.type == 'text'">{{ item.value }}</span>
-          <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
-        </template>
-      </tiny-alert>
+      <div class="sp">
+        <div class="bold-text">提交审核时间</div>
+        <div>{{ submitreviewdate }}</div>
+      </div>
+      <tiny-divider></tiny-divider>
+      <tiny-radio-group v-model="reviewstatus">
+        <tiny-radio label="valid">通过</tiny-radio>
+        <tiny-radio label="invalid">不通过</tiny-radio>
+      </tiny-radio-group>
+      <div v-if="reviewstatus == 'valid' && releasestatus == 'unrelease'" class="sp">
+        <div class="bold-text">上架</div>
+        <tiny-switch v-model="release"></tiny-switch>
+      </div>
+      <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
+        show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
+      <div v-if="reviewstatus == 'invalid'" class="sp">
+        <div class="bold-text">禁止修改、提交审核</div>
+        <tiny-switch v-model="disallowupdate"></tiny-switch>
+      </div>
+      <tiny-button type="info" @click="updateReviewResult">提交</tiny-button>
     </div>
-    <div v-if="update == true">
-      <tiny-form>
-        <tiny-form-item label="名称">
-          <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
-        </tiny-form-item>
-        <tiny-form-item label="简介">
-          <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
-            placeholder="请输入简介（可选）"></tiny-input>
-        </tiny-form-item>
-        <tiny-form-item label="版本号">
-          <tiny-input v-model="version" clearable show-word-limit maxlength="30" placeholder="请输入版本号（可选）"></tiny-input>
-        </tiny-form-item>
-        <tiny-form-item label="地址">
-          <div class="cz">
-            <tiny-input v-model="locationname" clearable show-word-limit maxlength="30"
-              placeholder="请输入名称（可选）"></tiny-input>
-            <tiny-base-select v-model="locationtype">
-              <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
-            </tiny-base-select>
-            <tiny-input v-model="locationvalue" type="textarea" autosize clearable show-word-limit maxlength="500"
-              placeholder="请输入地址"></tiny-input>
-            <div class="sp">
-              <tiny-base-select v-model="locationtagtype">
-                <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
-              </tiny-base-select>
-              <tiny-input v-model="locationtagvalue" clearable show-word-limit maxlength="30"
-                placeholder="请输入内容"></tiny-input>
-              <tiny-button type="success" @click="addLocationTag">添加标签</tiny-button>
-            </div>
-            <tiny-grid :data="locationtag" :drop-config="dropconfig" row-key>
-              <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
-              <tiny-grid-column title="标签" align="center">
-                <template #default="{ row }">
-                  <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
-                </template>
-              </tiny-grid-column>
-              <tiny-grid-column title="操作" align="center">
-                <template #default="{ $rowIndex }">
-                  <tiny-button type="danger" @click="removeLocationTag($rowIndex)">删除</tiny-button>
-                </template>
-              </tiny-grid-column>
-            </tiny-grid>
-            <tiny-button type="success" @click="addLocation">添加</tiny-button>
-            <tiny-grid :data="location" :drop-config="dropconfig" row-key>
-              <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
-              <tiny-grid-column title="地址" align="center">
-                <template #default="{ row }">
-                  <div class="sp">
-                    <div>
-                      <span v-if="row.name != ''">{{ row.name }}：</span>
-                      <span v-if="row.type == 'text'">{{ row.value }}</span>
-                      <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
-                    </div>
-                    <div class="sp">
-                      <tiny-tag v-for="item in row.tag" :type="item.type">{{ item.value }}</tiny-tag>
-                    </div>
-                  </div>
-                </template>
-              </tiny-grid-column>
-              <tiny-grid-column title="操作" align="center">
-                <template #default="{ $rowIndex }">
-                  <tiny-button type="danger" @click="removeLocation($rowIndex)">删除</tiny-button>
-                </template>
-              </tiny-grid-column>
-            </tiny-grid>
-          </div>
-        </tiny-form-item>
-        <tiny-form-item label="标签">
-          <div class="cz">
-            <div class="sp">
-              <tiny-base-select v-model="tagtype">
-                <tiny-option v-for="item in typebs" :value="item.value" :label="item.label"></tiny-option>
-              </tiny-base-select>
-              <tiny-input v-model="tagvalue" clearable show-word-limit maxlength="30" placeholder="请输入内容"></tiny-input>
-              <tiny-button type="success" @click="addTag">添加</tiny-button>
-            </div>
-            <tiny-grid :data="tag" :drop-config="dropconfig" row-key>
-              <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
-              <tiny-grid-column title="标签" align="center">
-                <template #default="{ row }">
-                  <tiny-tag :type="row.type">{{ row.value }}</tiny-tag>
-                </template>
-              </tiny-grid-column>
-              <tiny-grid-column title="操作" align="center">
-                <template #default="{ $rowIndex }">
-                  <tiny-button type="danger" @click="removeTag($rowIndex)">删除</tiny-button>
-                </template>
-              </tiny-grid-column>
-            </tiny-grid>
-          </div>
-        </tiny-form-item>
-        <tiny-form-item label="更多信息">
-          <div class="cz">
-            <tiny-base-select v-model="infocolor">
-              <tiny-option v-for="item in typecs" :value="item.value" :label="item.label"></tiny-option>
-            </tiny-base-select>
-            <tiny-input v-model="infoname" clearable show-word-limit maxlength="30"
-              placeholder="请输入名称（可选）"></tiny-input>
-            <tiny-base-select v-model="infotype">
-              <tiny-option v-for="item in typeas" :value="item.value" :label="item.label"></tiny-option>
-            </tiny-base-select>
-            <tiny-input v-model="infovalue" type="textarea" autosize clearable show-word-limit maxlength="500"
-              placeholder="请输入内容"></tiny-input>
-            <tiny-button type="success" @click="addInfo">添加</tiny-button>
-            <tiny-grid :data="info" :drop-config="dropconfig" row-key>
-              <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
-              <tiny-grid-column title="更多信息" align="center">
-                <template #default="{ row }">
-                  <tiny-alert :closable="false" :type="row.color">
-                    <template #description>
-                      <span v-if="row.name != ''">{{ row.name }}：</span>
-                      <span v-if="row.type == 'text'">{{ row.value }}</span>
-                      <a v-if="row.type == 'url'" :href="row.value" target="_blank">{{ row.value }}</a>
-                    </template>
-                  </tiny-alert>
-                </template>
-              </tiny-grid-column>
-              <tiny-grid-column title="操作" align="center">
-                <template #default="{ $rowIndex }">
-                  <tiny-button type="danger" @click="removeInfo($rowIndex)">删除</tiny-button>
-                </template>
-              </tiny-grid-column>
-            </tiny-grid>
-          </div>
-        </tiny-form-item>
-      </tiny-form>
-    </div>
-    <div class="sp">
-      <div class="bold-text">ID</div>
-      <div>{{ id }}</div>
-      <tiny-button type="info" @click="copy">复制</tiny-button>
-    </div>
-    <div class="sp">
-      <div class="bold-text">提交审核时间</div>
-      <div>{{ submitreviewdate }}</div>
-    </div>
-    <tiny-divider></tiny-divider>
-    <tiny-radio-group v-model="reviewstatus">
-      <tiny-radio label="valid">通过</tiny-radio>
-      <tiny-radio label="invalid">不通过</tiny-radio>
-    </tiny-radio-group>
-    <div v-if="reviewstatus == 'valid' && releasestatus == 'unrelease'" class="sp">
-      <div class="bold-text">上架</div>
-      <tiny-switch v-model="release"></tiny-switch>
-    </div>
-    <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
-      show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
-    <div v-if="reviewstatus == 'invalid'" class="sp">
-      <div class="bold-text">禁止修改、提交审核</div>
-      <tiny-switch v-model="disallowupdate"></tiny-switch>
-    </div>
-    <tiny-button type="info" @click="updateReviewResult">提交</tiny-button>
   </div>
 </template>
