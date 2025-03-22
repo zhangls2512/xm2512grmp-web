@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
 import request from '../../request'
+import router from '../../router'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
@@ -98,6 +99,9 @@ async function deleteAdd() {
   })
   get()
 }
+function update() {
+  router.push('/product/resourcecreator/updateresource?id=' + id)
+}
 </script>
 
 <template>
@@ -149,6 +153,7 @@ async function deleteAdd() {
       <div>
         <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
         <tiny-button v-if="added === true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>
+        <tiny-button v-if="typeof (added) == 'boolean'" type="info" @click="update">修改</tiny-button>
       </div>
     </div>
     <tiny-dialog-box class="dialog" :visible="dialog" title="设置标签" @close="newAddClose">

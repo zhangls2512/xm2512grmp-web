@@ -31,8 +31,8 @@ exports.main = async (event) => {
         regexp: requestdata.keyword
       })
     }
-    const validreleasestatus = ['release', 'unrelease', 'ban']
-    const validreviewstatus = ['pending', 'processing', 'valid', 'invalid']
+    const validreleasestatus = ['release', 'unrelease']
+    const validreviewstatus = ['pending', 'processing', 'invalid']
     if (validreleasestatus.includes(requestdata.releaseStatus)) {
       releasestatus = requestdata.releaseStatus
     }

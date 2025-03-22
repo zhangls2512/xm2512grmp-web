@@ -28,8 +28,8 @@ const infoname = ref('')
 const infotype = ref('text')
 const infovalue = ref('')
 const infocolor = ref('simple')
-const allowreviewerupdate = ref(false)
 const submitreview = ref(false)
+const submitreviewdisabled = ref(false)
 const dropconfig = ref({
   plugin: sortable,
   row: true,
@@ -110,7 +110,10 @@ async function get() {
   location.value = data.location
   tag.value = data.tag
   info.value = data.info
-  allowreviewerupdate.value = data.allowReviewerUpdate
+  if (res.data.uid == '') {
+    submitreview.value = true
+    submitreviewdisabled.value = true
+  }
 }
 get()
 function addLocationTag() {
@@ -218,15 +221,14 @@ async function update() {
       version: version.value,
       location: location.value,
       tag: tag.value,
-      info: info.value,
-      allowReviewerUpdate: allowreviewerupdate.value
+      info: info.value
     }
   })
   TinyModal.message({
     message: '修改成功',
     status: 'success'
   })
-  if (submitreview) {
+  if (submitreview && !submitreviewdisabled) {
     await request({
       apiPath: '/resourcecreator/submitReviewResource',
       body: {
@@ -252,8 +254,8 @@ async function update() {
     </tiny-breadcrumb>
     <tiny-alert :closable="false">
       <template #description>
-        <div>因审核严格，为了提高过审率，强烈建议在投稿前认真阅读<a href="https://docs.qq.com/doc/p/9cdd406b1baf3818877edcaf02f7317adcb793ee"
-            target="_blank">《审核标准》</a>并严格按照其中的要求、说明填写信息，谢谢。</div>
+        <div>建议阅读<a href="https://docs.qq.com/doc/p/9cdd406b1baf3818877edcaf02f7317adcb793ee"
+            target="_blank">《审核标准》</a>并按照其中的要求、说明填写信息，谢谢。</div>
       </template>
     </tiny-alert>
     <tiny-alert v-if="reviewinvalidreason != ''" type="error" size="large" :closable="false" title="不通过原因"
@@ -381,19 +383,8 @@ async function update() {
           </tiny-grid>
         </div>
       </tiny-form-item>
-      <tiny-form-item label="设置">
-        <div class="cz">
-          <tiny-alert v-if="allowreviewerupdate == false" :closable="false"
-            description="开启“允许审核人员修改信息”后，审核人员可以修改信息细节使其符合审核标准，有助于提高过审率。审核人员仅会修改信息细节，不会改变信息含义，请知悉。如果关闭，会提高因信息细节不符合审核标准导致审核不通过的概率。"></tiny-alert>
-          <div class="sp">
-            <div>允许审核人员修改信息</div>
-            <tiny-switch v-model="allowreviewerupdate"></tiny-switch>
-          </div>
-          <div class="sp">
-            <div>直接提交审核</div>
-            <tiny-switch v-model="submitreview"></tiny-switch>
-          </div>
-        </div>
+      <tiny-form-item label="提交审核">
+        <tiny-switch v-model="submitreview" :disabled="submitreviewdisabled"></tiny-switch>
       </tiny-form-item>
       <tiny-form-item>
         <tiny-button type="info" @click="update">修改</tiny-button>

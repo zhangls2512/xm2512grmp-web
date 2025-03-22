@@ -100,14 +100,14 @@ const endyear = new Date().getFullYear()
             <div class="cz">
               <div class="large-bold-text">宋佳懿</div>
               <div>工号：00007</div>
-              <div style="text-align: center">设计、研发、测试</div>
+              <div style="text-align: center">研发</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">代昊博</div>
               <div>工号：00008</div>
-              <div style="text-align: center">研发、测试</div>
+              <div style="text-align: center">测试</div>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ const endyear = new Date().getFullYear()
             <div class="cz">
               <div class="large-bold-text">朱子轩</div>
               <div>工号：00011</div>
-              <div style="text-align: center">测试、审核、客服</div>
+              <div style="text-align: center">测试</div>
             </div>
           </div>
           <div class="kuang">
@@ -130,7 +130,7 @@ const endyear = new Date().getFullYear()
             <div class="cz">
               <div class="large-bold-text">郭怡航</div>
               <div>工号：00014</div>
-              <div style="text-align: center">测试、审核、客服</div>
+              <div style="text-align: center">测试、审核</div>
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.8</div>
+          <div class="footer-text">Version 1.0.9</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>

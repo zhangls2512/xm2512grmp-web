@@ -26,14 +26,6 @@ exports.main = async (event) => {
         errFix: '传递有效的id参数'
       }
     }
-    const validtypes = [0, 1]
-    if (!validtypes.includes(requestdata.type)) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的type参数'
-      }
-    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -51,18 +43,16 @@ exports.main = async (event) => {
           code: code,
           requestIp: event.headers['x-real-ip']
         },
-        permission: ['account', 'resourcecreator'],
-        service: ['resourcecreator'],
-        apiName: 'resourcecreator_releaseResource'
+        permission: ['account', 'admin'],
+        service: ['admin'],
+        apiName: 'admin_releaseResource'
       }
     })
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const uid = res.result.account._id
       const resourceres = await db.collection('resource').where({
-        _id: requestdata.id,
-        uid: uid
+        _id: requestdata.id
       }).get()
       if (resourceres.data.length == 0) {
         return {
@@ -72,81 +62,28 @@ exports.main = async (event) => {
         }
       } else {
         const data = resourceres.data[0]
-        if (requestdata.type == 0) {
-          if (data.reviewStatus != 'valid') {
-            return {
-              errCode: 8001,
-              errMsg: '审核版本未审核通过',
-              errFix: '无修复建议'
-            }
-          }
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
-            desc: data.reviewInfo.desc,
-            info: data.reviewInfo.info,
-            location: data.reviewInfo.location,
-            name: data.reviewInfo.name,
-            reviewStatus: 'pending',
-            tag: data.reviewInfo.tag,
-            version: data.reviewInfo.version
-          })
-          if (data.version != data.reviewInfo.version && data.reviewInfo.version && data.releaseStatus == 'release') {
-            const userres = await db.collection('resourceadd').where({
-              resourceId: requestdata.id
-            }).get()
-            userres.data.forEach(item => {
-              app.callFunction({
-                name: 'sendEmail',
-                data: {
-                  uid: item.uid,
-                  noticeName: 'resource_email_versionupdate',
-                  subject: '资源版本更新通知',
-                  text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + data.reviewInfo.version + '。'
-                }
-              })
-              app.callFunction({
-                name: 'sendWebhook',
-                data: {
-                  uid: item.uid,
-                  data: {
-                    noticeName: 'resource_webhook_versionupdate',
-                    name: item.name,
-                    newVersion: data.reviewInfo.version
-                  }
-                }
-              })
-            })
-          }
+        if (data.releaseStatus == 'release') {
           return {
-            errCode: 0,
-            errMsg: '成功'
+            errCode: 8001,
+            errMsg: '资源已上架',
+            errFix: '无需重复上架'
           }
         }
-        if (requestdata.type == 1) {
-          if (data.releaseStatus != 'unrelease') {
-            return {
-              errCode: 8001,
-              errMsg: '线上版本未下架',
-              errFix: '无需下架'
-            }
-          }
-          if (!data.name) {
-            return {
-              errCode: 8002,
-              errMsg: '无线上版本',
-              errFix: '发布线上版本'
-            }
-          }
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
-            releaseStatus: 'release'
-          })
+        if (!data.name) {
           return {
-            errCode: 0,
-            errMsg: '成功'
+            errCode: 8002,
+            errMsg: '无线上版本',
+            errFix: '无修复建议'
           }
+        }
+        await db.collection('resource').where({
+          _id: requestdata.id
+        }).update({
+          releaseStatus: 'release'
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
     }

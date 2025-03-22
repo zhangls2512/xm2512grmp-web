@@ -63,11 +63,11 @@ exports.main = async (event) => {
         }
       } else {
         let data = resourceres.data[0]
-        if (data.releaseStatus == 'release') {
+        if (data.name) {
           return {
             errCode: 8001,
-            errMsg: '线上版本已上架',
-            errFix: '下架线上版本'
+            errMsg: '有线上版本',
+            errFix: '无修复建议'
           }
         }
         if (data.reviewStatus == 'processing') {

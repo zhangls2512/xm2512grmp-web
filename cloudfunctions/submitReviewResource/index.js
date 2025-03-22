@@ -45,7 +45,7 @@ exports.main = async (event) => {
         },
         permission: ['account', 'resourcecreator'],
         service: ['resourcecreator'],
-        apiName: 'resourcecreator_unreleaseResource'
+        apiName: 'resourcecreator_submitReviewResource'
       }
     })
     if (res.result.errCode != 0) {
@@ -70,10 +70,10 @@ exports.main = async (event) => {
             errFix: '撤回审核'
           }
         }
-        if (data.disallowUpdateReview == true) {
+        if (data.disallowUpdate) {
           return {
             errCode: 8002,
-            errMsg: '禁止更新审核版本',
+            errMsg: '禁止修改审核版本',
             errFix: '联系客服'
           }
         }

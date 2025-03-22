@@ -183,6 +183,10 @@ const router = createRouter({
           component: () => import('/src/product/admin/resourceinfo.vue')
         },
         {
+          path: '/product/admin/updateresource',
+          component: () => import('/src/product/admin/updateresource.vue')
+        },
+        {
           path: '/product/admin/reviewresource',
           component: () => import('/src/product/admin/reviewresource.vue')
         },
@@ -259,6 +263,10 @@ const router = createRouter({
         {
           path: '/product/resourcecreator/newresource',
           component: () => import('/src/product/resourcecreator/newresource.vue')
+        },
+        {
+          path: '/product/resourcecreator/newresourceeasy',
+          component: () => import('/src/product/resourcecreator/newresourceeasy.vue')
         },
         {
           path: '/product/resourcecreator/resourcelist',

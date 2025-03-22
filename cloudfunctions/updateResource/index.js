@@ -19,6 +19,13 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
+    if (typeof (requestdata.id) != 'string') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的id参数'
+      }
+    }
     if (typeof (requestdata.name) != 'string' || !requestdata.name) {
       return {
         errCode: 1001,
@@ -78,44 +85,88 @@ exports.main = async (event) => {
           code: code,
           requestIp: event.headers['x-real-ip']
         },
-        permission: ['account', 'resourcecreator'],
-        service: ['resourcecreator'],
-        apiName: 'resourcecreator_newResource'
+        permission: ['account', 'admin'],
+        service: ['admin'],
+        apiName: 'admin_updateResource'
       }
     })
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const uid = res.result.account._id
-      const addres = await db.collection('resource').add({
-        allowUpdateUser: [],
-        createDate: Date.now(),
-        desc: '',
-        disallowUpdate: false,
-        info: [],
-        location: [],
-        name: '',
-        releaseStatus: 'unrelease',
-        reviewInfo: {
+      const resourceres = await db.collection('resource').where({
+        _id: requestdata.id
+      }).get()
+      if (resourceres.data.length == 0) {
+        return {
+          errCode: 8000,
+          errMsg: '资源不存在',
+          errFix: '传递有效的id'
+        }
+      } else {
+        const data = resourceres.data[0]
+        if (!data.name) {
+          return {
+            errCode: 8001,
+            errMsg: '无线上版本',
+            errFix: '无修复建议'
+          }
+        }
+        if (data.uid) {
+          return {
+            errCode: 8002,
+            errMsg: '资源被用户管理',
+            errFix: '无修复建议'
+          }
+        }
+        await db.collection('resource').where({
+          _id: requestdata.id
+        }).update({
           desc: requestdata.desc,
           info: requestdata.info,
           location: requestdata.location,
           name: requestdata.name,
+          reviewInfo: {
+            desc: requestdata.desc,
+            info: requestdata.info,
+            location: requestdata.location,
+            name: requestdata.name,
+            tag: requestdata.tag,
+            version: requestdata.version
+          },
           tag: requestdata.tag,
           version: requestdata.version
-        },
-        reviewInvalidReason: '',
-        reviewStatus: 'pending',
-        submitReviewDate: 0,
-        tag: [],
-        uid: uid,
-        updateVersionWithoutReview: '',
-        version: ''
-      })
-      return {
-        errCode: 0,
-        errMsg: '成功',
-        id: addres.id
+        })
+        if (requestdata.version && requestdata.version != data.version && data.releaseStatus == 'release') {
+          const userres = await db.collection('resourceadd').where({
+            resourceId: requestdata.id
+          }).get()
+          userres.data.forEach(item => {
+            app.callFunction({
+              name: 'sendEmail',
+              data: {
+                uid: item.uid,
+                noticeName: 'resource_email_versionupdate',
+                subject: '资源版本更新通知',
+                text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
+              }
+            })
+            app.callFunction({
+              name: 'sendWebhook',
+              data: {
+                uid: item.uid,
+                data: {
+                  noticeName: 'resource_webhook_versionupdate',
+                  name: item.name,
+                  newVersion: requestdata.version
+                }
+              }
+            })
+          })
+        }
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
       }
     }
   } catch {

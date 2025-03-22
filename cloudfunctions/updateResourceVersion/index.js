@@ -60,7 +60,7 @@ exports.main = async (event) => {
     } else {
       const resourceres = await db.collection('resource').where({
         _id: requestdata.id,
-        uid: res.result.account._id
+        releaseStatus: 'release'
       }).get()
       if (resourceres.data.length == 0) {
         return {
@@ -70,10 +70,10 @@ exports.main = async (event) => {
         }
       } else {
         let data = resourceres.data[0]
-        if (data.updateVersionWithoutReview == false) {
+        if (data.updateVersionWithoutReview != res.result.account._id) {
           return {
             errCode: 8001,
-            errMsg: '未开启免审更新版本号',
+            errMsg: '无权限',
             errFix: '联系客服'
           }
         }
@@ -86,7 +86,7 @@ exports.main = async (event) => {
           submitReviewDate: Date.now(),
           version: requestdata.version
         })
-        if (data.version != requestdata.version && requestdata.version && data.releaseStatus == 'release') {
+        if (requestdata.version && data.version != requestdata.version && data.releaseStatus == 'release') {
           const userres = await db.collection('resourceadd').where({
             resourceId: requestdata.id
           }).get()

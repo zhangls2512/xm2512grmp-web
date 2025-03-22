@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 资源投稿'
 const data = [
   {
+    versionNumber: '1.0.6',
+    releaseDate: '2025-03-22',
+    logs: [
+      {
+        type: 'U',
+        content: '支持便捷新增资源'
+      },
+      {
+        type: 'U',
+        content: '优化了一些页面的细节体验'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.5',
     releaseDate: '2025-03-21',
     logs: [

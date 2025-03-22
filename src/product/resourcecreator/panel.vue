@@ -95,7 +95,7 @@ const tabClick = (data) => {
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备10号-W" target="_blank">轩铭2512品备10号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.5</div>
+          <div class="footer-text">Version 1.0.6</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/doc/resourcecreator" target="_blank">文档中心</router-link>
           <tiny-divider direction="vertical"></tiny-divider>

@@ -1,10 +1,13 @@
 <script setup>
-document.title = '轩铭2512 - 资源投稿 - 新增资源（完整）'
+document.title = '轩铭2512 - 管理后台 - 资源管理 - 资源管理 - 修改资源信息'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
 import sortable from 'sortablejs'
 import request from '../../request'
 import router from '../../router'
+const route = useRoute()
+const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const name = ref('')
 const desc = ref('')
@@ -24,7 +27,6 @@ const infoname = ref('')
 const infotype = ref('text')
 const infovalue = ref('')
 const infocolor = ref('simple')
-const submitreview = ref(false)
 const dropconfig = ref({
   plugin: sortable,
   row: true,
@@ -85,6 +87,27 @@ const typecs = ref([
     label: '红'
   }
 ])
+async function get() {
+  const res = await request({
+    apiPath: '/admin/getResourceInfo',
+    body: {
+      accessToken: accesstoken,
+      id: id
+    }
+  })
+  TinyModal.message({
+    message: '获取数据成功',
+    status: 'success'
+  })
+  const data = res.data
+  name.value = data.name
+  desc.value = data.desc
+  version.value = data.version
+  location.value = data.location
+  tag.value = data.tag
+  info.value = data.info
+}
+get()
 function addLocationTag() {
   if (!locationtagvalue.value) {
     TinyModal.message({
@@ -165,7 +188,7 @@ function addInfo() {
 function removeInfo(index) {
   info.value.splice(index, 1)
 }
-async function newResource() {
+async function update() {
   if (!name.value) {
     TinyModal.message({
       message: '请输入名称',
@@ -180,10 +203,11 @@ async function newResource() {
     })
     return
   }
-  const res = await request({
-    apiPath: '/resourcecreator/newResource',
+  await request({
+    apiPath: '/admin/updateResource',
     body: {
       accessToken: accesstoken,
+      id: id,
       name: name.value,
       desc: desc.value,
       version: version.value,
@@ -193,39 +217,19 @@ async function newResource() {
     }
   })
   TinyModal.message({
-    message: '新增成功',
+    message: '修改成功',
     status: 'success'
   })
-  if (submitreview) {
-    await request({
-      apiPath: '/resourcecreator/submitReviewResource',
-      body: {
-        accessToken: accesstoken,
-        id: res.id
-      }
-    })
-    TinyModal.message({
-      message: '提交审核成功',
-      status: 'success'
-    })
-  }
-  router.push('/product/resourcecreator/resourcelist')
+  router.push('/product/admin/resourcelist')
 }
 </script>
 
 <template>
   <div class="cz">
     <tiny-breadcrumb>
-      <tiny-breadcrumb-item :to="{ path: '/product/resourcecreator/resourcelist' }" label="资源管理"></tiny-breadcrumb-item>
-      <tiny-breadcrumb-item :to="{ path: '/product/resourcecreator/newresource' }"
-        label="新增资源（完整）"></tiny-breadcrumb-item>
+      <tiny-breadcrumb-item :to="{ path: '/product/admin/resourcelist' }" label="资源管理"></tiny-breadcrumb-item>
+      <tiny-breadcrumb-item :to="{ path: '/product/admin/updateresource' }" label="修改资源信息"></tiny-breadcrumb-item>
     </tiny-breadcrumb>
-    <tiny-alert :closable="false">
-      <template #description>
-        <div>建议阅读<a href="https://docs.qq.com/doc/p/9cdd406b1baf3818877edcaf02f7317adcb793ee"
-            target="_blank">《审核标准》</a>并按照其中的要求、说明填写信息，谢谢。</div>
-      </template>
-    </tiny-alert>
     <tiny-form>
       <tiny-form-item label="名称">
         <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
@@ -349,11 +353,8 @@ async function newResource() {
           </tiny-grid>
         </div>
       </tiny-form-item>
-      <tiny-form-item label="提交审核">
-        <tiny-switch v-model="submitreview"></tiny-switch>
-      </tiny-form-item>
       <tiny-form-item>
-        <tiny-button type="success" @click="newResource">新增</tiny-button>
+        <tiny-button type="info" @click="update">修改</tiny-button>
       </tiny-form-item>
     </tiny-form>
   </div>

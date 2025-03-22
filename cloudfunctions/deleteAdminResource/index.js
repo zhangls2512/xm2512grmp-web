@@ -45,7 +45,7 @@ exports.main = async (event) => {
         },
         permission: ['account', 'admin'],
         service: ['admin'],
-        apiName: 'admin_unbanResource'
+        apiName: 'admin_deleteResource'
       }
     })
     if (res.result.errCode != 0) {
@@ -62,39 +62,23 @@ exports.main = async (event) => {
         }
       } else {
         let data = resourceres.data[0]
-        if (data.releaseStatus != 'ban') {
+        if (data.releaseStatus == 'release') {
           return {
             errCode: 8001,
-            errMsg: '线上版本未封禁',
-            errFix: '无需解封'
+            errMsg: '资源已上架',
+            errFix: '下架线上版本'
+          }
+        }
+        if (data.uid) {
+          return {
+            errCode: 8002,
+            errMsg: '资源被用户管理',
+            errFix: '无修复建议'
           }
         }
         await db.collection('resource').where({
           _id: requestdata.id
-        }).update({
-          releaseBanReason: '',
-          releaseStatus: 'unrelease'
-        })
-        app.callFunction({
-          name: 'sendEmail',
-          data: {
-            uid: data.uid,
-            noticeName: 'resourcecreator_email_result',
-            subject: '资源解封通知',
-            text: '您的账号“资源投稿”产品的资源“' + data.name + '”（ID：' + data._id + '）已解封。'
-          }
-        })
-        app.callFunction({
-          name: 'sendWebhook',
-          data: {
-            uid: data.uid,
-            data: {
-              noticeName: 'resourcecreator_webhook_result',
-              id: data._id,
-              status: 'unrelease'
-            }
-          }
-        })
+        }).remove()
         return {
           errCode: 0,
           errMsg: '成功'

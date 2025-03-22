@@ -13,11 +13,11 @@ const count = ref(0)
 const percent = ref(0)
 const aftersubmit = ref('getnext')
 const type = ref('sorted')
-const allowupdate = ref(false)
 const update = ref(false)
 const reviewstatus = ref('valid')
+const release = ref(false)
 const reviewinvalidreason = ref('')
-const disallowupdatereview = ref(false)
+const disallowupdate = ref(false)
 const id = ref('')
 const submitreviewdate = ref(0)
 const name = ref('')
@@ -101,7 +101,7 @@ const typecs = ref([
 async function get() {
   reviewstatus.value = 'valid'
   reviewinvalidreason.value = ''
-  disallowupdatereview.value = false
+  disallowupdate.value = false
   const res = await request({
     apiPath: '/admin/getProcessingReviewResource',
     body: {
@@ -115,7 +115,6 @@ async function get() {
   })
   let dataout = res.data
   id.value = dataout._id
-  disallowupdatereview.value = dataout.disallowUpdateReview
   date = res.data.submitReviewDate
   submitreviewdate.value = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   name.value = dataout.reviewInfo.name
@@ -124,10 +123,6 @@ async function get() {
   location.value = dataout.reviewInfo.location
   tag.value = dataout.reviewInfo.tag
   info.value = dataout.reviewInfo.info
-  allowupdate.value = dataout.allowReviewerUpdate
-  if (dataout.allowReviewerUpdate == false) {
-    update.value = false
-  }
   const countres = await request({
     apiPath: '/admin/getProcessingReviewResourceCount',
     body: {
@@ -250,7 +245,7 @@ async function updateReviewResult() {
       id: id.value,
       status: reviewstatus.value,
       reason: reviewinvalidreason.value,
-      disallowUpdateReview: disallowupdatereview.value,
+      disallowUpdate: disallowupdate.value,
       date: date,
       name: name.value,
       desc: desc.value,
@@ -264,6 +259,19 @@ async function updateReviewResult() {
     message: '提交成功',
     status: 'success'
   })
+  if (reviewstatus.value == 'valid' && release.value) {
+    await request({
+      apiPath: '/admin/releaseResource',
+      body: {
+        accessToken: accesstoken,
+        id: id.value
+      }
+    })
+    TinyModal.message({
+      message: '上架成功',
+      status: 'success'
+    })
+  }
   if (aftersubmit.value == 'getnext') {
     get()
   }
@@ -299,16 +307,14 @@ async function updateReviewResult() {
       <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
     </div>
     <tiny-divider></tiny-divider>
-    <div v-if="allowupdate == true">
-      <tiny-switch v-model="update" show-text>
-        <template #open>
-          <span>修改</span>
-        </template>
-        <template #close>
-          <span>预览</span>
-        </template>
-      </tiny-switch>
-    </div>
+    <tiny-switch v-model="update" show-text>
+      <template #open>
+        <span>修改</span>
+      </template>
+      <template #close>
+        <span>预览</span>
+      </template>
+    </tiny-switch>
     <div v-if="update == false" class="cz">
       <div class="sp">
         <div class="bold-text">名称</div>
@@ -321,7 +327,8 @@ async function updateReviewResult() {
         <div>{{ version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="item in location" class="sp">
+      <div v-for="(item, index) in location" class="sp">
+        <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <span v-if="item.type == 'text'">{{ item.value }}</span>
@@ -485,11 +492,15 @@ async function updateReviewResult() {
       <tiny-radio label="valid">通过</tiny-radio>
       <tiny-radio label="invalid">不通过</tiny-radio>
     </tiny-radio-group>
+    <div v-if="reviewstatus == 'valid'" class="sp">
+      <div class="bold-text">上架</div>
+      <tiny-switch v-model="release"></tiny-switch>
+    </div>
     <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
       show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
     <div v-if="reviewstatus == 'invalid'" class="sp">
-      <div class="bold-text">禁止修改</div>
-      <tiny-switch v-model="disallowupdatereview"></tiny-switch>
+      <div class="bold-text">禁止修改、提交审核</div>
+      <tiny-switch v-model="disallowupdate"></tiny-switch>
     </div>
     <tiny-button type="info" @click="updateReviewResult">提交</tiny-button>
   </div>

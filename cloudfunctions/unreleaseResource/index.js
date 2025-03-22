@@ -43,17 +43,16 @@ exports.main = async (event) => {
           code: code,
           requestIp: event.headers['x-real-ip']
         },
-        permission: [],
-        service: ['resourcecreator'],
-        apiName: 'resourcecreator_unreleaseResource'
+        permission: ['account', 'admin'],
+        service: ['admin'],
+        apiName: 'admin_unreleaseResource'
       }
     })
     if (res.result.errCode != 0) {
       return res.result
     } else {
       const resourceres = await db.collection('resource').where({
-        _id: requestdata.id,
-        uid: res.result.account._id
+        _id: requestdata.id
       }).get()
       if (resourceres.data.length == 0) {
         return {
@@ -63,10 +62,10 @@ exports.main = async (event) => {
         }
       } else {
         let data = resourceres.data[0]
-        if (data.releaseStatus != 'release') {
+        if (data.releaseStatus == 'unrelease') {
           return {
             errCode: 8001,
-            errMsg: '线上版本未下架',
+            errMsg: '资源未上架',
             errFix: '无需下架'
           }
         }

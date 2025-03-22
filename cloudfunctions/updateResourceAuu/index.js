@@ -26,11 +26,11 @@ exports.main = async (event) => {
         errFix: '传递有效的id参数'
       }
     }
-    if (typeof (requestdata.reason) != 'string' || !requestdata.reason) {
+    if (!Array.isArray(requestdata.allowUpdateUser)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的reason参数'
+        errFix: '传递有效的allowUpdateUser参数'
       }
     }
     let type = ''
@@ -52,7 +52,7 @@ exports.main = async (event) => {
         },
         permission: ['account', 'admin'],
         service: ['admin'],
-        apiName: 'admin_banResource'
+        apiName: 'admin_updateResourceAuu'
       }
     })
     if (res.result.errCode != 0) {
@@ -68,33 +68,10 @@ exports.main = async (event) => {
           errFix: '传递有效的id'
         }
       } else {
-        let data = resourceres.data[0]
         await db.collection('resource').where({
           _id: requestdata.id
         }).update({
-          releaseBanReason: requestdata.reason,
-          releaseStatus: 'ban'
-        })
-        app.callFunction({
-          name: 'sendEmail',
-          data: {
-            uid: data.uid,
-            noticeName: 'resourcecreator_email_result',
-            subject: '资源封禁通知',
-            text: '您的账号“资源投稿”产品的资源“' + data.name + '”（ID：' + data._id + '）已封禁。\n封禁原因：' + requestdata.reason
-          }
-        })
-        app.callFunction({
-          name: 'sendWebhook',
-          data: {
-            uid: data.uid,
-            data: {
-              noticeName: 'resourcecreator_webhook_result',
-              id: data._id,
-              status: 'ban',
-              reason: requestdata.reason
-            }
-          }
+          allowUpdateUser: requestdata.allowUpdateUser
         })
         return {
           errCode: 0,

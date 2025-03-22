@@ -26,6 +26,13 @@ exports.main = async (event) => {
         errFix: '传递有效的id参数'
       }
     }
+    if (typeof (requestdata.updateVersionWithoutReview) != 'string') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的updateVersionWithoutReview参数'
+      }
+    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -61,16 +68,10 @@ exports.main = async (event) => {
           errFix: '传递有效的id'
         }
       } else {
-        let uvwr = resourceres.data[0].updateVersionWithoutReview
-        if (uvwr == true) {
-          uvwr = false
-        } else {
-          uvwr = true
-        }
         await db.collection('resource').where({
           _id: requestdata.id
         }).update({
-          updateVersionWithoutReview: uvwr
+          updateVersionWithoutReview: requestdata.updateVersionWithoutReview
         })
         return {
           errCode: 0,

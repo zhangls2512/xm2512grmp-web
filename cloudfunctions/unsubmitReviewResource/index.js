@@ -70,14 +70,35 @@ exports.main = async (event) => {
             errFix: '无需撤回审核'
           }
         }
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          reviewStatus: 'pending'
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+        if (data.name) {
+          await db.collection('resource').where({
+            _id: requestdata.id
+          }).update({
+            reviewInfo: {
+              desc: data.desc,
+              info: data.info,
+              location: data.location,
+              name: data.name,
+              tag: data.tag,
+              version: data.version
+            },
+            reviewStatus: 'pending',
+            uid: ''
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        } else {
+          await db.collection('resource').where({
+            _id: requestdata.id
+          }).update({
+            reviewStatus: 'pending'
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
         }
       }
     }

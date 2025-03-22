@@ -139,18 +139,33 @@ const apis = ref([
   },
   {
     product: '管理后台',
-    name: 'admin_banResource',
-    desc: '封禁资源'
+    name: 'admin_releaseResource',
+    desc: '上架资源'
   },
   {
     product: '管理后台',
-    name: 'admin_unbanResource',
-    desc: '解封资源'
+    name: 'admin_unreleaseResource',
+    desc: '下架资源'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_updateResource',
+    desc: '修改资源信息'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_updateResourceAuu',
+    desc: '修改资源可修改用户设置'
   },
   {
     product: '管理后台',
     name: 'admin_updateResourceUvwr',
     desc: '修改资源免审更新版本号设置'
+  },
+  {
+    product: '资源投稿',
+    name: 'admin_deleteResource',
+    desc: '删除资源'
   },
   {
     product: '管理后台',
@@ -259,16 +274,6 @@ const apis = ref([
   },
   {
     product: '资源投稿',
-    name: 'resourcecreator_releaseResource',
-    desc: '上架资源'
-  },
-  {
-    product: '资源投稿',
-    name: 'resourcecreator_unreleaseResource',
-    desc: '下架资源'
-  },
-  {
-    product: '资源投稿',
     name: 'resourcecreator_updateResourceVersion',
     desc: '更新资源版本号'
   },
@@ -285,7 +290,7 @@ const apis = ref([
   {
     product: '资源投稿',
     name: 'resourcecreator_updateReviewResource',
-    desc: '修改资源审核版本'
+    desc: '修改资源审核版本信息'
   },
   {
     product: '资源投稿',

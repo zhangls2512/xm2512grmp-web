@@ -19,19 +19,8 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    let keyword = db.command.neq(null)
-    let releasestatus = db.command.neq('')
     let reviewstatus = db.command.neq('')
-    if (typeof (requestdata.keyword) == 'string' && requestdata.keyword) {
-      keyword = db.RegExp({
-        regexp: requestdata.keyword
-      })
-    }
-    const validreleasestatus = ['release', 'unrelease', 'ban']
-    const validreviewstatus = ['pending', 'processing', 'valid', 'invalid']
-    if (validreleasestatus.includes(requestdata.releaseStatus)) {
-      releasestatus = requestdata.releaseStatus
-    }
+    const validreviewstatus = ['pending', 'processing', 'invalid']
     if (validreviewstatus.includes(requestdata.reviewStatus)) {
       reviewstatus = requestdata.reviewStatus
     }
@@ -61,8 +50,6 @@ exports.main = async (event) => {
       return res.result
     } else {
       const resourceres = await db.collection('resource').where({
-        name: keyword,
-        releaseStatus: releasestatus,
         reviewStatus: reviewstatus,
         uid: res.result.account._id
       }).count()

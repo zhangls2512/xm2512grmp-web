@@ -10,11 +10,14 @@ const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref({})
 let date = ''
-const releasestatus = ref('')
-const releasebanreason = ref('')
+const auudialog = ref(false)
+const uvwrdialog = ref(false)
+const auu = ref([])
+const auuuser = ref('')
+const uvwr = ref('')
 const reviewstatus = ref('')
 const reviewinvalidreason = ref('')
-const disallowupdatereview = ref(false)
+const disallowupdate = ref(false)
 async function get() {
   const res = await request({
     apiPath: '/admin/getResourceInfo',
@@ -29,16 +32,10 @@ async function get() {
   })
   let dataout = res.data
   dataout.createDate = moment(res.data.createDate).format('YYYY-MM-DD HH:mm:ss')
-  disallowupdatereview.value = dataout.disallowUpdateReview
+  disallowupdate.value = dataout.disallowUpdate
   date = res.data.submitReviewDate
   dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
-  if (dataout.releaseStatus == 'ban') {
-    releasestatus.value = 'unban'
-  } else {
-    releasestatus.value = 'ban'
-  }
-  releasebanreason.value = dataout.releaseBanReason
   if (dataout.reviewStatus == 'valid') {
     reviewstatus.value = 'invalid'
   }
@@ -55,57 +52,67 @@ function copy() {
     status: 'success'
   })
 }
-async function updateUvwr(wz) {
-  await request({
-    apiPath: '/admin/updateResourceUvwr',
-    body: {
-      accessToken: accesstoken,
-      id: id
-    }
-  })
-  TinyModal.message({
-    message: wz + '成功',
-    status: 'success'
-  })
-  get()
-}
-async function updateReleaseStatus() {
-  if (releasestatus.value == 'ban' && !releasebanreason.value) {
+function add() {
+  if (!auuuser.value) {
     TinyModal.message({
-      message: '请输入封禁原因',
+      message: '请输入 UID',
       status: 'warning'
     })
     return
   }
-  if (releasestatus.value == 'ban') {
-    await request({
-      apiPath: '/admin/banResource',
-      body: {
-        accessToken: accesstoken,
-        id: id,
-        reason: releasebanreason.value
-      }
-    })
-    TinyModal.message({
-      message: '封禁成功',
-      status: 'success'
-    })
-    get()
-  }
-  if (releasestatus.value == 'unban') {
-    await request({
-      apiPath: '/admin/unbanResource',
-      body: {
-        accessToken: accesstoken,
-        id: id
-      }
-    })
-    TinyModal.message({
-      message: '解封成功',
-      status: 'success'
-    })
-    get()
-  }
+  auu.value.push(auuuser.value)
+  auuuser.value = ''
+}
+function remove(index) {
+  auu.value.splice(index, 1)
+}
+function updateAuuOpen() {
+  auudialog.value = true
+  auu.value = [...data.value.allowUpdateUser]
+}
+function updateAuuClose() {
+  auudialog.value = false
+  auu.value = []
+}
+async function updateAuu() {
+  await request({
+    apiPath: '/admin/updateResourceAuu',
+    body: {
+      accessToken: accesstoken,
+      id: id,
+      allowUpdateUser: auu.value
+    }
+  })
+  updateAuuClose()
+  TinyModal.message({
+    message: '修改成功',
+    status: 'success'
+  })
+  get()
+}
+function updateUvwrOpen() {
+  uvwrdialog.value = true
+  uvwr.value = data.value.updateVersionWithoutReview
+}
+function updateUvwrClose() {
+  uvwrdialog.value = false
+  uvwr.value = ''
+}
+async function updateUvwr() {
+  await request({
+    apiPath: '/admin/updateResourceUvwr',
+    body: {
+      accessToken: accesstoken,
+      id: id,
+      updateVersionWithoutReview: uvwr.value
+    }
+  })
+  updateUvwrClose()
+  TinyModal.message({
+    message: '修改成功',
+    status: 'success'
+  })
+  get()
 }
 async function updateReviewResult() {
   if (reviewstatus.value == 'invalid' && !reviewinvalidreason.value) {
@@ -122,8 +129,14 @@ async function updateReviewResult() {
       id: id,
       status: reviewstatus.value,
       reason: reviewinvalidreason.value,
-      disallowUpdateReview: disallowupdatereview.value,
-      date: date
+      disallowUpdate: disallowupdate.value,
+      date: date,
+      name: data.value.reviewInfo.name,
+      desc: data.value.reviewInfo.desc,
+      version: data.value.reviewInfo.version,
+      location: data.value.reviewInfo.location,
+      tag: data.value.reviewInfo.tag,
+      info: data.value.reviewInfo.info
     }
   })
   TinyModal.message({
@@ -152,13 +165,20 @@ async function updateReviewResult() {
         <div>{{ data.createDate }}</div>
       </div>
       <div class="sp">
+        <div class="bold-text">可修改用户</div>
+        <div v-if="data.allowUpdateUser.length == 0 && data.uid == ''">全部</div>
+        <div v-if="data.uid != ''">{{ data.uid }}</div>
+        <tiny-button v-if="data.uid == ''" type="info" @click="updateAuuOpen">修改</tiny-button>
+      </div>
+      <div v-for="(item, index) in data.allowUpdateUser" v-if="data.allowUpdateUser.length > 0 && data.uid == ''"
+        class="sp">
+        <div>{{ index + 1 }}.</div>
+        <div>{{ item }}</div>
+      </div>
+      <div class="sp">
         <div class="bold-text">免审更新版本号</div>
-        <div v-if="data.updateVersionWithoutReview == true">是</div>
-        <div v-if="data.updateVersionWithoutReview == false">否</div>
-        <tiny-button v-if="data.updateVersionWithoutReview == false" type="success"
-          @click="updateUvwr('开启')">开启</tiny-button>
-        <tiny-button v-if="data.updateVersionWithoutReview == true" type="danger"
-          @click="updateUvwr('关闭')">关闭</tiny-button>
+        <div>{{ data.updateVersionWithoutReview }}</div>
+        <tiny-button type="info" @click="updateUvwrOpen">修改</tiny-button>
       </div>
       <tiny-divider></tiny-divider>
       <div class="large-bold-text">线上版本信息</div>
@@ -166,17 +186,7 @@ async function updateReviewResult() {
         <div class="bold-text">状态</div>
         <tiny-tag v-if="data.releaseStatus == 'release'" type="success">已上架</tiny-tag>
         <tiny-tag v-if="data.releaseStatus == 'unrelease'" type="info">未上架</tiny-tag>
-        <tiny-tag v-if="data.releaseStatus == 'ban'" type="danger">已封禁</tiny-tag>
       </div>
-      <div v-if="data.releaseStatus == 'ban'" class="bold-text">封禁原因</div>
-      <div v-if="data.releaseStatus == 'ban'">{{ data.releaseBanReason }}</div>
-      <tiny-radio-group v-model="releasestatus">
-        <tiny-radio label="ban">封禁</tiny-radio>
-        <tiny-radio label="unban" :disabled="data.releaseStatus != 'ban'">解封</tiny-radio>
-      </tiny-radio-group>
-      <tiny-input v-if="releasestatus == 'ban'" v-model="releasebanreason" type="textarea" autosize clearable
-        show-word-limit maxlength="500" placeholder="请输入封禁原因"></tiny-input>
-      <tiny-button type="info" @click="updateReleaseStatus">提交</tiny-button>
       <div class="sp">
         <div class="bold-text">名称</div>
         <div>{{ data.name }}</div>
@@ -211,17 +221,16 @@ async function updateReviewResult() {
       </tiny-alert>
       <tiny-divider></tiny-divider>
       <div class="large-bold-text">审核版本信息</div>
-      <tiny-alert v-if="data.disallowUpdateReview == true" type="error" :closable="false"
-        description="禁止修改"></tiny-alert>
+      <tiny-alert v-if="data.disallowUpdate == true" type="error" :closable="false"
+        description="禁止修改、提交审核"></tiny-alert>
       <div class="sp">
         <div class="bold-text">状态</div>
         <tiny-tag v-if="data.reviewStatus == 'pending'" type="info">待提交审核</tiny-tag>
         <tiny-tag v-if="data.reviewStatus == 'processing'" type="warning">审核中</tiny-tag>
-        <tiny-tag v-if="data.reviewStatus == 'valid'" type="success">审核通过</tiny-tag>
         <tiny-tag v-if="data.reviewStatus == 'invalid'" type="danger">审核不通过</tiny-tag>
       </div>
-      <div v-if="data.reviewStatus == 'invalid'" class="bold-text">不通过原因</div>
-      <div v-if="data.reviewStatus == 'invalid'">{{ data.reviewInvalidReason }}</div>
+      <tiny-alert v-if="data.reviewInvalidReason != ''" type="error" size="large" :closable="false" title="不通过原因"
+        :description="data.reviewInvalidReason"></tiny-alert>
       <tiny-radio-group v-if="data.reviewStatus != 'pending'" v-model="reviewstatus">
         <tiny-radio label="valid"
           :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
@@ -230,8 +239,8 @@ async function updateReviewResult() {
       <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
         show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
       <div v-if="reviewstatus == 'invalid'" class="sp">
-        <div class="bold-text">禁止修改</div>
-        <tiny-switch v-model="disallowupdatereview"></tiny-switch>
+        <div class="bold-text">禁止修改、提交审核</div>
+        <tiny-switch v-model="disallowupdate"></tiny-switch>
       </div>
       <tiny-button v-if="data.reviewStatus != 'pending'" type="info" @click="updateReviewResult">提交</tiny-button>
       <div v-if="data.reviewStatus != 'pending'" class="sp">
@@ -271,5 +280,26 @@ async function updateReviewResult() {
         </template>
       </tiny-alert>
     </div>
+    <tiny-dialog-box class="dialog" :visible="auudialog" title="可修改用户设置" @close="updateAuuClose">
+      <div class="dialog-cz">
+        <div class="sp">
+          <tiny-input v-model="auuuser" clearable placeholder="请输入 UID"></tiny-input>
+          <tiny-button type="success" @click="add">添加</tiny-button>
+        </div>
+        <div v-for="(item, index) in auu" class="sp">
+          <tiny-tag type="info">{{ item }}</tiny-tag>
+          <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
+        </div>
+      </div>
+      <template #footer>
+        <tiny-button type="info" @click="updateAuu">保存</tiny-button>
+      </template>
+    </tiny-dialog-box>
+    <tiny-dialog-box class="dialog" :visible="uvwrdialog" title="免审更新版本号设置" @close="updateAuuClose">
+      <tiny-input v-model="uvwr" clearable placeholder="请输入 UID"></tiny-input>
+      <template #footer>
+        <tiny-button type="info" @click="updateUvwr">保存</tiny-button>
+      </template>
+    </tiny-dialog-box>
   </div>
 </template>

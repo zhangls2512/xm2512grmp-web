@@ -9,27 +9,7 @@ const data = ref([])
 const currentpage = ref(1)
 const pagesize = ref(10)
 const total = ref(0)
-const keyword = ref('')
-const releasestatus = ref('')
 const reviewstatus = ref('')
-const releasestatuss = ref([
-  {
-    value: '',
-    label: '全部'
-  },
-  {
-    value: 'release',
-    label: '已上架'
-  },
-  {
-    value: 'unrelease',
-    label: '未上架'
-  },
-  {
-    value: 'ban',
-    label: '已封禁'
-  }
-])
 const reviewstatuss = ref([
   {
     value: '',
@@ -44,10 +24,6 @@ const reviewstatuss = ref([
     label: '审核中'
   },
   {
-    value: 'valid',
-    label: '审核通过'
-  },
-  {
     value: 'invalid',
     label: '审核不通过'
   }
@@ -57,8 +33,6 @@ async function get() {
     apiPath: '/resourcecreator/getResourceCount',
     body: {
       accessToken: accesstoken,
-      keyword: keyword.value,
-      releaseStatus: releasestatus.value,
       reviewStatus: reviewstatus.value
     }
   })
@@ -67,8 +41,6 @@ async function get() {
     apiPath: '/resourcecreator/getResourceList',
     body: {
       accessToken: accesstoken,
-      keyword: keyword.value,
-      releaseStatus: releasestatus.value,
       reviewStatus: reviewstatus.value,
       skip: (currentpage.value - 1) * pagesize.value,
       limit: pagesize.value
@@ -89,55 +61,11 @@ function pagesizeChange(t) {
   pagesize.value = t
   get()
 }
-function newResource() {
-  router.push('/product/resourcecreator/newresource')
+function newResource(name) {
+  router.push('/product/resourcecreator/' + name)
 }
 function info(id) {
   router.push('/product/resourcecreator/resourceinfo?id=' + id)
-}
-async function releasea(id) {
-  await request({
-    apiPath: '/resourcecreator/releaseResource',
-    body: {
-      accessToken: accesstoken,
-      id: id,
-      type: 0
-    }
-  })
-  TinyModal.message({
-    message: '发布成功',
-    status: 'success'
-  })
-  get()
-}
-async function releaseb(id) {
-  await request({
-    apiPath: '/resourcecreator/releaseResource',
-    body: {
-      accessToken: accesstoken,
-      id: id,
-      type: 1
-    }
-  })
-  TinyModal.message({
-    message: '上架成功',
-    status: 'success'
-  })
-  get()
-}
-async function unrelease(id) {
-  await request({
-    apiPath: '/resourcecreator/unreleaseResource',
-    body: {
-      accessToken: accesstoken,
-      id: id
-    }
-  })
-  TinyModal.message({
-    message: '下架成功',
-    status: 'success'
-  })
-  get()
 }
 async function submitReview(id) {
   await request({
@@ -188,31 +116,33 @@ async function deleteResource(id) {
 
 <template>
   <div class="cz">
-    <div><tiny-button type="success" @click="newResource">新增</tiny-button></div>
+    <div>
+      <tiny-dropdown type="success" border>
+        <span>新增</span>
+        <template #dropdown>
+          <tiny-dropdown-menu placement="bottom-start">
+            <tiny-dropdown-item @click="newResource('newresourceeasy')">便捷</tiny-dropdown-item>
+            <tiny-dropdown-item @click="newResource('newresource')">完整</tiny-dropdown-item>
+          </tiny-dropdown-menu>
+        </template>
+      </tiny-dropdown>
+    </div>
     <div class="sp">
-      <tiny-base-select v-model="releasestatus">
-        <tiny-option v-for="item in releasestatuss" :value="item.value" :label="item.label"></tiny-option>
-      </tiny-base-select>
       <tiny-base-select v-model="reviewstatus">
         <tiny-option v-for="item in reviewstatuss" :value="item.value" :label="item.label"></tiny-option>
       </tiny-base-select>
-      <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
-      <tiny-grid-column field="name" title="名称" align="center"></tiny-grid-column>
-      <tiny-grid-column title="线上版本状态" align="center">
+      <tiny-grid-column title="名称" align="center">
         <template #default="{ row }">
-          <tiny-tag v-if="row.releaseStatus == 'release'" type="success">已上架</tiny-tag>
-          <tiny-tag v-if="row.releaseStatus == 'unrelease'" type="info">未上架</tiny-tag>
-          <tiny-tag v-if="row.releaseStatus == 'ban'" type="danger">已封禁</tiny-tag>
+          <div>{{ row.reviewInfo.name }}</div>
         </template>
       </tiny-grid-column>
-      <tiny-grid-column title="审核版本状态" align="center">
+      <tiny-grid-column title="状态" align="center">
         <template #default="{ row }">
           <tiny-tag v-if="row.reviewStatus == 'pending'" type="info">待提交审核</tiny-tag>
           <tiny-tag v-if="row.reviewStatus == 'processing'" type="warning">审核中</tiny-tag>
-          <tiny-tag v-if="row.reviewStatus == 'valid'" type="success">审核通过</tiny-tag>
           <tiny-tag v-if="row.reviewStatus == 'invalid'" type="danger">审核不通过</tiny-tag>
         </template>
       </tiny-grid-column>
@@ -221,18 +151,13 @@ async function deleteResource(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="info(row._id)">详情</tiny-button>
-            <tiny-button v-if="row.reviewStatus == 'valid'" type="success" @click="releasea(row._id)">发布</tiny-button>
-            <tiny-button v-if="row.releaseStatus == 'unrelease' && row.name != ''" type="success"
-              @click="releaseb(row._id)">上架</tiny-button>
-            <tiny-button v-if="row.releaseStatus == 'release'" type="danger"
-              @click="unrelease(row._id)">下架</tiny-button>
-            <tiny-button v-if="row.reviewStatus != 'processing'" type="success" :disabled="row.disallowUpdateReview"
+            <tiny-button v-if="row.reviewStatus != 'processing'" type="success" :disabled="row.disallowUpdate"
               @click="submitReview(row._id)">提交审核</tiny-button>
             <tiny-button v-if="row.reviewStatus == 'processing'" type="danger"
               @click="unsubmitReview(row._id)">撤回审核</tiny-button>
-            <tiny-button v-if="row.reviewStatus != 'processing'" type="info" :disabled="row.disallowUpdateReview"
+            <tiny-button v-if="row.reviewStatus != 'processing'" type="info" :disabled="row.disallowUpdate"
               @click="update(row._id)">修改</tiny-button>
-            <tiny-popconfirm v-if="row.releaseStatus != 'release' && row.reviewStatus != 'processing'" title="提示"
+            <tiny-popconfirm v-if="row.name == '' && row.reviewStatus != 'processing'" title="提示"
               message="删除后无法恢复，确定删除？" type="warning" trigger="hover" @confirm="deleteResource(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>

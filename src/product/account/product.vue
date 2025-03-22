@@ -118,8 +118,9 @@ async function close(product) {
           <div class="sp">
             <tiny-tag type="success">已开通</tiny-tag>
             <tiny-tag v-if="productszt.accountfjzt === true" type="danger">永久封禁</tiny-tag>
-            <tiny-tag v-if="typeof (productszt.accountfjzt) == 'string'" type="danger">封禁至 {{ productszt.accountfjzt
-              }}</tiny-tag>
+            <tiny-tag v-if="typeof (productszt.accountfjzt) == 'string'" type="danger">
+              封禁至 {{ productszt.accountfjzt }}
+            </tiny-tag>
           </div>
           <div>一个账号即可使用轩铭2512全部产品，方便、快捷。</div>
           <tiny-alert :closable="false" description="如需取消开通，请注销账号"></tiny-alert>

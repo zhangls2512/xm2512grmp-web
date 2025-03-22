@@ -46,12 +46,6 @@
       "installDependency": true
     },
     {
-      "name": "banResource",
-      "timeout": 60,
-      "runtime": "Nodejs18.15",
-      "installDependency": true
-    },
-    {
       "name": "bindExternalAccount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -100,6 +94,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteAdminResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "deleteBanlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -107,6 +107,12 @@
     },
     {
       "name": "deleteBaxk",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deleteCreatorResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -125,12 +131,6 @@
     },
     {
       "name": "deleteLoginLog",
-      "timeout": 60,
-      "runtime": "Nodejs18.15",
-      "installDependency": true
-    },
-    {
-      "name": "deleteResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -622,12 +622,6 @@
       "installDependency": true
     },
     {
-      "name": "unbanResource",
-      "timeout": 60,
-      "runtime": "Nodejs18.15",
-      "installDependency": true
-    },
-    {
       "name": "unbindExternalAccount",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -683,6 +677,18 @@
     },
     {
       "name": "updateNoticeSetting",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResource",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "updateResourceAuu",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

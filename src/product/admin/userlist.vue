@@ -254,7 +254,7 @@ async function updateUserPermission() {
           </tiny-radio-group>
         </div>
         <div class="sp">
-          <div>账号密码智能备忘录</div>
+          <div>密码智能备忘录</div>
           <tiny-radio-group v-model="password">
             <tiny-radio label="true">正常</tiny-radio>
             <tiny-radio label="false">永久封禁</tiny-radio>

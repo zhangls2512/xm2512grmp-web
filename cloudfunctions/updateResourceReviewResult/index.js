@@ -1,7 +1,6 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const lodash = require('lodash')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -42,6 +41,49 @@ exports.main = async (event) => {
         errFix: '传递有效的status参数'
       }
     }
+
+    if (typeof (requestdata.name) != 'string' || !requestdata.name) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的name参数'
+      }
+    }
+    if (typeof (requestdata.desc) != 'string') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的desc参数'
+      }
+    }
+    if (typeof (requestdata.version) != 'string') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的version参数'
+      }
+    }
+    if (!Array.isArray(requestdata.location) || requestdata.location.length == 0) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的location参数'
+      }
+    }
+    if (!Array.isArray(requestdata.tag)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的tag参数'
+      }
+    }
+    if (!Array.isArray(requestdata.info)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的info参数'
+      }
+    }
     if (requestdata.status == 'invalid' && (typeof (requestdata.reason) != 'string' || !requestdata.reason)) {
       return {
         errCode: 1001,
@@ -49,11 +91,11 @@ exports.main = async (event) => {
         errFix: '传递有效的reason参数'
       }
     }
-    if (requestdata.status == 'invalid' && typeof (requestdata.disallowUpdateReview) != 'boolean') {
+    if (requestdata.status == 'invalid' && typeof (requestdata.disallowUpdate) != 'boolean') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的disallowUpdateReview参数'
+        errFix: '传递有效的disallowUpdate参数'
       }
     }
     let type = ''
@@ -106,88 +148,28 @@ exports.main = async (event) => {
             errFix: '重新获取审核版本信息'
           }
         }
-        let reviewinfo = data.reviewInfo
-        if ((typeof (requestdata.name) == 'string' && requestdata.name) && reviewinfo.name != requestdata.name) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.name = requestdata.name
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
-        if (typeof (requestdata.desc) == 'string' && reviewinfo.desc != requestdata.desc) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.desc = requestdata.desc
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
-        if (typeof (requestdata.version) == 'string' && reviewinfo.version != requestdata.version) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.version = requestdata.version
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
-        if ((Array.isArray(requestdata.location) && requestdata.location.length > 0) && !lodash.isEqual(reviewinfo.location, requestdata.location)) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.location = requestdata.location
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
-        if (Array.isArray(requestdata.tag) && !lodash.isEqual(reviewinfo.tag, requestdata.tag)) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.tag = requestdata.tag
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
-        if (Array.isArray(requestdata.info) && !lodash.isEqual(reviewinfo.info, requestdata.info)) {
-          if (data.allowReviewerUpdate) {
-            reviewinfo.info = requestdata.info
-          } else {
-            return {
-              errCode: 8003,
-              errMsg: '未允许审核人员修改信息',
-              errFix: '不修改信息'
-            }
-          }
-        }
         if (requestdata.status == 'valid') {
-          if (data.reviewStatus == 'valid') {
-            return {
-              errCode: 8004,
-              errMsg: '审核版本已审核通过',
-              errFix: '无需重复通过审核'
-            }
-          }
           await db.collection('resource').where({
             _id: requestdata.id
           }).update({
-            disallowUpdateReview: false,
-            reviewInfo: reviewinfo,
+            desc: requestdata.desc,
+            disallowUpdate: false,
+            info: requestdata.info,
+            location: requestdata.location,
+            name: requestdata.name,
+            reviewInfo: {
+              desc: requestdata.desc,
+              info: requestdata.info,
+              location: requestdata.location,
+              name: requestdata.name,
+              tag: requestdata.tag,
+              version: requestdata.version
+            },
             reviewInvalidReason: '',
-            reviewStatus: 'valid'
+            reviewStatus: 'pending',
+            tag: requestdata.tag,
+            uid: '',
+            version: requestdata.version
           })
           app.callFunction({
             name: 'sendEmail',
@@ -209,6 +191,33 @@ exports.main = async (event) => {
               }
             }
           })
+          if (requestdata.version && requestdata.version != data.version && data.releaseStatus == 'release') {
+            const userres = await db.collection('resourceadd').where({
+              resourceId: requestdata.id
+            }).get()
+            userres.data.forEach(item => {
+              app.callFunction({
+                name: 'sendEmail',
+                data: {
+                  uid: item.uid,
+                  noticeName: 'resource_email_versionupdate',
+                  subject: '资源版本更新通知',
+                  text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
+                }
+              })
+              app.callFunction({
+                name: 'sendWebhook',
+                data: {
+                  uid: item.uid,
+                  data: {
+                    noticeName: 'resource_webhook_versionupdate',
+                    name: item.name,
+                    newVersion: requestdata.version
+                  }
+                }
+              })
+            })
+          }
           return {
             errCode: 0,
             errMsg: '成功'
@@ -218,8 +227,15 @@ exports.main = async (event) => {
           await db.collection('resource').where({
             _id: requestdata.id
           }).update({
-            disallowUpdateReview: requestdata.disallowUpdateReview,
-            reviewInfo: reviewinfo,
+            disallowUpdate: requestdata.disallowUpdate,
+            reviewInfo: {
+              desc: requestdata.desc,
+              info: requestdata.info,
+              location: requestdata.location,
+              name: requestdata.name,
+              tag: requestdata.tag,
+              version: requestdata.version
+            },
             reviewInvalidReason: requestdata.reason,
             reviewStatus: 'invalid'
           })

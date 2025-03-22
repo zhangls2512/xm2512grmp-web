@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.9',
+    releaseDate: '2025-03-22',
+    logs: [
+      {
+        type: 'U',
+        content: '修订一些成员的岗位'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.8',
     releaseDate: '2025-03-21',
     logs: [
