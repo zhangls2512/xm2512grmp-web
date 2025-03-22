@@ -165,7 +165,7 @@ async function deleteResource(id) {
       <tiny-grid-column field="createDate" title="创建时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
-          <div class="sp">
+          <div class="czsp">
             <tiny-button type="info" @click="info(row._id)">详情</tiny-button>
             <tiny-button v-if="row.releaseStatus == 'unrelease' && row.name != ''" type="success"
               @click="release(row._id)">上架</tiny-button>
