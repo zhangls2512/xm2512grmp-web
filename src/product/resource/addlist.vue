@@ -196,12 +196,12 @@ async function deleteAddResource(resourceid) {
         description="名称、版本号不随原资源名称、版本号更新而更新，保持添加时原资源的名称、版本号不变。如需更新名称、版本号为原资源更新后的名称、版本号，请使用同步功能。"></tiny-alert>
       <tiny-form>
         <tiny-form-item label="名称">
-          <tiny-input v-model="keyword" placeholder="请输入名称"></tiny-input>
+          <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
         </tiny-form-item>
         <tiny-form-item label="标签">
           <div class="cz">
             <div class="sp">
-              <tiny-input v-model="tag" placeholder="请输入内容"></tiny-input>
+              <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
               <tiny-button type="success" @click="addTag">添加</tiny-button>
             </div>
             <div v-for="(item, index) in tags" class="sp">

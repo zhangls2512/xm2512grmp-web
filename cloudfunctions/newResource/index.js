@@ -106,6 +106,7 @@ exports.main = async (event) => {
         },
         reviewInvalidReason: '',
         reviewStatus: 'pending',
+        searchTag: [],
         submitReviewDate: 0,
         tag: [],
         uid: uid,

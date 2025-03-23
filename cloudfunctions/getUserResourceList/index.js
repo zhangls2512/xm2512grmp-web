@@ -33,7 +33,7 @@ exports.main = async (event) => {
     const resourceres = await db.collection('resource').where({
       name: keyword,
       releaseStatus: 'release',
-      tag: tag
+      searchTag: tag
     }).skip(skip).limit(limit).field({
       _id: true,
       name: true,

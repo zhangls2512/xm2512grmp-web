@@ -25,7 +25,7 @@ exports.main = async (event) => {
     const resourceres = await db.collection('resource').where({
       name: keyword,
       releaseStatus: 'release',
-      tag: tag
+      searchTag: tag
     }).count()
     return {
       errCode: 0,

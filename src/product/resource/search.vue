@@ -41,7 +41,9 @@ async function get() {
 }
 if (typeof (route.query.keyword) == 'string') {
   keyword.value = route.query.keyword
-  get()
+  if (keyword.value) {
+    get()
+  }
 }
 async function getTag() {
   if (accesstoken) {
@@ -90,12 +92,12 @@ function inputTag(inputtags) {
     <div class="cz">
       <tiny-form>
         <tiny-form-item label="名称">
-          <tiny-input v-model="keyword" placeholder="请输入名称"></tiny-input>
+          <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
         </tiny-form-item>
         <tiny-form-item label="标签">
           <div class="cz">
             <div class="sp">
-              <tiny-input v-model="tag" placeholder="请输入内容"></tiny-input>
+              <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
               <tiny-button type="success" @click="addTag">添加</tiny-button>
             </div>
             <div v-for="(item, index) in tags" class="sp">
