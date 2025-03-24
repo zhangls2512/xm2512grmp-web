@@ -133,8 +133,8 @@ exports.main = async (event) => {
         accessToken: accesstoken,
         endDate: enddate
       })
-      const ipconfig = await axios.get('https://api.qjqq.cn/api/district?ip=' + requestip)
-      const ipaddress = ipconfig.data.data.continent + ' ' + ipconfig.data.data.country + ' ' + ipconfig.data.data.prov + ' ' + ipconfig.data.data.city + ' ' + ipconfig.data.data.isp
+      const ipconfig = await axios.get('https://api.vore.top/api/IPdata?ip=' + requestip)
+      const ipaddress = ipconfig.data.ipdata.info1 + ' ' + ipconfig.data.ipdata.info2 + ' ' + ipconfig.data.ipdata.info3 + ' ' + ipconfig.data.ipdata.isp
       await db.collection('loginlog').add({
         date: Date.now(),
         ip: requestip,
