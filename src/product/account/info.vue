@@ -583,34 +583,42 @@ async function getEmailCodea() {
   <div>
     <div class="cz">
       <div class="sp">
-        <div>UID：{{ accountinfo.uid }}</div>
+        <div class="bold-text">UID</div>
+        <div>{{ accountinfo.uid }}</div>
         <tiny-button type="info" @click="copy">复制</tiny-button>
       </div>
       <div class="sp">
-        <div>邮箱：{{ accountinfo.email }}</div>
+        <div class="bold-text">邮箱</div>
+        <div>{{ accountinfo.email }}</div>
         <tiny-button type="info" @click="updateEmailOpen">修改</tiny-button>
       </div>
       <div class="sp">
-        <div>MFA：<span v-if="accountinfo.mfa == false">未设置</span><span v-if="accountinfo.mfa == true">已设置</span></div>
+        <div class="bold-text">MFA</div>
+        <div v-if="accountinfo.mfa == false">未设置</div>
+        <div v-if="accountinfo.mfa == true">已设置</div>
         <tiny-button v-if="accountinfo.mfa == false" type="success" @click="setMfaOpen">开启</tiny-button>
         <tiny-button v-if="accountinfo.mfa == true" type="danger" @click="removeMfaOpen">关闭</tiny-button>
       </div>
       <tiny-alert v-if="accountinfo.password == true" :closable="false"
         description="为了保证账号安全，建议设置强密码、定期修改密码，或关闭密码，仅允许将短期有效、更安全的邮箱验证码、MFA 作为允许的登录验证方式。"></tiny-alert>
       <div class="sp">
-        <div>密码：<span v-if="accountinfo.password == false">未设置</span><span
-            v-if="accountinfo.password == true">已设置</span>
-        </div>
+        <div class="bold-text">密码</div>
+        <div v-if="accountinfo.password == false">未设置</div>
+        <div v-if="accountinfo.password == true">已设置</div>
         <tiny-button v-if="accountinfo.password == false" type="success" @click="setPasswordOpen">开启</tiny-button>
         <tiny-button v-if="accountinfo.password == true" type="info" @click="setPasswordOpen">修改</tiny-button>
         <tiny-button v-if="accountinfo.password == true" type="danger" @click="removePasswordOpen">关闭</tiny-button>
       </div>
       <div class="sp">
-        <div>登录保持时长：{{ accountinfo.duration }} 天</div>
+        <div class="bold-text">登录保持时长</div>
+        <div>{{ accountinfo.duration }} 天</div>
         <tiny-button type="info" @click="updateDurationOpen">修改</tiny-button>
       </div>
       <tiny-alert :closable="false" description="系统会在登录账号时自动延长登录到期时间。如果在登录到期时间前未登录账号，为了保证账号安全，将需要退出重新登录。"></tiny-alert>
-      <div>登录到期时间：{{ accountinfo.endDate }}</div>
+      <div class="sp">
+        <div class="bold-text">登录到期时间</div>
+        <div>{{ accountinfo.endDate }}</div>
+      </div>
       <tiny-alert :closable="false"
         description="系统会在登录账号时使用邮箱 zhangls2512@vip.qq.com 作为发件人发送登录提醒邮件到邮箱。当发现登录行为可疑时，可使用下方的冻结账号、强制登出功能，防止账号被他人非法使用。"></tiny-alert>
       <div class="sp">
