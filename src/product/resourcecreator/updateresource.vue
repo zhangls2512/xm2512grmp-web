@@ -228,7 +228,7 @@ async function update() {
     message: '修改成功',
     status: 'success'
   })
-  if (submitreview && !submitreviewdisabled) {
+  if (submitreview.value && !submitreviewdisabled.value) {
     await request({
       apiPath: '/resourcecreator/submitReviewResource',
       body: {

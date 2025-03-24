@@ -47,7 +47,7 @@ async function newResource() {
     message: '新增成功',
     status: 'success'
   })
-  if (submitreview) {
+  if (submitreview.value) {
     await request({
       apiPath: '/resourcecreator/submitReviewResource',
       body: {
