@@ -140,7 +140,7 @@ async function changeWebhookNewResourceTask(zt) {
         </div>
       </div>
       <div class="sp">
-        <div class="item">新待审任务</div>
+        <div class="item">资源待审</div>
         <div class="item">
           <tiny-switch v-model="emailnewresourcetask" @change="changeEmailNewResourceTask"></tiny-switch>
         </div>

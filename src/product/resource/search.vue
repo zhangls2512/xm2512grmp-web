@@ -83,7 +83,7 @@ function removeTag(index) {
   tags.value.splice(index, 1)
 }
 function inputTag(inputtags) {
-  tags.value = [...new Set(tags.value.concat(inputtags))]
+  tags.value = tags.value.concat(inputtags)
 }
 </script>
 

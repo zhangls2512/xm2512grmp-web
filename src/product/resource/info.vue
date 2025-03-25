@@ -58,7 +58,7 @@ function removeTag(index) {
 }
 function inputTag() {
   const resourcetag = data.value.tag.map(item => item.value)
-  tags.value = [...new Set(tags.value.concat(resourcetag))]
+  tags.value = tags.value.concat(resourcetag)
 }
 function newAddOpen() {
   dialog.value = true

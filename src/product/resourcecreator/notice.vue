@@ -140,7 +140,7 @@ async function changeWebhookResult(zt) {
         </div>
       </div>
       <div class="sp">
-        <div class="item">审核结果</div>
+        <div class="item">资源审核版本审核结果</div>
         <div class="item">
           <tiny-switch v-model="emailresult" @change="changeEmailResult"></tiny-switch>
         </div>

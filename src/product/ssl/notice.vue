@@ -30,17 +30,17 @@ const noticenames = ref([
 const noticeszt = ref({})
 const notices = ref([
   {
-    name: '订单额度变更',
+    name: '额度变更',
     emailname: 'ssl_email_limitchange',
     webhookname: 'ssl_webhook_limitchange'
   },
   {
-    name: '订单额度耗尽',
+    name: '额度耗尽',
     emailname: 'ssl_email_limitempty',
     webhookname: 'ssl_webhook_limitempty'
   },
   {
-    name: '自动新增订单结果',
+    name: '自动新增续期订单结果',
     emailname: 'ssl_email_autoneworderresult',
     webhookname: 'ssl_webhook_autoneworderresult'
   },
@@ -60,12 +60,12 @@ const notices = ref([
     webhookname: 'ssl_webhook_autodnstaskstatuschange'
   },
   {
-    name: '订单即将过期',
+    name: '订单即将到期',
     emailname: 'ssl_email_ordernearexpire',
     webhookname: 'ssl_webhook_ordernearexpire'
   },
   {
-    name: '证书即将过期',
+    name: '证书即将到期',
     emailname: 'ssl_email_certificatenearexpire',
     webhookname: 'ssl_webhook_certificatenearexpire'
   }

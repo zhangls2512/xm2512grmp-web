@@ -140,7 +140,7 @@ async function changeWebhookVersionUpdate(zt) {
         </div>
       </div>
       <div class="sp">
-        <div class="item">版本更新</div>
+        <div class="item">资源版本更新</div>
         <div class="item">
           <tiny-switch v-model="emailversionupdate" @change="changeEmailVersionUpdate"></tiny-switch>
         </div>

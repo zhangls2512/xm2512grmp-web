@@ -16,9 +16,89 @@ const locationvalue = ref('')
 const locationtag = ref([])
 const locationtagtype = ref('')
 const locationtagvalue = ref('')
+const frequentlocationtag = ref([
+  {
+    type: 'success',
+    value: '国内访问快'
+  },
+  {
+    type: 'info',
+    value: '国内访问适中'
+  },
+  {
+    type: 'warning',
+    value: '国内访问慢'
+  },
+  {
+    type: 'danger',
+    value: '国内无法访问'
+  },
+  {
+    type: 'success',
+    value: '国内下载快'
+  },
+  {
+    type: 'info',
+    value: '国内下载适中'
+  },
+  {
+    type: 'warning',
+    value: '国内下载慢'
+  },
+  {
+    type: 'danger',
+    value: '国内无法下载'
+  },
+  {
+    type: 'success',
+    value: '官方'
+  },
+  {
+    type: 'info',
+    value: '镜像'
+  },
+  {
+    type: 'success',
+    value: '更新及时'
+  },
+  {
+    type: 'info',
+    value: '更新较及时'
+  }
+])
 const tag = ref([])
 const tagtype = ref('')
 const tagvalue = ref('')
+const frequenttag = ref([
+  {
+    type: '',
+    value: '电脑软件'
+  },
+  {
+    type: 'success',
+    value: '官网'
+  },
+  {
+    type: 'info',
+    value: '实用工具'
+  },
+  {
+    type: 'success',
+    value: '免费'
+  },
+  {
+    type: 'warning',
+    value: '部分付费'
+  },
+  {
+    type: 'warning',
+    value: '少量付费'
+  },
+  {
+    type: '',
+    value: '下载'
+  }
+])
 const info = ref([])
 const infoname = ref('')
 const infotype = ref('text')
@@ -100,6 +180,9 @@ function addLocationTag() {
   locationtagtype.value = ''
   locationtagvalue.value = ''
 }
+function addFrequentLocationTag(index) {
+  locationtag.value.push(frequentlocationtag.value[index])
+}
 function removeLocationTag(index) {
   locationtag.value.splice(index, 1)
 }
@@ -139,6 +222,9 @@ function addTag() {
   })
   tagtype.value = ''
   tagvalue.value = ''
+}
+function addFrequentTag(index) {
+  tag.value.push(frequenttag.value[index])
 }
 function removeTag(index) {
   tag.value.splice(index, 1)
@@ -267,6 +353,16 @@ async function newResource() {
               </template>
             </tiny-grid-column>
           </tiny-grid>
+          <div class="sp">
+            <div class="bold-text">常用</div>
+            <tiny-tag type="info">持续更新中</tiny-tag>
+          </div>
+          <div class="cz">
+            <div v-for="(item, index) in frequentlocationtag" class="sp">
+              <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+              <tiny-button type="success" @click="addFrequentLocationTag(index)">添加</tiny-button>
+            </div>
+          </div>
           <tiny-button type="success" @click="addLocation">添加</tiny-button>
           <tiny-grid :data="location" :drop-config="dropconfig" row-key>
             <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
@@ -314,6 +410,16 @@ async function newResource() {
               </template>
             </tiny-grid-column>
           </tiny-grid>
+          <div class="sp">
+            <div class="bold-text">常用</div>
+            <tiny-tag type="info">持续更新中</tiny-tag>
+          </div>
+          <div class="cz">
+            <div v-for="(item, index) in frequenttag" class="sp">
+              <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+              <tiny-button type="success" @click="addFrequentTag(index)">添加</tiny-button>
+            </div>
+          </div>
         </div>
       </tiny-form-item>
       <tiny-form-item label="更多信息">
