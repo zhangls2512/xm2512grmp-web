@@ -254,6 +254,11 @@ const apis = ref([
   },
   {
     product: '资源投稿',
+    name: 'resourcecreator_aiGenerateResourceInfo',
+    desc: 'AI 生成资源简介、标签'
+  },
+  {
+    product: '资源投稿',
     name: 'resourcecreator_newResource',
     desc: '新增资源'
   },

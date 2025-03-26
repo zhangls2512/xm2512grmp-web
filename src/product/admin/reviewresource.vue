@@ -15,7 +15,7 @@ const aftersubmit = ref('getnext')
 const type = ref('sorted')
 const update = ref(false)
 const reviewstatus = ref('valid')
-const release = ref(false)
+const release = ref(true)
 const reviewinvalidreason = ref('')
 const disallowupdate = ref(false)
 const id = ref('')
@@ -101,8 +101,9 @@ const typecs = ref([
 ])
 async function get() {
   id.value = ''
+  update.value = false
   reviewstatus.value = 'valid'
-  release.value = false
+  release.value = true
   reviewinvalidreason.value = ''
   disallowupdate.value = false
   const res = await request({
@@ -270,7 +271,7 @@ async function updateReviewResult() {
     message: '提交成功',
     status: 'success'
   })
-  if (reviewstatus.value == 'valid' && release.value && releasestatus.value == 'unrelease') {
+  if (release.value && releasestatus.value == 'unrelease' && reviewstatus.value == 'valid') {
     await request({
       apiPath: '/admin/releaseResource',
       body: {
@@ -506,7 +507,7 @@ async function updateReviewResult() {
         <tiny-radio label="valid">通过</tiny-radio>
         <tiny-radio label="invalid">不通过</tiny-radio>
       </tiny-radio-group>
-      <div v-if="reviewstatus == 'valid' && releasestatus == 'unrelease'" class="sp">
+      <div v-if="releasestatus == 'unrelease' && reviewstatus == 'valid'" class="sp">
         <div class="bold-text">上架</div>
         <tiny-switch v-model="release"></tiny-switch>
       </div>

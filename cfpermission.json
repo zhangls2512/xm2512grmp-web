@@ -2,6 +2,9 @@
   "*": {
     "invoke": false
   },
+  "aiGenerateResourceInfo": {
+    "invoke": true
+  },
   "deactivateAcmeAccount": {
     "invoke": true
   },

@@ -29,7 +29,7 @@ const endyear = new Date().getFullYear()
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备9号-W" target="_blank">轩铭2512品备9号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.5</div>
+          <div class="footer-text">Version 1.0.6</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/doc/resource" target="_blank">文档中心</router-link>
           <tiny-divider direction="vertical"></tiny-divider>

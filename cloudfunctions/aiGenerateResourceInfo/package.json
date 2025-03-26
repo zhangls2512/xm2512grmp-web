@@ -1,0 +1,7 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "latest",
+    "openai": "latest"
+  }
+}

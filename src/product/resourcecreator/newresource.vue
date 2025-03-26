@@ -3,11 +3,13 @@ document.title = '轩铭2512 - 资源投稿 - 新增资源（完整）'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import sortable from 'sortablejs'
+import callfunction from '../../callfunction'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
 const name = ref('')
 const desc = ref('')
+const aidesc = ref('')
 const version = ref('')
 const location = ref([])
 const locationname = ref('')
@@ -69,6 +71,7 @@ const frequentlocationtag = ref([
 const tag = ref([])
 const tagtype = ref('')
 const tagvalue = ref('')
+const aitag = ref([])
 const frequenttag = ref([
   {
     type: '',
@@ -165,6 +168,39 @@ const typecs = ref([
     label: '红'
   }
 ])
+async function aiGenerate(type) {
+  if (!name.value) {
+    TinyModal.message({
+      message: '请输入名称',
+      status: 'warning'
+    })
+    return
+  }
+  const res = await callfunction({
+    functionName: 'aiGenerateResourceInfo',
+    data: {
+      accessToken: accesstoken,
+      name: name.value,
+      type: type
+    }
+  })
+  if (type == 'desc') {
+    aidesc.value = res.data
+  }
+  if (type == 'tag') {
+    aitag.value = res.data.map(item => ({
+      type: '',
+      value: item
+    }))
+  }
+  TinyModal.message({
+    message: '已生成',
+    status: 'success'
+  })
+}
+function inputDesc() {
+  desc.value = aidesc.value
+}
 function addLocationTag() {
   if (!locationtagvalue.value) {
     TinyModal.message({
@@ -225,6 +261,9 @@ function addTag() {
 }
 function addFrequentTag(index) {
   tag.value.push(frequenttag.value[index])
+}
+function addAiTag(index) {
+  tag.value.push(aitag.value[index])
 }
 function removeTag(index) {
   tag.value.splice(index, 1)
@@ -317,8 +356,16 @@ async function newResource() {
         <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="简介">
-        <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
-          placeholder="请输入简介（可选）"></tiny-input>
+        <div class="cz">
+          <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
+            placeholder="请输入简介（可选）"></tiny-input>
+          <tiny-button type="info" @click="aiGenerate('desc')">AI 生成</tiny-button>
+          <tiny-alert v-if="aidesc != ''" :closable="false" description="AI 生成结果仅供参考"></tiny-alert>
+          <div v-if="aidesc != ''" class="sp">
+            <div>{{ aidesc }}</div>
+            <tiny-button type="info" @click="inputDesc">填入</tiny-button>
+          </div>
+        </div>
       </tiny-form-item>
       <tiny-form-item label="版本号">
         <tiny-input v-model="version" clearable show-word-limit maxlength="30" placeholder="请输入版本号（可选）"></tiny-input>
@@ -411,13 +458,26 @@ async function newResource() {
             </tiny-grid-column>
           </tiny-grid>
           <div class="sp">
-            <div class="bold-text">常用</div>
-            <tiny-tag type="info">持续更新中</tiny-tag>
-          </div>
-          <div class="cz">
-            <div v-for="(item, index) in frequenttag" class="sp">
-              <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
-              <tiny-button type="success" @click="addFrequentTag(index)">添加</tiny-button>
+            <div class="cz">
+              <div class="sp">
+                <div class="bold-text">常用</div>
+                <tiny-tag type="info">持续更新中</tiny-tag>
+              </div>
+              <div v-for="(item, index) in frequenttag" class="sp">
+                <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+                <tiny-button type="success" @click="addFrequentTag(index)">添加</tiny-button>
+              </div>
+            </div>
+            <div class="cz">
+              <div class="sp">
+                <div class="bold-text">AI 生成</div>
+                <tiny-button type="info" @click="aiGenerate('tag')">生成</tiny-button>
+              </div>
+              <tiny-alert v-if="aitag.length > 0" :closable="false" description="AI 生成结果仅供参考"></tiny-alert>
+              <div v-for="(item, index) in aitag" class="sp">
+                <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
+                <tiny-button type="success" @click="addAiTag(index)">添加</tiny-button>
+              </div>
             </div>
           </div>
         </div>

@@ -92,6 +92,7 @@ function info(id) {
 
 .grid {
   grid-template-columns: repeat(4, 1fr);
+  overflow: auto;
   width: 100%;
 }
 </style>

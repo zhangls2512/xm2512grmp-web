@@ -12,6 +12,7 @@ const added = ref('')
 const dialog = ref(false)
 const tags = ref([])
 const tag = ref('')
+const mytag = ref([])
 async function get() {
   const res = await request({
     apiPath: '/resource/getResourceInfo',
@@ -33,6 +34,14 @@ async function get() {
       }
     })
     added.value = addres.added
+    const tagres = await request({
+      apiPath: '/product/getUserInfo',
+      body: {
+        accessToken: accesstoken,
+        product: 'resource'
+      }
+    })
+    mytag.value = tagres.data.setting.tag
   }
 }
 get()
@@ -59,6 +68,9 @@ function removeTag(index) {
 function inputTag() {
   const resourcetag = data.value.tag.map(item => item.value)
   tags.value = tags.value.concat(resourcetag)
+}
+function inputMytag(inputtags) {
+  tags.value = tags.value.concat(inputtags)
 }
 function newAddOpen() {
   dialog.value = true
@@ -161,10 +173,21 @@ function update() {
           <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addTag">添加</tiny-button>
         </div>
-        <tiny-button v-if="data.tag.length > 0" type="info" @click="inputTag">添加自带标签</tiny-button>
         <div v-for="(item, index) in tags" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
+        </div>
+        <div v-if="data.tag.length > 0" class="sp">
+          <div class="bold-text">自带标签</div>
+          <tiny-button type="success" @click="inputTag">添加</tiny-button>
+        </div>
+        <div v-if="mytag.length > 0" class="bold-text">我的标签</div>
+        <div v-for="(item, index) in mytag">
+          <div class="sp">
+            <div>{{ index + 1 }}.</div>
+            <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
+            <tiny-button type="success" @click="inputMytag(item)">添加</tiny-button>
+          </div>
         </div>
       </div>
       <template #footer>

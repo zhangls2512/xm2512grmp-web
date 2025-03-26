@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 资源投稿'
 const data = [
   {
+    versionNumber: '1.0.8',
+    releaseDate: '2025-03-26',
+    logs: [
+      {
+        type: 'U',
+        content: '新增资源页面支持 AI 生成简介、标签'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.7',
     releaseDate: '2025-03-25',
     logs: [
