@@ -163,7 +163,7 @@ const apis = ref([
     desc: '修改资源免审更新版本号设置'
   },
   {
-    product: '资源投稿',
+    product: '管理后台',
     name: 'admin_deleteResource',
     desc: '删除资源'
   },
