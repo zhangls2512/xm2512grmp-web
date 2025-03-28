@@ -237,7 +237,7 @@ async function deleteBaxk(t) {
     <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     <tiny-dialog-box class="dialog" :visible="dialog" title="修改描述" @close="closeDialog">
-      <tiny-input v-model="desc" type="textarea" autosize clearable placeholder="请输入描述"></tiny-input>
+      <tiny-input v-model="desc" type="textarea" autosize placeholder="请输入描述"></tiny-input>
       <template #footer>
         <tiny-button type="info" @click="updateBaxkDesc">修改</tiny-button>
       </template>

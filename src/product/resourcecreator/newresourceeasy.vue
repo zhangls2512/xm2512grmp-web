@@ -100,11 +100,11 @@ async function newResource() {
     </tiny-breadcrumb>
     <tiny-form>
       <tiny-form-item label="名称">
-        <tiny-input v-model="name" clearable show-word-limit maxlength="30" placeholder="请输入名称"></tiny-input>
+        <tiny-input v-model="name" clearable maxlength="30" placeholder="请输入名称"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="简介">
         <div class="cz">
-          <tiny-input v-model="desc" type="textarea" autosize clearable show-word-limit maxlength="500"
+          <tiny-input v-model="desc" type="textarea" autosize show-word-limit maxlength="500"
             placeholder="请输入简介（可选）"></tiny-input>
           <tiny-button type="info" @click="aiGenerate">AI 生成</tiny-button>
           <tiny-alert v-if="aidesc != ''" :closable="false" description="AI 生成结果仅供参考"></tiny-alert>
@@ -115,7 +115,7 @@ async function newResource() {
         </div>
       </tiny-form-item>
       <tiny-form-item label="地址">
-        <tiny-input v-model="location" type="textarea" autosize clearable show-word-limit maxlength="500"
+        <tiny-input v-model="location" type="textarea" autosize show-word-limit maxlength="500"
           placeholder="请输入地址"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="提交审核">

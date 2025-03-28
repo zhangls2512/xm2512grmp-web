@@ -145,7 +145,7 @@ async function newOrder() {
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'csr'" label="CSR">
-        <tiny-input v-model="csr" type="textarea" autosize clearable placeholder="请输入 CSR"></tiny-input>
+        <tiny-input v-model="csr" type="textarea" autosize placeholder="请输入 CSR"></tiny-input>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic'" label="域名">
         <div class="cz">

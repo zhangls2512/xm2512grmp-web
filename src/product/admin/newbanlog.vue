@@ -58,10 +58,10 @@ async function newBanlog() {
         <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="违规内容">
-        <tiny-input v-model="content" type="textarea" autosize clearable placeholder="请输入违规内容"></tiny-input>
+        <tiny-input v-model="content" type="textarea" autosize placeholder="请输入违规内容"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="处罚方式">
-        <tiny-input v-model="method" type="textarea" autosize clearable placeholder="请输入处罚方式"></tiny-input>
+        <tiny-input v-model="method" type="textarea" autosize placeholder="请输入处罚方式"></tiny-input>
       </tiny-form-item>
       <tiny-form-item>
         <tiny-button type="success" @click="newBanlog">新增</tiny-button>

@@ -237,7 +237,7 @@ async function updateReviewResult() {
           :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
         <tiny-radio label="invalid">不通过</tiny-radio>
       </tiny-radio-group>
-      <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize clearable
+      <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize
         show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
       <div v-if="reviewstatus == 'invalid'" class="sp">
         <div class="bold-text">禁止修改、提交审核</div>

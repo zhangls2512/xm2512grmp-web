@@ -195,8 +195,8 @@ async function updateDns() {
     </tiny-grid>
     <tiny-dialog-box class="dialog" :visible="dialog" title="编辑 DNS" @close="closeDialog">
       <div class="dialog-cz">
-        <tiny-input v-model="keyid" type="textarea" autosize clearable placeholder="请输入 Key ID"></tiny-input>
-        <tiny-input v-model="keysecret" type="textarea" autosize clearable placeholder="请输入 Key Secret"></tiny-input>
+        <tiny-input v-model="keyid" type="textarea" autosize placeholder="请输入 Key ID"></tiny-input>
+        <tiny-input v-model="keysecret" type="textarea" autosize placeholder="请输入 Key Secret"></tiny-input>
         <div class="sp">
           <tiny-input v-model="domain" clearable placeholder="请输入域名"></tiny-input>
           <tiny-button type="success" @click="add">添加</tiny-button>
