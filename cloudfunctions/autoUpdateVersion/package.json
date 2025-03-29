@@ -1,0 +1,7 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "axios": "latest",
+    "json5": "latest"
+  }
+}
