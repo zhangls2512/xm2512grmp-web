@@ -190,87 +190,85 @@ async function deleteAddResource(resourceid) {
 </script>
 
 <template>
-  <div class="main">
-    <div class="cz">
-      <tiny-alert :closable="false"
-        description="名称、版本号不随原资源名称、版本号更新而更新，保持添加时原资源的名称、版本号不变。如需更新名称、版本号为原资源更新后的名称、版本号，请使用同步功能。"></tiny-alert>
-      <tiny-form>
-        <tiny-form-item label="名称">
-          <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
-        </tiny-form-item>
-        <tiny-form-item label="标签">
-          <div class="cz">
-            <div class="sp">
-              <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
-              <tiny-button type="success" @click="addTag">添加</tiny-button>
-            </div>
-            <div v-for="(item, index) in tags" class="sp">
-              <tiny-tag type="info">{{ item }}</tiny-tag>
-              <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
-            </div>
-          </div>
-        </tiny-form-item>
-        <tiny-form-item v-if="mytag.length > 0" label="我的标签">
-          <div class="cz">
-            <div v-for="(item, index) in mytag">
-              <div class="sp">
-                <div>{{ index + 1 }}.</div>
-                <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
-                <tiny-button type="success" @click="inputTag(item)">添加</tiny-button>
-              </div>
-            </div>
-          </div>
-        </tiny-form-item>
-        <tiny-form-item label="检查更新">
-          <tiny-switch v-model="checkversionupdate"></tiny-switch>
-        </tiny-form-item>
-        <tiny-form-item>
-          <tiny-button type="info" @click="get">搜索</tiny-button>
-        </tiny-form-item>
-      </tiny-form>
-      <div v-if="checkversionupdate == true && data.length > 0" class="sp">
-        <div>仅显示有更新</div>
-        <tiny-switch v-model="onlyshowversionupdate"></tiny-switch>
-      </div>
-      <tiny-button v-if="data.length > 0" type="success" @click="syncAll">同步此页</tiny-button>
-      <div v-if="data.length == 0">
-        <tiny-divider></tiny-divider>
-        <div class="large-bold-text" style="text-align: center">无数据</div>
-      </div>
-      <div v-for="item in data">
-        <div v-if="item.versionUpdate != false || onlyshowversionupdate == false" class="cz">
-          <tiny-divider></tiny-divider>
+  <div class="cz">
+    <tiny-alert :closable="false"
+      description="名称、版本号不随原资源名称、版本号更新而更新，保持添加时原资源的名称、版本号不变。如需更新名称、版本号为原资源更新后的名称、版本号，请使用同步功能。"></tiny-alert>
+    <tiny-form>
+      <tiny-form-item label="名称">
+        <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
+      </tiny-form-item>
+      <tiny-form-item label="标签">
+        <div class="cz">
           <div class="sp">
-            <tiny-alert v-if="item.name == null" style="flex-grow:1" type="error" :closable="false"
-              description="资源已失效"></tiny-alert>
-            <div v-if="item.name != null" class="cz" style="cursor: pointer;flex-grow:1" @click="info(item.resourceId)">
-              <div class="bold-text">{{ item.name }}</div>
-              <div v-if="item.version != ''">当前版本：{{ item.version }}</div>
-              <div class="sp">
-                <tiny-tag v-for="item in item.tag" type="info">{{ item }}</tiny-tag>
-              </div>
-              <div v-if="item.versionUpdate !== ''">
-                <tiny-alert v-if="item.versionUpdate == false" type="success" :closable="false"
-                  description="已是更新"></tiny-alert>
-                <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
-                  <template #description>
-                    <div>存在新版本：{{ item.latestVersion }}</div>
-                  </template>
-                </tiny-alert>
-              </div>
-            </div>
+            <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
+            <tiny-button type="success" @click="addTag">添加</tiny-button>
+          </div>
+          <div v-for="(item, index) in tags" class="sp">
+            <tiny-tag type="info">{{ item }}</tiny-tag>
+            <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
+          </div>
+        </div>
+      </tiny-form-item>
+      <tiny-form-item v-if="mytag.length > 0" label="我的标签">
+        <div class="cz">
+          <div v-for="(item, index) in mytag">
             <div class="sp">
-              <tiny-button type="success" @click="syncSingle(item._id)">同步</tiny-button>
-              <tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button>
-              <tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button>
+              <div>{{ index + 1 }}.</div>
+              <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
+              <tiny-button type="success" @click="inputTag(item)">添加</tiny-button>
             </div>
           </div>
         </div>
-      </div>
-      <tiny-divider v-if="data.length > 0"></tiny-divider>
-      <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
-        :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
+      </tiny-form-item>
+      <tiny-form-item label="检查更新">
+        <tiny-switch v-model="checkversionupdate"></tiny-switch>
+      </tiny-form-item>
+      <tiny-form-item>
+        <tiny-button type="info" @click="get">搜索</tiny-button>
+      </tiny-form-item>
+    </tiny-form>
+    <div v-if="checkversionupdate == true && data.length > 0" class="sp">
+      <div>仅显示有更新</div>
+      <tiny-switch v-model="onlyshowversionupdate"></tiny-switch>
     </div>
+    <tiny-button v-if="data.length > 0" type="success" @click="syncAll">同步此页</tiny-button>
+    <div v-if="data.length == 0">
+      <tiny-divider></tiny-divider>
+      <div class="large-bold-text" style="text-align: center">无数据</div>
+    </div>
+    <div v-for="item in data">
+      <div v-if="item.versionUpdate != false || onlyshowversionupdate == false" class="cz">
+        <tiny-divider></tiny-divider>
+        <div class="sp">
+          <tiny-alert v-if="item.name == null" style="flex-grow:1" type="error" :closable="false"
+            description="资源已失效"></tiny-alert>
+          <div v-if="item.name != null" class="cz" style="cursor: pointer;flex-grow:1" @click="info(item.resourceId)">
+            <div class="bold-text">{{ item.name }}</div>
+            <div v-if="item.version != ''">当前版本：{{ item.version }}</div>
+            <div class="sp">
+              <tiny-tag v-for="item in item.tag" type="info">{{ item }}</tiny-tag>
+            </div>
+            <div v-if="item.versionUpdate !== ''">
+              <tiny-alert v-if="item.versionUpdate == false" type="success" :closable="false"
+                description="已是更新"></tiny-alert>
+              <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
+                <template #description>
+                  <div>有新版本：{{ item.latestVersion }}</div>
+                </template>
+              </tiny-alert>
+            </div>
+          </div>
+          <div class="sp">
+            <tiny-button type="success" @click="syncSingle(item._id)">同步</tiny-button>
+            <tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button>
+            <tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <tiny-divider v-if="data.length > 0"></tiny-divider>
+    <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
+      :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
     <tiny-dialog-box class="dialog" :visible="dialog" title="设置标签" @close="updateAddResourceClose">
       <div class="dialog-cz">
         <div class="sp">

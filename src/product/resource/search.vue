@@ -129,7 +129,7 @@ function inputTag(inputtags) {
       <div v-for="item in data" class="cz" style="cursor: pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
-        <div v-if="showdesc == true">{{ item.desc }}</div>
+        <div v-if="item.desc != '' && showdesc == true">{{ item.desc }}</div>
         <div class="sp">
           <tiny-tag v-for="item in item.tag" :type="item.type">{{ item.value }}</tiny-tag>
         </div>
