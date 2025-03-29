@@ -80,6 +80,7 @@ exports.main = async (event) => {
         await db.collection('resource').where({
           _id: requestdata.id
         }).update({
+          reviewInvalidReason: '',
           reviewStatus: 'processing',
           submitReviewDate: Date.now()
         })

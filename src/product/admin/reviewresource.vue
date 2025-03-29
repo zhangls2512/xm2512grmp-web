@@ -13,7 +13,7 @@ const count = ref(0)
 const percent = ref(0)
 const aftersubmit = ref('getnext')
 const type = ref('sorted')
-const update = ref(false)
+const mode = ref('preview')
 const reviewstatus = ref('valid')
 const release = ref(true)
 const reviewinvalidreason = ref('')
@@ -101,7 +101,7 @@ const typecs = ref([
 ])
 async function get() {
   id.value = ''
-  update.value = false
+  mode.value = 'preview'
   reviewstatus.value = 'valid'
   release.value = true
   reviewinvalidreason.value = ''
@@ -314,21 +314,21 @@ async function updateReviewResult() {
         <tiny-radio label="random">随机</tiny-radio>
       </tiny-radio-group>
     </div>
+    <tiny-alert :closable="false" description="多人同时审核时请选择“随机”。"></tiny-alert>
     <div>
       <tiny-button v-if="type == 'sorted'" type="info" @click="get">刷新</tiny-button>
       <tiny-button v-if="type == 'random'" type="info" @click="get">换一个</tiny-button>
     </div>
     <tiny-divider></tiny-divider>
     <div v-if="id != ''" class="cz">
-      <tiny-switch v-model="update" show-text>
-        <template #open>
-          <span>修改</span>
-        </template>
-        <template #close>
-          <span>预览</span>
-        </template>
-      </tiny-switch>
-      <div v-if="update == false" class="cz">
+      <div class="sp">
+        <div class="bold-text">显示模式</div>
+        <tiny-radio-group v-model="mode">
+          <tiny-radio label="preview">预览</tiny-radio>
+          <tiny-radio label="update">修改</tiny-radio>
+        </tiny-radio-group>
+      </div>
+      <div v-if="mode == 'preview'" class="cz">
         <div class="sp">
           <div class="bold-text">名称</div>
           <div>{{ name }}</div>
@@ -364,7 +364,7 @@ async function updateReviewResult() {
           </template>
         </tiny-alert>
       </div>
-      <div v-if="update == true">
+      <div v-if="mode == 'update'">
         <tiny-form>
           <tiny-form-item label="名称">
             <tiny-input v-model="name" clearable maxlength="30" placeholder="请输入名称"></tiny-input>

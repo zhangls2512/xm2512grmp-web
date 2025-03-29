@@ -230,8 +230,8 @@ async function updateReviewResult() {
         <tiny-tag v-if="data.reviewStatus == 'processing'" type="warning">审核中</tiny-tag>
         <tiny-tag v-if="data.reviewStatus == 'invalid'" type="danger">审核不通过</tiny-tag>
       </div>
-      <tiny-alert v-if="data.reviewInvalidReason != ''" type="error" size="large" :closable="false" title="不通过原因"
-        :description="data.reviewInvalidReason"></tiny-alert>
+      <div v-if="data.reviewInvalidReason != ''" class="bold-text">不通过原因</div>
+      <div v-if="data.reviewInvalidReason != ''">{{ data.reviewInvalidReason }}</div>
       <tiny-radio-group v-if="data.reviewStatus != 'pending'" v-model="reviewstatus">
         <tiny-radio label="valid"
           :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
