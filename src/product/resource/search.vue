@@ -78,6 +78,7 @@ function addTag() {
     return
   }
   tags.value.push(tag.value)
+  tag.value = ''
 }
 function removeTag(index) {
   tags.value.splice(index, 1)
