@@ -478,6 +478,12 @@
       "installDependency": true
     },
     {
+      "name": "newErrorLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "newResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
