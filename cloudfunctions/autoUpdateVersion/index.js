@@ -52,9 +52,4 @@ exports.main = async () => {
     id: '80a8bd4f67e68074001383b1504da293',
     version: wxwindowsversions[0]
   })
-  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
-    accessKey: process.env.accesskey,
-    id: 'e1cff63567e680e400138e506fb1b405',
-    version: wxwindowsversions[1]
-  })
 }
