@@ -42,7 +42,7 @@ exports.main = async (event) => {
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '新错误日志上传通知',
-      text: '有新错误日志上传。'
+      text: '有新错误日志上传，错误类型：' + requestdata.object.name + '。'
     })
     return {
       errCode: 0,
