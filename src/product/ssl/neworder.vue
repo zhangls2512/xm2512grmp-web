@@ -59,7 +59,7 @@ function close() {
   templatedisplay.value = false
 }
 function input(domainsinput) {
-  domains.value = domainsinput
+  domains.value = [...domainsinput]
 }
 async function newOrder() {
   let csrused = ''
