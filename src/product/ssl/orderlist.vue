@@ -3,6 +3,7 @@ document.title = '轩铭2512 - SSL 证书 - 订单管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import validator from 'validator'
+import callfunction from '../../callfunction'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
@@ -99,9 +100,9 @@ function info(id) {
   router.push('/product/ssl/orderinfo?id=' + id)
 }
 async function submit(id) {
-  await request({
-    apiPath: '/ssl/submitOrder',
-    body: {
+  await callfunction({
+    functionName: 'submitSslOrder',
+    data: {
       accessToken: accesstoken,
       id: id
     }
