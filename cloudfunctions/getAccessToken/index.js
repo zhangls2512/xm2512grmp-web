@@ -39,7 +39,7 @@ exports.main = async (event) => {
     }
   }
   try {
-    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx', 'huawei']
+    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx', 'huaweiaipasswordmemoapp']
     if (!validtypes.includes(requestdata.verifyType)) {
       return {
         errCode: 1001,
