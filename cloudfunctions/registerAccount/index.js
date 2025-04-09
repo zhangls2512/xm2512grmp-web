@@ -83,7 +83,7 @@ exports.main = async (event) => {
           },
           service: []
         })
-        const accesstoken = res.id + '\0' + nanoid(30)
+        const accesstoken = res.id + '\0' + nanoid(60)
         const encryptaccesstoken = sm4.encrypt(accesstoken, process.env.key)
         await db.collection('account').where({
           _id: res.id

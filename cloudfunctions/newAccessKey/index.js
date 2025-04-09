@@ -169,7 +169,7 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      const accesskeyvalue = sm4.encrypt(account._id + '\0' + nanoid(30), process.env.key)
+      const accesskeyvalue = sm4.encrypt(account._id + '\0' + nanoid(60), process.env.key)
       const accesskey = {
         name: requestdata.name,
         value: accesskeyvalue,

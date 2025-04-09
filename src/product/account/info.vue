@@ -72,7 +72,8 @@ async function getExternalAccount() {
     status: 'success'
   })
   const platformmap = {
-    sslwxxcx: 'SSL 证书（微信小程序）'
+    sslwxxcx: 'SSL 证书（微信小程序）',
+    huawei: '华为账号'
   }
   externalaccount.value = res.data.map(item => ({
     ...item,

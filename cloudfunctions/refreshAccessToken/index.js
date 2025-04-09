@@ -74,7 +74,7 @@ exports.main = async (event) => {
         }
       } else {
         const enddate = Date.now() + account.duration * 86400000
-        const outaccesstoken = account._id + '\0' + nanoid(30)
+        const outaccesstoken = account._id + '\0' + nanoid(60)
         const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
         await db.collection('account').where({
           _id: account._id

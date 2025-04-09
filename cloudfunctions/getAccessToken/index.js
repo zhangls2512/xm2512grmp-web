@@ -39,7 +39,7 @@ exports.main = async (event) => {
     }
   }
   try {
-    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx']
+    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx', 'huawei']
     if (!validtypes.includes(requestdata.verifyType)) {
       return {
         errCode: 1001,
@@ -60,6 +60,9 @@ exports.main = async (event) => {
     if (requestdata.verifyType == 'sslwxxcx') {
       verifytypetext = 'SSL证书（微信小程序）'
     }
+    if (requestdata.verifyType == 'huaweiaipasswordmemoapp') {
+      verifytypetext = '华为账号'
+    }
     if (typeof (requestdata.verifyCode) != 'string') {
       return {
         errCode: 1001,
@@ -68,7 +71,8 @@ exports.main = async (event) => {
       }
     }
     let email = ''
-    if (requestdata.verifyType != 'sslwxxcx') {
+    const platforms = ['sslwxxcx', 'huaweiaipasswordmemoapp']
+    if (!platforms.includes(requestdata.verifyType)) {
       if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
         return {
           errCode: 1001,
@@ -124,7 +128,7 @@ exports.main = async (event) => {
       let accesstoken = account.accessToken
       const enddate = Date.now() + account.duration * 86400000
       if (Date.now() > account.endDate) {
-        const outaccesstoken = account._id + '\0' + nanoid(30)
+        const outaccesstoken = account._id + '\0' + nanoid(60)
         accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
       }
       await db.collection('account').where({

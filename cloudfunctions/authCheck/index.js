@@ -409,6 +409,57 @@ exports.main = async (event) => {
         }
       }
     }
+    if (event.type == 'huaweiaipasswordmemoapp') {
+      let clientid = ''
+      let clientsecret = ''
+      if (event.type == 'huaweiaipasswordmemoapp') {
+        clientid = '6917568345502278703'
+        clientsecret = process.env.huaweiaipasswordmemoappclientsecret
+      }
+      try {
+        const huaweitokenres = await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', null, {
+          params: {
+            grant_type: 'authorization_code',
+            client_id: clientid,
+            client_secret: clientsecret,
+            code: checkdata.code
+          }
+        })
+        const huaweitokeninfores = await axios.post('https://oauth-api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo&access_token=' + huaweitokenres.data.access_token)
+        await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/revoke', null, {
+          params: {
+            token: huaweitokenres.data.access_token
+          }
+        })
+        const externalaccount = await db.collection('externalaccount').where({
+          openid: huaweitokeninfores.data.union_id,
+          platform: 'huawei'
+        }).get()
+        if (externalaccount.data.length == 0) {
+          return {
+            errCode: 3061,
+            errMsg: '此外部平台账号未绑定账号',
+            errFix: '传递绑定账号的外部平台账号的code'
+          }
+        } else {
+          const uid = externalaccount.data[0].uid
+          const accountres = await db.collection('account').where({
+            _id: uid
+          }).get()
+          return {
+            errCode: 0,
+            errMsg: '成功',
+            account: accountres.data[0]
+          }
+        }
+      } catch (err) {
+        return {
+          errCode: 3060,
+          errMsg: 'code校验错误，错误信息：' + err.response.data.error_description,
+          errFix: '传递有效的code参数，code：' + checkdata.code
+        }
+      }
+    }
   } catch {
     return {
       errCode: 5000,

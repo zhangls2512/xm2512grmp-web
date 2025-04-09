@@ -50,7 +50,7 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyCode参数'
       }
     }
-    const validplatforms = ['sslwxxcx']
+    const validplatforms = ['sslwxxcx', 'huaweiaipasswordmemoapp']
     if (!validplatforms.includes(requestdata.platform)) {
       return {
         errCode: 1001,
@@ -120,6 +120,57 @@ exports.main = async (event) => {
                 errCode: 0,
                 errMsg: '成功'
               }
+            }
+          }
+        }
+        if (requestdata.platform == 'huaweiaipasswordmemoapp') {
+          let clientid = ''
+          let clientsecret = ''
+          if (requestdata.platform == 'huaweiaipasswordmemoapp') {
+            clientid = '6917568345502278703'
+            clientsecret = process.env.huaweiaipasswordmemoappclientsecret
+          }
+          try {
+            const huaweitokenres = await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', null, {
+              params: {
+                grant_type: 'authorization_code',
+                client_id: clientid,
+                client_secret: clientsecret,
+                code: requestdata.code
+              }
+            })
+            const huaweitokeninfores = await axios.post('https://oauth-api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo&access_token=' + huaweitokenres.data.access_token)
+            await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/revoke', null, {
+              params: {
+                token: huaweitokenres.data.access_token
+              }
+            })
+            const externalaccountres = await db.collection('externalaccount').where({
+              openid: huaweitokeninfores.data.union_id,
+              platform: 'huawei'
+            }).get()
+            if (externalaccountres.data.length > 0) {
+              return {
+                errCode: 8002,
+                errMsg: '此外部平台账号已绑定其他账号',
+                errFix: '解除此外部平台账号与其他账号的绑定'
+              }
+            } else {
+              await db.collection('externalaccount').add({
+                openid: huaweitokeninfores.data.union_id,
+                platform: 'huawei',
+                uid: uid
+              })
+              return {
+                errCode: 0,
+                errMsg: '成功'
+              }
+            }
+          } catch (err) {
+            return {
+              errCode: 8001,
+              errMsg: 'code校验错误，错误信息：' + err.data.error_description,
+              errFix: '传递有效的code参数'
             }
           }
         }
