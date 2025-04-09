@@ -80,8 +80,12 @@ exports.main = async (event) => {
       return res.result
     } else {
       const uid = res.result.account._id
+      let platform = requestdata.platform
+      if (requestdata.platform == 'huaweiaipasswordmemoapp') {
+        platform = 'huawei'
+      }
       const externalaccountres = await db.collection('externalaccount').where({
-        platform: requestdata.platform,
+        platform: platform,
         uid: uid
       }).get()
       if (externalaccountres.data.length > 0) {
@@ -139,7 +143,11 @@ exports.main = async (event) => {
                 code: requestdata.code
               }
             })
-            const huaweitokeninfores = await axios.post('https://oauth-api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo&access_token=' + huaweitokenres.data.access_token)
+            const huaweitokeninfores = await axios.post('https://oauth-api.cloud.huawei.com/rest.php?nsp_fmt=JSON&nsp_svc=huawei.oauth2.user.getTokenInfo', null, {
+              params: {
+                access_token: huaweitokenres.data.access_token
+              }
+            })
             await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/revoke', null, {
               params: {
                 token: huaweitokenres.data.access_token
@@ -169,7 +177,7 @@ exports.main = async (event) => {
           } catch (err) {
             return {
               errCode: 8001,
-              errMsg: 'code校验错误，错误信息：' + err.data.error_description,
+              errMsg: 'code校验错误，错误信息：' + err.response.data.error_description,
               errFix: '传递有效的code参数'
             }
           }

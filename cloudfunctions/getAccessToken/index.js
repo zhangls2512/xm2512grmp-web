@@ -71,6 +71,10 @@ exports.main = async (event) => {
       }
     }
     let email = ''
+    let verifytype = requestdata.verifyType
+    if (requestdata.verifyType == 'huaweiaipasswordmemoapp') {
+      verifytype = 'huawei'
+    }
     const platforms = ['sslwxxcx', 'huaweiaipasswordmemoapp']
     if (!platforms.includes(requestdata.verifyType)) {
       if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
@@ -143,7 +147,7 @@ exports.main = async (event) => {
         date: Date.now(),
         ip: requestip,
         ipAddress: ipaddress,
-        verifyType: requestdata.verifyType,
+        verifyType: verifytype,
         ua: useragent,
         uid: account._id
       })

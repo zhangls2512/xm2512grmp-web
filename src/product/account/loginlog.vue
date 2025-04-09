@@ -20,7 +20,8 @@ async function get() {
     emailcode: '邮箱验证码',
     mfa: 'MFA',
     password: '密码',
-    sslwxxcx: 'SSL 证书（微信小程序）'
+    sslwxxcx: 'SSL 证书（微信小程序）',
+    huawei: '华为账号'
   }
   const outloginlog = res.data.map(item => ({
     ...item,
