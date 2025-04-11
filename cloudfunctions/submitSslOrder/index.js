@@ -56,7 +56,7 @@ exports.main = async (event) => {
         },
         permission: ['account', 'ssl'],
         service: ['ssl'],
-        apiName: 'ssl_refreshOrder'
+        apiName: 'ssl_submitOrder'
       }
     })
     if (res.result.errCode != 0) {
@@ -124,19 +124,31 @@ exports.main = async (event) => {
             errFix: '联系客服'
           }
         }
-        const uploadres = await app.uploadFile({
-          cloudPath: 'sslorder/' + requestdata.id + '/' + data.domains[0] + '.key',
-          fileContent: Buffer.from(privatekey)
-        })
-        await db.collection('sslorder').where({
-          _id: requestdata.id
-        }).update({
-          privateKey: uploadres.fileID,
-          status: 'processing'
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+        if (privatekey) {
+          const uploadres = await app.uploadFile({
+            cloudPath: 'sslorder/' + requestdata.id + '/' + data.domains[0] + '.key',
+            fileContent: Buffer.from(privatekey)
+          })
+          await db.collection('sslorder').where({
+            _id: requestdata.id
+          }).update({
+            privateKey: uploadres.fileID,
+            status: 'processing'
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        } else {
+          await db.collection('sslorder').where({
+            _id: requestdata.id
+          }).update({
+            status: 'processing'
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
         }
       }
     }

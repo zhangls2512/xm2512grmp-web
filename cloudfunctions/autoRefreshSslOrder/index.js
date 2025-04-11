@@ -108,16 +108,24 @@ exports.main = async () => {
             errFix: '联系客服'
           }
         }
-        const uploadres = await app.uploadFile({
-          cloudPath: 'sslorder/' + item._id + '/' + item.domains[0] + '.key',
-          fileContent: Buffer.from(privatekey)
-        })
-        await db.collection('sslorder').where({
-          _id: item._id
-        }).update({
-          privateKey: uploadres.fileID,
-          status: 'processing'
-        })
+        if (privatekey) {
+          const uploadres = await app.uploadFile({
+            cloudPath: 'sslorder/' + item._id + '/' + item.domains[0] + '.key',
+            fileContent: Buffer.from(privatekey)
+          })
+          await db.collection('sslorder').where({
+            _id: item._id
+          }).update({
+            privateKey: uploadres.fileID,
+            status: 'processing'
+          })
+        } else {
+          await db.collection('sslorder').where({
+            _id: item._id
+          }).update({
+            status: 'processing'
+          })
+        }
         app.callFunction({
           name: 'sendEmail',
           data: {
