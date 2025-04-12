@@ -50,7 +50,7 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       } else {
-        const secret = speakeasy.generateSecret({ length: 30 }).base32
+        const secret = speakeasy.generateSecret({ length: 32 }).base32
         await db.collection('account').where({
           _id: account._id
         }).update({
