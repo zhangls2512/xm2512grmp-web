@@ -592,6 +592,12 @@
       "installDependency": true
     },
     {
+      "name": "sendFeedbackEmail",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "sendWebhook",
       "timeout": 60,
       "runtime": "Nodejs18.15",
