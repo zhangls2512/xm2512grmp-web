@@ -19,10 +19,10 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    let backuptype = db.command.neq('')
+    let types = ['password', 'info', 'tag']
     const validtypes = ['password', 'info', 'tag']
-    if (validtypes.includes(requestdata.type)) {
-      backuptype = requestdata.type
+    if (Array.isArray(requestdata.types) && requestdata.types.length > 0 && requestdata.types.every(item => validtypes.includes(item))) {
+      types = requestdata.types
     }
     let type = ''
     let code = ''
@@ -50,7 +50,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const passwordres = await db.collection('password').where({
-        type: backuptype,
+        type: db.command.in(types),
         uid: res.result.account._id
       }).remove()
       if (passwordres.deleted == 0) {
