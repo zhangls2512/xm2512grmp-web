@@ -67,31 +67,78 @@ exports.main = async (event) => {
       return res.result
     } else {
       const uid = res.result.account._id
-      const passwordres = await db.collection('password').where({
-        id: requestdata.id,
+      const countres = await db.collection('password').where({
         type: requestdata.type,
         uid: uid
-      }).get()
-      if (passwordres.data.length == 0) {
-        await db.collection('password').add({
-          content: requestdata.content,
+      }).count()
+      if (countres.total >= 10) {
+        const userres = await db.collection('productuser').where({
+          product: 'password',
+          uid: uid
+        }).get()
+        const vipenddate = userres.data[0].vipEndDate
+        if (vipenddate < Date.now() && vipenddate !== 0) {
+          return {
+            errCode: 8000,
+            errMsg: '数量达到上限',
+            errFix: '开通会员'
+          }
+        } else {
+          const passwordres = await db.collection('password').where({
+            id: requestdata.id,
+            type: requestdata.type,
+            uid: uid
+          }).get()
+          if (passwordres.data.length == 0) {
+            await db.collection('password').add({
+              content: requestdata.content,
+              id: requestdata.id,
+              type: requestdata.type,
+              uid: uid
+            })
+            return {
+              errCode: 0,
+              errMsg: '成功'
+            }
+          } else {
+            await db.collection('password').where({
+              _id: passwordres.data[0]._id
+            }).update({
+              content: requestdata.content
+            })
+            return {
+              errCode: 0,
+              errMsg: '成功'
+            }
+          }
+        }
+      } else {
+        const passwordres = await db.collection('password').where({
           id: requestdata.id,
           type: requestdata.type,
           uid: uid
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
-      } else {
-        await db.collection('password').where({
-          _id: passwordres.data[0]._id
-        }).update({
-          content: requestdata.content
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+        }).get()
+        if (passwordres.data.length == 0) {
+          await db.collection('password').add({
+            content: requestdata.content,
+            id: requestdata.id,
+            type: requestdata.type,
+            uid: uid
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        } else {
+          await db.collection('password').where({
+            _id: passwordres.data[0]._id
+          }).update({
+            content: requestdata.content
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
         }
       }
     }
