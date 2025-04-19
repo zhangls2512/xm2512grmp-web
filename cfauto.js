@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const cloudfunctionspath = path.join(__dirname, 'cloudfunctions')
 const subfolders = fs.readdirSync(cloudfunctionspath).filter(item => fs.statSync(path.join(cloudfunctionspath, item)).isDirectory() && !item.startsWith('.'))
+console.log('函数个数：' + subfolders.length)
 const jsoncontent = {
   'version': '2.0',
   'envId': 'zhangls2512-5ggbio7hc46f4036',

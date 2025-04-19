@@ -213,55 +213,33 @@ exports.main = async (event) => {
         if (passwordres.total > 0) {
           return {
             errCode: 8000,
-            errMsg: '存在密码',
-            errFix: '清空密码'
+            errMsg: '存在云备份',
+            errFix: '清空云备份'
           }
         } else {
-          const passwordinfores = await db.collection('passwordinfo').where({
+          const viplogres = await db.collection('viplog').where({
+            product: 'password',
             uid: uid
           }).count()
-          if (passwordinfores.total > 0) {
+          if (viplogres.total > 0) {
             return {
               errCode: 8001,
-              errMsg: '存在常用信息',
-              errFix: '清空常用信息'
+              errMsg: '存在会员开通记录',
+              errFix: '无修复建议'
             }
           } else {
-            const passwordtagres = await db.collection('passwordtag').where({
+            await db.collection('productuser').where({
+              product: 'password',
               uid: uid
-            }).count()
-            if (passwordtagres.total > 0) {
-              return {
-                errCode: 8002,
-                errMsg: '存在标签',
-                errFix: '清空标签'
-              }
-            } else {
-              const viplogres = await db.collection('viplog').where({
-                product: 'password',
-                uid: uid
-              }).count()
-              if (viplogres.total > 0) {
-                return {
-                  errCode: 8003,
-                  errMsg: '存在会员开通记录',
-                  errFix: '无修复建议'
-                }
-              } else {
-                await db.collection('productuser').where({
-                  product: 'password',
-                  uid: uid
-                }).remove()
-                await db.collection('account').where({
-                  _id: uid
-                }).update({
-                  service: service
-                })
-                return {
-                  errCode: 0,
-                  errMsg: '成功'
-                }
-              }
+            }).remove()
+            await db.collection('account').where({
+              _id: uid
+            }).update({
+              service: service
+            })
+            return {
+              errCode: 0,
+              errMsg: '成功'
             }
           }
         }

@@ -511,6 +511,31 @@ const apis = ref([
     product: 'SSL 证书',
     name: 'ssl_updateUserDns',
     desc: '修改用户 DNS 设置'
+  },
+  {
+    product: '密码智能备忘录',
+    name: 'password_setBackup',
+    desc: '设置备份'
+  },
+  {
+    product: '密码智能备忘录',
+    name: 'password_getBackupCount',
+    desc: '获取备份总数'
+  },
+  {
+    product: '密码智能备忘录',
+    name: 'password_getBackupList',
+    desc: '获取备份列表'
+  },
+  {
+    product: '密码智能备忘录',
+    name: 'password_deleteBackup',
+    desc: '删除备份'
+  },
+  {
+    product: '密码智能备忘录',
+    name: 'password_clearBackup',
+    desc: '清空备份'
   }
 ])
 const filter = ref({

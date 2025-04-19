@@ -135,7 +135,12 @@ exports.main = async (event) => {
       'ssl_updateTemplate',
       'ssl_deleteTemplate',
       'ssl_updateUserSetting',
-      'ssl_updateUserDns'
+      'ssl_updateUserDns',
+      'password_setBackup',
+      'password_getBackupCount',
+      'password_getBackupList',
+      'password_deleteBackup',
+      'password_clearBackup'
     ]
     if (!Array.isArray(requestdata.allowApi) || !requestdata.allowApi.every(item => validapis.includes(item))) {
       return {

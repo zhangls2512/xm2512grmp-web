@@ -70,6 +70,12 @@
       "installDependency": true
     },
     {
+      "name": "clearPasswordBackup",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "closeService",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -143,6 +149,12 @@
     },
     {
       "name": "deleteLoginLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deletePasswordBackup",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -305,6 +317,18 @@
     },
     {
       "name": "getLoginLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPasswordBackupCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPasswordBackupList",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -677,6 +701,12 @@
     },
     {
       "name": "setPassword",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "setPasswordBackup",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
