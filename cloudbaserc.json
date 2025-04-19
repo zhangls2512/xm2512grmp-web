@@ -166,6 +166,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteVipcode",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "endDnsTask",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -299,6 +305,18 @@
     },
     {
       "name": "getLoginLog",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPasswordUserCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPasswordUserList",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -448,6 +466,42 @@
       "installDependency": true
     },
     {
+      "name": "getUserViplogCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getUserViplogList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getVipcodeCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getVipcodeList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getViplogCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getViplogList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "newAccessKey",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -508,6 +562,12 @@
       "installDependency": true
     },
     {
+      "name": "newVipcode",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "noticeSslCertificateNearexpire",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -563,6 +623,12 @@
     },
     {
       "name": "revokeSslCertificate",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "searchPasswordUser",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -773,6 +839,12 @@
     },
     {
       "name": "updateUserPermission",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "useVipcode",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

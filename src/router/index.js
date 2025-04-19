@@ -175,6 +175,26 @@ const router = createRouter({
           component: () => import('/src/product/admin/baxklist.vue')
         },
         {
+          path: '/product/admin/ssluserlist',
+          component: () => import('/src/product/admin/ssluserlist.vue')
+        },
+        {
+          path: '/product/admin/passworduserlist',
+          component: () => import('/src/product/admin/passworduserlist.vue')
+        },
+        {
+          path: '/product/admin/newvipcode',
+          component: () => import('/src/product/admin/newvipcode.vue')
+        },
+        {
+          path: '/product/admin/vipcodelist',
+          component: () => import('/src/product/admin/vipcodelist.vue')
+        },
+        {
+          path: '/product/admin/viploglist',
+          component: () => import('/src/product/admin/viploglist.vue')
+        },
+        {
           path: '/product/admin/resourcelist',
           component: () => import('/src/product/admin/resourcelist.vue')
         },
@@ -189,10 +209,6 @@ const router = createRouter({
         {
           path: '/product/admin/reviewresource',
           component: () => import('/src/product/admin/reviewresource.vue')
-        },
-        {
-          path: '/product/admin/ssluserlist',
-          component: () => import('/src/product/admin/ssluserlist.vue')
         },
         {
           path: '/product/admin/sslnewlimitchange',

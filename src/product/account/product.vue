@@ -41,6 +41,13 @@ const products = [
     title: 'SSL 证书',
     desc: '简单、便捷地申请免费 DV SSL 证书。',
     defaultallow: true
+  },
+  {
+    name: 'password',
+    logo: '/password.png',
+    title: '密码智能备忘录',
+    desc: '智能记录密码。',
+    defaultallow: true
   }
 ]
 const validproducts = products.map(item => item.name)
@@ -159,7 +166,7 @@ async function close(product) {
 
 <style scoped>
 .grid {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   width: 100%;
 }
 </style>

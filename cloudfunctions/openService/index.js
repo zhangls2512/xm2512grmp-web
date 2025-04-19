@@ -31,7 +31,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
+    const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl', 'password']
     if (!validservices.includes(requestdata.service)) {
       return {
         errCode: 1001,
@@ -205,6 +205,25 @@ exports.main = async (event) => {
           date: Date.now(),
           number: 8,
           reason: String(new Date().getFullYear()) + '年免费',
+          uid: uid
+        })
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
+      }
+      if (requestdata.service == 'password') {
+        await db.collection('productuser').add({
+          noticeSetting: [],
+          product: 'password',
+          vipEndDate: -1,
+          webhookToken: nanoid(15) + uid + nanoid(15),
+          webhookUrl: '',
           uid: uid
         })
         await db.collection('account').where({

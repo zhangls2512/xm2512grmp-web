@@ -212,7 +212,7 @@ async function deleteBaxk(t) {
       <tiny-grid-column field="productName" title="产品名称" align="center"></tiny-grid-column>
       <tiny-grid-column field="specificType" title="具体类型" align="center"></tiny-grid-column>
       <tiny-grid-column field="desc" title="描述" align="center" show-overflow></tiny-grid-column>
-      <tiny-grid-column title="备案/许可号" align="center" format-text="longDateTime">
+      <tiny-grid-column title="备案/许可号" align="center">
         <template #default="{ row }">
           <tiny-tooltip content="点击复制" placement="top">
             <div style="cursor: pointer" @click="copy(row.baxkNumber)">{{ row.baxkNumber }}</div>

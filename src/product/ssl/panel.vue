@@ -25,7 +25,7 @@ const tabs = [
   {
     id: 'dnstask',
     label: 'DNS 自动配置任务管理',
-    customIcon: icon.IconRichTextTaskList()
+    customIcon: icon.IconEditorList()
   },
   {
     id: 'templatelist',

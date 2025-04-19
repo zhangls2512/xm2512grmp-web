@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.9',
+    releaseDate: '2025-04-19',
+    logs: [
+      {
+        type: 'U',
+        content: '产品管理 新增 密码智能备忘录'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.8',
     releaseDate: '2025-03-19',
     logs: [

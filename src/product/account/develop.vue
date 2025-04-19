@@ -33,6 +33,21 @@ const apis = ref([
     desc: '修改通知设置'
   },
   {
+    product: '全部产品',
+    name: 'product_useVipcode',
+    desc: '使用会员兑换码'
+  },
+  {
+    product: '全部产品',
+    name: 'product_getViplogCount',
+    desc: '获取会员开通记录总数'
+  },
+  {
+    product: '全部产品',
+    name: 'product_getViplogList',
+    desc: '获取会员开通记录列表'
+  },
+  {
     product: '统一账号',
     name: 'account_openService',
     desc: '开通产品/功能'
@@ -124,6 +139,36 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_newVipcode',
+    desc: '新增会员兑换码'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getVipcodeCount',
+    desc: '获取会员兑换码总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getVipcodeList',
+    desc: '获取会员兑换码列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_deleteVipcode',
+    desc: '删除会员兑换码'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getViplogCount',
+    desc: '获取会员开通记录总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getViplogList',
+    desc: '获取会员开通记录列表'
+  },
+  {
+    product: '管理后台',
     name: 'admin_getResourceCount',
     desc: '获取资源总数'
   },
@@ -211,6 +256,21 @@ const apis = ref([
     product: '管理后台',
     name: 'admin_getSslLimitChangeList',
     desc: '获取 SSL 证书额度变更列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPasswordUserCount',
+    desc: '获取密码智能备忘录用户总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPasswordUserList',
+    desc: '获取密码智能备忘录用户列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_SearchPasswordUser',
+    desc: '搜索单个密码智能备忘录用户'
   },
   {
     product: '资源',

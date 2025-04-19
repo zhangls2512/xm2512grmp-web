@@ -1,7 +1,8 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 产品用户列表 - SSL 证书'
+document.title = '轩铭2512 - 管理后台 - 产品用户列表 - 密码智能备忘录'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
+import moment from 'moment-timezone'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
@@ -9,16 +10,28 @@ const currentpage = ref(1)
 const pagesize = ref(10)
 const total = ref(0)
 const uid = ref('')
+function formatVipenddate(t) {
+  const vipenddate = t.cellValue
+  if (vipenddate == -1) {
+    return '无'
+  }
+  if (vipenddate == 0) {
+    return '终身'
+  }
+  if (vipenddate > 0) {
+    return moment(vipenddate).format('YYYY-MM-DD HH:mm:ss')
+  }
+}
 async function get() {
   const countres = await request({
-    apiPath: '/admin/getSslUserCount',
+    apiPath: '/admin/getPasswordUserCount',
     body: {
       accessToken: accesstoken
     }
   })
   total.value = countres.count
   const res = await request({
-    apiPath: '/admin/getSslUserList',
+    apiPath: '/admin/getPasswordUserList',
     body: {
       accessToken: accesstoken,
       skip: (currentpage.value - 1) * pagesize.value,
@@ -49,7 +62,7 @@ async function search() {
     return
   }
   const userres = await request({
-    apiPath: '/admin/searchSslUser',
+    apiPath: '/admin/searchPasswordUser',
     body: {
       accessToken: accesstoken,
       uid: uid.value
@@ -71,8 +84,8 @@ async function search() {
     </div>
     <tiny-grid :data="data">
       <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
-      <tiny-grid-column field="productionLimit" title="正式剩余额度" align="center"></tiny-grid-column>
-      <tiny-grid-column field="stagingLimit" title="测试剩余额度" align="center"></tiny-grid-column>
+      <tiny-grid-column field="vipEndDate" title="会员到期时间" align="center"
+        :format-text="formatVipenddate"></tiny-grid-column>
     </tiny-grid>
     <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>
