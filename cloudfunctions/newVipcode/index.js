@@ -73,16 +73,42 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      await db.collection('vipcode').add({
-        date: Date.now(),
-        duration: requestdata.duration,
-        endDate: requestdata.endDate,
-        permission: requestdata.permission,
-        product: requestdata.product
-      })
-      return {
-        errCode: 0,
-        errMsg: '成功'
+      if (typeof (requestdata.permission) == 'string') {
+        const userres = await db.collection('productuser').where({
+          product: requestdata.product,
+          uid: requestdata.permission
+        }).get()
+        if (userres.data.length == 0) {
+          return {
+            errCode: 8000,
+            errMsg: '用户不存在',
+            errFix: '传递有效的uid参数'
+          }
+        } else {
+          await db.collection('vipcode').add({
+            date: Date.now(),
+            duration: requestdata.duration,
+            endDate: requestdata.endDate,
+            permission: requestdata.permission,
+            product: requestdata.product
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        }
+      } else {
+        await db.collection('vipcode').add({
+          date: Date.now(),
+          duration: requestdata.duration,
+          endDate: requestdata.endDate,
+          permission: requestdata.permission,
+          product: requestdata.product
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
       }
     }
   } catch {
