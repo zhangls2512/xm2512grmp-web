@@ -41,16 +41,9 @@ const products = [
     title: 'SSL 证书',
     desc: '简单、便捷地申请免费 DV SSL 证书。',
     defaultallow: true
-  },
-  {
-    name: 'password',
-    logo: '/password.png',
-    title: '密码智能备忘录',
-    desc: '智能记录密码。',
-    defaultallow: true
   }
 ]
-const validproducts = products.map(item => item.name)
+const validproducts = products.map(item => item.name).concat(['password'])
 const productszt = ref(validproducts.reduce((out, item) => {
   out[`${item}ktzt`] = false
   out[`${item}fjzt`] = false
@@ -111,6 +104,9 @@ async function close(product) {
   })
   getAccountInfo()
 }
+function openAppDetail(bundleName) {
+  window.open('https://appgallery.huawei.com/app/detail?id=' + bundleName, '_blank')
+}
 </script>
 
 <template>
@@ -157,6 +153,30 @@ async function close(product) {
               :disabled="productszt[`${item.name}fjzt`]" @click="open(item.name)">开通</tiny-button>
             <tiny-button v-if="productszt[`${item.name}ktzt`] == true" type="danger"
               @click="close(item.name)">取消开通</tiny-button>
+          </div>
+        </div>
+      </div>
+      <div class="kuang">
+        <div class="cz">
+          <div class="sp">
+            <img class="image" src="/password.png" loading="lazy" />
+            <div class="bold-text">密码智能备忘录</div>
+          </div>
+          <div class="sp">
+            <tiny-tag v-if="productszt.passwordktzt == false" type="danger">未开通</tiny-tag>
+            <tiny-tag v-if="productszt.passwordktzt == true" type="success">已开通</tiny-tag>
+            <tiny-tag v-if="productszt.passwordfjzt === true" type="danger">永久封禁</tiny-tag>
+            <tiny-tag v-if="typeof (productszt.passwordfjzt) == 'string'" type="danger">封禁至 {{
+              productszt.passwordfjzt }}</tiny-tag>
+          </div>
+          <div>智能记录密码。</div>
+          <div class="sp">
+            <tiny-button v-if="productszt.passwordktzt == true && productszt.passwordfjzt == false" type="info"
+              @click="openAppDetail('com.zhangxm.aipasswordmemo')">去使用</tiny-button>
+            <tiny-button v-if="productszt.passwordktzt == false" type="success" :disabled="productszt.passwordfjzt"
+              @click="open('password')">开通</tiny-button>
+            <tiny-button v-if="productszt.passwordktzt == true" type="danger"
+              @click="close('password')">取消开通</tiny-button>
           </div>
         </div>
       </div>
