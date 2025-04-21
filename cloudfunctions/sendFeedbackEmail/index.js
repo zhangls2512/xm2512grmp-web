@@ -25,18 +25,26 @@ exports.main = async (event) => {
         errFix: '传递正确的key'
       }
     }
+    const validproducts = ['密码智能备忘录']
+    if (!validproducts.includes(requestdata.product)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的product参数'
+      }
+    }
     if (typeof (requestdata.content) != 'string') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递正确的content'
+        errFix: '传递有效的content参数'
       }
     }
     await nodemailer.createTransport(mailerconfig).sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '有新反馈',
-      text: requestdata.content
+      text: '产品：' + requestdata.product + '\n内容：' + requestdata.content
     })
     return {
       errCode: 0,
