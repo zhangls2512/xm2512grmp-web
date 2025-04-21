@@ -442,12 +442,6 @@
       "installDependency": true
     },
     {
-      "name": "getToken",
-      "timeout": 60,
-      "runtime": "Nodejs18.15",
-      "installDependency": true
-    },
-    {
       "name": "getUserBanlogCount",
       "timeout": 60,
       "runtime": "Nodejs18.15",

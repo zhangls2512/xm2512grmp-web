@@ -41,8 +41,8 @@ exports.main = async (event) => {
     await nodemailer.createTransport(mailerconfig).sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
-      subject: '新错误日志上传通知',
-      text: '有新错误日志上传，错误类型：' + requestdata.object.name + '。'
+      subject: '有新错误日志',
+      text: JSON.stringify(requestdata.object)
     })
     return {
       errCode: 0,
