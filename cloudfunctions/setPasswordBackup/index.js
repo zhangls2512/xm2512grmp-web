@@ -41,6 +41,13 @@ exports.main = async (event) => {
         errFix: '传递有效的content参数'
       }
     }
+    if (typeof (requestdata.iv) != 'string') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的iv参数'
+      }
+    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -93,6 +100,7 @@ exports.main = async (event) => {
             await db.collection('password').add({
               content: requestdata.content,
               id: requestdata.id,
+              iv: requestdata.iv,
               type: requestdata.type,
               uid: uid
             })
@@ -104,7 +112,8 @@ exports.main = async (event) => {
             await db.collection('password').where({
               _id: passwordres.data[0]._id
             }).update({
-              content: requestdata.content
+              content: requestdata.content,
+              iv: requestdata.iv
             })
             return {
               errCode: 0,
@@ -122,6 +131,7 @@ exports.main = async (event) => {
           await db.collection('password').add({
             content: requestdata.content,
             id: requestdata.id,
+            iv: requestdata.iv,
             type: requestdata.type,
             uid: uid
           })
@@ -133,7 +143,8 @@ exports.main = async (event) => {
           await db.collection('password').where({
             _id: passwordres.data[0]._id
           }).update({
-            content: requestdata.content
+            content: requestdata.content,
+            iv: requestdata.iv
           })
           return {
             errCode: 0,

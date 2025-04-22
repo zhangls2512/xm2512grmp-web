@@ -52,4 +52,16 @@ exports.main = async () => {
     id: '80a8bd4f67e68074001383b1504da293',
     version: wxwindowsversions[0]
   })
+  const wxkfzgjres = await axios.get('https://developers.weixin.qq.com/miniprogram/dev/devtools/nightly.html')
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: '11bc22f267e2adb2008bbe7e48ec3c7d',
+    version: wxkfzgjres.data.match(/1\.06\.\d+/)[0]
+  })
+  const rufusres = await axios.get('https://rufus.ie/zh')
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: 'ed153fc76804a5ad017dd25f29e43879',
+    version: rufusres.data.match(/rufus-(.+?)\.exe/)[1]
+  })
 }

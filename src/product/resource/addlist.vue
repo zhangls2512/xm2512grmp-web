@@ -251,7 +251,7 @@ async function deleteAddResource(resourceid) {
             </div>
             <div v-if="item.versionUpdate !== ''">
               <tiny-alert v-if="item.versionUpdate == false" type="success" :closable="false"
-                description="已是更新"></tiny-alert>
+                description="已是最新"></tiny-alert>
               <tiny-alert v-if="item.versionUpdate == true" type="warning" :closable="false">
                 <template #description>
                   <div>有新版本：{{ item.latestVersion }}</div>
