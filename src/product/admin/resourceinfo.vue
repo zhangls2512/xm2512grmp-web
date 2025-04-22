@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 资源管理 - 资源详情'
+document.title = '轩铭2512 - 管理后台 - 资源详情'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment-timezone'

@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 产品会员管理 - 兑换码'
+document.title = '轩铭2512 - 管理后台 - 产品会员兑换码'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import moment from 'moment-timezone'
@@ -121,10 +121,16 @@ async function deleteVipcode(t) {
         </template>
       </tiny-grid-column>
       <tiny-grid-column field="product" title="产品" align="center"></tiny-grid-column>
-      <tiny-grid-column field="permission" title="权限" align="center"></tiny-grid-column>
       <tiny-grid-column field="duration" title="时长" align="center" :format-text="formatDuration"></tiny-grid-column>
+      <tiny-grid-column title="权限" align="center">
+        <template #default="{ row }">
+          <div v-if="typeof (row.permission) == 'string'">指定用户：{{ row.permission }}</div>
+          <div v-if="typeof (row.permission) == 'number'">最大次数：{{ row.permission }}</div>
+        </template>
+      </tiny-grid-column>
       <tiny-grid-column field="endDate" title="兑换截止时间" align="center" :format-text="formatEnddate"></tiny-grid-column>
       <tiny-grid-column field="date" title="创建时间" align="center" format-text="longDateTime"></tiny-grid-column>
+      <tiny-grid-column field="count" title="兑换次数" align="center"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
           <tiny-popconfirm title="提示" message="删除后无法恢复，确定删除？" type="warning" trigger="hover"

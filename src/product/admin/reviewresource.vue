@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 资源管理 - 资源审核'
+document.title = '轩铭2512 - 管理后台 - 资源审核'
 import { ref } from 'vue'
 import moment from 'moment-timezone'
 import cookie from 'js-cookie'

@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 额度管理'
+document.title = '轩铭2512 - 管理后台 - SSL 证书额度管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'

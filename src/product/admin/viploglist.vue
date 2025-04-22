@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 产品会员管理 - 开通记录'
+document.title = '轩铭2512 - 管理后台 - 产品会员开通记录'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'

@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 资源管理 - 资源管理 - 修改资源信息'
+document.title = '轩铭2512 - 管理后台 - 修改资源信息'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'

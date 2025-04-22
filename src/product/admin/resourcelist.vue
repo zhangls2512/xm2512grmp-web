@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 资源管理 - 资源管理'
+document.title = '轩铭2512 - 管理后台 - 资源管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'

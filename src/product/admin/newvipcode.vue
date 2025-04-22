@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 产品会员管理 - 新增兑换码'
+document.title = '轩铭2512 - 管理后台 - 新增产品会员兑换码'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
@@ -12,12 +12,27 @@ const products = ref([
     label: '密码智能备忘录'
   }
 ])
-const permission = ref('')
-const permissiontype = ref('uid')
 const duration = ref('')
+const permissiontype = ref('uid')
+const permission = ref('')
 const enddate = ref('')
 const enddateforever = ref('false')
 async function newVipcode() {
+  if (duration.value === '') {
+    TinyModal.message({
+      message: '请输入时长',
+      status: 'warning'
+    })
+    return
+  }
+  const durationout = Number(duration.value)
+  if (!Number.isInteger(durationout) || durationout < 0) {
+    TinyModal.message({
+      message: '请输入有效的时长',
+      status: 'warning'
+    })
+    return
+  }
   if (permission.value === '') {
     TinyModal.message({
       message: '请输入权限',
@@ -35,21 +50,6 @@ async function newVipcode() {
       })
       return
     }
-  }
-  if (duration.value === '') {
-    TinyModal.message({
-      message: '请输入时长',
-      status: 'warning'
-    })
-    return
-  }
-  const durationout = Number(duration.value)
-  if (!Number.isInteger(durationout) || durationout < 0) {
-    TinyModal.message({
-      message: '请输入有效的时长',
-      status: 'warning'
-    })
-    return
   }
   let enddateout = enddate.value
   if (enddateforever.value == 'true') {
@@ -95,6 +95,9 @@ async function newVipcode() {
           <tiny-option v-for="item in products" :value="item.value" :label="item.label"></tiny-option>
         </tiny-base-select>
       </tiny-form-item>
+      <tiny-form-item label="时长">
+        <tiny-input v-model="duration" type="number" clearable placeholder="请输入时长，单位：天，终身输入 0"></tiny-input>
+      </tiny-form-item>
       <tiny-form-item label="权限类型">
         <tiny-radio-group v-model="permissiontype">
           <tiny-radio label="uid">指定用户</tiny-radio>
@@ -103,9 +106,6 @@ async function newVipcode() {
       </tiny-form-item>
       <tiny-form-item label="权限">
         <tiny-input v-model="permission" clearable placeholder="请输入权限"></tiny-input>
-      </tiny-form-item>
-      <tiny-form-item label="时长">
-        <tiny-input v-model="duration" type="number" clearable placeholder="请输入时长，单位：天，终身输入 0"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="截止时间">
         <tiny-radio-group v-model="enddateforever">
