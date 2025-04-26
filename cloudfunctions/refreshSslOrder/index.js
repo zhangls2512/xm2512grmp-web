@@ -90,11 +90,17 @@ exports.main = async (event) => {
         directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
       }
       if (data.status == 'pending') {
-        const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+        let status = ''
+        try {
+          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+          status = acmeorderres.status
+        } catch {
+          status = 'invalid'
+        }
         await db.collection('sslorder').where({
           _id: requestdata.id
         }).update({
-          status: acmeorderres.status
+          status: status
         })
         return {
           errCode: 0,
@@ -102,11 +108,17 @@ exports.main = async (event) => {
         }
       }
       if (data.status == 'ready') {
-        const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+        let status = ''
+        try {
+          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+          status = acmeorderres.status
+        } catch {
+          status = 'invalid'
+        }
         await db.collection('sslorder').where({
           _id: requestdata.id
         }).update({
-          status: acmeorderres.status
+          status: status
         })
         return {
           errCode: 0,
@@ -114,15 +126,19 @@ exports.main = async (event) => {
         }
       }
       if (data.status == 'processing') {
-        const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
-        if (acmeorderres.status == 'invalid') {
-          await db.collection('sslorder').where({
-            _id: requestdata.id
-          }).update({
-            status: 'invalid'
-          })
+        let status = ''
+        try {
+          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+          status = acmeorderres.status
+        } catch {
+          status = 'invalid'
         }
-        if (acmeorderres.status == 'valid') {
+        await db.collection('sslorder').where({
+          _id: requestdata.id
+        }).update({
+          status: status
+        })
+        if (status == 'valid') {
           const certificatesres = await acme.api.getOrderCertificate(data.orderUrl)
           const promise = certificatesres.map(async (item, index) => {
             const certificateres = await app.uploadFile({

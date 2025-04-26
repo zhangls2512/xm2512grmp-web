@@ -2,7 +2,7 @@
   "main": "index.js",
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
-    "argon2": "latest",
+    "argon2": "0.41.1",
     "validator": "latest"
   }
 }

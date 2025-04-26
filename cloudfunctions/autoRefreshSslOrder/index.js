@@ -15,20 +15,27 @@ exports.main = async () => {
     if (item.environmentType == 'staging') {
       directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
     }
-    const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
-    await db.collection('sslorder').where({
-      _id: item._id
-    }).update({
-      status: acmeorderres.status
-    })
+    let status = ''
     let statuswz = ''
-    if (acmeorderres.status == 'ready') {
-      statuswz = '待提交'
-    }
-    if (acmeorderres.status == 'invalid') {
+    try {
+      const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
+      status = acmeorderres.status
+      if (acmeorderres.status == 'ready') {
+        statuswz = '待提交'
+      }
+      if (acmeorderres.status == 'invalid') {
+        statuswz = '已失效'
+      }
+    } catch {
+      status = 'invalid'
       statuswz = '已失效'
     }
     if (statuswz) {
+      await db.collection('sslorder').where({
+        _id: item._id
+      }).update({
+        status: status
+      })
       app.callFunction({
         name: 'sendEmail',
         data: {
@@ -45,12 +52,12 @@ exports.main = async () => {
           data: {
             noticeName: 'ssl_webhook_orderstatuschange',
             orderId: item._id,
-            status: acmeorderres.status
+            status: status
           }
         }
       })
     }
-    if (acmeorderres.status == 'ready') {
+    if (status == 'ready') {
       const userres = await db.collection('productuser').where({
         product: 'ssl',
         uid: item.uid
@@ -153,8 +160,14 @@ exports.main = async () => {
     status: 'ready'
   }).orderBy('createDate', 'asc').get()
   readyordersres.data.forEach(async (item) => {
-    const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
-    if (acmeorderres.status == 'invalid') {
+    let status = ''
+    try {
+      const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
+      status = acmeorderres.status
+    } catch {
+      status = 'invalid'
+    }
+    if (status == 'invalid') {
       await db.collection('sslorder').where({
         _id: item._id
       }).update({
@@ -186,8 +199,14 @@ exports.main = async () => {
     status: 'processing'
   }).orderBy('createDate', 'asc').get()
   processingordersres.data.forEach(async (item) => {
-    const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
-    if (acmeorderres.status == 'invalid') {
+    let status = ''
+    try {
+      const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
+      status = acmeorderres.status
+    } catch {
+      status = 'invalid'
+    }
+    if (status == 'invalid') {
       await db.collection('sslorder').where({
         _id: item._id
       }).update({
@@ -214,7 +233,7 @@ exports.main = async () => {
         }
       })
     }
-    if (acmeorderres.status == 'valid') {
+    if (status == 'valid') {
       const certificatesres = await acme.api.getOrderCertificate(item.orderUrl)
       const promise = certificatesres.map(async (certificateitem, index) => {
         const certificateres = await app.uploadFile({
