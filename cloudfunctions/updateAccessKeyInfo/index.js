@@ -176,7 +176,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const account = res.result.account
-      let accesskeys = account.accessKey
+      const accesskeys = account.accessKey
       if (accesskeys.length == 0 || requestdata.index > accesskeys.length) {
         return {
           errCode: 8000,
@@ -184,7 +184,7 @@ exports.main = async (event) => {
           errFix: '传递有效的index参数'
         }
       }
-      let accesskey = accesskeys[requestdata.index]
+      const accesskey = accesskeys[requestdata.index]
       accesskey.name = requestdata.name
       accesskey.endDate = requestdata.endDate
       accesskey.allowApi = requestdata.allowApi

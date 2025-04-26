@@ -72,17 +72,16 @@ exports.main = async (event) => {
           errMsg: '暂仅支持最多10个模板',
           errFix: '无修复建议'
         }
-      } else {
-        await db.collection('ssltemplate').add({
-          desc: requestdata.desc,
-          domains: requestdata.domains,
-          uid: uid,
-          updateDate: Date.now()
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      await db.collection('ssltemplate').add({
+        desc: requestdata.desc,
+        domains: requestdata.domains,
+        uid: uid,
+        updateDate: Date.now()
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

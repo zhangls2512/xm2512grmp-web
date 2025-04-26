@@ -549,9 +549,8 @@ function formatEnddate(t) {
   const enddate = t.cellValue
   if (enddate == 0) {
     return '永久'
-  } else {
-    return moment(enddate).format('YYYY-MM-DD HH:mm:ss')
   }
+  return moment(enddate).format('YYYY-MM-DD HH:mm:ss')
 }
 async function getAccessKeys() {
   const res = await request({

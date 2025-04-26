@@ -67,16 +67,15 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          updateVersionWithoutReview: requestdata.updateVersionWithoutReview
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        updateVersionWithoutReview: requestdata.updateVersionWithoutReview
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

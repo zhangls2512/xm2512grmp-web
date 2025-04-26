@@ -61,11 +61,10 @@ exports.main = async (event) => {
           errMsg: '未添加此资源',
           errFix: '传递有效的resourceId'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

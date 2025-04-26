@@ -68,55 +68,54 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.updateVersionWithoutReview != res.result.account._id) {
-          return {
-            errCode: 8001,
-            errMsg: '无权限',
-            errFix: '联系客服'
-          }
-        }
-        let reviewinfo = data.reviewInfo
-        reviewinfo.version = requestdata.version
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          reviewInfo: reviewinfo,
-          submitReviewDate: Date.now(),
-          version: requestdata.version
-        })
-        if (requestdata.version && data.version != requestdata.version && data.releaseStatus == 'release') {
-          const userres = await db.collection('resourceadd').where({
-            resourceId: requestdata.id
-          }).get()
-          userres.data.forEach(item => {
-            app.callFunction({
-              name: 'sendEmail',
-              data: {
-                uid: item.uid,
-                noticeName: 'resource_email_versionupdate',
-                subject: '资源版本更新通知',
-                text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
-              }
-            })
-            app.callFunction({
-              name: 'sendWebhook',
-              data: {
-                uid: item.uid,
-                data: {
-                  noticeName: 'resource_webhook_versionupdate',
-                  name: item.name,
-                  newVersion: requestdata.version
-                }
-              }
-            })
-          })
-        }
+      }
+      const data = resourceres.data[0]
+      if (data.updateVersionWithoutReview != res.result.account._id) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '无权限',
+          errFix: '联系客服'
         }
+      }
+      const reviewinfo = data.reviewInfo
+      reviewinfo.version = requestdata.version
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        reviewInfo: reviewinfo,
+        submitReviewDate: Date.now(),
+        version: requestdata.version
+      })
+      if (requestdata.version && data.version != requestdata.version && data.releaseStatus == 'release') {
+        const userres = await db.collection('resourceadd').where({
+          resourceId: requestdata.id
+        }).get()
+        userres.data.forEach(item => {
+          app.callFunction({
+            name: 'sendEmail',
+            data: {
+              uid: item.uid,
+              noticeName: 'resource_email_versionupdate',
+              subject: '资源版本更新通知',
+              text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
+            }
+          })
+          app.callFunction({
+            name: 'sendWebhook',
+            data: {
+              uid: item.uid,
+              data: {
+                noticeName: 'resource_webhook_versionupdate',
+                name: item.name,
+                newVersion: requestdata.version
+              }
+            }
+          })
+        })
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

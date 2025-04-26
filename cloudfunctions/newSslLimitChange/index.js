@@ -94,46 +94,45 @@ exports.main = async (event) => {
           errMsg: '用户不存在',
           errFix: '传递有效的uid参数'
         }
-      } else {
-        await db.collection('productuser').where({
-          product: 'ssl',
-          uid: requestdata.uid
-        }).update({
-          productionLimit: command
-        })
-        await db.collection('ssllimitchange').add({
-          changeType: requestdata.changeType,
-          date: Date.now(),
-          number: requestdata.number,
-          reason: requestdata.reason,
-          uid: requestdata.uid
-        })
-        app.callFunction({
-          name: 'sendEmail',
-          data: {
-            uid: requestdata.uid,
-            noticeName: 'ssl_email_limitchange',
-            subject: 'SSL证书产品额度变更通知',
-            text: '您的账号“SSL证书”产品额度发生变更，详情如下。\n' + '类型：' + changetypewz + '\n' + '数量：' + String(requestdata.number) + '\n' + '原因：' + requestdata.reason + '\n' + '时间：' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
-          }
-        })
-        app.callFunction({
-          name: 'sendWebhook',
-          data: {
-            uid: requestdata.uid,
-            data: {
-              noticeName: 'ssl_email_limitchange',
-              changeType: requestdata.changeType,
-              number: requestdata.number,
-              reason: requestdata.reason,
-              date: Date.now()
-            }
-          }
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+      }
+      await db.collection('productuser').where({
+        product: 'ssl',
+        uid: requestdata.uid
+      }).update({
+        productionLimit: command
+      })
+      await db.collection('ssllimitchange').add({
+        changeType: requestdata.changeType,
+        date: Date.now(),
+        number: requestdata.number,
+        reason: requestdata.reason,
+        uid: requestdata.uid
+      })
+      app.callFunction({
+        name: 'sendEmail',
+        data: {
+          uid: requestdata.uid,
+          noticeName: 'ssl_email_limitchange',
+          subject: 'SSL证书产品额度变更通知',
+          text: '您的账号“SSL证书”产品额度发生变更，详情如下。\n' + '类型：' + changetypewz + '\n' + '数量：' + String(requestdata.number) + '\n' + '原因：' + requestdata.reason + '\n' + '时间：' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
         }
+      })
+      app.callFunction({
+        name: 'sendWebhook',
+        data: {
+          uid: requestdata.uid,
+          data: {
+            noticeName: 'ssl_email_limitchange',
+            changeType: requestdata.changeType,
+            number: requestdata.number,
+            reason: requestdata.reason,
+            date: Date.now()
+          }
+        }
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

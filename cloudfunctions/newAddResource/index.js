@@ -73,25 +73,23 @@ exports.main = async (event) => {
             errMsg: '资源不存在',
             errFix: '传递有效的resourceId参数'
           }
-        } else {
-          await db.collection('resourceadd').add({
-            name: resourceres.data[0].name,
-            resourceId: requestdata.resourceId,
-            tag: requestdata.tag,
-            uid: res.result.account._id,
-            version: resourceres.data[0].version
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
         }
-      } else {
+        await db.collection('resourceadd').add({
+          name: resourceres.data[0].name,
+          resourceId: requestdata.resourceId,
+          tag: requestdata.tag,
+          uid: res.result.account._id,
+          version: resourceres.data[0].version
+        })
         return {
-          errCode: 8000,
-          errMsg: '资源已添加',
-          errFix: '无需重复添加'
+          errCode: 0,
+          errMsg: '成功'
         }
+      }
+      return {
+        errCode: 8000,
+        errMsg: '资源已添加',
+        errFix: '无需重复添加'
       }
     }
   } catch {

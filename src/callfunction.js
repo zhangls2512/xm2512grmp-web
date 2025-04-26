@@ -18,28 +18,26 @@ async function callfunction({ functionName, data }) {
     loading.close()
     if (res.result.errCode == 0) {
       return res.result
-    } else {
-      TinyNotify({
-        type: 'error',
-        title: '接口调用失败，错误码：' + String(res.result.errCode),
-        message: '错误信息：' + res.result.errMsg + '，修复方法：' + res.result.errFix,
-        position: 'top-right'
-      })
-      throw '接口调用失败'
     }
+    TinyNotify({
+      type: 'error',
+      title: '接口调用失败，错误码：' + String(res.result.errCode),
+      message: '错误信息：' + res.result.errMsg + '，修复方法：' + res.result.errFix,
+      position: 'top-right'
+    })
+    throw '接口调用失败'
   } catch (err) {
     loading.close()
     if (err == '接口调用失败') {
       throw new Error('接口调用失败')
-    } else {
-      TinyNotify({
-        type: 'error',
-        title: '请求失败',
-        message: String(err),
-        position: 'top-right'
-      })
-      throw err
     }
+    TinyNotify({
+      type: 'error',
+      title: '请求失败',
+      message: String(err),
+      position: 'top-right'
+    })
+    throw err
   }
 }
 export default callfunction

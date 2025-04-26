@@ -28,7 +28,7 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  let resdata = res.data
+  const resdata = res.data
   resdata.ariEndDate = moment(resdata.ariEndDate).format('YYYY-MM-DD HH:mm:ss')
   resdata.ariStartDate = moment(resdata.ariStartDate).format('YYYY-MM-DD HH:mm:ss')
   resdata.certificateEndDate = moment(resdata.certificateEndDate).format('YYYY-MM-DD HH:mm:ss')

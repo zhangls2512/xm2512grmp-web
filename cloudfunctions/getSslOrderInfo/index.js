@@ -66,41 +66,40 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = orderres.data[0]
-        if (data.privateKey) {
-          const privatekeyres = await app.getTempFileURL({
+      }
+      const data = orderres.data[0]
+      if (data.privateKey) {
+        const privatekeyres = await app.getTempFileURL({
+          fileList: [
+            {
+              fileID: data.privateKey,
+              maxAge: 300
+            }
+          ]
+        })
+        data.privateKey = privatekeyres.fileList[0].tempFileURL
+      }
+      if (data.certificate.length > 0) {
+        const promise = data.certificate.map(async (item) => {
+          const certificateres = await app.getTempFileURL({
             fileList: [
               {
-                fileID: data.privateKey,
+                fileID: item.value,
                 maxAge: 300
               }
             ]
           })
-          data.privateKey = privatekeyres.fileList[0].tempFileURL
-        }
-        if (data.certificate.length > 0) {
-          const promise = data.certificate.map(async (item) => {
-            const certificateres = await app.getTempFileURL({
-              fileList: [
-                {
-                  fileID: item.value,
-                  maxAge: 300
-                }
-              ]
-            })
-            return {
-              ...item,
-              value: certificateres.fileList[0].tempFileURL
-            }
-          })
-          data.certificate = await Promise.all(promise)
-        }
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          data: data
-        }
+          return {
+            ...item,
+            value: certificateres.fileList[0].tempFileURL
+          }
+        })
+        data.certificate = await Promise.all(promise)
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        data: data
       }
     }
   } catch {

@@ -81,32 +81,31 @@ exports.main = async (event) => {
           errMsg: 'ACME账户处于可用状态',
           errFix: '无需重复创建'
         }
-      } else {
-        const privatekey = acme.crypto.generateECDSAKeyPair('secp384r1').privateKey
-        try {
-          await acme.api.newAccount({
-            directoryUrl: directoryurl,
-            accountKey: privatekey
-          })
-        } catch (err) {
-          return {
-            errCode: 8001,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
-        }
-        let accountkey = userres.data[0].accountKey
-        accountkey[requestdata.accountType] = privatekey
-        await db.collection('productuser').where({
-          product: 'ssl',
-          uid: uid
-        }).update({
-          accountKey: accountkey
+      }
+      const privatekey = acme.crypto.generateECDSAKeyPair('secp384r1').privateKey
+      try {
+        await acme.api.newAccount({
+          directoryUrl: directoryurl,
+          accountKey: privatekey
         })
+      } catch (err) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
         }
+      }
+      const accountkey = userres.data[0].accountKey
+      accountkey[requestdata.accountType] = privatekey
+      await db.collection('productuser').where({
+        product: 'ssl',
+        uid: uid
+      }).update({
+        accountKey: accountkey
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

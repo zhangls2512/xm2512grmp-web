@@ -62,26 +62,25 @@ exports.main = async (event) => {
         errCode: 0,
         errMsg: '成功'
       }
-    } else {
-      const random = customAlphabet('0123456789', 8)
-      const emailcode = random()
-      await db.collection('emailcode').add({
-        email: requestdata.email,
-        emailCode: emailcode,
-        timeStamp: Date.now(),
-        used: false,
-        verifyTimes: 0
-      })
-      await nodemailer.createTransport(mailerconfig).sendMail({
-        from: 'zhangls2512@vip.qq.com',
-        to: requestdata.email,
-        subject: '轩铭2512统一账号邮箱验证码',
-        text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
-      })
-      return {
-        errCode: 0,
-        errMsg: '成功'
-      }
+    }
+    const random = customAlphabet('0123456789', 8)
+    const emailcode = random()
+    await db.collection('emailcode').add({
+      email: requestdata.email,
+      emailCode: emailcode,
+      timeStamp: Date.now(),
+      used: false,
+      verifyTimes: 0
+    })
+    await nodemailer.createTransport(mailerconfig).sendMail({
+      from: 'zhangls2512@vip.qq.com',
+      to: requestdata.email,
+      subject: '轩铭2512统一账号邮箱验证码',
+      text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
+    })
+    return {
+      errCode: 0,
+      errMsg: '成功'
     }
   } catch {
     return {

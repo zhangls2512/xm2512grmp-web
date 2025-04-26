@@ -68,12 +68,11 @@ exports.main = async (event) => {
           errMsg: '无数据',
           errFix: '联系客服'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          data: userres.data[0]
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        data: userres.data[0]
       }
     }
   } catch {

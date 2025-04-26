@@ -60,7 +60,7 @@ exports.main = async (event) => {
       const vipcoderes = await db.collection('vipcode').where({
         product: product
       }).orderBy('date', 'desc').skip(skip).limit(limit).get()
-      let vipcodes = vipcoderes.data
+      const vipcodes = vipcoderes.data
       const promises = vipcodes.map(async (item, index) => {
         const countres = await db.collection('viplog').where({
           info: item._id,

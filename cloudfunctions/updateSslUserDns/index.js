@@ -79,7 +79,7 @@ exports.main = async (event) => {
         product: 'ssl',
         uid: uid
       }).get()
-      let dns = userres.data[0].dns
+      const dns = userres.data[0].dns
       const index = dns.findIndex(item => item.platform == requestdata.platform)
       if (index == -1) {
         dns.push({

@@ -77,39 +77,38 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const data = orderres.data[0]
-        if (data.status == 'invalid' || data.status == 'expired') {
-          return {
-            errCode: 8001,
-            errMsg: '不可修改状态为已失效或已过期的订单',
-            errFix: '无修复建议'
-          }
-        }
-        if (data.isAutoNewOrder) {
-          return {
-            errCode: 8002,
-            errMsg: '订单已自动续期，不可修改',
-            errFix: '无修复建议'
-          }
-        }
-        if (requestdata.autoNewOrder == 'ari' && data.ariEndDate && data.ariEndDate < Date.now()) {
-          return {
-            errCode: 8003,
-            errMsg: '已过CA建议续期截止时间，不可修改为CA建议',
-            errFix: '修改为其他续期方式'
-          }
-        }
-        await db.collection('sslorder').where({
-          _id: requestdata.id
-        }).update({
-          autoNewOrder: requestdata.autoNewOrder,
-          desc: requestdata.desc
-        })
+      }
+      const data = orderres.data[0]
+      if (data.status == 'invalid' || data.status == 'expired') {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '不可修改状态为已失效或已过期的订单',
+          errFix: '无修复建议'
         }
+      }
+      if (data.isAutoNewOrder) {
+        return {
+          errCode: 8002,
+          errMsg: '订单已自动续期，不可修改',
+          errFix: '无修复建议'
+        }
+      }
+      if (requestdata.autoNewOrder == 'ari' && data.ariEndDate && data.ariEndDate < Date.now()) {
+        return {
+          errCode: 8003,
+          errMsg: '已过CA建议续期截止时间，不可修改为CA建议',
+          errFix: '修改为其他续期方式'
+        }
+      }
+      await db.collection('sslorder').where({
+        _id: requestdata.id
+      }).update({
+        autoNewOrder: requestdata.autoNewOrder,
+        desc: requestdata.desc
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

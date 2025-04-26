@@ -72,20 +72,19 @@ exports.main = async (event) => {
           errMsg: '账号未冻结',
           errFix: '无需解冻账号'
         }
-      } else {
-        const enddate = Date.now() + account.duration * 86400000
-        const outaccesstoken = account._id + '\0' + nanoid(60)
-        const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
-        await db.collection('account').where({
-          _id: account._id
-        }).update({
-          accessToken: accesstoken,
-          endDate: enddate
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      const enddate = Date.now() + account.duration * 86400000
+      const outaccesstoken = account._id + '\0' + nanoid(60)
+      const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)
+      await db.collection('account').where({
+        _id: account._id
+      }).update({
+        accessToken: accesstoken,
+        endDate: enddate
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

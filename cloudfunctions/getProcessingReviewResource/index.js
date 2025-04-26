@@ -62,12 +62,11 @@ exports.main = async (event) => {
             errMsg: '成功',
             data: ''
           }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            data: resourceres.data[0]
-          }
+        }
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          data: resourceres.data[0]
         }
       }
       if (requestdata.type == 'random') {
@@ -82,12 +81,11 @@ exports.main = async (event) => {
             errMsg: '成功',
             data: ''
           }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            data: resourceres.data[0]
-          }
+        }
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          data: resourceres.data[0]
         }
       }
     }

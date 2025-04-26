@@ -132,139 +132,138 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.reviewStatus == 'pending') {
-          return {
-            errCode: 8001,
-            errMsg: '审核版本未提交审核',
-            errFix: '无修复建议'
-          }
+      }
+      const data = resourceres.data[0]
+      if (data.reviewStatus == 'pending') {
+        return {
+          errCode: 8001,
+          errMsg: '审核版本未提交审核',
+          errFix: '无修复建议'
         }
-        if (data.submitReviewDate != requestdata.date) {
-          return {
-            errCode: 8002,
-            errMsg: '提交审核时间比对不通过',
-            errFix: '重新获取审核版本信息'
-          }
+      }
+      if (data.submitReviewDate != requestdata.date) {
+        return {
+          errCode: 8002,
+          errMsg: '提交审核时间比对不通过',
+          errFix: '重新获取审核版本信息'
         }
-        if (requestdata.status == 'valid') {
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
+      }
+      if (requestdata.status == 'valid') {
+        await db.collection('resource').where({
+          _id: requestdata.id
+        }).update({
+          desc: requestdata.desc,
+          disallowUpdate: false,
+          info: requestdata.info,
+          location: requestdata.location,
+          name: requestdata.name,
+          reviewInfo: {
             desc: requestdata.desc,
-            disallowUpdate: false,
             info: requestdata.info,
             location: requestdata.location,
             name: requestdata.name,
-            reviewInfo: {
-              desc: requestdata.desc,
-              info: requestdata.info,
-              location: requestdata.location,
-              name: requestdata.name,
-              tag: requestdata.tag,
-              version: requestdata.version
-            },
-            reviewInvalidReason: '',
-            reviewStatus: 'pending',
-            searchTag: requestdata.tag.map(item => item.value),
             tag: requestdata.tag,
-            uid: '',
             version: requestdata.version
-          })
-          app.callFunction({
-            name: 'sendEmail',
+          },
+          reviewInvalidReason: '',
+          reviewStatus: 'pending',
+          searchTag: requestdata.tag.map(item => item.value),
+          tag: requestdata.tag,
+          uid: '',
+          version: requestdata.version
+        })
+        app.callFunction({
+          name: 'sendEmail',
+          data: {
+            uid: data.uid,
+            noticeName: 'resourcecreator_email_result',
+            subject: '资源审核版本审核结果',
+            text: '您的账号“资源投稿”产品的资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）审核版本审核通过。'
+          }
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: data.uid,
             data: {
-              uid: data.uid,
-              noticeName: 'resourcecreator_email_result',
-              subject: '资源审核版本审核结果',
-              text: '您的账号“资源投稿”产品的资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）审核版本审核通过。'
+              noticeName: 'resourcecreator_webhook_result',
+              id: data._id,
+              status: 'valid'
             }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: data.uid,
+          }
+        })
+        if (requestdata.version && requestdata.version != data.version && data.releaseStatus == 'release') {
+          const userres = await db.collection('resourceadd').where({
+            resourceId: requestdata.id
+          }).get()
+          userres.data.forEach(item => {
+            app.callFunction({
+              name: 'sendEmail',
               data: {
-                noticeName: 'resourcecreator_webhook_result',
-                id: data._id,
-                status: 'valid'
+                uid: item.uid,
+                noticeName: 'resource_email_versionupdate',
+                subject: '资源版本更新通知',
+                text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
               }
-            }
-          })
-          if (requestdata.version && requestdata.version != data.version && data.releaseStatus == 'release') {
-            const userres = await db.collection('resourceadd').where({
-              resourceId: requestdata.id
-            }).get()
-            userres.data.forEach(item => {
-              app.callFunction({
-                name: 'sendEmail',
-                data: {
-                  uid: item.uid,
-                  noticeName: 'resource_email_versionupdate',
-                  subject: '资源版本更新通知',
-                  text: '您的账号“资源”产品添加的资源（名称：' + item.name + '）版本已更新，新版本号：' + requestdata.version + '。'
-                }
-              })
-              app.callFunction({
-                name: 'sendWebhook',
-                data: {
-                  uid: item.uid,
-                  data: {
-                    noticeName: 'resource_webhook_versionupdate',
-                    name: item.name,
-                    newVersion: requestdata.version
-                  }
-                }
-              })
             })
-          }
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
-        }
-        if (requestdata.status == 'invalid') {
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
-            disallowUpdate: requestdata.disallowUpdate,
-            reviewInfo: {
-              desc: requestdata.desc,
-              info: requestdata.info,
-              location: requestdata.location,
-              name: requestdata.name,
-              tag: requestdata.tag,
-              version: requestdata.version
-            },
-            reviewInvalidReason: requestdata.reason,
-            reviewStatus: 'invalid'
-          })
-          app.callFunction({
-            name: 'sendEmail',
-            data: {
-              uid: data.uid,
-              noticeName: 'resourcecreator_email_result',
-              subject: '资源审核版本审核结果',
-              text: '您的账号“资源投稿”产品的资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）审核版本审核不通过。\n不通过原因：' + requestdata.reason
-            }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: data.uid,
+            app.callFunction({
+              name: 'sendWebhook',
               data: {
-                noticeName: 'resourcecreator_webhook_result',
-                id: data._id,
-                status: 'invalid',
-                reason: requestdata.reason
+                uid: item.uid,
+                data: {
+                  noticeName: 'resource_webhook_versionupdate',
+                  name: item.name,
+                  newVersion: requestdata.version
+                }
               }
-            }
+            })
           })
-          return {
-            errCode: 0,
-            errMsg: '成功'
+        }
+        return {
+          errCode: 0,
+          errMsg: '成功'
+        }
+      }
+      if (requestdata.status == 'invalid') {
+        await db.collection('resource').where({
+          _id: requestdata.id
+        }).update({
+          disallowUpdate: requestdata.disallowUpdate,
+          reviewInfo: {
+            desc: requestdata.desc,
+            info: requestdata.info,
+            location: requestdata.location,
+            name: requestdata.name,
+            tag: requestdata.tag,
+            version: requestdata.version
+          },
+          reviewInvalidReason: requestdata.reason,
+          reviewStatus: 'invalid'
+        })
+        app.callFunction({
+          name: 'sendEmail',
+          data: {
+            uid: data.uid,
+            noticeName: 'resourcecreator_email_result',
+            subject: '资源审核版本审核结果',
+            text: '您的账号“资源投稿”产品的资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）审核版本审核不通过。\n不通过原因：' + requestdata.reason
           }
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: data.uid,
+            data: {
+              noticeName: 'resourcecreator_webhook_result',
+              id: data._id,
+              status: 'invalid',
+              reason: requestdata.reason
+            }
+          }
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
     }

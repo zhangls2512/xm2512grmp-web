@@ -60,11 +60,10 @@ exports.main = async (event) => {
           errMsg: '模板不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

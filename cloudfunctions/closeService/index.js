@@ -53,7 +53,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const uid = res.result.account._id
-      let service = res.result.account.service
+      const service = res.result.account.service
       service.splice(service.indexOf(requestdata.service), 1)
       if (requestdata.service == 'account') {
         await db.collection('productuser').where({
@@ -95,20 +95,19 @@ exports.main = async (event) => {
             errMsg: '我的资源未清空',
             errFix: '清空我的资源'
           }
-        } else {
-          await db.collection('productuser').where({
-            product: 'resource',
-            uid: uid
-          }).remove()
-          await db.collection('account').where({
-            _id: uid
-          }).update({
-            service: service
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+        }
+        await db.collection('productuser').where({
+          product: 'resource',
+          uid: uid
+        }).remove()
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
       if (requestdata.service == 'resourcecreator') {
@@ -121,20 +120,19 @@ exports.main = async (event) => {
             errMsg: '存在投稿资源',
             errFix: '清空投稿资源'
           }
-        } else {
-          await db.collection('productuser').where({
-            product: 'resourcecreator',
-            uid: uid
-          }).remove()
-          await db.collection('account').where({
-            _id: uid
-          }).update({
-            service: service
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+        }
+        await db.collection('productuser').where({
+          product: 'resourcecreator',
+          uid: uid
+        }).remove()
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
       if (requestdata.service == 'ssl') {
@@ -147,63 +145,60 @@ exports.main = async (event) => {
             errMsg: '存在订单',
             errFix: '清空订单'
           }
-        } else {
-          const dnstaskres = await db.collection('dnstask').where({
-            uid: uid
-          }).count()
-          if (dnstaskres.total > 0) {
-            return {
-              errCode: 8001,
-              errMsg: '存在DNS自动配置任务',
-              errFix: '清空DNS自动配置任务'
-            }
-          } else {
-            const limitchangeres = await db.collection('ssllimitchange').where({
-              uid: uid
-            }).count()
-            if (limitchangeres.total > 0) {
-              return {
-                errCode: 8002,
-                errMsg: '存在额度变更记录',
-                errFix: '无修复建议'
-              }
-            } else {
-              const userres = await db.collection('productuser').where({
-                product: 'ssl',
-                uid: uid
-              }).get()
-              if (userres.data[0].accountKey.production) {
-                return {
-                  errCode: 8003,
-                  errMsg: '正式ACME账户可用',
-                  errFix: '停用正式ACME账户'
-                }
-              }
-              if (userres.data[0].accountKey.staging) {
-                return {
-                  errCode: 8004,
-                  errMsg: '测试ACME账户可用',
-                  errFix: '停用测试ACME账户'
-                }
-              }
-              await db.collection('ssltemplate').where({
-                uid: uid
-              }).remove()
-              await db.collection('productuser').where({
-                product: 'ssl',
-                uid: uid
-              }).remove()
-              await db.collection('account').where({
-                _id: uid
-              }).update({
-                service: service
-              })
-              return {
-                errCode: 0,
-                errMsg: '成功'
-              }
-            }
+        }
+        const dnstaskres = await db.collection('dnstask').where({
+          uid: uid
+        }).count()
+        if (dnstaskres.total > 0) {
+          return {
+            errCode: 8001,
+            errMsg: '存在DNS自动配置任务',
+            errFix: '清空DNS自动配置任务'
           }
+        }
+        const limitchangeres = await db.collection('ssllimitchange').where({
+          uid: uid
+        }).count()
+        if (limitchangeres.total > 0) {
+          return {
+            errCode: 8002,
+            errMsg: '存在额度变更记录',
+            errFix: '无修复建议'
+          }
+        }
+        const userres = await db.collection('productuser').where({
+          product: 'ssl',
+          uid: uid
+        }).get()
+        if (userres.data[0].accountKey.production) {
+          return {
+            errCode: 8003,
+            errMsg: '正式ACME账户可用',
+            errFix: '停用正式ACME账户'
+          }
+        }
+        if (userres.data[0].accountKey.staging) {
+          return {
+            errCode: 8004,
+            errMsg: '测试ACME账户可用',
+            errFix: '停用测试ACME账户'
+          }
+        }
+        await db.collection('ssltemplate').where({
+          uid: uid
+        }).remove()
+        await db.collection('productuser').where({
+          product: 'ssl',
+          uid: uid
+        }).remove()
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
       if (requestdata.service == 'password') {
@@ -216,32 +211,30 @@ exports.main = async (event) => {
             errMsg: '存在云备份',
             errFix: '清空云备份'
           }
-        } else {
-          const viplogres = await db.collection('viplog').where({
-            product: 'password',
-            uid: uid
-          }).count()
-          if (viplogres.total > 0) {
-            return {
-              errCode: 8001,
-              errMsg: '存在会员开通记录',
-              errFix: '无修复建议'
-            }
-          } else {
-            await db.collection('productuser').where({
-              product: 'password',
-              uid: uid
-            }).remove()
-            await db.collection('account').where({
-              _id: uid
-            }).update({
-              service: service
-            })
-            return {
-              errCode: 0,
-              errMsg: '成功'
-            }
+        }
+        const viplogres = await db.collection('viplog').where({
+          product: 'password',
+          uid: uid
+        }).count()
+        if (viplogres.total > 0) {
+          return {
+            errCode: 8001,
+            errMsg: '存在会员开通记录',
+            errFix: '无修复建议'
           }
+        }
+        await db.collection('productuser').where({
+          product: 'password',
+          uid: uid
+        }).remove()
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          service: service
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
     }

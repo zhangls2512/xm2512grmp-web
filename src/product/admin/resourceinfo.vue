@@ -30,11 +30,11 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  let dataout = res.data
-  dataout.createDate = moment(res.data.createDate).format('YYYY-MM-DD HH:mm:ss')
+  const dataout = res.data
+  dataout.createDate = moment(dataout.createDate).format('YYYY-MM-DD HH:mm:ss')
   disallowupdate.value = dataout.disallowUpdate
-  date = res.data.submitReviewDate
-  dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+  date = dataout.submitReviewDate
+  dataout.submitReviewDate = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
   if (dataout.reviewStatus == 'valid') {
     reviewstatus.value = 'invalid'

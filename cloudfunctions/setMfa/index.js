@@ -49,18 +49,17 @@ exports.main = async (event) => {
           errMsg: '账号已设置MFA',
           errFix: '无修复建议'
         }
-      } else {
-        const secret = speakeasy.generateSecret({ length: 32 }).base32
-        await db.collection('account').where({
-          _id: account._id
-        }).update({
-          mfa: secret
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          secret: secret
-        }
+      }
+      const secret = speakeasy.generateSecret({ length: 32 }).base32
+      await db.collection('account').where({
+        _id: account._id
+      }).update({
+        mfa: secret
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        secret: secret
       }
     }
   } catch {

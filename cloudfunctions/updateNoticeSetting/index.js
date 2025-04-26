@@ -52,7 +52,7 @@ exports.main = async (event) => {
         errFix: '传递有效的noticeName参数'
       }
     }
-    let product = requestdata.noticeName.split('_')[0]
+    const product = requestdata.noticeName.split('_')[0]
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
@@ -84,7 +84,7 @@ exports.main = async (event) => {
         uid: uid
       }).get()
       if (userres.data.length > 0) {
-        let noticesetting = userres.data[0].noticeSetting
+        const noticesetting = userres.data[0].noticeSetting
         if (noticesetting.includes(requestdata.noticeName)) {
           noticesetting.splice(noticesetting.indexOf(requestdata.noticeName), 1)
         } else {
@@ -100,12 +100,11 @@ exports.main = async (event) => {
           errCode: 0,
           errMsg: '成功'
         }
-      } else {
-        return {
-          errCode: 8000,
-          errMsg: '无数据',
-          errFix: '联系客服'
-        }
+      }
+      return {
+        errCode: 8000,
+        errMsg: '无数据',
+        errFix: '联系客服'
       }
     }
   } catch {

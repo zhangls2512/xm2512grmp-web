@@ -60,31 +60,30 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const data = resourceres.data[0]
-        if (data.releaseStatus == 'release') {
-          return {
-            errCode: 8001,
-            errMsg: '资源已上架',
-            errFix: '无需重复上架'
-          }
-        }
-        if (!data.name) {
-          return {
-            errCode: 8002,
-            errMsg: '无线上版本',
-            errFix: '无修复建议'
-          }
-        }
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          releaseStatus: 'release'
-        })
+      }
+      const data = resourceres.data[0]
+      if (data.releaseStatus == 'release') {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '资源已上架',
+          errFix: '无需重复上架'
         }
+      }
+      if (!data.name) {
+        return {
+          errCode: 8002,
+          errMsg: '无线上版本',
+          errFix: '无修复建议'
+        }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        releaseStatus: 'release'
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

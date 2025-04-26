@@ -72,7 +72,7 @@ exports.main = async (event) => {
         product: 'ssl',
         uid: uid
       }).get()
-      let setting = userres.data[0].setting
+      const setting = userres.data[0].setting
       setting[requestdata.settingName] = requestdata.settingValue
       await db.collection('productuser').where({
         product: 'ssl',

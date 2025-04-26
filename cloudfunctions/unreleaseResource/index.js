@@ -60,24 +60,23 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.releaseStatus == 'unrelease') {
-          return {
-            errCode: 8001,
-            errMsg: '资源未上架',
-            errFix: '无需下架'
-          }
-        }
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          releaseStatus: 'unrelease'
-        })
+      }
+      const data = resourceres.data[0]
+      if (data.releaseStatus == 'unrelease') {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '资源未上架',
+          errFix: '无需下架'
         }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        releaseStatus: 'unrelease'
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

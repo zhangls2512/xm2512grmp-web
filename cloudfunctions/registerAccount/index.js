@@ -48,53 +48,52 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      const res = await db.collection('account').where({
+      const accountres = await db.collection('account').where({
         email: requestdata.email
       }).get()
-      if (res.data.length > 0) {
+      if (accountres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '邮箱已注册',
           errFix: '使用其他邮箱'
         }
-      } else {
-        let passwordhash = password
-        if (password) {
-          passwordhash = await argon2.hash(password)
-        }
-        const res = await db.collection('account').add({
-          accessKey: [],
-          accessToken: '',
-          duration: 2,
-          email: requestdata.email,
-          endDate: 0,
-          mfa: '',
-          password: passwordhash,
-          passwordVerifyTimes: 0,
-          permission: {
-            account: true,
-            admin: false,
-            password: true,
-            resource: true,
-            resourcecreator: false,
-            smdztj: true,
-            ssl: true,
-            todo: true
-          },
-          service: []
-        })
-        const accesstoken = res.id + '\0' + nanoid(60)
-        const encryptaccesstoken = sm4.encrypt(accesstoken, process.env.key)
-        await db.collection('account').where({
-          _id: res.id
-        }).update({
-          accessToken: encryptaccesstoken,
-          endDate: Date.now() + 172800000
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      let passwordhash = password
+      if (password) {
+        passwordhash = await argon2.hash(password)
+      }
+      const addres = await db.collection('account').add({
+        accessKey: [],
+        accessToken: '',
+        duration: 2,
+        email: requestdata.email,
+        endDate: 0,
+        mfa: '',
+        password: passwordhash,
+        passwordVerifyTimes: 0,
+        permission: {
+          account: true,
+          admin: false,
+          password: true,
+          resource: true,
+          resourcecreator: false,
+          smdztj: true,
+          ssl: true,
+          todo: true
+        },
+        service: []
+      })
+      const accesstoken = res.id + '\0' + nanoid(60)
+      const encryptaccesstoken = sm4.encrypt(accesstoken, process.env.key)
+      await db.collection('account').where({
+        _id: addres.id
+      }).update({
+        accessToken: encryptaccesstoken,
+        endDate: Date.now() + 172800000
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

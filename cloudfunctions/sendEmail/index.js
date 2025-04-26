@@ -41,19 +41,17 @@ exports.main = async (event) => {
           errCode: 0,
           errMsg: '成功'
         }
-      } else {
-        return {
-          errCode: 3000,
-          errMsg: '账号不存在',
-          errFix: '传递有效的uid'
-        }
       }
-    } else {
       return {
-        errCode: 3002,
-        errMsg: '产品/功能未开通',
-        errFix: '开通产品/功能'
+        errCode: 3000,
+        errMsg: '账号不存在',
+        errFix: '传递有效的uid'
       }
+    }
+    return {
+      errCode: 3002,
+      errMsg: '产品/功能未开通',
+      errFix: '开通产品/功能'
     }
   } catch {
     return {

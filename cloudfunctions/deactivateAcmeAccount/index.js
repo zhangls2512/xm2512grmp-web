@@ -81,42 +81,41 @@ exports.main = async (event) => {
           errMsg: 'ACME账户存在订单',
           errFix: '清空ACME账户订单'
         }
-      } else {
-        const userres = await db.collection('productuser').where({
-          product: 'ssl',
-          uid: uid
-        }).get()
-        let accountkey = userres.data[0].accountKey
-        if (!accountkey[requestdata.accountType]) {
-          return {
-            errCode: 8001,
-            errMsg: 'ACME账户已停用',
-            errFix: '无需重复停用'
-          }
-        }
-        try {
-          await acme.api.deactivateAccount({
-            directoryUrl: directoryurl,
-            accountKey: accountkey[requestdata.accountType]
-          })
-        } catch (err) {
-          return {
-            errCode: 8002,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
-        }
-        accountkey[requestdata.accountType] = ''
-        await db.collection('productuser').where({
-          product: 'ssl',
-          uid: uid
-        }).update({
-          accountKey: accountkey
-        })
+      }
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: uid
+      }).get()
+      const accountkey = userres.data[0].accountKey
+      if (!accountkey[requestdata.accountType]) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: 'ACME账户已停用',
+          errFix: '无需重复停用'
         }
+      }
+      try {
+        await acme.api.deactivateAccount({
+          directoryUrl: directoryurl,
+          accountKey: accountkey[requestdata.accountType]
+        })
+      } catch (err) {
+        return {
+          errCode: 8002,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
+        }
+      }
+      accountkey[requestdata.accountType] = ''
+      await db.collection('productuser').where({
+        product: 'ssl',
+        uid: uid
+      }).update({
+        accountKey: accountkey
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

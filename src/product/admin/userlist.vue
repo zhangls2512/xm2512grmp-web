@@ -147,7 +147,7 @@ function closeDialog() {
   tododate.value = ''
 }
 async function updateUserPermission() {
-  let permission = {}
+  const permission = {}
   function boolean(value) {
     if (value === 'true') {
       return true

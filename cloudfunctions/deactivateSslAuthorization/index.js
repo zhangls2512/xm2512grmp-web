@@ -79,43 +79,42 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的orderId'
         }
-      } else {
-        const userres = await db.collection('productuser').where({
-          product: 'ssl',
-          uid: res.result.account._id
-        }).get()
-        let directoryurl = ''
-        if (orderres.data[0].environmentType == 'production') {
-          directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+      }
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: res.result.account._id
+      }).get()
+      let directoryurl = ''
+      if (orderres.data[0].environmentType == 'production') {
+        directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+      }
+      if (orderres.data[0].environmentType == 'staging') {
+        directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      }
+      const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
+      const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
+      if (!acmeorderres.authorizations.includes(requestdata.url)) {
+        return {
+          errCode: 8001,
+          errMsg: '授权不存在',
+          errFix: '传递有效的url'
         }
-        if (orderres.data[0].environmentType == 'staging') {
-          directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      }
+      try {
+        await acme.api.deactivateAuthorization({
+          directoryUrl: directoryurl,
+          accountKey: accountkey,
+          authorizationUrl: requestdata.url
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
-        const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
-        const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
-        if (!acmeorderres.authorizations.includes(requestdata.url)) {
-          return {
-            errCode: 8001,
-            errMsg: '授权不存在',
-            errFix: '传递有效的url'
-          }
-        }
-        try {
-          await acme.api.deactivateAuthorization({
-            directoryUrl: directoryurl,
-            accountKey: accountkey,
-            authorizationUrl: requestdata.url
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
-        } catch (err) {
-          return {
-            errCode: 8002,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
+      } catch (err) {
+        return {
+          errCode: 8002,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
         }
       }
     }

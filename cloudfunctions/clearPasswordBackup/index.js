@@ -59,11 +59,10 @@ exports.main = async (event) => {
           errMsg: '无数据可清理',
           errFix: '无修复建议'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

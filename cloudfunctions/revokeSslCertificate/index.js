@@ -77,52 +77,51 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的orderId'
         }
-      } else {
-        let data = orderres.data[0]
-        const userres = await db.collection('productuser').where({
-          product: 'ssl',
-          uid: res.result.account._id
-        }).get()
-        let directoryurl = ''
-        let accountkey = ''
-        if (data.environmentType == 'production') {
-          directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
-          accountkey = userres.data[0].accountKey.production
-        }
-        if (data.environmentType == 'staging') {
-          directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
-          accountkey = userres.data[0].accountKey.staging
-        }
-        const certificateres = await app.downloadFile({
-          fileID: data.certificate[0].value
+      }
+      const data = orderres.data[0]
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: res.result.account._id
+      }).get()
+      let directoryurl = ''
+      let accountkey = ''
+      if (data.environmentType == 'production') {
+        directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+        accountkey = userres.data[0].accountKey.production
+      }
+      if (data.environmentType == 'staging') {
+        directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+        accountkey = userres.data[0].accountKey.staging
+      }
+      const certificateres = await app.downloadFile({
+        fileID: data.certificate[0].value
+      })
+      try {
+        await acme.api.revokeCertificate({
+          directoryUrl: directoryurl,
+          accountKey: accountkey,
+          certificate: certificateres.fileContent.toString(),
+          reason: reason
         })
-        try {
-          await acme.api.revokeCertificate({
-            directoryUrl: directoryurl,
-            accountKey: accountkey,
-            certificate: certificateres.fileContent.toString(),
-            reason: reason
-          })
-        } catch (err) {
-          return {
-            errCode: 8002,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
-        }
-        const certificates = data.certificate.map(item => item.value)
-        await app.deleteFile({
-          fileList: certificates
-        })
-        await db.collection('sslorder').where({
-          _id: requestdata.orderId
-        }).update({
-          certificate: []
-        })
+      } catch (err) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8002,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
         }
+      }
+      const certificates = data.certificate.map(item => item.value)
+      await app.deleteFile({
+        fileList: certificates
+      })
+      await db.collection('sslorder').where({
+        _id: requestdata.orderId
+      }).update({
+        certificate: []
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

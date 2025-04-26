@@ -41,7 +41,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const account = res.result.account
-      let accesskeys = account.accessKey
+      const accesskeys = account.accessKey
       if (requestdata.index > accesskeys.length - 1) {
         return {
           errCode: 8000,

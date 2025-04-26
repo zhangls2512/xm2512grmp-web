@@ -79,52 +79,51 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的orderId'
         }
-      } else {
-        if (orderres.data[0].status != 'pending') {
-          return {
-            errCode: 8001,
-            errMsg: '订单状态为待授权时才可请求验证挑战',
-            errFix: '无修复建议'
-          }
+      }
+      if (orderres.data[0].status != 'pending') {
+        return {
+          errCode: 8001,
+          errMsg: '订单状态为待授权时才可请求验证挑战',
+          errFix: '无修复建议'
         }
-        const userres = await db.collection('productuser').where({
-          product: 'ssl',
-          uid: res.result.account._id
-        }).get()
-        let directoryurl = ''
-        if (orderres.data[0].environmentType == 'production') {
-          directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+      }
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: res.result.account._id
+      }).get()
+      let directoryurl = ''
+      if (orderres.data[0].environmentType == 'production') {
+        directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+      }
+      if (orderres.data[0].environmentType == 'staging') {
+        directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      }
+      const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
+      const authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
+      if (!authorization.some(item =>
+        item.challenges.some(challenge => challenge.url == requestdata.url)
+      )) {
+        return {
+          errCode: 8002,
+          errMsg: '挑战不存在',
+          errFix: '传递有效的url'
         }
-        if (orderres.data[0].environmentType == 'staging') {
-          directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      }
+      try {
+        await acme.api.respondChallenge({
+          directoryUrl: directoryurl,
+          accountKey: accountkey,
+          challengeUrl: requestdata.url
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
-        const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
-        const authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
-        if (!authorization.some(item =>
-          item.challenges.some(challenge => challenge.url == requestdata.url)
-        )) {
-          return {
-            errCode: 8002,
-            errMsg: '挑战不存在',
-            errFix: '传递有效的url'
-          }
-        }
-        try {
-          await acme.api.respondChallenge({
-            directoryUrl: directoryurl,
-            accountKey: accountkey,
-            challengeUrl: requestdata.url
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
-        } catch (err) {
-          return {
-            errCode: 8003,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
+      } catch (err) {
+        return {
+          errCode: 8003,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
         }
       }
     }

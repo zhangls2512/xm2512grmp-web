@@ -74,7 +74,7 @@ exports.main = async (event) => {
         uid: false
       }).get()
       if (checkversionupdate) {
-        let resourceadd = resourceaddres.data
+        const resourceadd = resourceaddres.data
         const promises = resourceadd.map(async (resourceadditem, index) => {
           const resourceres = await db.collection('resource').where({
             _id: resourceadditem.resourceId,
@@ -92,12 +92,11 @@ exports.main = async (event) => {
           errMsg: '成功',
           data: resourceadd
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          data: resourceaddres.data
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        data: resourceaddres.data
       }
     }
   } catch {

@@ -50,17 +50,15 @@ async function get() {
           ...item,
           versionUpdate: false
         }
-      } else {
-        return {
-          ...item,
-          versionUpdate: true
-        }
       }
-    } else {
       return {
         ...item,
-        versionUpdate: ''
+        versionUpdate: true
       }
+    }
+    return {
+      ...item,
+      versionUpdate: ''
     }
   })
 }

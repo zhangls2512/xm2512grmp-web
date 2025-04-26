@@ -30,12 +30,11 @@ exports.main = async (event) => {
         errMsg: '备案/许可不存在',
         errFix: '传递有效的baxkNumber参数'
       }
-    } else {
-      return {
-        errCode: 0,
-        errMsg: '成功',
-        data: res.data[0]
-      }
+    }
+    return {
+      errCode: 0,
+      errMsg: '成功',
+      data: res.data[0]
     }
   } catch {
     return {

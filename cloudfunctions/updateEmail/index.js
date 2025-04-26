@@ -85,16 +85,15 @@ exports.main = async (event) => {
             errMsg: '新邮箱已注册',
             errFix: '使用其他邮箱'
           }
-        } else {
-          await db.collection('account').where({
-            email: requestdata.email
-          }).update({
-            email: requestdata.newEmail
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+        }
+        await db.collection('account').where({
+          email: requestdata.email
+        }).update({
+          email: requestdata.newEmail
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
       }
     }

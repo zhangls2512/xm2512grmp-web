@@ -31,7 +31,7 @@ async function get() {
     message: '查询成功',
     status: 'success'
   })
-  let data = res.data
+  const data = res.data
   const maintypemap = {
     '0': '许可',
     '1': '产品备案',

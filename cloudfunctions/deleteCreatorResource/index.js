@@ -61,29 +61,28 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.name) {
-          return {
-            errCode: 8001,
-            errMsg: '有线上版本',
-            errFix: '无修复建议'
-          }
-        }
-        if (data.reviewStatus == 'processing') {
-          return {
-            errCode: 8002,
-            errMsg: '审核版本审核中',
-            errFix: '撤回审核或等待审核完成'
-          }
-        }
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).remove()
+      }
+      const data = resourceres.data[0]
+      if (data.name) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '有线上版本',
+          errFix: '无修复建议'
         }
+      }
+      if (data.reviewStatus == 'processing') {
+        return {
+          errCode: 8002,
+          errMsg: '审核版本审核中',
+          errFix: '撤回审核或等待审核完成'
+        }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).remove()
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

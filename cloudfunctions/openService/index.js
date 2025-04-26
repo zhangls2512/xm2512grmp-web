@@ -65,7 +65,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const uid = res.result.account._id
-      let service = res.result.account.service
+      const service = res.result.account.service
       if (service.includes(requestdata.service)) {
         return {
           errCode: 8000,

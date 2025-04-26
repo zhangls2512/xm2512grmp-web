@@ -83,7 +83,7 @@ exports.main = async () => {
         directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
       }
       const accountkey = userdata.accountKey[item.environmentType]
-      let acmeorderconfig = {
+      const acmeorderconfig = {
         directoryUrl: directoryurl,
         accountKey: accountkey,
         domains: item.domains,
@@ -192,7 +192,7 @@ exports.main = async () => {
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
         const authorizationdomains = authorizations.map(item => item.identifier.value)
-        let dnstasks = []
+        const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {
             dnsitem.domains.forEach(dnsdomain => {
@@ -472,7 +472,7 @@ exports.main = async () => {
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
         const authorizationdomains = authorizations.map(item => item.identifier.value)
-        let dnstasks = []
+        const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {
             dnsitem.domains.forEach(dnsdomain => {

@@ -60,42 +60,40 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const data = resourceres.data[0]
-        if (data.uid == res.result.account._id) {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            data: resourceres.data[0]
-          }
-        } else {
-          if (!data.uid) {
-            if (data.allowUpdateUser.length > 0 && !data.allowUpdateUser.includes(res.result.account._id)) {
-              return {
-                errCode: 8001,
-                errMsg: '无权限',
-                errFix: '联系客服'
-              }
-            }
-            if (data.reviewStatus == 'unrelease') {
-              return {
-                errCode: 8002,
-                errMsg: '资源未上架',
-                errFix: '无修复建议'
-              }
-            }
-            return {
-              errCode: 0,
-              errMsg: '成功',
-              data: resourceres.data[0]
-            }
-          }
+      }
+      const data = resourceres.data[0]
+      if (data.uid == res.result.account._id) {
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          data: resourceres.data[0]
+        }
+      }
+      if (!data.uid) {
+        if (data.allowUpdateUser.length > 0 && !data.allowUpdateUser.includes(res.result.account._id)) {
           return {
             errCode: 8001,
             errMsg: '无权限',
             errFix: '联系客服'
           }
         }
+        if (data.reviewStatus == 'unrelease') {
+          return {
+            errCode: 8002,
+            errMsg: '资源未上架',
+            errFix: '无修复建议'
+          }
+        }
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          data: resourceres.data[0]
+        }
+      }
+      return {
+        errCode: 8001,
+        errMsg: '无权限',
+        errFix: '联系客服'
       }
     }
   } catch {

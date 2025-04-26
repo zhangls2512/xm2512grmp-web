@@ -117,12 +117,12 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  let dataout = res.data
-  if (res.data) {
+  const dataout = res.data
+  if (dataout) {
     id.value = dataout._id
     releasestatus.value = dataout.releaseStatus
-    date = res.data.submitReviewDate
-    submitreviewdate.value = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+    date = dataout.submitReviewDate
+    submitreviewdate.value = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
     name.value = dataout.reviewInfo.name
     desc.value = dataout.reviewInfo.desc
     version.value = dataout.reviewInfo.version

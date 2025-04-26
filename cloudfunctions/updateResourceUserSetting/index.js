@@ -64,7 +64,7 @@ exports.main = async (event) => {
         product: 'resource',
         uid: uid
       }).get()
-      let setting = userres.data[0].setting
+      const setting = userres.data[0].setting
       setting[requestdata.settingName] = requestdata.settingValue
       await db.collection('productuser').where({
         product: 'resource',

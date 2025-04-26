@@ -70,31 +70,28 @@ exports.main = async (event) => {
             errCode: 0,
             errMsg: '成功'
           }
-        } else {
-          const res = await db.collection('account').where({
-            email: checkdata.email
-          }).get()
-          if (res.data.length > 0) {
-            const data = res.data[0]
-            return {
-              errCode: 0,
-              errMsg: '成功',
-              account: data
-            }
-          } else {
-            return {
-              errCode: 3000,
-              errMsg: '邮箱未注册账号',
-              errFix: '为邮箱注册账号'
-            }
+        }
+        const res = await db.collection('account').where({
+          email: checkdata.email
+        }).get()
+        if (res.data.length > 0) {
+          const data = res.data[0]
+          return {
+            errCode: 0,
+            errMsg: '成功',
+            account: data
           }
         }
-      } else {
         return {
-          errCode: 3010,
-          errMsg: '邮箱验证码错误',
-          errFix: '传递正确的邮箱验证码'
+          errCode: 3000,
+          errMsg: '邮箱未注册账号',
+          errFix: '为邮箱注册账号'
         }
+      }
+      return {
+        errCode: 3010,
+        errMsg: '邮箱验证码错误',
+        errFix: '传递正确的邮箱验证码'
       }
     }
     if (event.type == 'mfa') {
@@ -128,12 +125,11 @@ exports.main = async (event) => {
           errMsg: '成功',
           account: data
         }
-      } else {
-        return {
-          errCode: 3000,
-          errMsg: '邮箱未注册账号',
-          errFix: '为邮箱注册账号'
-        }
+      }
+      return {
+        errCode: 3000,
+        errMsg: '邮箱未注册账号',
+        errFix: '为邮箱注册账号'
       }
     }
     if (event.type == 'password') {
@@ -184,12 +180,11 @@ exports.main = async (event) => {
           errMsg: '成功',
           account: data
         }
-      } else {
-        return {
-          errCode: 3000,
-          errMsg: '邮箱未注册账号',
-          errFix: '为邮箱注册账号'
-        }
+      }
+      return {
+        errCode: 3000,
+        errMsg: '邮箱未注册账号',
+        errFix: '为邮箱注册账号'
       }
     }
     if (event.type == 'accesstoken') {
@@ -235,19 +230,17 @@ exports.main = async (event) => {
             errMsg: '权限被封禁',
             errFix: '联系客服'
           }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: data
-          }
         }
-      } else {
         return {
-          errCode: 3040,
-          errMsg: '无效的accessToken',
-          errFix: '传递有效的accessToken'
+          errCode: 0,
+          errMsg: '成功',
+          account: data
         }
+      }
+      return {
+        errCode: 3040,
+        errMsg: '无效的accessToken',
+        errFix: '传递有效的accessToken'
       }
     }
     if (event.type == 'accesskey') {
@@ -317,29 +310,27 @@ exports.main = async (event) => {
             errMsg: '权限被封禁',
             errFix: '联系客服'
           }
-        } else {
-          accesskeys.forEach(item => {
-            if (item.value == checkdata.code) {
-              item.lastUsedDate = Date.now()
-            }
-          })
-          await db.collection('account').where({
-            _id: uid
-          }).update({
-            accessKey: accesskeys
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: data
+        }
+        accesskeys.forEach(item => {
+          if (item.value == checkdata.code) {
+            item.lastUsedDate = Date.now()
           }
-        }
-      } else {
+        })
+        await db.collection('account').where({
+          _id: uid
+        }).update({
+          accessKey: accesskeys
+        })
         return {
-          errCode: 3050,
-          errMsg: '无效的accessKey',
-          errFix: '传递有效的accessKey'
+          errCode: 0,
+          errMsg: '成功',
+          account: data
         }
+      }
+      return {
+        errCode: 3050,
+        errMsg: '无效的accessKey',
+        errFix: '传递有效的accessKey'
       }
     }
     if (event.type == 'cloudfunction') {
@@ -362,19 +353,17 @@ exports.main = async (event) => {
             errMsg: '权限被封禁',
             errFix: '联系客服'
           }
-        } else {
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: data
-          }
         }
-      } else {
         return {
-          errCode: 3000,
-          errMsg: '账号不存在',
-          errFix: '传递有效的uid'
+          errCode: 0,
+          errMsg: '成功',
+          account: data
         }
+      }
+      return {
+        errCode: 3000,
+        errMsg: '账号不存在',
+        errFix: '传递有效的uid'
       }
     }
     if (event.type == 'sslwxxcx') {
@@ -385,28 +374,26 @@ exports.main = async (event) => {
           errMsg: 'code校验错误，错误信息：' + wxres.data.errmsg,
           errFix: '传递有效的code参数'
         }
-      } else {
-        const externalaccount = await db.collection('externalaccount').where({
-          openid: wxres.data.openid,
-          platform: 'sslwxxcx'
-        }).get()
-        if (externalaccount.data.length == 0) {
-          return {
-            errCode: 3061,
-            errMsg: '此外部平台账号未绑定账号',
-            errFix: '传递绑定账号的外部平台账号的code'
-          }
-        } else {
-          const uid = externalaccount.data[0].uid
-          const accountres = await db.collection('account').where({
-            _id: uid
-          }).get()
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: accountres.data[0]
-          }
+      }
+      const externalaccount = await db.collection('externalaccount').where({
+        openid: wxres.data.openid,
+        platform: 'sslwxxcx'
+      }).get()
+      if (externalaccount.data.length == 0) {
+        return {
+          errCode: 3061,
+          errMsg: '此外部平台账号未绑定账号',
+          errFix: '传递绑定账号的外部平台账号的code'
         }
+      }
+      const uid = externalaccount.data[0].uid
+      const accountres = await db.collection('account').where({
+        _id: uid
+      }).get()
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        account: accountres.data[0]
       }
     }
     if (event.type == 'huaweiaipasswordmemoapp') {
@@ -445,16 +432,15 @@ exports.main = async (event) => {
             errMsg: '此外部平台账号未绑定账号',
             errFix: '传递绑定账号的外部平台账号的code'
           }
-        } else {
-          const uid = externalaccount.data[0].uid
-          const accountres = await db.collection('account').where({
-            _id: uid
-          }).get()
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            account: accountres.data[0]
-          }
+        }
+        const uid = externalaccount.data[0].uid
+        const accountres = await db.collection('account').where({
+          _id: uid
+        }).get()
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          account: accountres.data[0]
         }
       } catch (err) {
         return {

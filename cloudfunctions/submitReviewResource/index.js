@@ -61,56 +61,55 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.reviewStatus == 'processing') {
-          return {
-            errCode: 8001,
-            errMsg: '审核版本审核中',
-            errFix: '撤回审核'
-          }
-        }
-        if (data.disallowUpdate) {
-          return {
-            errCode: 8002,
-            errMsg: '禁止修改审核版本',
-            errFix: '联系客服'
-          }
-        }
-        await db.collection('resource').where({
-          _id: requestdata.id
-        }).update({
-          reviewInvalidReason: '',
-          reviewStatus: 'processing',
-          submitReviewDate: Date.now()
-        })
-        const userres = await db.collection('account').where({
-          service: db.command.in(['admin'])
-        }).get()
-        userres.data.forEach(item => {
-          app.callFunction({
-            name: 'sendEmail',
-            data: {
-              uid: item._id,
-              noticeName: 'admin_email_newresourcetask',
-              subject: '资源待审提醒',
-              text: '有新资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）等待审核。'
-            }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: item._id,
-              data: {
-                noticeName: 'admin_webhook_newresourcetask'
-              }
-            }
-          })
-        })
+      }
+      const data = resourceres.data[0]
+      if (data.reviewStatus == 'processing') {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '审核版本审核中',
+          errFix: '撤回审核'
         }
+      }
+      if (data.disallowUpdate) {
+        return {
+          errCode: 8002,
+          errMsg: '禁止修改审核版本',
+          errFix: '联系客服'
+        }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        reviewInvalidReason: '',
+        reviewStatus: 'processing',
+        submitReviewDate: Date.now()
+      })
+      const userres = await db.collection('account').where({
+        service: db.command.in(['admin'])
+      }).get()
+      userres.data.forEach(item => {
+        app.callFunction({
+          name: 'sendEmail',
+          data: {
+            uid: item._id,
+            noticeName: 'admin_email_newresourcetask',
+            subject: '资源待审提醒',
+            text: '有新资源“' + data.reviewInfo.name + '”（ID：' + data._id + '）等待审核。'
+          }
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: item._id,
+            data: {
+              noticeName: 'admin_webhook_newresourcetask'
+            }
+          }
+        })
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

@@ -61,12 +61,11 @@ exports.main = async (event) => {
           errMsg: '成功',
           added: false
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功',
-          added: true
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        added: true
       }
     }
   } catch {

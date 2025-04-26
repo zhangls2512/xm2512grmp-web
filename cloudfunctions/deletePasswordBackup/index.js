@@ -70,11 +70,10 @@ exports.main = async (event) => {
           errMsg: '数据不存在或已被删除',
           errFix: '无修复建议'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

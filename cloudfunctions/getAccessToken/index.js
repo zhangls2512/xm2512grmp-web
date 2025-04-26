@@ -47,7 +47,7 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyType参数'
       }
     }
-    let verifytypetext
+    let verifytypetext = ''
     if (requestdata.verifyType == 'emailcode') {
       verifytypetext = '邮箱验证码'
     }

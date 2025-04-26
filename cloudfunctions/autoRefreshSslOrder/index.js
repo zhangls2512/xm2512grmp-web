@@ -284,7 +284,7 @@ exports.main = async () => {
     status: 'valid'
   }).orderBy('createDate', 'asc').get()
   validordersres.data.forEach(async (item) => {
-    let deletefiles = []
+    const deletefiles = []
     if (item.privateKey) {
       deletefiles.push(item.privateKey)
     }

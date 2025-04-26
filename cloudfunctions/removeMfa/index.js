@@ -70,16 +70,15 @@ exports.main = async (event) => {
           errMsg: '账号未设置MFA',
           errFix: '无需移除MFA'
         }
-      } else {
-        await db.collection('account').where({
-          _id: account._id
-        }).update({
-          mfa: ''
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      await db.collection('account').where({
+        _id: account._id
+      }).update({
+        mfa: ''
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

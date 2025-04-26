@@ -72,40 +72,39 @@ exports.main = async (event) => {
           errMsg: '订单不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const userres = await db.collection('productuser').where({
-          product: 'ssl',
-          uid: res.result.account._id
-        }).get()
-        const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
-        try {
-          const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
-          let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
-          authorization = authorization.map((item, index) => ({
+      }
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: res.result.account._id
+      }).get()
+      const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
+      try {
+        const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
+        let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
+        authorization = authorization.map((item, index) => ({
+          ...item,
+          url: acmeorderres.authorizations[index],
+          identifier: item.identifier.value,
+          expires: new Date(item.expires).getTime(),
+          challenges: item.challenges.map(item => ({
             ...item,
-            url: acmeorderres.authorizations[index],
-            identifier: item.identifier.value,
-            expires: new Date(item.expires).getTime(),
-            challenges: item.challenges.map(item => ({
-              ...item,
-              token: acme.api.getChallengeKeyAuthorization({
-                challenge: item,
-                accountKey: accountkey
-              }),
-              validated: new Date(item.validated).getTime()
-            }))
+            token: acme.api.getChallengeKeyAuthorization({
+              challenge: item,
+              accountKey: accountkey
+            }),
+            validated: new Date(item.validated).getTime()
           }))
-          return {
-            errCode: 0,
-            errMsg: '成功',
-            authorization: authorization
-          }
-        } catch (err) {
-          return {
-            errCode: 8001,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
+        }))
+        return {
+          errCode: 0,
+          errMsg: '成功',
+          authorization: authorization
+        }
+      } catch (err) {
+        return {
+          errCode: 8001,
+          errMsg: 'CA返回错误，错误信息：' + err.detail,
+          errFix: '联系客服'
         }
       }
     }

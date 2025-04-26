@@ -273,7 +273,7 @@ exports.main = async (event) => {
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
         const authorizationdomains = authorizations.map(item => item.identifier.value)
-        let dnstasks = []
+        const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {
             dnsitem.domains.forEach(dnsdomain => {
@@ -298,15 +298,10 @@ exports.main = async (event) => {
           await db.collection('dnstask').add(item)
         })
         await Promise.all(promise)
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

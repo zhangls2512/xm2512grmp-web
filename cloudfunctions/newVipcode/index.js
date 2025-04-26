@@ -84,20 +84,7 @@ exports.main = async (event) => {
             errMsg: '用户不存在',
             errFix: '传递有效的uid参数'
           }
-        } else {
-          await db.collection('vipcode').add({
-            date: Date.now(),
-            duration: requestdata.duration,
-            endDate: requestdata.endDate,
-            permission: requestdata.permission,
-            product: requestdata.product
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
         }
-      } else {
         await db.collection('vipcode').add({
           date: Date.now(),
           duration: requestdata.duration,
@@ -109,6 +96,17 @@ exports.main = async (event) => {
           errCode: 0,
           errMsg: '成功'
         }
+      }
+      await db.collection('vipcode').add({
+        date: Date.now(),
+        duration: requestdata.duration,
+        endDate: requestdata.endDate,
+        permission: requestdata.permission,
+        product: requestdata.product
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

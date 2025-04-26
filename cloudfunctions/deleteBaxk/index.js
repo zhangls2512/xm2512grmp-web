@@ -60,25 +60,23 @@ exports.main = async (event) => {
           errMsg: '备案/许可不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const data = banlogres.data[0]
-        if (data.mainType == '1') {
-          await db.collection('baxk').where({
-            productNumber: data.productNumber
-          }).remove()
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
-        } else {
-          await db.collection('baxk').where({
-            _id: requestdata.id
-          }).remove()
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+      }
+      const data = banlogres.data[0]
+      if (data.mainType == '1') {
+        await db.collection('baxk').where({
+          productNumber: data.productNumber
+        }).remove()
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
+      }
+      await db.collection('baxk').where({
+        _id: requestdata.id
+      }).remove()
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

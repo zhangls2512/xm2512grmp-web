@@ -70,11 +70,10 @@ exports.main = async (event) => {
           errMsg: '备案/许可不存在或数据无修改',
           errFix: '传递有效的id或修改数据'
         }
-      } else {
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

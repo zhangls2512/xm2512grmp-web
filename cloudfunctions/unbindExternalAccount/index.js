@@ -82,15 +82,14 @@ exports.main = async (event) => {
           errMsg: '账号未绑定此外部平台',
           errFix: '无需解绑'
         }
-      } else {
-        await db.collection('externalaccount').where({
-          platform: requestdata.platform,
-          uid: uid
-        }).remove()
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      }
+      await db.collection('externalaccount').where({
+        platform: requestdata.platform,
+        uid: uid
+      }).remove()
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

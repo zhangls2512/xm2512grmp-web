@@ -21,9 +21,9 @@ async function get() {
     message: '获取数据成功',
     status: 'success'
   })
-  let dataout = res.data
-  dataout.createDate = moment(res.data.createDate).format('YYYY-MM-DD HH:mm:ss')
-  dataout.submitReviewDate = moment(res.data.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+  const dataout = res.data
+  dataout.createDate = moment(dataout.createDate).format('YYYY-MM-DD HH:mm:ss')
+  dataout.submitReviewDate = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
 }
 get()

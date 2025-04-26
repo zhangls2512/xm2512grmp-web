@@ -61,45 +61,43 @@ exports.main = async (event) => {
           errMsg: '资源不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        let data = resourceres.data[0]
-        if (data.reviewStatus != 'processing') {
-          return {
-            errCode: 8001,
-            errMsg: '审核版本未处于审核中状态',
-            errFix: '无需撤回审核'
-          }
+      }
+      const data = resourceres.data[0]
+      if (data.reviewStatus != 'processing') {
+        return {
+          errCode: 8001,
+          errMsg: '审核版本未处于审核中状态',
+          errFix: '无需撤回审核'
         }
-        if (data.name) {
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
-            reviewInfo: {
-              desc: data.desc,
-              info: data.info,
-              location: data.location,
-              name: data.name,
-              tag: data.tag,
-              version: data.version
-            },
-            reviewStatus: 'pending',
-            uid: ''
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
-        } else {
-          await db.collection('resource').where({
-            _id: requestdata.id
-          }).update({
-            reviewStatus: 'pending'
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+      }
+      if (data.name) {
+        await db.collection('resource').where({
+          _id: requestdata.id
+        }).update({
+          reviewInfo: {
+            desc: data.desc,
+            info: data.info,
+            location: data.location,
+            name: data.name,
+            tag: data.tag,
+            version: data.version
+          },
+          reviewStatus: 'pending',
+          uid: ''
+        })
+        return {
+          errCode: 0,
+          errMsg: '成功'
         }
+      }
+      await db.collection('resource').where({
+        _id: requestdata.id
+      }).update({
+        reviewStatus: 'pending'
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

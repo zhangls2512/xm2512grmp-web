@@ -44,7 +44,7 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
-      let count = {
+      const count = {
         password: 0,
         info: 0,
         tag: 0

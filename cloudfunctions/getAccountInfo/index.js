@@ -41,7 +41,7 @@ exports.main = async (event) => {
       if (account.password) {
         password = true
       }
-      let accesskey = account.accessKey
+      const accesskey = account.accessKey
       if (accesskey.length > 0) {
         accesskey.forEach(item => {
           delete item.value

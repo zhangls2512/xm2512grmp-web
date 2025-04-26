@@ -61,22 +61,21 @@ exports.main = async (event) => {
           errMsg: '任务不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const endstatus = ['setfail', 'submitsuccess', 'submitfail', 'manualend', 'autoend', 'timeoutend']
-        if (!endstatus.includes(dnstaskres.data[0].status)) {
-          return {
-            errCode: 8001,
-            errMsg: '任务未结束',
-            errFix: '结束任务或等待任务结束'
-          }
-        }
-        await db.collection('dnstask').where({
-          _id: requestdata.id
-        }).remove()
+      }
+      const endstatus = ['setfail', 'submitsuccess', 'submitfail', 'manualend', 'autoend', 'timeoutend']
+      if (!endstatus.includes(dnstaskres.data[0].status)) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '任务未结束',
+          errFix: '结束任务或等待任务结束'
         }
+      }
+      await db.collection('dnstask').where({
+        _id: requestdata.id
+      }).remove()
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

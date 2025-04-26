@@ -61,25 +61,24 @@ exports.main = async (event) => {
           errMsg: '任务不存在',
           errFix: '传递有效的id'
         }
-      } else {
-        const pendingstatus = ['setpending', 'submitpending']
-        if (!pendingstatus.includes(dnstaskres.data[0].status)) {
-          return {
-            errCode: 8001,
-            errMsg: '任务已结束',
-            errFix: '无需重复结束'
-          }
-        }
-        await db.collection('dnstask').where({
-          _id: requestdata.id
-        }).update({
-          status: 'manualend',
-          updateDate: Date.now()
-        })
+      }
+      const pendingstatus = ['setpending', 'submitpending']
+      if (!pendingstatus.includes(dnstaskres.data[0].status)) {
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '任务已结束',
+          errFix: '无需重复结束'
         }
+      }
+      await db.collection('dnstask').where({
+        _id: requestdata.id
+      }).update({
+        status: 'manualend',
+        updateDate: Date.now()
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {
