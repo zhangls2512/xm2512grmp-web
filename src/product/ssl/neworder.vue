@@ -90,6 +90,13 @@ async function newOrder() {
       })
       return
     }
+    if (certificatetype.value != 'classic' && domains.value.length > 25) {
+      TinyModal.message({
+        message: '非经典证书类型最多仅支持添加 25 个域名 / IP 地址',
+        status: 'warning'
+      })
+      return
+    }
     domainsused = domains.value
     keytypeused = keytype.value
     if (keytype.value == 'rsa') {

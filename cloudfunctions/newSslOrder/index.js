@@ -127,6 +127,13 @@ exports.main = async (event) => {
         errFix: '传递有效的certificateType参数'
       }
     }
+    if (requestdata.certificateType != 'classic' && domains.length > 25) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的certificateType参数'
+      }
+    }
     const validautoneworder = ['ari', 'nearexpire', 'close']
     if (!validautoneworder.includes(requestdata.autoNewOrder)) {
       return {
