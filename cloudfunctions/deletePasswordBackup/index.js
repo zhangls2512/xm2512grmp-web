@@ -27,7 +27,7 @@ exports.main = async (event) => {
         errFix: '传递有效的type参数'
       }
     }
-    if (typeof (requestdata.id) != 'string') {
+    if (typeof (requestdata.id) != 'number') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
