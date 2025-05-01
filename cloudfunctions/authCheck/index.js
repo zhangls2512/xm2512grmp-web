@@ -71,11 +71,11 @@ exports.main = async (event) => {
             errMsg: '成功'
           }
         }
-        const res = await db.collection('account').where({
+        const accountres = await db.collection('account').where({
           email: checkdata.email
         }).get()
-        if (res.data.length > 0) {
-          const data = res.data[0]
+        if (accountres.data.length > 0) {
+          const data = accountres.data[0]
           return {
             errCode: 0,
             errMsg: '成功',
