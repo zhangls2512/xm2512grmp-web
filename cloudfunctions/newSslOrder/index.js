@@ -14,13 +14,21 @@ exports.main = async (event) => {
     requestdata = event
     requestip = auth.getClientIP()
   } else {
-    requestdata = JSON.parse(event.body)
     requestip = event.headers['x-real-ip']
     if (event.httpMethod != 'POST') {
       return {
         errCode: 1000,
         errMsg: '请求方法错误',
         errFix: '使用POST方法请求'
+      }
+    }
+    try {
+      requestdata = JSON.parse(event.body)
+    } catch {
+      return {
+        errCode: 5000,
+        errMsg: '内部错误',
+        errFix: '联系客服'
       }
     }
   }

@@ -27,7 +27,6 @@ exports.main = async (event) => {
     requestip = auth.getClientIP()
     useragent = event.userAgent
   } else {
-    requestdata = JSON.parse(event.body)
     requestip = event.headers['x-real-ip']
     useragent = event.headers['user-agent']
     if (event.httpMethod != 'POST') {
@@ -35,6 +34,15 @@ exports.main = async (event) => {
         errCode: 1000,
         errMsg: '请求方法错误',
         errFix: '使用POST方法请求'
+      }
+    }
+    try {
+      requestdata = JSON.parse(event.body)
+    } catch {
+      return {
+        errCode: 5000,
+        errMsg: '内部错误',
+        errFix: '联系客服'
       }
     }
   }
