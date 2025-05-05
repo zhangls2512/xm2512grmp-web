@@ -64,9 +64,11 @@ async function login() {
       userAgent: navigator.userAgent
     }
   })
-  const expires = new Date(res.endDate)
-  cookie.set('accessToken', res.accessToken, { expires: expires, secure: true, sameSite: 'strict' })
-  cookie.set('email', email.value, { expires: expires, secure: true, sameSite: 'strict' })
+  cookie.set('accessToken', res.accessToken, {
+    expires: new Date(res.endDate),
+    secure: true,
+    sameSite: 'strict'
+  })
   routePush()
   TinyModal.message({
     message: '登录成功',

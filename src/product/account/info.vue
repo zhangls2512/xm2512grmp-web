@@ -8,7 +8,6 @@ import validator from 'validator'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
-const email = cookie.get('email')
 const accountinfo = ref({})
 const externalaccount = ref([])
 const type = ref('')
@@ -21,8 +20,7 @@ const newemail = ref('')
 const newemailcode = ref('')
 const newpassworda = ref('')
 const newpasswordb = ref('')
-const duration = ref(2)
-const durationvalue = ref('')
+const duration = ref('')
 let platform = ''
 const updateemailbutton = ref(false)
 const setmfabutton = ref(false)
@@ -90,8 +88,8 @@ function logOut() {
   cookie.remove('email')
   router.push('/product/account/login')
 }
-function copy() {
-  navigator.clipboard.writeText(accountinfo.value.uid)
+function copy(value) {
+  navigator.clipboard.writeText(value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'
@@ -108,7 +106,7 @@ function closeDialog() {
   newemailcode.value = ''
   newpassworda.value = ''
   newpasswordb.value = ''
-  durationvalue.value = ''
+  duration.value = String(accountinfo.value.duration)
   updateemailbutton.value = false
   setmfabutton.value = false
   removemfabutton.value = false
@@ -157,7 +155,7 @@ async function updateEmail() {
   await request({
     apiPath: '/account/updateEmail',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       emailCode: code.value,
       newEmail: newemail.value,
       newEmailCode: newemailcode.value
@@ -187,7 +185,7 @@ async function setMfa() {
   const res = await request({
     apiPath: '/account/setMfa',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       emailCode: code.value
     }
   })
@@ -195,9 +193,11 @@ async function setMfa() {
   qrcodedialog.value = true
   const mfasecret = res.secret
   secret.value = mfasecret
-  const accountname = 'xm2512:' + email
+  const accountname = 'xm2512:' + accountinfo.value.email
   const totpurl = `otpauth://totp/${encodeURIComponent(accountname)}?secret=` + mfasecret
-  qrcodeimg.value = await qrcode.toDataURL(totpurl, { type: 'image/png' })
+  qrcodeimg.value = await qrcode.toDataURL(totpurl, {
+    type: 'image/png'
+  })
 }
 function removeMfaOpen() {
   dialog.value = true
@@ -223,7 +223,7 @@ async function removeMfa() {
   await request({
     apiPath: '/account/removeMfa',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value
     }
@@ -280,7 +280,7 @@ async function setPassword() {
   await request({
     apiPath: '/account/setPassword',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value,
       newPassword: newpassworda.value
@@ -324,7 +324,7 @@ async function removePassword() {
   await request({
     apiPath: '/account/setPassword',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value,
       newPassword: ''
@@ -358,8 +358,8 @@ async function updateDuration() {
     })
     return
   }
-  const duration = Number(durationvalue.value)
-  if (!Number.isInteger(duration) || duration < 1 || duration > 60) {
+  const durationvalue = Number(duration.value)
+  if (!Number.isInteger(durationvalue) || durationvalue < 1 || durationvalue > 60) {
     TinyModal.message({
       message: '请输入有效的时长',
       status: 'warning'
@@ -369,10 +369,10 @@ async function updateDuration() {
   await request({
     apiPath: '/account/updateDuration',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value,
-      duration: duration
+      duration: durationvalue
     }
   })
   closeDialog()
@@ -406,7 +406,7 @@ async function freeze() {
   await request({
     apiPath: '/account/freezeAccessToken',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value
     }
@@ -442,7 +442,7 @@ async function refresh() {
   await request({
     apiPath: '/account/refreshAccessToken',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value
     }
@@ -478,7 +478,7 @@ async function deleteAccount() {
   await request({
     apiPath: '/account/deleteAccount',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value
     }
@@ -515,7 +515,7 @@ async function unbindExternalAccount() {
   await request({
     apiPath: '/account/unbindExternalAccount',
     body: {
-      email: email,
+      email: accountinfo.value.email,
       verifyType: type.value,
       verifyCode: code.value,
       platform: platform
@@ -532,11 +532,11 @@ async function getEmailCode() {
   await request({
     apiPath: '/account/sendEmailCode',
     body: {
-      email: email
+      email: accountinfo.value.email
     }
   })
   TinyModal.message({
-    message: '验证码已成功发送到邮箱：' + email,
+    message: '验证码已成功发送到邮箱：' + accountinfo.value.email,
     status: 'success'
   })
   buttondisabled.value = true
@@ -586,7 +586,7 @@ async function getEmailCodea() {
       <div class="sp">
         <div class="bold-text">UID</div>
         <div>{{ accountinfo.uid }}</div>
-        <tiny-button type="info" @click="copy">复制</tiny-button>
+        <tiny-button type="info" @click="copy(accountinfo.uid)">复制</tiny-button>
       </div>
       <div class="sp">
         <div class="bold-text">邮箱</div>
@@ -693,7 +693,7 @@ async function getEmailCodea() {
           maxlength="30" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 30 位）"></tiny-input>
         <tiny-input v-if="setpasswordbutton == true" v-model="newpasswordb" type="password" clearable minlength="8"
           maxlength="30" autocomplete="new-password" placeholder="请再次输入新密码"></tiny-input>
-        <tiny-input v-if="updatedurationbutton == true" v-model="durationvalue" clearable minlength="1" maxlength="2"
+        <tiny-input v-if="updatedurationbutton == true" v-model="duration" clearable minlength="1" maxlength="2"
           placeholder="范围：1 - 60，单位：天"></tiny-input>
       </div>
       <template #footer>
@@ -710,12 +710,15 @@ async function getEmailCodea() {
           @click="unbindExternalAccount">解绑</tiny-button>
       </template>
     </tiny-dialog-box>
-    <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA" @close="closeQrcodeDialog">
+    <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA（以下两种方式二选一）" @close="closeQrcodeDialog">
       <div class="dialog-cz">
-        <div>1. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
+        <div>1. 使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
         <img class="qrcode" :src="qrcodeimg" loading="lazy" />
-        <div>2. 请使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）手动输入下方密钥添加 MFA 。</div>
-        <div>{{ secret }} </div>
+        <div>2. 使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）手动输入下方密钥添加 MFA 。</div>
+        <div class="sp">
+          <div>{{ secret }} </div>
+          <tiny-button type="info" @click="copy(secret)">复制</tiny-button>
+        </div>
       </div>
       <template #footer>
         <tiny-button type="danger" @click="closeQrcodeDialog">关闭</tiny-button>

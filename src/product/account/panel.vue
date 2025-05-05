@@ -46,21 +46,8 @@ const tabs = [
     customIcon: icon.IconGoBack()
   }
 ]
-async function getAccountInfo() {
-  const res = await request({
-    apiPath: '/account/getAccountInfo',
-    body: {
-      accessToken: accesstoken
-    }
-  })
-  const expires = new Date(res.data.endDate)
-  cookie.set('accessToken', accesstoken, { expires: expires, secure: true, sameSite: 'strict' })
-  cookie.set('email', cookie.get('email'), { expires: expires, secure: true, sameSite: 'strict' })
-}
 if (!cookie.get('accessToken')) {
   router.push('/product/account/login')
-} else {
-  getAccountInfo()
 }
 const tabClick = (data) => {
   if (data.id == 'logout') {

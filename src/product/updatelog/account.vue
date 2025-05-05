@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.10',
+    releaseDate: '2025-05-05',
+    logs: [
+      {
+        type: 'U',
+        content: '账号管理 - 基本信息支持一键复制 MFA 密钥'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.9',
     releaseDate: '2025-04-19',
     logs: [
