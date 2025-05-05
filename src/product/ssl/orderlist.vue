@@ -157,7 +157,8 @@ async function deleteOrder(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="info(row._id)">详情</tiny-button>
-            <tiny-button type="warning" @click="authorization(row._id)">授权</tiny-button>
+            <tiny-button v-if="row.orderEndDate > Date.now()" type="warning"
+              @click="authorization(row._id)">授权</tiny-button>
             <tiny-button v-if="row.status == 'ready'" type="success" @click="submit(row._id)">提交</tiny-button>
             <tiny-popconfirm v-if="row.status != 'processing'" title="提示" message="删除后无法恢复，确定删除？" type="warning"
               trigger="hover" @confirm="deleteOrder(row._id)">

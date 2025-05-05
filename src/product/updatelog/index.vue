@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.10',
+    releaseDate: '2025-05-05',
+    logs: [
+      {
+        type: 'U',
+        content: '媒体 新增 抖音'
+      },
+      {
+        type: 'U',
+        content: '修订成员'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.9',
     releaseDate: '2025-03-22',
     logs: [
