@@ -111,7 +111,7 @@ exports.main = async (event) => {
             vipEndDate: 0
           })
         } else {
-          if (vipenddate == -1) {
+          if (vipenddate < Date.now()) {
             vipenddate = Date.now()
           }
           await db.collection('productuser').where({
@@ -180,7 +180,7 @@ exports.main = async (event) => {
             vipEndDate: 0
           })
         } else {
-          if (vipenddate == -1) {
+          if (vipenddate < Date.now()) {
             vipenddate = Date.now()
           }
           await db.collection('productuser').where({
