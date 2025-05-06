@@ -20,6 +20,10 @@ const tabs = [
     label: '备案许可'
   },
   {
+    id: 'aipasswordmemohmapp',
+    label: '密码智能备忘录'
+  },
+  {
     id: 'resource',
     label: '资源'
   },

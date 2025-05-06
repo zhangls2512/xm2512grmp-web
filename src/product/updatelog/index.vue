@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.11',
+    releaseDate: '2025-05-06',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 新增 密码智能备忘录（邀请测试）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.10',
     releaseDate: '2025-05-05',
     logs: [

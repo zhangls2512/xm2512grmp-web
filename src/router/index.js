@@ -61,6 +61,10 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/baxk.vue')
         },
         {
+          path: 'aipasswordmemohmapp',
+          component: () => import('/src/product/updatelog/aipasswordmemohmapp.vue')
+        },
+        {
           path: 'resource',
           component: () => import('/src/product/updatelog/resource.vue')
         },
