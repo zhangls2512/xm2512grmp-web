@@ -2,6 +2,44 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.0.1.0',
+    releaseDate: '2025-05-09',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 密码安全检查'
+      },
+      {
+        type: 'A',
+        content: '支持创建应用分身（最多 5 个）'
+      },
+      {
+        type: 'U',
+        content: '修改底部导航栏实现方式'
+      },
+      {
+        type: 'U',
+        content: '修改部分场景禁止截、录屏时机'
+      },
+      {
+        type: 'U',
+        content: '提升数据库查询性能'
+      },
+      {
+        type: 'U',
+        content: '调试页面删减部分信息'
+      },
+      {
+        type: 'U',
+        content: '删除冗余图标资源文件，减小包体积'
+      },
+      {
+        type: 'U',
+        content: '仅信任系统预置的 CA 证书，不信任用户安装的 CA 证书，提高安全性'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.1',
     releaseDate: '2025-05-08',
     logs: [
