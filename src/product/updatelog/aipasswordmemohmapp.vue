@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.0.1.1',
+    releaseDate: '2025-05-10',
+    logs: [
+      {
+        type: 'U',
+        content: '修改部分页面上间距'
+      },
+      {
+        type: 'U',
+        content: '修改页面间通信实现方式'
+      },
+      {
+        type: 'F',
+        content: '底部导航栏页面非首次进入时未刷新'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.0',
     releaseDate: '2025-05-09',
     logs: [
