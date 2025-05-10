@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.0.2.0',
+    releaseDate: '2025-05-10',
+    logs: [
+      {
+        type: 'A',
+        content: '支持打开文件管理、微信等第三方应用中的 txt 文件用于导入数据'
+      },
+      {
+        type: 'U',
+        content: '我的 - 密码安全检查 - 重复按使用账号数从大到小排序、不显示使用账号数为 1 的'
+      },
+      {
+        type: 'F',
+        content: '设置页面未登录账号时上间距不正确'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.1',
     releaseDate: '2025-05-10',
     logs: [
