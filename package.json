@@ -4,7 +4,7 @@
     "release": "npm update && vite build && tcb hosting deploy ./dist -e zhangls2512-5ggbio7hc46f4036"
   },
   "dependencies": {
-    "@cloudbase/js-sdk": "^2.9.3",
+    "@cloudbase/js-sdk": "latest",
     "@opentiny/vue": "latest",
     "axios": "latest",
     "js-cookie": "latest",

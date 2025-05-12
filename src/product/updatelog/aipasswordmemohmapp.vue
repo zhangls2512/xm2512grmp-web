@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.0.2.1',
+    releaseDate: '2025-05-12',
+    logs: [
+      {
+        type: 'F',
+        content: '用其他应用打开文件管理、微信等第三方应用中的 txt 文件时“选择打开方式”弹窗中无本应用'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.0',
     releaseDate: '2025-05-10',
     logs: [
