@@ -604,6 +604,18 @@
       "installDependency": true
     },
     {
+      "name": "openVip",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "receiveIapNotification",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "refreshAccessToken",
       "timeout": 60,
       "runtime": "Nodejs18.15",
