@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.1.0',
+    releaseDate: '2025-05-15',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 密码随机生成'
+      },
+      {
+        type: 'U',
+        content: '权限管理页面中的“系统设置”文本支持点击跳转系统设置“应用权限管理”页面'
+      },
+      {
+        type: 'F',
+        content: '登录、应用服务模式页面查看的隐私政策可能不是最新版本'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.0.0',
     releaseDate: '2025-05-15',
     logs: [
