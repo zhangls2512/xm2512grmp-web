@@ -2,6 +2,36 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.0.0',
+    releaseDate: '2025-05-15',
+    logs: [
+      {
+        type: 'A',
+        content: '新增 AI 助手'
+      },
+      {
+        type: 'A',
+        content: '支持付费开通会员'
+      },
+      {
+        type: 'U',
+        content: '修改登录到期时间相关逻辑'
+      },
+      {
+        type: 'U',
+        content: '登录弹窗删除冗余取消禁止截、录屏逻辑'
+      },
+      {
+        type: 'F',
+        content: '设置、会员中心页面刷新会员状态逻辑不完善'
+      },
+      {
+        type: 'F',
+        content: '会员开通记录页面加载动画位置错误'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.1',
     releaseDate: '2025-05-12',
     logs: [

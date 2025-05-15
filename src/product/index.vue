@@ -31,7 +31,7 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
-          <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=ec4bbc06bde9f69a4961d1e648ed2edb&invitationCode=ABsUTpXFYfD"
+          <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=683b58db6de437f5466aa94b08598b2c&invitationCode=ABsUTpXFYfD"
             target="_blank">
             <div class="kuang">
               <div class="cz">
