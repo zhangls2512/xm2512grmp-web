@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.2.0',
+    releaseDate: '2025-05-16',
+    logs: [
+      {
+        type: 'A',
+        content: '新增静态快捷方式（长按桌面应用图标）：新增密码、搜索密码'
+      },
+      {
+        type: 'A',
+        content: '电脑端支持右键 txt 文件导入数据（此功能目前无法使用，为能力预埋）'
+      },
+      {
+        type: 'F',
+        content: 'WLAN 断开时调试页面不显示应用安装、缓存、其他文件存储空间信息'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.0',
     releaseDate: '2025-05-15',
     logs: [
@@ -11,7 +29,7 @@ const data = [
       },
       {
         type: 'U',
-        content: '权限管理页面中的“系统设置”文本支持点击跳转系统设置“应用权限管理”页面'
+        content: '权限管理页面中的“系统设置”文本支持点击跳转系统设置应用权限管理页面'
       },
       {
         type: 'F',
