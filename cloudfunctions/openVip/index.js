@@ -17,16 +17,10 @@ exports.main = async (event) => {
     }
   }
   try {
-    let key = ''
-    let keyid = ''
-    let issuerid = ''
     let aid = ''
     let product = ''
     let productwz = ''
     if (event.notificationMetaData.packageName == 'com.zhangxm.aipasswordmemo') {
-      key = process.env.aipasswordmemokey
-      keyid = '131ad2fc-d07d-4a0d-b09d-aa569c0dbe25'
-      issuerid = '62471dcb-a075-46e4-95ec-d37e99dc1c8d'
       aid = '6917568345502278703'
       product = 'password'
       productwz = '密码智能备忘录'
@@ -36,18 +30,18 @@ exports.main = async (event) => {
       purchaseOrderId: event.notificationMetaData.purchaseOrderId
     }
     const jwt = jsonwebtoken.sign({
-      iss: issuerid,
+      iss: '62471dcb-a075-46e4-95ec-d37e99dc1c8d',
       aud: 'iap-v1',
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 60,
       aid: aid,
       digest: crypto.createHash('sha256').update(JSON.stringify(body)).digest('hex')
-    }, key, {
+    }, process.env.key, {
       algorithm: 'ES256',
       header: {
         alg: 'ES256',
         typ: 'JWT',
-        kid: keyid
+        kid: '131ad2fc-d07d-4a0d-b09d-aa569c0dbe25'
       }
     })
     const authorization = 'Bearer ' + jwt
