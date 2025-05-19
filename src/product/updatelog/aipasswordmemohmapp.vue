@@ -2,6 +2,40 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.3.0',
+    releaseDate: '2025-05-19',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用新增 记忆主窗口尺寸（仅电脑端可用）'
+      },
+      {
+        type: 'U',
+        content: '优化 AI 助手功能'
+      },
+      {
+        type: 'U',
+        content: '修改会员中心页面阅读服务协议提示文本'
+      },
+      {
+        type: 'U',
+        content: '修改公安备案注册时间'
+      },
+      {
+        type: 'U',
+        content: '修改麦克风权限使用目的说明文本'
+      },
+      {
+        type: 'F',
+        content: '平板、折叠屏、电脑上首页仅在左侧窄区域右侧宽区域空白'
+      },
+      {
+        type: 'F',
+        content: '电脑端 txt 文件右键菜单打开时未弹窗提示导入数据'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.2.0',
     releaseDate: '2025-05-16',
     logs: [
