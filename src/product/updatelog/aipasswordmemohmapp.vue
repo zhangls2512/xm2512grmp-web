@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.4.0',
+    releaseDate: '2025-05-20',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 恶意 URL 检测'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.3.0',
     releaseDate: '2025-05-19',
     logs: [
