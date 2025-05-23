@@ -31,12 +31,11 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
-          <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=0b39060509b9ad4306602a4f3a33da40&invitationCode=ABsUTpXFYfD"
-            target="_blank">
+          <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aipasswordmemo" target="_blank">
             <div class="kuang">
               <div class="cz">
                 <img class="image" src="/password.png" loading="lazy" />
-                <div class="large-bold-text">密码智能备忘录（邀请测试）</div>
+                <div class="large-bold-text">密码智能备忘录</div>
               </div>
             </div>
           </a>
