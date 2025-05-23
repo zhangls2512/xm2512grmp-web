@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.4.1',
+    releaseDate: '2025-05-23',
+    logs: [
+      {
+        type: 'A',
+        content: '适配智慧屏'
+      },
+      {
+        type: 'F',
+        content: '新增、修改标签页面颜色未左对齐'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.0',
     releaseDate: '2025-05-20',
     logs: [
