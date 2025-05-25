@@ -91,7 +91,6 @@ const endyear = new Date().getFullYear()
               <div class="large-bold-text">个人名片</div>
               <div class="sp">
                 <router-link to="/" target="_blank">网页</router-link>
-                <tiny-divider direction="vertical"></tiny-divider>
                 <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
               </div>
             </div>
