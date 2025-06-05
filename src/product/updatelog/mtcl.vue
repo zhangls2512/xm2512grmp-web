@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - 媒体处理'
+document.title = '轩铭2512 - 更新日志 - 图片处理'
 const data = [
   {
     versionNumber: '1.0.3',

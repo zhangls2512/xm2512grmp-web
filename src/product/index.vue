@@ -73,7 +73,7 @@ const endyear = new Date().getFullYear()
             <div class="kuang">
               <div class="cz">
                 <img class="image" src="/logomedia.png" loading="lazy" />
-                <div class="large-bold-text">媒体处理</div>
+                <div class="large-bold-text">图片处理</div>
               </div>
             </div>
           </router-link>

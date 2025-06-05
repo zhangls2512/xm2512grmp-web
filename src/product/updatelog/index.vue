@@ -107,7 +107,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '更新日志 新增 媒体处理'
+        content: '更新日志 新增 图片处理'
       }
     ]
   },

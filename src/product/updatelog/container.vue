@@ -41,7 +41,7 @@ const tabs = [
   },
   {
     id: 'mtcl',
-    label: '媒体处理'
+    label: '图片处理'
   },
   {
     id: 'grmpweb',
