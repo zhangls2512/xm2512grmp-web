@@ -81,8 +81,8 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/sslwxxcx.vue')
         },
         {
-          path: 'mtcl',
-          component: () => import('/src/product/updatelog/mtcl.vue')
+          path: 'tpcl',
+          component: () => import('/src/product/updatelog/tpcl.vue')
         },
         {
           path: 'grmpweb',

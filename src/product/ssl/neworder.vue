@@ -221,14 +221,12 @@ async function newOrder() {
         </div>
       </tiny-form-item>
       <tiny-form-item label="证书类型">
-        <div class="cz">
-          <tiny-radio-group v-model="certificatetype">
-            <tiny-radio label="classic">经典</tiny-radio>
-            <tiny-radio label="tlsserver">TLS 服务器</tiny-radio>
-            <tiny-radio label="shortlived" disabled>短期</tiny-radio>
-          </tiny-radio-group>
-          <tiny-alert :closable="false" description="CA 暂未开放短期证书类型，因此选项被禁用。CA 开放后将更新版本解除禁用，敬请期待！"></tiny-alert>
-        </div>
+        <tiny-radio-group v-model="certificatetype">
+          <tiny-radio label="classic">经典</tiny-radio>
+          <tiny-radio label="shortlived" disabled>短期</tiny-radio>
+          <tiny-radio label="tlsserver">TLS 服务器</tiny-radio>
+          <tiny-radio label="tlsclient" disabled>TLS 客户端</tiny-radio>
+        </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item label="自动续期">
         <tiny-radio-group v-model="autoneworder">

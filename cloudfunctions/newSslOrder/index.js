@@ -120,7 +120,7 @@ exports.main = async (event) => {
         errFix: '传递有效的environmentType参数'
       }
     }
-    const validcertificatetypes = ['classic', 'shortlived', 'tlsserver']
+    const validcertificatetypes = ['classic', 'shortlived', 'tlsserver', 'tlsclient']
     if (!validcertificatetypes.includes(requestdata.certificateType)) {
       return {
         errCode: 1001,

@@ -40,7 +40,7 @@ const tabs = [
     label: 'SSL 证书（微信小程序）'
   },
   {
-    id: 'mtcl',
+    id: 'tpcl',
     label: '图片处理'
   },
   {

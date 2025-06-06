@@ -192,8 +192,8 @@ async function revokeCertificate() {
         </template>
       </tiny-grid-column>
     </tiny-grid>
-    <tiny-alert v-if="data.certificate.length == 0 && (data.status == 'valid' || data.status == 'expired')" type="error"
-      :closable="false" description="证书已吊销"></tiny-alert>
+    <tiny-alert v-if="data.certificate.length == 0 && data.status == 'valid'" type="error" :closable="false"
+      description="证书已吊销"></tiny-alert>
     <div v-if="data.certificate.length > 0" class="sp">
       <div class="bold-text">证书颁发时间</div>
       <div>{{ data.certificateStartDate }}</div>
