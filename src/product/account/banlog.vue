@@ -10,14 +10,14 @@ const pagesize = ref(10)
 const total = ref(0)
 async function get() {
   const countres = await request({
-    apiPath: '/account/getUserBanlogCount',
+    apiPath: '/account/getBanlogCount',
     body: {
       accessToken: accesstoken
     }
   })
   total.value = countres.count
   const res = await request({
-    apiPath: '/account/getBanlog',
+    apiPath: '/account/getBanlogList',
     body: {
       accessToken: accesstoken,
       skip: (currentpage.value - 1) * pagesize.value,

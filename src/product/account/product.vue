@@ -144,7 +144,7 @@ function openAppDetail(bundleName) {
           </div>
           <div>{{ item.desc }}</div>
           <tiny-alert
-            v-if="item.defaultallow == false && productszt[`${item.name}fjzt`] != false && productszt[`${item.name}ktzt`] == false"
+            v-if="item.defaultallow == false && productszt[`${item.name}ktzt`] == false && productszt[`${item.name}fjzt`] != false"
             :closable="false" description="如需开通，请联系客服"></tiny-alert>
           <div class="sp">
             <tiny-button v-if="productszt[`${item.name}ktzt`] == true && productszt[`${item.name}fjzt`] == false"
@@ -169,7 +169,7 @@ function openAppDetail(bundleName) {
             <tiny-tag v-if="typeof (productszt.passwordfjzt) == 'string'" type="danger">封禁至 {{
               productszt.passwordfjzt }}</tiny-tag>
           </div>
-          <div>智能记录密码。</div>
+          <div>密码智能管理工具。</div>
           <div class="sp">
             <tiny-button v-if="productszt.passwordktzt == true && productszt.passwordfjzt == false" type="info"
               @click="openAppDetail('com.zhangxm.aipasswordmemo')">去使用</tiny-button>

@@ -13,8 +13,8 @@ const accesskeyname = ref('')
 const accesskeyenddate = ref('')
 const accesskeyforever = ref(false)
 let accesskeyallowapi = []
-const ip = ref('')
 const accesskeyallowip = ref([])
+const ip = ref('')
 const accesskeystatus = ref(false)
 const apis = ref([
   {
@@ -59,12 +59,12 @@ const apis = ref([
   },
   {
     product: '统一账号',
-    name: 'account_getUserBanlogCount',
+    name: 'account_getBanlogCount',
     desc: '获取违规记录总数'
   },
   {
     product: '统一账号',
-    name: 'account_getBanlog',
+    name: 'account_getBanlogList',
     desc: '获取违规记录列表'
   },
   {

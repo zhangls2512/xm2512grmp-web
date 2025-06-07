@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.2',
+    releaseDate: '2025-06-07',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1',
     releaseDate: '2025-06-06',
     logs: [

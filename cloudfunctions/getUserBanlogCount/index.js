@@ -38,7 +38,7 @@ exports.main = async (event) => {
         },
         permission: [],
         service: [],
-        apiName: 'account_getUserBanlogCount'
+        apiName: 'account_getBanlogCount'
       }
     })
     if (res.result.errCode != 0) {

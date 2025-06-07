@@ -6,9 +6,9 @@ import request from '../../request'
 const accesstoken = cookie.get('accessToken')
 const tags = ref([])
 const dialog = ref(false)
-const intag = ref('')
 const tag = ref([])
 const inputtags = ref([])
+const intag = ref('')
 async function getUserInfo() {
   const res = await request({
     apiPath: '/product/getUserInfo',

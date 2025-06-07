@@ -147,6 +147,7 @@ async function getEmailCode() {
         </tiny-form>
         <div class="sp">
           <router-link to="/product/account/register">注册账号</router-link>
+          <tiny-divider direction="vertical"></tiny-divider>
           <router-link to="/product/account/unfreeze">解冻账号</router-link>
         </div>
       </div>

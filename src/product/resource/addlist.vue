@@ -11,13 +11,13 @@ const total = ref(0)
 const keyword = ref('')
 const tags = ref([])
 const tag = ref('')
-const mytag = ref([])
 const checkversionupdate = ref(false)
 const onlyshowversionupdate = ref(false)
 const dialog = ref(false)
 let addid = ''
 const addtags = ref([])
 const addtag = ref('')
+const mytag = ref([])
 async function get() {
   const countres = await request({
     apiPath: '/resource/getAddResourceCount',

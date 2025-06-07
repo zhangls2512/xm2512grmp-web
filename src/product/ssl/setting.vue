@@ -26,8 +26,8 @@ const dialog = ref(false)
 const platform = ref('')
 const keyid = ref('')
 const keysecret = ref('')
-const domain = ref('')
 const domains = ref([])
+const domain = ref('')
 async function getUserInfo() {
   const res = await request({
     apiPath: '/product/getUserInfo',
