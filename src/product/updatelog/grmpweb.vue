@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（网页）'
 const data = [
   {
+    versionNumber: '1.0.1',
+    releaseDate: '2025-06-09',
+    logs: [
+      {
+        type: 'U',
+        content: '更新 个人简介'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0',
     releaseDate: '2025-02-26',
     logs: [

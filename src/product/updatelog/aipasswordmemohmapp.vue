@@ -2,6 +2,52 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '1.1.5.0',
+    releaseDate: '2025-06-09',
+    logs: [
+      {
+        type: 'U',
+        content: '兑换码获取方式 新增 应用市场评论'
+      },
+      {
+        type: 'U',
+        content: '客服 新增 MeoW 频道'
+      },
+      {
+        type: 'U',
+        content: '调试页面修改部分信息属性名'
+      },
+      {
+        type: 'U',
+        content: '非手机上半模态页面样式改为居中'
+      },
+      {
+        type: 'U',
+        content: '修改部分组件四周间距使其在电脑、智慧屏上正确渲染'
+      },
+      {
+        type: 'F',
+        content: '卡证识别可能会报错'
+      },
+      {
+        type: 'F',
+        content: '只能对一个设备开启数据自动同步'
+      },
+      {
+        type: 'F',
+        content: '设备间同步数据入参错误'
+      },
+      {
+        type: 'F',
+        content: '基本模式下“自动上传故障日志”开关可能显示为开启状态'
+      },
+      {
+        type: 'F',
+        content: '登录过期时未自动退出登录'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.1',
     releaseDate: '2025-05-23',
     logs: [

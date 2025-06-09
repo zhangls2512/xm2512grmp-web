@@ -8,7 +8,7 @@ const tags = ref([])
 const dialog = ref(false)
 const tag = ref([])
 const inputtags = ref([])
-const intag = ref('')
+const inputtag = ref('')
 async function getUserInfo() {
   const res = await request({
     apiPath: '/product/getUserInfo',
@@ -48,15 +48,15 @@ function closeDialog() {
   dialog.value = false
 }
 function addIntag() {
-  if (!intag.value) {
+  if (!inputtag.value) {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'
     })
     return
   }
-  tag.value.push(intag.value)
-  intag.value = ''
+  tag.value.push(inputtag.value)
+  inputtag.value = ''
 }
 function removeIntag(index) {
   tag.value.splice(index, 1)
@@ -93,7 +93,7 @@ function removeTag(index) {
     <tiny-dialog-box class="dialog" :visible="dialog" title="编辑标签" @close="closeDialog">
       <div class="dialog-cz">
         <div class="sp">
-          <tiny-input v-model="intag" clearable placeholder="请输入内容"></tiny-input>
+          <tiny-input v-model="inputtag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addIntag">添加单标签</tiny-button>
         </div>
         <div v-for="(item, index) in tag" class="sp">

@@ -69,10 +69,10 @@ const endyear = new Date().getFullYear()
           </div>
         </div>
         <div class="sp" style="align-items: stretch">
-          <router-link to="/qrcodemedia.jpg" target="_blank">
+          <router-link to="/qrcodetp.jpg" target="_blank">
             <div class="kuang">
               <div class="cz">
-                <img class="image" src="/logomedia.png" loading="lazy" />
+                <img class="image" src="/logotp.png" loading="lazy" />
                 <div class="large-bold-text">图片处理</div>
               </div>
             </div>

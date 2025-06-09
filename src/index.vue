@@ -32,7 +32,7 @@ age = outputage()
         </div>
       </div>
       <div class="title">个人简介</div>
-      <div class="large-text">我是一名软件开发工程师，专注于网页、鸿蒙原生应用、鸿蒙元服务与微信小程序的开发。</div>
+      <div class="large-text">一名软件开发工程师，专注于网页、鸿蒙原生应用与微信小程序的开发。</div>
       <div class="title">技能证书</div>
       <div class="sp">
         <img class="tp" src="/zsa.jpeg" loading="lazy" />
@@ -42,14 +42,14 @@ age = outputage()
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/zsc.jpg" loading="lazy" />
+        <img class="tp" src="/zsb.jpg" loading="lazy" />
         <div class="cz">
           <div class="large-bold-text">蓝桥杯大赛获奖证书</div>
           <div class="large-text">证书编号：011504114</div>
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/zsb.png" loading="lazy" />
+        <img class="tp" src="/zsc.png" loading="lazy" />
         <div class="cz">
           <div class="large-bold-text">华为开发者学堂专业证书——HarmonyOS应用开发者基础认证</div>
           <div class="large-text">证书编号：TCNdb723c1</div>
@@ -124,7 +124,7 @@ age = outputage()
       </div>
       <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
       <div class="sp">
-        <div class="footer-text">Version 1.0.0</div>
+        <div class="footer-text">Version 1.0.1</div>
         <tiny-divider direction="vertical"></tiny-divider>
         <router-link class="footer-text" to="/product/updatelog/grmpweb" target="_blank">更新日志</router-link>
       </div>
