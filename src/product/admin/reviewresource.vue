@@ -156,7 +156,7 @@ async function getTotal() {
 get()
 getTotal()
 function addLocationTag() {
-  if (!locationtagvalue.value) {
+  if (locationtagvalue.value == '') {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'
@@ -174,7 +174,7 @@ function removeLocationTag(index) {
   locationtag.value.splice(index, 1)
 }
 function addLocation() {
-  if (!locationvalue.value) {
+  if (locationvalue.value == '') {
     TinyModal.message({
       message: '请输入地址',
       status: 'warning'
@@ -196,7 +196,7 @@ function removeLocation(index) {
   location.value.splice(index, 1)
 }
 function addTag() {
-  if (!tagvalue.value) {
+  if (tagvalue.value == '') {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'
@@ -214,7 +214,7 @@ function removeTag(index) {
   tag.value.splice(index, 1)
 }
 function addInfo() {
-  if (!infovalue.value) {
+  if (infovalue.value == '') {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'

@@ -43,6 +43,8 @@ exports.main = async (event) => {
       'product_useVipcode',
       'product_getViplogCount',
       'product_getViplogList',
+      'product_useInvitationcode',
+      'product_getInviteUserCount',
       'account_openService',
       'account_closeService',
       'account_getBanlogCount',
@@ -67,6 +69,13 @@ exports.main = async (event) => {
       'admin_deleteVipcode',
       'admin_getViplogCount',
       'admin_getViplogList',
+      'admin_getPushCount',
+      'admin_getPushList',
+      'admin_sendPush',
+      'admin_getPushlogCount',
+      'admin_getPushlogList',
+      'admin_revokePush',
+      'admin_deletePushlog',
       'admin_getResourceCount',
       'admin_getResourceList',
       'admin_getResourceInfo',
@@ -149,7 +158,7 @@ exports.main = async (event) => {
         errFix: '传递有效的allowApi参数'
       }
     }
-    if (!Array.isArray(requestdata.allowIp) || !requestdata.allowIp.every(item => new cidr().range(item) !== null)) {
+    if (!Array.isArray(requestdata.allowIp) || !requestdata.allowIp.every(item => new cidr().range(item) != null)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',

@@ -227,6 +227,7 @@ exports.main = async (event) => {
       }
       if (requestdata.service == 'password') {
         await db.collection('productuser').add({
+          invitationCode: nanoid(15) + uid + nanoid(15),
           noticeSetting: [],
           product: 'password',
           vipEndDate: -1,

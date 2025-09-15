@@ -53,7 +53,7 @@ function copy() {
   })
 }
 function add() {
-  if (!auuuser.value) {
+  if (auuuser.value == '') {
     TinyModal.message({
       message: '请输入 UID',
       status: 'warning'
@@ -284,7 +284,7 @@ async function updateReviewResult() {
     <tiny-dialog-box class="dialog" :visible="auudialog" title="可修改用户设置" @close="updateAuuClose">
       <div class="dialog-cz">
         <div class="sp">
-          <tiny-input v-model="auuuser" clearable placeholder="请输入 UID"></tiny-input>
+          <tiny-input v-model="auuuser" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
           <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
         <div v-for="(item, index) in auu" class="sp">
@@ -297,7 +297,7 @@ async function updateReviewResult() {
       </template>
     </tiny-dialog-box>
     <tiny-dialog-box class="dialog" :visible="uvwrdialog" title="免审更新版本号设置" @close="updateUvwrClose">
-      <tiny-input v-model="uvwr" clearable placeholder="请输入 UID"></tiny-input>
+      <tiny-input v-model="uvwr" clearable maxlength="32" placeholder="请输入 UID"></tiny-input>
       <template #footer>
         <tiny-button type="info" @click="updateUvwr">保存</tiny-button>
       </template>

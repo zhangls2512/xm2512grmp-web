@@ -136,6 +136,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteDeadAccount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "deleteDnsTask",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -155,6 +161,12 @@
     },
     {
       "name": "deletePasswordBackup",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "deletePushlog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -310,6 +322,12 @@
       "installDependency": true
     },
     {
+      "name": "getInviteUserCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "getLoginLog",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -353,6 +371,36 @@
     },
     {
       "name": "getProductBaList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getProductPushList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPushCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPushList",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPushlogCount",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "getPushlogList",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -616,6 +664,12 @@
       "installDependency": true
     },
     {
+      "name": "receiveWebhook",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "refreshAccessToken",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -647,6 +701,12 @@
     },
     {
       "name": "respondSslChallenge",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "revokePush",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -689,6 +749,12 @@
     },
     {
       "name": "sendFeedbackEmail",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "sendPush",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true
@@ -808,6 +874,12 @@
       "installDependency": true
     },
     {
+      "name": "updatePushStatus",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "updateResource",
       "timeout": 60,
       "runtime": "Nodejs18.15",
@@ -875,6 +947,12 @@
     },
     {
       "name": "updateUserPermission",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
+      "name": "useInvitationcode",
       "timeout": 60,
       "runtime": "Nodejs18.15",
       "installDependency": true

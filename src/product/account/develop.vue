@@ -48,6 +48,16 @@ const apis = ref([
     desc: '获取会员开通记录列表'
   },
   {
+    product: '全部产品',
+    name: 'product_useInvitationcode',
+    desc: '使用邀请码'
+  },
+  {
+    product: '全部产品',
+    name: 'product_getInviteUserCount',
+    desc: '获取邀请新用户总数'
+  },
+  {
     product: '统一账号',
     name: 'account_openService',
     desc: '开通产品/功能'
@@ -166,6 +176,41 @@ const apis = ref([
     product: '管理后台',
     name: 'admin_getViplogList',
     desc: '获取会员开通记录列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPushCount',
+    desc: '获取推送位总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPushList',
+    desc: '获取推送位列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_sendPush',
+    desc: '新增推送'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPushlogCount',
+    desc: '获取推送日志总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getPushlogList',
+    desc: '获取推送日志列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_revokePush',
+    desc: '撤回推送'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_deletePushlog',
+    desc: '删除推送日志'
   },
   {
     product: '管理后台',
@@ -583,7 +628,7 @@ function chooseApi(t) {
   accesskeyallowapi = t.selection.map(item => item.name)
 }
 function add() {
-  if (ip.value === '') {
+  if (ip.value == '') {
     TinyModal.message({
       message: '请输入 CIDR 表达式',
       status: 'warning'
@@ -597,14 +642,14 @@ function remove(index) {
   accesskeyallowip.value.splice(index, 1)
 }
 async function newAccessKey() {
-  if (accesskeyname.value === '') {
+  if (accesskeyname.value == '') {
     TinyModal.message({
       message: '请输入备注',
       status: 'warning'
     })
     return
   }
-  if (accesskeyenddate.value === '' && !accesskeyforever.value) {
+  if (accesskeyenddate.value == '' && !accesskeyforever.value) {
     TinyModal.message({
       message: '请选择到期时间',
       status: 'warning'
@@ -679,14 +724,14 @@ function updateAccessKeyClose() {
   accesskeyallowip.value = []
 }
 async function updateAccessKey() {
-  if (accesskeyname.value === '') {
+  if (accesskeyname.value == '') {
     TinyModal.message({
       message: '请输入备注',
       status: 'warning'
     })
     return
   }
-  if (accesskeyenddate.value === '' && !accesskeyforever.value) {
+  if (accesskeyenddate.value == '' && !accesskeyforever.value) {
     TinyModal.message({
       message: '请选择到期时间',
       status: 'warning'
@@ -756,7 +801,7 @@ async function deleteAccessKey(index) {
               <tiny-button v-if="row.status == true" type="danger"
                 @click="updateAccessKeyStatus($rowIndex, '禁用')">禁用</tiny-button>
               <tiny-button type="info" @click="updateAccessKeyOpen(row, $rowIndex)">编辑</tiny-button>
-              <tiny-popconfirm title="提示" message="删除后无法恢复，确定删除？" type="warning" trigger="hover"
+              <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
                 @confirm="deleteAccessKey($rowIndex)">
                 <template #reference>
                   <tiny-button type="danger">删除</tiny-button>

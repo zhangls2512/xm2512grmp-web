@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（网页）'
 const data = [
   {
+    versionNumber: '1.0.6',
+    releaseDate: '2025-09-15',
+    logs: [
+      {
+        type: 'U',
+        content: '证书类型支持选择短期、TLS 客户端'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.5',
     releaseDate: '2025-04-26',
     logs: [

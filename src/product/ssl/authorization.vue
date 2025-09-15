@@ -99,8 +99,8 @@ function error(error) {
           <tiny-tag v-if="item.status == 'deactivated'" type="danger">已停用</tiny-tag>
           <tiny-tag v-if="item.status == 'expired'" type="warning">已过期</tiny-tag>
           <tiny-tag v-if="item.status == 'revoked'" type="danger">被停用</tiny-tag>
-          <tiny-popconfirm v-if="item.status == 'pending' || item.status == 'valid'" title="提示" message="停用后无法恢复，确定停用？"
-            type="warning" trigger="hover" @confirm="deactivateAuthorization(item.url)">
+          <tiny-popconfirm v-if="item.status == 'pending' || item.status == 'valid'" title="提示"
+            message="停用成功后无法恢复，确定停用？" type="warning" trigger="hover" @confirm="deactivateAuthorization(item.url)">
             <template #reference>
               <tiny-button type="danger">停用</tiny-button>
             </template>

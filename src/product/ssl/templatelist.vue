@@ -54,7 +54,7 @@ async function deleteTemplate(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="updateTemplate(row._id)">修改</tiny-button>
-            <tiny-popconfirm title="提示" message="删除后无法恢复，确定删除？" type="warning" trigger="hover"
+            <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
               @confirm="deleteTemplate(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>

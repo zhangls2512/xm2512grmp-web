@@ -32,7 +32,7 @@ function deactivateAccount(type) {
   TinyModal.confirm({
     status: 'warning',
     title: '提示',
-    message: '停用后无法恢复，确定停用？',
+    message: '停用成功后无法恢复，确定停用？',
     events: {
       async confirm() {
         await callfunction({

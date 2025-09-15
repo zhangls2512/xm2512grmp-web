@@ -69,7 +69,9 @@ async function get() {
   }
   const typemap = {
     pay: '付费',
-    vipcode: '兑换码'
+    vipcode: '兑换码',
+    invitationcode: '邀请码',
+    invitenewuser: '邀请新用户'
   }
   data.value = res.data.map(item => ({
     ...item,
@@ -94,7 +96,7 @@ function pagesizeChange(t) {
       <tiny-base-select v-model="product">
         <tiny-option v-for="item in products" :value="item.value" :label="item.label"></tiny-option>
       </tiny-base-select>
-      <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+      <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       <tiny-date-picker v-model="date" type="datetimerange"></tiny-date-picker>
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>

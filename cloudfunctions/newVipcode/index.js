@@ -97,7 +97,7 @@ exports.main = async (event) => {
           errMsg: '成功'
         }
       }
-      await db.collection('vipcode').add({
+      const addres = await db.collection('vipcode').add({
         date: Date.now(),
         duration: requestdata.duration,
         endDate: requestdata.endDate,
@@ -106,7 +106,8 @@ exports.main = async (event) => {
       })
       return {
         errCode: 0,
-        errMsg: '成功'
+        errMsg: '成功',
+        vipcode: addres.id
       }
     }
   } catch {

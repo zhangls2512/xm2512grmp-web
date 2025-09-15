@@ -65,7 +65,7 @@ exports.main = async (event) => {
       const addres = await db.collection('account').add({
         accessKey: [],
         accessToken: '',
-        duration: 2,
+        duration: 7,
         email: requestdata.email,
         endDate: 0,
         mfa: '',

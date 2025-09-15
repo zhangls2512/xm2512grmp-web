@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（网页）'
 const data = [
   {
+    versionNumber: '1.0.2',
+    releaseDate: '2025-09-15',
+    logs: [
+      {
+        type: 'U',
+        content: '技能证书 新增 轩铭密码智能备忘录APP——计算机软件著作权登记证书'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1',
     releaseDate: '2025-06-09',
     logs: [

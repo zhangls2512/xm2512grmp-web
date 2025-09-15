@@ -28,7 +28,8 @@ exports.main = async (event) => {
     }
     if (typeof (requestdata.keyword) == 'string' && requestdata.keyword) {
       keyword = db.RegExp({
-        regexp: requestdata.keyword
+        regexp: requestdata.keyword,
+        options: 'i'
       })
     }
     const validreleasestatus = ['release', 'unrelease']

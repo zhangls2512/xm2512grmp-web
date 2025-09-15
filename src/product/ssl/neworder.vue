@@ -67,7 +67,7 @@ async function newOrder() {
   let keytypeused = ''
   let keysizeused = ''
   if (type.value == 'csr') {
-    if (csr.value === '') {
+    if (csr.value == '') {
       TinyModal.message({
         message: '请输入 CSR',
         status: 'warning'
@@ -223,9 +223,9 @@ async function newOrder() {
       <tiny-form-item label="证书类型">
         <tiny-radio-group v-model="certificatetype">
           <tiny-radio label="classic">经典</tiny-radio>
-          <tiny-radio label="shortlived" disabled>短期</tiny-radio>
+          <tiny-radio label="shortlived">短期</tiny-radio>
           <tiny-radio label="tlsserver">TLS 服务器</tiny-radio>
-          <tiny-radio label="tlsclient" disabled>TLS 客户端</tiny-radio>
+          <tiny-radio label="tlsclient">TLS 客户端</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item label="自动续期">

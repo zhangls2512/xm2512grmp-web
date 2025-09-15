@@ -2,6 +2,44 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（微信小程序）'
 const data = [
   {
+    versionNumber: '2.0.11',
+    releaseDate: '2025-09-12',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
+    versionNumber: '2.0.10',
+    releaseDate: '2025-09-07',
+    logs: [
+      {
+        type: 'U',
+        content: '获取客服帮助 新增 公众号会话'
+      }
+    ]
+  },
+  {
+    versionNumber: '2.0.9',
+    releaseDate: '2025-07-07',
+    logs: [
+      {
+        type: 'U',
+        content: '证书类型支持选择短期、TLS 客户端'
+      },
+      {
+        type: 'U',
+        content: '网络检测新增一些参数'
+      },
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8',
     releaseDate: '2025-06-06',
     logs: [

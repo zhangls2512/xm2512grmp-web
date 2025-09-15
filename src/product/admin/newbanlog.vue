@@ -9,21 +9,21 @@ const uid = ref('')
 const content = ref('')
 const method = ref('')
 async function newBanlog() {
-  if (uid.value === '') {
+  if (uid.value == '') {
     TinyModal.message({
       message: '请输入 UID',
       status: 'warning'
     })
     return
   }
-  if (content.value === '') {
+  if (content.value == '') {
     TinyModal.message({
       message: '请输入违规内容',
       status: 'warning'
     })
     return
   }
-  if (method.value === '') {
+  if (method.value == '') {
     TinyModal.message({
       message: '请输入处罚方式',
       status: 'warning'
@@ -55,7 +55,7 @@ async function newBanlog() {
     </tiny-breadcrumb>
     <tiny-form>
       <tiny-form-item label="UID">
-        <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+        <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="违规内容">
         <tiny-input v-model="content" type="textarea" autosize placeholder="请输入违规内容"></tiny-input>

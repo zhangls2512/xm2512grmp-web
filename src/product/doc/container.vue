@@ -29,7 +29,7 @@ const tabClick = (data) => {
   <div class="container">
     <div class="header">
       <div class="sp">
-        <img class="tx" src="/logo.jpg" loading="lazy" />
+        <img class="tx" src="/logo.jpg" loading="lazy"></img>
         <div class="header-title">文档中心</div>
       </div>
     </div>

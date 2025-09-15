@@ -2,9 +2,7 @@
 document.title = '轩铭2512 - 资源 - 个人中心'
 import icon from '@opentiny/vue-icon'
 import cookie from 'js-cookie'
-import request from '../../request'
 import router from '../../router'
-const accesstoken = cookie.get('accessToken')
 const tabs = [
   {
     id: 'addlist',

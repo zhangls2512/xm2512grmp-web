@@ -15,7 +15,8 @@ exports.main = async (event) => {
     let keyword = db.command.neq(null)
     if (typeof (requestdata.keyword) == 'string' && requestdata.keyword) {
       keyword = db.RegExp({
-        regexp: requestdata.keyword
+        regexp: requestdata.keyword,
+        options: 'i'
       })
     }
     let tag = db.command.neq(null)

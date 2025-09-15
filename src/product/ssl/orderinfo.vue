@@ -157,7 +157,7 @@ async function revokeCertificate() {
     <div class="sp">
       <div class="bold-text">备注</div>
       <div>{{ data.desc }}</div>
-      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
+      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder == false"
         type="info" @click="openUpdateDescDialog">修改</tiny-button>
     </div>
     <div class="sp">
@@ -176,7 +176,7 @@ async function revokeCertificate() {
     </div>
     <div v-if="data.certificate.length > 0" class="sp">
       <div class="bold-text">证书</div>
-      <tiny-popconfirm title="提示" message="吊销后无法恢复，确定吊销？" type="warning" trigger="hover"
+      <tiny-popconfirm title="提示" message="吊销成功后无法恢复，确定吊销？" type="warning" trigger="hover"
         @confirm="openRevokeCertificateDialog">
         <template #reference>
           <tiny-button type="danger">吊销</tiny-button>
@@ -207,7 +207,7 @@ async function revokeCertificate() {
       <div v-if="data.autoNewOrder == 'ari'">CA 建议</div>
       <div v-if="data.autoNewOrder == 'nearexpire'">即将到期</div>
       <div v-if="data.autoNewOrder == 'close'">关闭</div>
-      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder === false"
+      <tiny-button v-if="data.status != 'invalid' && data.status != 'expired' && data.isAutoNewOrder == false"
         type="info" @click="openUpdateAutoNewOrderDialog">修改</tiny-button>
     </div>
     <tiny-divider></tiny-divider>
@@ -239,6 +239,7 @@ async function revokeCertificate() {
       <div v-if="data.certificateType == 'classic'">经典</div>
       <div v-if="data.certificateType == 'shortlived'">短期</div>
       <div v-if="data.certificateType == 'tlsserver'">TLS 服务器</div>
+      <div v-if="data.certificateType == 'tlsclient'">TLS 客户端</div>
     </div>
     <div class="sp">
       <div class="bold-text">订单创建时间</div>

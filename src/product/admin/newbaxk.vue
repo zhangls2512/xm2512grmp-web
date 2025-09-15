@@ -146,35 +146,35 @@ async function getProducts() {
 }
 getProducts()
 async function newBaxk() {
-  if (maintype.value === '') {
+  if (maintype.value == '') {
     TinyModal.message({
       message: '请选择类型',
       status: 'warning'
     })
     return
   }
-  if (desc.value === '') {
+  if (desc.value == '') {
     TinyModal.message({
       message: '请输入描述',
       status: 'warning'
     })
     return
   }
-  if (maintype.value != '1' && productnumber.value === '') {
+  if (maintype.value != '1' && productnumber.value == '') {
     TinyModal.message({
       message: '请选择产品',
       status: 'warning'
     })
     return
   }
-  if (maintype.value == '1' && productname.value === '') {
+  if (maintype.value == '1' && productname.value == '') {
     TinyModal.message({
       message: '请输入产品名称',
       status: 'warning'
     })
     return
   }
-  if (maintype.value != '3' && specifictype.value === '') {
+  if (maintype.value != '3' && specifictype.value == '') {
     TinyModal.message({
       message: '请选择具体类型',
       status: 'warning'

@@ -17,14 +17,14 @@ age = outputage()
 <template>
   <div class="header">
     <div class="sp">
-      <img class="tx" src="/logo.jpg" loading="lazy" />
+      <img class="tx" src="/logo.jpg" loading="lazy"></img>
       <div class="header-title">轩铭2512个人名片</div>
     </div>
   </div>
   <div class="main">
     <div class="cz">
       <div class="sp">
-        <img class="tp" src="/tx.jpg" loading="lazy" />
+        <img class="tp" src="/tx.jpg" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">张轩铭</div>
           <div class="large-text">男 {{ age }}岁 巨蟹座</div>
@@ -35,38 +35,45 @@ age = outputage()
       <div class="large-text">一名软件开发工程师，专注于网页、鸿蒙原生应用与微信小程序的开发。</div>
       <div class="title">技能证书</div>
       <div class="sp">
-        <img class="tp" src="/zsa.jpeg" loading="lazy" />
+        <img class="tp" src="/zsa.jpg" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">工业和信息化人才岗位能力认证证书</div>
           <div class="large-text">证书编号：GXRCPJ011202413996</div>
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/zsb.jpg" loading="lazy" />
+        <img class="tp" src="/zsb.jpg" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">蓝桥杯大赛获奖证书</div>
           <div class="large-text">证书编号：011504114</div>
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/zsc.png" loading="lazy" />
+        <img class="tp" src="/zsc.png" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">华为开发者学堂专业证书——HarmonyOS应用开发者基础认证</div>
           <div class="large-text">证书编号：TCNdb723c1</div>
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/rjzzqmchd.png" loading="lazy" />
+        <img class="tp" src="/rjzzqmchd.png" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">MC活动软件——计算机软件著作权转让合同登记证书</div>
           <div class="large-text">证书编号：软转登字第0006144号</div>
         </div>
       </div>
       <div class="sp">
-        <img class="tp" src="/rjzzqxq.png" loading="lazy" />
+        <img class="tp" src="/rjzzqxq.png" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">个人需求备忘录软件——计算机软件著作权登记证书</div>
           <div class="large-text">证书编号：软著登字第14161102号</div>
+        </div>
+      </div>
+      <div class="sp">
+        <img class="tp" src="/rjzzqpassword.png" loading="lazy"></img>
+        <div class="cz">
+          <div class="large-bold-text">轩铭密码智能备忘录APP——计算机软件著作权登记证书</div>
+          <div class="large-text">证书编号：软著登字第16014869号</div>
         </div>
       </div>
       <div class="title">教育经历</div>
@@ -84,26 +91,28 @@ age = outputage()
       <div class="sp">
         <tiny-popover trigger="hover">
           <template #reference>
-            <img class="image" src="/gzh.svg" loading="lazy" />
+            <img class="image" src="/gzh.svg" loading="lazy"></img>
           </template>
-          <img class="tp" src="/qrcodegzh.jpg" loading="lazy" />
+          <img class="tp" src="/qrcodegzh.jpg" loading="lazy"></img>
         </tiny-popover>
         <tiny-popover trigger="hover">
           <template #reference>
-            <img class="image" src="/sph.svg" loading="lazy" />
+            <img class="image" src="/sph.svg" loading="lazy"></img>
           </template>
-          <img class="tp" src="/qrcodesph.jpg" loading="lazy" />
+          <img class="tp" src="/qrcodesph.jpg" loading="lazy"></img>
         </tiny-popover>
         <tiny-popover trigger="hover">
           <template #reference>
-            <img class="image" src="/xcx.svg" loading="lazy" />
+            <img class="image" src="/xcx.svg" loading="lazy"></img>
           </template>
-          <img class="tp" src="/qrcodemp.jpg" loading="lazy" />
+          <img class="tp" src="/qrcodemp.jpg" loading="lazy"></img>
         </tiny-popover>
-        <a href="https://space.bilibili.com/448824492" target="_blank"><img class="image" src="/bili.svg"
-            loading="lazy" /></a>
-        <a href="https://gitcode.com/zhangls2512" target="_blank"><img class="image" src="/gitcode.png"
-            loading="lazy" /></a>
+        <a href="https://space.bilibili.com/448824492" target="_blank">
+          <img class="image" src="/bili.svg" loading="lazy"></img>
+        </a>
+        <a href="https://gitcode.com/zhangls2512" target="_blank">
+          <img class="image" src="/gitcode.png" loading="lazy"></img>
+        </a>
       </div>
       <div class="sp">
         <a class="footer-text" href="tel:18846496985">联系手机：18846496985</a>
@@ -116,7 +125,7 @@ age = outputage()
         <a class="footer-text" href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
           target="_blank">黑ICP备2024023054号-8</a>
         <tiny-divider direction="vertical"></tiny-divider>
-        <img class="logo" src="/gabeian.png" loading="lazy" />
+        <img class="logo" src="/gabeian.png" loading="lazy"></img>
         <a class="footer-text" href="https://beian.mps.gov.cn/#/query/webSearch?code=23060002000214"
           target="_blank">黑公网安备23060002000214号</a>
         <tiny-divider direction="vertical"></tiny-divider>
@@ -124,7 +133,7 @@ age = outputage()
       </div>
       <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
       <div class="sp">
-        <div class="footer-text">Version 1.0.1</div>
+        <div class="footer-text">Version 1.0.2</div>
         <tiny-divider direction="vertical"></tiny-divider>
         <router-link class="footer-text" to="/product/updatelog/grmpweb" target="_blank">更新日志</router-link>
       </div>
@@ -134,7 +143,7 @@ age = outputage()
 
 <style scoped>
 .header {
-  background-color: #1476ff;
+  background-color: #1476FF;
 }
 
 .tp {

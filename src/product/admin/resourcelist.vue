@@ -143,7 +143,7 @@ async function deleteResource(id) {
       <tiny-base-select v-model="reviewstatus">
         <tiny-option v-for="item in reviewstatuss" :value="item.value" :label="item.label"></tiny-option>
       </tiny-base-select>
-      <tiny-input v-model="id" clearable placeholder="请输入 ID"></tiny-input>
+      <tiny-input v-model="id" clearable minlength="32" maxlength="32" placeholder="请输入 ID"></tiny-input>
       <tiny-input v-model="keyword" clearable placeholder="请输入名称"></tiny-input>
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
@@ -172,8 +172,8 @@ async function deleteResource(id) {
             <tiny-button v-if="row.releaseStatus == 'release'" type="danger"
               @click="unrelease(row._id)">下架</tiny-button>
             <tiny-button type="info" v-if="row.uid == ''" @click="update(row._id)">修改</tiny-button>
-            <tiny-popconfirm v-if="row.releaseStatus == 'unrelease' && row.uid == ''" title="提示" message="删除后无法恢复，确定删除？"
-              type="warning" trigger="hover" @confirm="deleteResource(row._id)">
+            <tiny-popconfirm v-if="row.releaseStatus == 'unrelease' && row.uid == ''" title="提示"
+              message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover" @confirm="deleteResource(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>
               </template>

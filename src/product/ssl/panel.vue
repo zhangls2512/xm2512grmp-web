@@ -3,9 +3,7 @@ document.title = '轩铭2512 - SSL 证书'
 const endyear = new Date().getFullYear()
 import icon from '@opentiny/vue-icon'
 import cookie from 'js-cookie'
-import request from '../../request'
 import router from '../../router'
-const accesstoken = cookie.get('accessToken')
 const tabs = [
   {
     id: 'limit',
@@ -81,7 +79,7 @@ const tabClick = (data) => {
   <div class="container">
     <div class="header">
       <div class="sp">
-        <img class="tx" src="/logossl.png" loading="lazy" />
+        <img class="tx" src="/logossl.png" loading="lazy"></img>
         <div class="header-title">SSL 证书</div>
       </div>
     </div>
@@ -99,7 +97,7 @@ const tabClick = (data) => {
           <div class="footer-text">敏感信息收集处理服务许可号：<a href="/product/baxk/jqcx?baxknumber=轩铭2512许6号-1M"
               target="_blank">轩铭2512许6号-1M</a></div>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.0.5</div>
+          <div class="footer-text">Version 1.0.6</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/doc/ssl" target="_blank">文档中心</router-link>
           <tiny-divider direction="vertical"></tiny-divider>

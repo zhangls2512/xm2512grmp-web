@@ -32,7 +32,7 @@ exports.main = async (event) => {
     if (Number.isInteger(requestdata.skip)) {
       skip = requestdata.skip
     }
-    if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
+    if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 50) {
       limit = requestdata.limit
     }
     let type = ''

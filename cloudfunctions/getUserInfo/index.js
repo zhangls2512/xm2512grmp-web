@@ -1,6 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -62,17 +63,21 @@ exports.main = async (event) => {
         product: false,
         uid: false
       }).get()
-      if (userres.data.length == 0) {
-        return {
-          errCode: 8000,
-          errMsg: '无数据',
-          errFix: '联系客服'
-        }
+      const data = userres.data[0]
+      if (requestdata.product == 'password' && !data.invitationCode) {
+        const invitationCode = nanoid(15) + uid + nanoid(15)
+        data.invitationCode = invitationCode
+        await db.collection('productuser').where({
+          product: requestdata.product,
+          uid: uid
+        }).update({
+          invitationCode: invitationCode
+        })
       }
       return {
         errCode: 0,
         errMsg: '成功',
-        data: userres.data[0]
+        data: data
       }
     }
   } catch {

@@ -5,7 +5,7 @@ exports.main = async (event) => {
   const app = tcb.init()
   const db = app.database()
   try {
-    const product = event.noticeName.split('_')[0]
+    const product = event.data.noticeName.split('_')[0]
     const res = await db.collection('productuser').where({
       product: product,
       uid: event.uid
@@ -32,7 +32,7 @@ exports.main = async (event) => {
         } catch {
           return {
             errCode: 8001,
-            errMsg: '请求webhookurl失败',
+            errMsg: '请求webhookUrl失败',
             errFix: '无修复建议'
           }
         }

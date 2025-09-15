@@ -3,9 +3,7 @@ document.title = '轩铭2512 - 管理后台'
 const endyear = new Date().getFullYear()
 import icon from '@opentiny/vue-icon'
 import cookie from 'js-cookie'
-import request from '../../request'
 import router from '../../router'
-const accesstoken = cookie.get('accessToken')
 const tabs = [
   {
     id: 'userlist',
@@ -55,6 +53,11 @@ const tabs = [
         customIcon: icon.IconEditorList()
       }
     ]
+  },
+  {
+    id: 'pushlist',
+    label: '产品推送管理',
+    customIcon: icon.IconPublicNotice()
   },
   {
     id: '',
@@ -129,7 +132,7 @@ const tabClick = (data) => {
   <div class="container">
     <div class="header">
       <div class="sp">
-        <img class="tx" src="/logo.jpg" loading="lazy" />
+        <img class="tx" src="/logo.jpg" loading="lazy"></img>
         <div class="header-title">管理后台</div>
       </div>
     </div>
@@ -144,7 +147,7 @@ const tabClick = (data) => {
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备3号-W" target="_blank">轩铭2512品备3号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.3.1</div>
+          <div class="footer-text">Version 1.4.0</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/admin" target="_blank">更新日志</router-link>
         </div>

@@ -25,6 +25,7 @@ async function getUserInfo() {
   })
   webhookurl.value = res.data.webhookUrl
   webhooktoken.value = res.data.webhookToken
+  url.value = res.data.webhookUrl
   const noticesetting = res.data.noticeSetting
   if (noticesetting.includes('admin_email_newresourcetask')) {
     emailnewresourcetask.value = true
@@ -155,15 +156,11 @@ async function changeWebhookNewResourceTask(zt) {
           <div>webhookToken：{{ webhooktoken }}</div>
           <tiny-button type="info" @click="copy">复制</tiny-button>
         </div>
-        <tiny-input v-model="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS）"></tiny-input>
+        <tiny-input v-model="url" type="url" clearable placeholder="请输入 Webhook 推送地址（仅支持 HTTPS）"></tiny-input>
         <div>提示：</div>
-        <div>1. 在输入的 Webhook 推送地址目录下新建一个名为 admin 的文件夹，在其中放置一个名为 xm2512webhooktoken.txt 、内容为
-          webhookToken
-          的 TXT 文本文件。</div>
+        <div>1. 让 Webhook 推送地址/xm2512webhooktoken/admin 返回 webhookToken。</div>
         <div>2. 点击“设置”按钮向服务器发送设置请求。</div>
-        <div>3. 服务器收到设置请求后会向输入的 Webhook 推送地址/admin/xm2512webhooktoken.txt 发送 HTTP GET
-          请求，检查响应体是否是正确的
-          webhookToken。</div>
+        <div>3. 服务器收到设置请求后会向输入的 Webhook 推送地址/xm2512webhooktoken/admin 发送 HTTP GET 请求，检查响应体是否是正确的 webhookToken。</div>
         <div>4. 如输入的 Webhook 推送地址限制入站 IP ，须放行验证服务器 IP：81.68.129.229，以免因验证请求被阻止导致验证失败。</div>
         <div>5. 服务器发送验证请求后等待 5 秒，如果未收到响应即验证失败。请保证输入的 Webhook 推送地址网络通畅，以免因验证请求超时导致验证失败。</div>
       </div>

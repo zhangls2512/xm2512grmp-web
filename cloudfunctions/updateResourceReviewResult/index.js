@@ -212,7 +212,7 @@ exports.main = async (event) => {
                 uid: item.uid,
                 data: {
                   noticeName: 'resource_webhook_versionupdate',
-                  name: item.name,
+                  resourceId: requestdata.id,
                   newVersion: requestdata.version
                 }
               }

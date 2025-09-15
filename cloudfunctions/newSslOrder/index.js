@@ -287,7 +287,7 @@ exports.main = async (event) => {
       }
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
-        const authorizationdomains = authorizations.map(item => item.identifier.value)
+        const authorizationdomains = authorizations.filter(item => item.status == 'pending').map(item => item.identifier.value)
         const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {

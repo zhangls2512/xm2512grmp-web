@@ -115,7 +115,7 @@ function openAppDetail(bundleName) {
       <div class="kuang">
         <div class="cz">
           <div class="sp">
-            <img class="image" src="/logo.jpg" loading="lazy" />
+            <img class="image" src="/logo.jpg" loading="lazy"></img>
             <div class="bold-text">统一账号基本功能</div>
           </div>
           <div class="sp">
@@ -132,7 +132,7 @@ function openAppDetail(bundleName) {
       <div v-for="item in products" class="kuang">
         <div class="cz">
           <div class="sp">
-            <img class="image" :src="item.logo" loading="lazy" />
+            <img class="image" :src="item.logo" loading="lazy"></img>
             <div class="bold-text">{{ item.title }}</div>
           </div>
           <div class="sp">
@@ -159,7 +159,7 @@ function openAppDetail(bundleName) {
       <div class="kuang">
         <div class="cz">
           <div class="sp">
-            <img class="image" src="/password.png" loading="lazy" />
+            <img class="image" src="/password.png" loading="lazy"></img>
             <div class="bold-text">密码智能备忘录</div>
           </div>
           <div class="sp">

@@ -2,6 +2,36 @@
 document.title = '轩铭2512 - 更新日志 - 图片处理'
 const data = [
   {
+    versionNumber: '1.0.8',
+    releaseDate: '2025-09-07',
+    logs: [
+      {
+        type: 'U',
+        content: '获取客服帮助 新增 公众号会话'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.7',
+    releaseDate: '2025-07-29',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.6',
+    releaseDate: '2025-07-07',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.5',
     releaseDate: '2025-06-06',
     logs: [

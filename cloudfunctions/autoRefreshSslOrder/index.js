@@ -95,7 +95,7 @@ exports.main = async () => {
               uid: item.uid,
               noticeName: 'ssl_email_autosubmitorderresult',
               subject: 'SSL证书自动提交订单结果',
-              text: '您的账号“SSL证书”产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单失败。'
+              text: '您的账号“SSL证书”产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
             }
           })
           app.callFunction({
@@ -105,15 +105,13 @@ exports.main = async () => {
               data: {
                 noticeName: 'ssl_webhook_autosubmitorderresult',
                 orderId: item._id,
-                status: 'fail'
+                status: 'fail',
+                reason: 'caerror',
+                errmsg: err.detail
               }
             }
           })
-          return {
-            errCode: 8002,
-            errMsg: 'CA返回错误，错误信息：' + err.detail,
-            errFix: '联系客服'
-          }
+          return
         }
         if (privatekey) {
           const uploadres = await app.uploadFile({

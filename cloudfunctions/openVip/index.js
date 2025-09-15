@@ -55,16 +55,23 @@ exports.main = async (event) => {
       confirmurl = 'https://iap.cloud.huawei.com/order/harmony/v1/application/purchase/shipped/confirm'
     }
     try {
-      const res = await axios.post(queryurl, body, {
+      const queryres = await axios.post(queryurl, body, {
         headers: {
           Authorization: authorization
         }
       })
+      if (queryres.data.responseCode != 0) {
+        return {
+          errCode: 8000,
+          errMsg: '查询订单详情失败，原因：' + queryres.data.responseMessage,
+          errFix: '联系客服'
+        }
+      }
       let jws = ''
       if (event.notificationMetaData.type == 2) {
-        jws = res.data.jwsSubGroupStatus
+        jws = queryres.data.jwsSubGroupStatus
       } else {
-        jws = res.data.jwsPurchaseOrder
+        jws = queryres.data.jwsPurchaseOrder
       }
       const parts = jws.split('.')
       const payloadbase64url = parts[1]
@@ -115,11 +122,18 @@ exports.main = async (event) => {
         }
       }
       try {
-        await axios.post(confirmurl, body, {
+        const confirmres = await axios.post(confirmurl, body, {
           headers: {
             Authorization: authorization
           }
         })
+        if (confirmres.data.responseCode != 0) {
+          return {
+            errCode: 8002,
+            errMsg: '订单确认发货失败，原因：' + queryres.data.responseMessage,
+            errFix: '联系客服'
+          }
+        }
         let vipenddatewz = ''
         if (duration == 0) {
           await db.collection('productuser').where({
@@ -162,17 +176,17 @@ exports.main = async (event) => {
           errCode: 0,
           errMsg: '成功'
         }
-      } catch {
+      } catch (err) {
         return {
           errCode: 8002,
-          errMsg: '订单确认发货失败',
+          errMsg: '订单确认发货失败，原因：' + err.response.data.responseMessage,
           errFix: '联系客服'
         }
       }
-    } catch {
+    } catch (err) {
       return {
         errCode: 8000,
-        errMsg: '查询订单详情失败',
+        errMsg: '查询订单详情失败，原因：' + err.response.data.responseMessage,
         errFix: '联系客服'
       }
     }

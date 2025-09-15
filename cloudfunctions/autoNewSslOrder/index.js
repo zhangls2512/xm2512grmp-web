@@ -83,21 +83,14 @@ exports.main = async () => {
         directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
       }
       const accountkey = userdata.accountKey[item.environmentType]
-      const acmeorderconfig = {
-        directoryUrl: directoryurl,
-        accountKey: accountkey,
-        domains: item.domains,
-        profile: item.certificateType
-      }
-      if (item.certificate.length > 0) {
-        const certificateres = await app.downloadFile({
-          fileID: item.certificate[0].value
-        })
-        acmeorderconfig.replaceCertificate = certificateres.fileContent.toString()
-      }
       let acmeorder = {}
       try {
-        const acmeorderres = await acme.api.newOrder(acmeorderconfig)
+        const acmeorderres = await acme.api.newOrder({
+          directoryUrl: directoryurl,
+          accountKey: accountkey,
+          domains: item.domains,
+          profile: item.certificateType
+        })
         acmeorder = acmeorderres
       } catch (err) {
         app.callFunction({
@@ -121,6 +114,11 @@ exports.main = async () => {
             }
           }
         })
+        return
+      }
+      let desc = item.desc
+      if (desc.endsWith != '（自动续期）') {
+        desc = desc + '（自动续期）'
       }
       const orderres = await db.collection('sslorder').add({
         ariEndDate: 0,
@@ -132,7 +130,7 @@ exports.main = async () => {
         certificateType: item.certificateType,
         createDate: Date.now(),
         csr: item.csr,
-        desc: item.desc + '（自动续期）',
+        desc: desc,
         domains: item.domains,
         environmentType: item.environmentType,
         isAutoNewOrder: false,
@@ -191,7 +189,7 @@ exports.main = async () => {
       }
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
-        const authorizationdomains = authorizations.map(item => item.identifier.value)
+        const authorizationdomains = authorizations.filter(item => item.status == 'pending').map(item => item.identifier.value)
         const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {
@@ -401,6 +399,11 @@ exports.main = async () => {
             }
           }
         })
+        return
+      }
+      let desc = item.desc
+      if (desc.endsWith != '（自动续期）') {
+        desc = desc + '（自动续期）'
       }
       const orderres = await db.collection('sslorder').add({
         ariEndDate: 0,
@@ -412,7 +415,7 @@ exports.main = async () => {
         certificateType: item.certificateType,
         createDate: Date.now(),
         csr: item.csr,
-        desc: item.desc + '（自动续期）',
+        desc: desc,
         domains: item.domains,
         environmentType: item.environmentType,
         isAutoNewOrder: false,
@@ -471,7 +474,7 @@ exports.main = async () => {
       }
       if (userdata.setting.autoSetDns) {
         const authorizations = await acme.api.getOrderAuthorization(acmeorder.orderUrl)
-        const authorizationdomains = authorizations.map(item => item.identifier.value)
+        const authorizationdomains = authorizations.filter(item => item.status == 'pending').map(item => item.identifier.value)
         const dnstasks = []
         authorizationdomains.forEach((authorizationdomain, index) => {
           userdata.dns.forEach(dnsitem => {

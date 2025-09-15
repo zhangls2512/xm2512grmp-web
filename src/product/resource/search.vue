@@ -70,7 +70,7 @@ function info(id) {
   window.open('/product/resource/info?id=' + id, '_blank')
 }
 function addTag() {
-  if (!tag.value) {
+  if (tag.value == '') {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'

@@ -132,7 +132,7 @@ async function deleteVipcode(t) {
       <tiny-grid-column field="count" title="兑换次数" align="center"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
-          <tiny-popconfirm title="提示" message="删除后无法恢复，确定删除？" type="warning" trigger="hover"
+          <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
             @confirm="deleteVipcode(row._id)">
             <template #reference>
               <tiny-button type="danger">删除</tiny-button>

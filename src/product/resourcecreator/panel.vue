@@ -3,9 +3,7 @@ document.title = '轩铭2512 - 资源投稿'
 const endyear = new Date().getFullYear()
 import icon from '@opentiny/vue-icon'
 import cookie from 'js-cookie'
-import request from '../../request'
 import router from '../../router'
-const accesstoken = cookie.get('accessToken')
 const tabs = [
   {
     id: 'resourcelist',
@@ -56,7 +54,7 @@ const tabClick = (data) => {
   <div class="container">
     <div class="header">
       <div class="sp">
-        <img class="tx" src="/logo.jpg" loading="lazy" />
+        <img class="tx" src="/logo.jpg" loading="lazy"></img>
         <div class="header-title">资源投稿</div>
       </div>
     </div>
@@ -68,15 +66,11 @@ const tabClick = (data) => {
     <div class="footer">
       <div class="cz">
         <div class="sp">
+          <a class="footer-text" href="tel:18846496985">联系手机：18846496985</a>
+          <tiny-divider direction="vertical"></tiny-divider>
           <a class="footer-text" href="mailto:2300990296@qq.com">联系邮箱：2300990296@qq.com</a>
           <tiny-divider direction="vertical"></tiny-divider>
           <div class="footer-text">联系微信：gerenyinsi_z07x17m</div>
-          <tiny-divider direction="vertical"></tiny-divider>
-          <a class="footer-text"
-            href="https://chatbot.weixin.qq.com/webapp/5e2JglFAERGl06z0FkTK6eWL6D1Oa5?robotName=轩铭2512产品客服"
-            target="_blank">在线客服</a>
-          <tiny-divider direction="vertical"></tiny-divider>
-          <a class="footer-text" href="https://pd.qq.com/s/cnx7f1zdm" target="_blank">腾讯频道</a>
         </div>
         <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">

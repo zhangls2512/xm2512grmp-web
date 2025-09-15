@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /product/account/login
+Allow: /product/account/register
+Allow: /product/account/unfreeze
+Allow: /product/resource/search
+Disallow: /product/account/
+Disallow: /product/admin
+Disallow: /product/resource/
+Disallow: /product/resourcecreator
+Disallow: /product/ssl
+Sitemap: https://www.zhangls2512.cn/sitemapindex.xml

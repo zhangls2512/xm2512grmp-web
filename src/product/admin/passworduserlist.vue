@@ -54,7 +54,7 @@ async function pagesizeChange(t) {
   get()
 }
 async function search() {
-  if (uid.value === '') {
+  if (uid.value == '') {
     TinyModal.message({
       message: '请输入 UID',
       status: 'warning'
@@ -79,7 +79,7 @@ async function search() {
 <template>
   <div class="cz">
     <div class="sp">
-      <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+      <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       <tiny-button type="info" @click="search">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">

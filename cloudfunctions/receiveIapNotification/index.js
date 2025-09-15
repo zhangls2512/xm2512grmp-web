@@ -81,7 +81,7 @@ exports.main = async (event) => {
         from: 'zhangls2512@vip.qq.com',
         to: '2300990296@qq.com',
         subject: '有新退款申请',
-        text: '产品：' + product + '\n理由：' + reason + '\n金额：' + payload.notificationMetaData.refundRequestData.applyAmount / 100 + ' 元\n批次号：' + payload.notificationMetaData.refundRequestData.refundBatchNo + '\n订单号：' + payload.notificationMetaData.refundRequestData.refundOrders[0].purchaseOrderId
+        text: '产品：' + product + '\n理由：' + reason + '\n金额：' + payload.notificationMetaData.refundRequestData.applyAmount / 100 + '元\n批次号：' + payload.notificationMetaData.refundRequestData.refundBatchNo + '\n订单号：' + payload.notificationMetaData.refundRequestData.refundOrders[0].purchaseOrderId
       })
     }
     return {

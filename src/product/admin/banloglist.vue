@@ -69,8 +69,8 @@ async function deleteBanlog(t) {
   <div class="cz">
     <div><tiny-button type="success" @click="newBanlog">新增</tiny-button></div>
     <div class="sp">
-      <tiny-input v-model="id" clearable placeholder="请输入 ID"></tiny-input>
-      <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+      <tiny-input v-model="id" clearable minlength="32" maxlength="32" placeholder="请输入 ID"></tiny-input>
+      <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       <tiny-button type="info" @click="get">搜索</tiny-button>
     </div>
     <tiny-grid :data="data">
@@ -81,7 +81,7 @@ async function deleteBanlog(t) {
       <tiny-grid-column field="date" title="时间" align="center" format-text="longDateTime"></tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
         <template #default="{ row }">
-          <tiny-popconfirm title="提示" message="删除后无法恢复，确定删除？" type="warning" trigger="hover"
+          <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
             @confirm="deleteBanlog(row._id)">
             <template #reference>
               <tiny-button type="danger">删除</tiny-button>

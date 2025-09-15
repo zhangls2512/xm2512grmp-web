@@ -1,0 +1,9 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "latest",
+    "axios": "latest",
+    "jsonwebtoken": "latest",
+    "nodemailer": "latest"
+  }
+}

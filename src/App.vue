@@ -38,7 +38,7 @@
 
 .footer {
   align-items: center;
-  background-color: #fafafa;
+  background-color: #FAFAFA;
   display: flex;
   padding: 20px 5% 20px 5%;
 }

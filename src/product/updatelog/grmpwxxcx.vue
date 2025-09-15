@@ -2,6 +2,40 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.6',
+    releaseDate: '2025-09-07',
+    logs: [
+      {
+        type: 'U',
+        content: '获取客服帮助 新增 公众号会话'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.5',
+    releaseDate: '2025-08-12',
+    logs: [
+      {
+        type: 'U',
+        content: '技能证书 新增 轩铭密码智能备忘录APP——计算机软件著作权登记证书'
+      },
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.4',
+    releaseDate: '2025-07-07',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3',
     releaseDate: '2025-06-09',
     logs: [

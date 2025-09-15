@@ -18,7 +18,7 @@ const permission = ref('')
 const enddate = ref('')
 const enddateforever = ref('false')
 async function newVipcode() {
-  if (duration.value === '') {
+  if (duration.value == '') {
     TinyModal.message({
       message: '请输入时长',
       status: 'warning'
@@ -33,7 +33,7 @@ async function newVipcode() {
     })
     return
   }
-  if (permission.value === '') {
+  if (permission.value == '') {
     TinyModal.message({
       message: '请输入权限',
       status: 'warning'
@@ -41,7 +41,7 @@ async function newVipcode() {
     return
   }
   let permissionout = permission.value
-  if (permissiontype.value === 'maxcount') {
+  if (permissiontype.value == 'maxcount') {
     permissionout = Number(permissionout)
     if (!Number.isInteger(permissionout) || permissionout <= 0) {
       TinyModal.message({
@@ -55,7 +55,7 @@ async function newVipcode() {
   if (enddateforever.value == 'true') {
     enddateout = 0
   }
-  if (enddateforever.value == 'false' && enddate.value === '') {
+  if (enddateforever.value == 'false' && enddate.value == '') {
     TinyModal.message({
       message: '请选择截止时间',
       status: 'warning'
@@ -65,7 +65,7 @@ async function newVipcode() {
   if (enddateforever.value == 'false' && enddate.value) {
     enddateout = enddateout.getTime()
   }
-  await request({
+  const res = await request({
     apiPath: '/admin/newVipcode',
     body: {
       accessToken: accesstoken,
@@ -75,11 +75,16 @@ async function newVipcode() {
       endDate: enddateout
     }
   })
-  TinyModal.message({
-    message: '新增成功',
-    status: 'success'
+  TinyModal.alert({
+    status: 'success',
+    title: '新增成功',
+    message: '兑换码：' + res.vipcode,
+    events: {
+      confirm() {
+        router.push('/product/admin/vipcodelist')
+      }
+    }
   })
-  router.push('/product/admin/vipcodelist')
 }
 </script>
 

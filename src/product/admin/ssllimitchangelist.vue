@@ -87,7 +87,7 @@ function newLimitChange() {
   <div class="cz">
     <div><tiny-button type="success" @click="newLimitChange">新增</tiny-button></div>
     <div class="sp">
-      <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+      <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       <tiny-base-select v-model="changetype">
         <tiny-option v-for="item in changetypes" :value="item.value" :label="item.label"></tiny-option>
       </tiny-base-select>

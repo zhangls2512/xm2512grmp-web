@@ -32,7 +32,7 @@ exports.main = async (event) => {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递正确的object'
+        errFix: '传递有效的object参数'
       }
     }
     await db.collection('errorlog').add({

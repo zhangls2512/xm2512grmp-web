@@ -20,11 +20,19 @@ exports.main = async () => {
   })
   const uniquearray = Array.from(uniquemap.values())
   uniquearray.forEach(async (item) => {
-    const countres = await db.collection('dnstask').where({
+    const countares = await db.collection('dnstask').where({
       domain: item.domain,
       status: 'submitpending'
     }).count()
-    if (countres.total > 0) {
+    if (countares.total > 0) {
+      return
+    }
+    const countbres = await db.collection('dnstask').where({
+      domain: item.domain,
+      status: 'submitsuccess',
+      updateDate: db.command.gte(Date.now() + 60000)
+    }).count()
+    if (countbres.total > 0) {
       return
     }
     const challenge = item.authorization.challenges.find(item => item.type = 'dns-01')
@@ -61,7 +69,7 @@ exports.main = async () => {
         })
         const runtime = new Util.RuntimeOptions({})
         const describedomainrecordsres = await client.describeDomainRecordsWithOptions(describedomainrecordsrequest, runtime)
-        const record = describedomainrecordsres.body.domainRecords.record[0]
+        const record = describedomainrecordsres.body.domainRecords.record.find(recorditem => recorditem.RR == subdomain)
         if (record) {
           const recordid = record.recordId
           const updatedomainrecordrequest = new Alidns20150109.UpdateDomainRecordRequest({

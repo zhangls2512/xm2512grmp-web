@@ -21,7 +21,7 @@ exports.main = async (event) => {
     }
     if (!Number.isInteger(requestdata.index) || requestdata.index < 0 || requestdata.index > 9) {
       return {
-        errCode: 1002,
+        errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的index参数'
       }

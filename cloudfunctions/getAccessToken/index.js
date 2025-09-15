@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const axios = require('axios')
+  const https = require('https')
   const moment = require('moment-timezone')
   const nodemailer = require('nodemailer')
   const { sm4 } = require('sm-crypto-v2')
@@ -130,6 +130,13 @@ exports.main = async (event) => {
       return res.result
     } else {
       const account = res.result.account
+      if (!account.accessToken) {
+        return {
+          errCode: 8000,
+          errMsg: '未获取到此账号的accessToken',
+          errFix: '请稍后再试，如仍有此问题请联系客服'
+        }
+      }
       if (account.accessToken == '已冻结') {
         return {
           errCode: 3001,
@@ -149,8 +156,39 @@ exports.main = async (event) => {
         accessToken: accesstoken,
         endDate: enddate
       })
-      const ipconfig = await axios.get('https://api.vore.top/api/IPdata?ip=' + requestip)
-      const ipaddress = ipconfig.data.ipdata.info1 + ' ' + ipconfig.data.ipdata.info2 + ' ' + ipconfig.data.ipdata.info3 + ' ' + ipconfig.data.ipdata.isp
+      let ipaddress = '未知'
+      if (requestip) {
+        try {
+          const data = await httpsget('https://ip.cn/ip/' + requestip + '.html')
+          ipaddress = data.match(/<span\s+id="tab0_address"\s*>(.*?)<\/span>/)[1]
+        } catch (err) {
+          console.log(err)
+          await nodemailer.createTransport(mailerconfig).sendMail({
+            from: 'zhangls2512@vip.qq.com',
+            to: '2300990296@qq.com',
+            subject: '获取IP归属地失败通知',
+            text: '获取IP归属地失败。\n' + err.stack
+          })
+        }
+        function httpsget(url) {
+          return new Promise((resolve, reject) => {
+            https.get(url, (res) => {
+              let data = ''
+              res.on('data', (chunk) => {
+                data += chunk
+              })
+              res.on('end', () => {
+                resolve(data)
+              })
+            }).on('error', (err) => {
+              reject(err)
+            })
+          })
+        }
+      }
+      if (!requestip) {
+        requestip = '未知'
+      }
       await db.collection('loginlog').add({
         date: Date.now(),
         ip: requestip,
@@ -172,10 +210,19 @@ exports.main = async (event) => {
         errCode: 0,
         errMsg: '成功',
         accessToken: accesstoken,
-        endDate: account.endDate
+        uid: account._id,
+        email: email,
+        endDate: enddate
       }
     }
-  } catch {
+  } catch (err) {
+    console.log(err)
+    await nodemailer.createTransport(mailerconfig).sendMail({
+      from: 'zhangls2512@vip.qq.com',
+      to: '2300990296@qq.com',
+      subject: '登录接口内部错误通知',
+      text: '登录接口内部错误。\n' + err.stack
+    })
     return {
       errCode: 5000,
       errMsg: '内部错误',

@@ -631,7 +631,8 @@ async function getEmailCodea() {
           </template>
         </tiny-popconfirm>
         <tiny-divider direction="vertical"></tiny-divider>
-        <tiny-popconfirm title="提示" message="注销后无法恢复，确定注销？" type="warning" trigger="hover" @confirm="deleteAccountOpen">
+        <tiny-popconfirm title="提示" message="注销成功后无法恢复，确定注销？" type="warning" trigger="hover"
+          @confirm="deleteAccountOpen">
           <template #reference>
             <tiny-button type="danger">注销账号</tiny-button>
           </template>
@@ -713,7 +714,7 @@ async function getEmailCodea() {
     <tiny-dialog-box class="dialog" :visible="qrcodedialog" title="保存 MFA（以下两种方式二选一）" @close="closeQrcodeDialog">
       <div class="dialog-cz">
         <div>1. 使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）扫描下方二维码添加 MFA 。</div>
-        <img class="qrcode" :src="qrcodeimg" loading="lazy" />
+        <img class="qrcode" :src="qrcodeimg" loading="lazy"></img>
         <div>2. 使用身份验证应用程序（如阿里云、腾讯云助手微信小程序、Google Authenticator）手动输入下方密钥添加 MFA 。</div>
         <div class="sp">
           <div>{{ secret }} </div>

@@ -10,7 +10,7 @@ const changetype = ref('add')
 const number = ref('')
 const reason = ref('')
 async function newLimitChange() {
-  if (uid.value === '') {
+  if (uid.value == '') {
     TinyModal.message({
       message: '请输入 UID',
       status: 'warning'
@@ -25,7 +25,7 @@ async function newLimitChange() {
     })
     return
   }
-  if (reason.value === '') {
+  if (reason.value == '') {
     TinyModal.message({
       message: '请输入原因',
       status: 'warning'
@@ -58,7 +58,7 @@ async function newLimitChange() {
     </tiny-breadcrumb>
     <tiny-form>
       <tiny-form-item label="UID">
-        <tiny-input v-model="uid" clearable placeholder="请输入 UID"></tiny-input>
+        <tiny-input v-model="uid" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="类型">
         <tiny-radio-group v-model="changetype">

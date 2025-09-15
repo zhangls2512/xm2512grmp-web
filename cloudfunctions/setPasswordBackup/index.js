@@ -84,7 +84,7 @@ exports.main = async (event) => {
           uid: uid
         }).get()
         const vipenddate = userres.data[0].vipEndDate
-        if (vipenddate < Date.now() && vipenddate !== 0) {
+        if (vipenddate < Date.now() && vipenddate != 0) {
           return {
             errCode: 8000,
             errMsg: '数量达到上限',

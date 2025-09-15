@@ -156,7 +156,7 @@ function closeDialog() {
   desc.value = ''
 }
 async function updateBaxkDesc() {
-  if (desc.value === '') {
+  if (desc.value == '') {
     TinyModal.message({
       message: '请输入描述',
       status: 'warning'
@@ -224,7 +224,7 @@ async function deleteBaxk(t) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="openDialog(row)">修改描述</tiny-button>
-            <tiny-popconfirm title="提示" message="注销后无法恢复，确定注销？" type="warning" trigger="hover"
+            <tiny-popconfirm title="提示" message="注销成功后无法恢复，确定注销？" type="warning" trigger="hover"
               @confirm="deleteBaxk(row._id)">
               <template #reference>
                 <tiny-button type="danger">注销</tiny-button>

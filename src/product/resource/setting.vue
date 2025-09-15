@@ -48,7 +48,7 @@ function closeDialog() {
   dialog.value = false
 }
 function addIntag() {
-  if (!inputtag.value) {
+  if (inputtag.value == '') {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'

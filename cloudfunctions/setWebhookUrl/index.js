@@ -79,7 +79,7 @@ exports.main = async (event) => {
       const webhooktoken = userres.data[0].webhookToken
       if (requestdata.webhookUrl) {
         try {
-          const { data } = await axios.get(requestdata.webhookUrl + '/' + requestdata.product + '/xm2512webhooktoken.txt', {
+          const { data } = await axios.get(requestdata.webhookUrl + '/xm2512webhooktoken/' + requestdata.product, {
             timeout: 5000
           })
           if (data != webhooktoken) {

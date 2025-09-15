@@ -199,6 +199,18 @@ const router = createRouter({
           component: () => import('/src/product/admin/viploglist.vue')
         },
         {
+          path: '/product/admin/pushlist',
+          component: () => import('/src/product/admin/pushlist.vue')
+        },
+        {
+          path: '/product/admin/sendpush',
+          component: () => import('/src/product/admin/sendpush.vue')
+        },
+        {
+          path: '/product/admin/pushloglist',
+          component: () => import('/src/product/admin/pushloglist.vue')
+        },
+        {
           path: '/product/admin/resourcelist',
           component: () => import('/src/product/admin/resourcelist.vue')
         },

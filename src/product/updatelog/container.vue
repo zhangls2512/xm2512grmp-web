@@ -61,7 +61,7 @@ const tabClick = (data) => {
   <div class="container">
     <div class="header">
       <div class="sp">
-        <img class="tx" src="/logo.jpg" loading="lazy" />
+        <img class="tx" src="/logo.jpg" loading="lazy"></img>
         <div class="header-title">更新日志</div>
       </div>
     </div>

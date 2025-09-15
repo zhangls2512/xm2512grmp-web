@@ -83,28 +83,21 @@ exports.main = async (event) => {
         product: product,
         uid: uid
       }).get()
-      if (userres.data.length > 0) {
-        const noticesetting = userres.data[0].noticeSetting
-        if (noticesetting.includes(requestdata.noticeName)) {
-          noticesetting.splice(noticesetting.indexOf(requestdata.noticeName), 1)
-        } else {
-          noticesetting.push(requestdata.noticeName)
-        }
-        await db.collection('productuser').where({
-          product: product,
-          uid: uid
-        }).update({
-          noticeSetting: noticesetting
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
+      const noticesetting = userres.data[0].noticeSetting
+      if (noticesetting.includes(requestdata.noticeName)) {
+        noticesetting.splice(noticesetting.indexOf(requestdata.noticeName), 1)
+      } else {
+        noticesetting.push(requestdata.noticeName)
       }
+      await db.collection('productuser').where({
+        product: product,
+        uid: uid
+      }).update({
+        noticeSetting: noticesetting
+      })
       return {
-        errCode: 8000,
-        errMsg: '无数据',
-        errFix: '联系客服'
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

@@ -81,7 +81,7 @@ function pagesizeChange(t) {
 function search() {
   if (!validator.isFQDN(domain.value, {
     allow_wildcard: true
-  }) && !validator.isIP(domain.value) && domain.value !== '') {
+  }) && !validator.isIP(domain.value) && domain.value != '') {
     TinyModal.message({
       message: '请输入有效的域名 / IP 地址',
       status: 'warning'
@@ -160,7 +160,7 @@ async function deleteOrder(id) {
             <tiny-button v-if="row.orderEndDate > Date.now()" type="warning"
               @click="authorization(row._id)">授权</tiny-button>
             <tiny-button v-if="row.status == 'ready'" type="success" @click="submit(row._id)">提交</tiny-button>
-            <tiny-popconfirm v-if="row.status != 'processing'" title="提示" message="删除后无法恢复，确定删除？" type="warning"
+            <tiny-popconfirm v-if="row.status != 'processing'" title="提示" message="删除成功后无法恢复，确定删除？" type="warning"
               trigger="hover" @confirm="deleteOrder(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>
