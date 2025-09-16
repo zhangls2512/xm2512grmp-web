@@ -130,7 +130,7 @@ exports.main = async (event) => {
       return res.result
     } else {
       const account = res.result.account
-      if (!account.accessToken) {
+      if (!account) {
         return {
           errCode: 8000,
           errMsg: '未获取到此账号的accessToken',
