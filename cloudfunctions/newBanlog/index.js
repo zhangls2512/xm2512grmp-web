@@ -73,7 +73,7 @@ exports.main = async (event) => {
         return {
           errCode: 8000,
           errMsg: '用户不存在',
-          errFix: '传递有效的uid参数'
+          errFix: '传递有效的uid'
         }
       }
       await db.collection('banlog').add({

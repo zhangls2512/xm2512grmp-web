@@ -782,7 +782,7 @@ async function deleteAccessKey(index) {
       <div class="large-bold-text">accessKey</div>
       <tiny-alert type="warning" :closable="false"
         description="accessKey 是调用 API 的凭证，请勿泄露给他人，防止账号被他人非法使用。为了保证账号安全，建议仅开启必要 API 的权限、设置合理的到期时间和 IP 白名单、及时禁用或删除不再使用的 accessKey。"></tiny-alert>
-      <div><tiny-button type="success" @click="newAccessKeyOpen">新增</tiny-button></div>
+      <div v-if="accesskeys.length < 10"><tiny-button type="success" @click="newAccessKeyOpen">新增</tiny-button></div>
       <tiny-grid :data="accesskeys">
         <tiny-grid-column type="index" title="序号" align="center"></tiny-grid-column>
         <tiny-grid-column field="name" title="备注" align="center"></tiny-grid-column>

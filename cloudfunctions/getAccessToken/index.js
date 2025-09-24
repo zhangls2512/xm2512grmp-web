@@ -47,7 +47,7 @@ exports.main = async (event) => {
     }
   }
   try {
-    const validtypes = ['emailcode', 'mfa', 'password', 'sslwxxcx', 'huaweiaipasswordmemoapp']
+    const validtypes = ['emailcode', 'mfa', 'password', 'passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp']
     if (!validtypes.includes(requestdata.verifyType)) {
       return {
         errCode: 1001,
@@ -55,35 +55,77 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyType参数'
       }
     }
+    let verifytype = requestdata.verifyType
     let verifytypetext = ''
-    if (requestdata.verifyType == 'emailcode') {
+    if (verifytype == 'emailcode') {
       verifytypetext = '邮箱验证码'
     }
-    if (requestdata.verifyType == 'mfa') {
+    if (verifytype == 'mfa') {
       verifytypetext = 'MFA'
     }
-    if (requestdata.verifyType == 'password') {
+    if (verifytype == 'password') {
       verifytypetext = '密码'
     }
-    if (requestdata.verifyType == 'sslwxxcx') {
+    if (verifytype == 'passkey') {
+      verifytypetext = '通行密钥'
+    }
+    if (verifytype == 'sslwxxcx') {
       verifytypetext = 'SSL证书（微信小程序）'
     }
-    if (requestdata.verifyType == 'huaweiaipasswordmemoapp') {
+    if (verifytype == 'huaweiaipasswordmemoapp') {
+      verifytype = 'huawei'
       verifytypetext = '华为账号'
     }
-    if (typeof (requestdata.verifyCode) != 'string') {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的verifyCode参数'
+    let verifycode = ''
+    let rawId = ''
+    let authenticatorData = ''
+    let clientDataJSON = ''
+    let signature = ''
+    if (verifytype == 'passkey') {
+      if (typeof (requestdata.rawId) != 'string' || !requestdata.rawId) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的rawId参数'
+        }
       }
+      if (typeof (requestdata.authenticatorData) != 'string' || !requestdata.authenticatorData) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的authenticatorData参数'
+        }
+      }
+      if (typeof (requestdata.clientDataJSON) != 'string' || !requestdata.clientDataJSON) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的clientDataJSON参数'
+        }
+      }
+      if (typeof (requestdata.signature) != 'string' || !requestdata.signature) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的signature参数'
+        }
+      }
+      rawId = requestdata.rawId
+      authenticatorData = requestdata.authenticatorData
+      clientDataJSON = requestdata.clientDataJSON
+      signature = requestdata.signature
+    } else {
+      if (typeof (requestdata.verifyCode) != 'string') {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的verifyCode参数'
+        }
+      }
+      verifycode = requestdata.verifyCode
     }
     let email = ''
-    let verifytype = requestdata.verifyType
-    if (requestdata.verifyType == 'huaweiaipasswordmemoapp') {
-      verifytype = 'huawei'
-    }
-    const platforms = ['sslwxxcx', 'huaweiaipasswordmemoapp']
+    const platforms = ['passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp']
     if (!platforms.includes(requestdata.verifyType)) {
       if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
         return {
@@ -121,7 +163,11 @@ exports.main = async (event) => {
         type: requestdata.verifyType,
         data: {
           email: email,
-          code: requestdata.verifyCode
+          code: verifycode,
+          rawId: rawId,
+          authenticatorData: authenticatorData,
+          clientDataJSON: clientDataJSON,
+          signature: signature
         },
         permission: []
       }
@@ -133,7 +179,7 @@ exports.main = async (event) => {
       if (!account) {
         return {
           errCode: 8000,
-          errMsg: '未获取到此账号的accessToken',
+          errMsg: '未获取到账号的accessToken',
           errFix: '请稍后再试，如仍有此问题请联系客服'
         }
       }
@@ -162,7 +208,6 @@ exports.main = async (event) => {
           const data = await httpsget('https://ip.cn/ip/' + requestip + '.html')
           ipaddress = data.match(/<span\s+id="tab0_address"\s*>(.*?)<\/span>/)[1]
         } catch (err) {
-          console.log(err)
           await nodemailer.createTransport(mailerconfig).sendMail({
             from: 'zhangls2512@vip.qq.com',
             to: '2300990296@qq.com',
@@ -197,12 +242,9 @@ exports.main = async (event) => {
         ua: useragent,
         uid: account._id
       })
-      if (!email) {
-        email = account.email
-      }
       await nodemailer.createTransport(mailerconfig).sendMail({
         from: 'zhangls2512@vip.qq.com',
-        to: email,
+        to: account.email,
         subject: '轩铭2512统一账号登录提醒',
         text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipaddress + '（IP：' + requestip + '）'
       })
@@ -211,12 +253,11 @@ exports.main = async (event) => {
         errMsg: '成功',
         accessToken: accesstoken,
         uid: account._id,
-        email: email,
+        email: account.email,
         endDate: enddate
       }
     }
   } catch (err) {
-    console.log(err)
     await nodemailer.createTransport(mailerconfig).sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',

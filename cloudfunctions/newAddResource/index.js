@@ -71,7 +71,7 @@ exports.main = async (event) => {
           return {
             errCode: 8001,
             errMsg: '资源不存在',
-            errFix: '传递有效的resourceId参数'
+            errFix: '传递有效的resourceId'
           }
         }
         await db.collection('resourceadd').add({

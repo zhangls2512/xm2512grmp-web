@@ -46,7 +46,7 @@ exports.main = async (event) => {
         return {
           errCode: 8000,
           errMsg: '不存在索引为index的accessKey',
-          errFix: '传递有效的index参数'
+          errFix: '传递有效的index'
         }
       }
       accesskeys.splice(requestdata.index, 1)

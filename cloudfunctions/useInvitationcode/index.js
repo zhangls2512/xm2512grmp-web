@@ -105,7 +105,7 @@ exports.main = async (event) => {
       if (viplogres.data.length > 0) {
         return {
           errCode: 8002,
-          errMsg: '此账号使用过邀请码',
+          errMsg: '账号使用过邀请码',
           errFix: '无修复建议'
         }
       }

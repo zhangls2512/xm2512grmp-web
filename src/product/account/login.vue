@@ -15,6 +15,14 @@ const code = ref('')
 const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
+function base64url(buffer) {
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
 function routePush() {
   const products = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
   if (products.includes(product)) {
@@ -74,6 +82,36 @@ async function login() {
     message: '登录成功',
     status: 'success'
   })
+}
+async function loginByPasskey() {
+  const resa = await navigator.credentials.get({
+    publicKey: {
+      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')
+    }
+  })
+  const resb = await callfunction({
+    functionName: 'getAccessToken',
+    data: {
+      verifyType: 'passkey',
+      rawId: base64url(resa.rawId),
+      authenticatorData: base64url(resa.response.authenticatorData),
+      clientDataJSON: base64url(resa.response.clientDataJSON),
+      signature: base64url(resa.response.signature),
+      userAgent: navigator.userAgent
+    }
+  })
+  cookie.set('accessToken', resb.accessToken, {
+    expires: new Date(resb.endDate),
+    secure: true,
+    sameSite: 'strict'
+  })
+  routePush()
+  TinyModal.message({
+    message: '登录成功',
+    status: 'success'
+  })
+  //console.log('服务端生成的挑战值：' + base64url(challenge))
+  //console.log('publicKey：' + base64url(resa.response.getPublicKey()))
 }
 async function getEmailCode() {
   if (!validator.isEmail(email.value)) {
@@ -142,7 +180,10 @@ async function getEmailCode() {
               placeholder="请输入验证码"></tiny-input>
           </tiny-form-item>
           <tiny-form-item>
-            <tiny-button type='info' @click="login">登录</tiny-button>
+            <div class="sp">
+              <tiny-button type='success' @click="login">登录</tiny-button>
+              <tiny-button type='info' @click="loginByPasskey">通行密钥登录</tiny-button>
+            </div>
           </tiny-form-item>
         </tiny-form>
         <div class="sp">

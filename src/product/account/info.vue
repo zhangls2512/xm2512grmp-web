@@ -9,6 +9,7 @@ import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
 const accountinfo = ref({})
+const passkey = ref([])
 const externalaccount = ref([])
 const type = ref('')
 const code = ref('')
@@ -22,6 +23,8 @@ const newpassworda = ref('')
 const newpasswordb = ref('')
 const duration = ref('')
 let platform = ''
+let rawid = ''
+let publickey = ''
 const updateemailbutton = ref(false)
 const setmfabutton = ref(false)
 const removemfabutton = ref(false)
@@ -31,6 +34,8 @@ const updatedurationbutton = ref(false)
 const freezebutton = ref(false)
 const refreshbutton = ref(false)
 const deleteaccountbutton = ref(false)
+const newpasskeybutton = ref(false)
+const deletepasskeybutton = ref(false)
 const unbindexternalaccountbutton = ref(false)
 const countdown = ref(60)
 const buttondisabled = ref(false)
@@ -41,6 +46,14 @@ const buttontexta = ref('获取验证码')
 const qrcodedialog = ref(false)
 const qrcodeimg = ref('')
 const secret = ref('')
+function base64url(buffer) {
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
 async function getAccountInfo() {
   const res = await request({
     apiPath: '/account/getAccountInfo',
@@ -70,13 +83,18 @@ async function getExternalAccount() {
     status: 'success'
   })
   const platformmap = {
+    passkey: '通行密钥',
     sslwxxcx: 'SSL 证书（微信小程序）',
     huawei: '华为账号'
   }
+  passkey.value = res.data.map(item => ({
+    ...item,
+    platformwz: platformmap[item.platform]
+  })).filter(item => item.platformwz === '通行密钥')
   externalaccount.value = res.data.map(item => ({
     ...item,
     platformwz: platformmap[item.platform]
-  }))
+  })).filter(item => item.platformwz !== '通行密钥')
 }
 async function get() {
   await getAccountInfo()
@@ -116,6 +134,8 @@ function closeDialog() {
   freezebutton.value = false
   refreshbutton.value = false
   deleteaccountbutton.value = false
+  newpasskeybutton.value = false
+  deletepasskeybutton.value = false
   unbindexternalaccountbutton.value = false
 }
 function closeQrcodeDialog() {
@@ -490,6 +510,103 @@ async function deleteAccount() {
   })
   logOut()
 }
+async function newPasskeyOpen() {
+  const res = await navigator.credentials.create({
+    publicKey: {
+      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
+      pubKeyCredParams: [{
+        type: 'public-key',
+        alg: -7
+      }],
+      rp: {
+        name: 'xm2512'
+      },
+      user: {
+        id: new TextEncoder().encode(accountinfo.value.uid),
+        name: accountinfo.value.email,
+        displayName: accountinfo.value.email
+      }
+    }
+  })
+  rawid = base64url(res.rawId)
+  publickey = base64url(res.response.getPublicKey())
+  dialog.value = true
+  yzmmfatext.value = true
+  newpasskeybutton.value = true
+  type.value = 'mfa'
+}
+async function newPasskey() {
+  if (type.value == 'mfa' && code.value.length != 6) {
+    TinyModal.message({
+      message: '请输入有效的 MFA',
+      status: 'warning'
+    })
+    return
+  }
+  if (type.value == 'emailcode' && code.value.length != 8) {
+    TinyModal.message({
+      message: '请输入有效的邮箱验证码',
+      status: 'warning'
+    })
+    return
+  }
+  await request({
+    apiPath: '/account/bindExternalAccount',
+    body: {
+      email: accountinfo.value.email,
+      verifyType: type.value,
+      verifyCode: code.value,
+      platform: 'passkey',
+      rawId: rawid,
+      publicKey: publickey
+    }
+  })
+  closeDialog()
+  TinyModal.message({
+    message: '新增成功',
+    status: 'success'
+  })
+  getExternalAccount()
+}
+function deletePasskeyOpen(openid) {
+  dialog.value = true
+  yzmmfatext.value = true
+  deletepasskeybutton.value = true
+  type.value = 'mfa'
+  rawid = openid
+}
+async function deletePasskey() {
+  if (type.value == 'mfa' && code.value.length != 6) {
+    TinyModal.message({
+      message: '请输入有效的 MFA',
+      status: 'warning'
+    })
+    return
+  }
+  if (type.value == 'emailcode' && code.value.length != 8) {
+    TinyModal.message({
+      message: '请输入有效的邮箱验证码',
+      status: 'warning'
+    })
+    return
+  }
+  await request({
+    apiPath: '/account/unbindExternalAccount',
+    body: {
+      email: accountinfo.value.email,
+      verifyType: type.value,
+      verifyCode: code.value,
+      platform: 'passkey',
+      openid: rawid
+    }
+  })
+  closeDialog()
+  TinyModal.message({
+    message: '删除成功',
+    status: 'success'
+  })
+  getExternalAccount()
+}
 function unbindExternalAccountOpen(platforminput) {
   dialog.value = true
   yzmmfatext.value = true
@@ -638,6 +755,24 @@ async function getEmailCodea() {
           </template>
         </tiny-popconfirm>
       </div>
+      <div class="large-bold-text">通行密钥</div>
+      <tiny-alert :closable="false"
+        description="通行密钥是一种安全、快捷的无密码验证方式。添加后，你可以使用设备屏幕解锁方式（PIN、指纹、面容等）直接登录账号，无需使用邮箱验证码、MFA 、密码验证。"></tiny-alert>
+      <div v-if="passkey.length < 5"><tiny-button type="success" @click="newPasskeyOpen">新增</tiny-button></div>
+      <tiny-grid :data="passkey">
+        <tiny-grid-column field="openid" title="ID" align="center"></tiny-grid-column>
+        <tiny-grid-column field="publicKey" title="公钥" align="center"></tiny-grid-column>
+        <tiny-grid-column title="操作" align="center">
+          <template #default="{ row }">
+            <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
+              @confirm="deletePasskeyOpen(row.openid)">
+              <template #reference>
+                <tiny-button type="danger">删除</tiny-button>
+              </template>
+            </tiny-popconfirm>
+          </template>
+        </tiny-grid-column>
+      </tiny-grid>
       <div class="large-bold-text">外部账号</div>
       <tiny-alert :closable="false" description="你可以使用绑定的外部账号直接登录账号，无需使用邮箱验证码、MFA 、密码验证。"></tiny-alert>
       <tiny-grid :data="externalaccount">
@@ -645,7 +780,7 @@ async function getEmailCodea() {
         <tiny-grid-column field="openid" title="外部账号 ID" align="center"></tiny-grid-column>
         <tiny-grid-column title="操作" align="center">
           <template #default="{ row }">
-            <tiny-popconfirm title="提示" message="解绑后需重新绑定才可直接登录账号，确定解绑？" type="warning" trigger="hover"
+            <tiny-popconfirm title="提示" message="解绑成功后需重新绑定才可直接登录账号，确定解绑？" type="warning" trigger="hover"
               @confirm="unbindExternalAccountOpen(row.platform)">
               <template #reference>
                 <tiny-button type="danger">解绑</tiny-button>
@@ -707,6 +842,8 @@ async function getEmailCodea() {
         <tiny-button v-if="freezebutton == true" type="info" @click="freeze">冻结账号</tiny-button>
         <tiny-button v-if="refreshbutton == true" type="danger" @click="refresh">强制登出</tiny-button>
         <tiny-button v-if="deleteaccountbutton == true" type="danger" @click="deleteAccount">注销账号</tiny-button>
+        <tiny-button v-if="newpasskeybutton == true" type="success" @click="newPasskey">新增</tiny-button>
+        <tiny-button v-if="deletepasskeybutton == true" type="danger" @click="deletePasskey">删除</tiny-button>
         <tiny-button v-if="unbindexternalaccountbutton == true" type="danger"
           @click="unbindExternalAccount">解绑</tiny-button>
       </template>

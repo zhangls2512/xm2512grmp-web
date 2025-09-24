@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.11',
+    releaseDate: '2025-09-24',
+    logs: [
+      {
+        type: 'U',
+        content: '登录 新增 通行密钥登录'
+      },
+      {
+        type: 'U',
+        content: '账号管理 - 基本信息新增 通行密钥'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.10',
     releaseDate: '2025-05-05',
     logs: [

@@ -3,6 +3,7 @@ exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const argon2 = require('argon2')
   const axios = require('axios')
+  const crypto = require('crypto')
   const ipaddr = require('ipaddr.js')
   const nodemailer = require('nodemailer')
   const { sm4 } = require('sm-crypto-v2')
@@ -366,13 +367,75 @@ exports.main = async (event) => {
         errFix: '传递有效的uid'
       }
     }
+    if (event.type == 'passkey') {
+      const passkeyres = await db.collection('externalaccount').where({
+        openid: checkdata.rawId,
+        platform: 'passkey'
+      }).get()
+      if (passkeyres.data.length == 0) {
+        return {
+          errCode: 3061,
+          errMsg: 'ID为rawId的passkey未绑定账号',
+          errFix: '传递绑定账号的passkey的rawId'
+        }
+      }
+      function base64url(buffer) {
+        let binary = ''
+        const bytes = new Uint8Array(buffer)
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i])
+        }
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+      }
+      function base64urlToBuffer(base64url) {
+        let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/')
+        const padLength = (4 - (base64.length % 4)) % 4
+        base64 += '='.repeat(padLength)
+        return Buffer.from(base64, 'base64')
+      }
+      const clientDataJSONBuffer = base64urlToBuffer(checkdata.clientDataJSON)
+      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientDataJSONBuffer))).challenge !== base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
+        return {
+          errCode: 3060,
+          errMsg: 'challenge校验失败',
+          errFix: '传递有效的clientDataJSON'
+        }
+      }
+      const publicKey = crypto.createPublicKey({
+        key: base64urlToBuffer(passkeyres.data[0].publicKey),
+        format: 'der',
+        type: 'spki'
+      })
+      const authenticatorDataBuffer = base64urlToBuffer(checkdata.authenticatorData)
+      const signatureBuffer = base64urlToBuffer(checkdata.signature)
+      const clientDataHash = crypto.createHash('sha256').update(clientDataJSONBuffer).digest()
+      const dataToVerify = Buffer.concat([authenticatorDataBuffer, clientDataHash])
+      const verify = crypto.createVerify('sha256')
+      verify.update(dataToVerify)
+      if (!verify.verify(publicKey, signatureBuffer)) {
+        return {
+          errCode: 3060,
+          errMsg: 'signature校验失败',
+          errFix: '传递有效的signature'
+        }
+      }
+      const uid = passkeyres.data[0].uid
+      const accountres = await db.collection('account').where({
+        _id: uid
+      }).get()
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        account: accountres.data[0]
+      }
+    }
     if (event.type == 'sslwxxcx') {
       const wxres = await axios.get('https://api.weixin.qq.com/sns/jscode2session?appid=wxd46f84216a1a856e&secret=' + process.env.sslappsecret + '&js_code=' + checkdata.code + '&grant_type=authorization_code')
       if (wxres.data.errcode) {
         return {
           errCode: 3060,
-          errMsg: 'code校验错误，错误信息：' + wxres.data.errmsg,
-          errFix: '传递有效的code参数'
+          errMsg: 'code校验失败，原因：' + wxres.data.errmsg,
+          errFix: '传递有效的code'
         }
       }
       const externalaccount = await db.collection('externalaccount').where({
@@ -445,8 +508,8 @@ exports.main = async (event) => {
       } catch (err) {
         return {
           errCode: 3060,
-          errMsg: 'code校验错误，错误信息：' + err.response.data.error_description,
-          errFix: '传递有效的code参数'
+          errMsg: 'code校验失败，原因：' + err.response.data.error_description,
+          errFix: '传递有效的code'
         }
       }
     }
