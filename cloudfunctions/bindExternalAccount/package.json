@@ -3,7 +3,6 @@
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
     "axios": "latest",
-    "nodemailer": "latest",
     "validator": "latest"
   }
 }

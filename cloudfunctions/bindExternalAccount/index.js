@@ -2,18 +2,9 @@
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const axios = require('axios')
-  const nodemailer = require('nodemailer')
   const validator = require('validator')
   const app = tcb.init()
   const db = app.database()
-  const mailerconfig = {
-    host: 'smtp.qq.com',
-    secure: true,
-    auth: {
-      user: 'zhangls2512@vip.qq.com',
-      pass: process.env.mailtoken
-    }
-  }
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -241,13 +232,7 @@ exports.main = async (event) => {
         }
       }
     }
-  } catch (err) {
-    await nodemailer.createTransport(mailerconfig).sendMail({
-      from: 'zhangls2512@vip.qq.com',
-      to: '2300990296@qq.com',
-      subject: '新增通行密钥、绑定外部账号接口内部错误通知',
-      text: '新增通行密钥、绑定外部账号接口内部错误。\n' + JSON.stringify(err)
-    })
+  } catch {
     return {
       errCode: 5000,
       errMsg: '内部错误',
