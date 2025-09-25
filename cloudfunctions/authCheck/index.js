@@ -379,14 +379,6 @@ exports.main = async (event) => {
           errFix: '传递绑定账号的passkey的rawId'
         }
       }
-      function base64url(buffer) {
-        let binary = ''
-        const bytes = new Uint8Array(buffer)
-        for (let i = 0; i < bytes.byteLength; i++) {
-          binary += String.fromCharCode(bytes[i])
-        }
-        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-      }
       function base64urlToBuffer(base64url) {
         let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/')
         const padlength = (4 - (base64.length % 4)) % 4
