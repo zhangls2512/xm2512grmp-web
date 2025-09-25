@@ -77,9 +77,9 @@ exports.main = async (event) => {
       verifytypetext = '华为账号'
     }
     let verifycode = ''
-    let rawId = ''
-    let authenticatorData = ''
-    let clientDataJSON = ''
+    let rawid = ''
+    let authenticatordata = ''
+    let clientdatajson = ''
     let signature = ''
     if (verifytype == 'passkey') {
       if (typeof (requestdata.rawId) != 'string' || !requestdata.rawId) {
@@ -110,9 +110,9 @@ exports.main = async (event) => {
           errFix: '传递有效的signature参数'
         }
       }
-      rawId = requestdata.rawId
-      authenticatorData = requestdata.authenticatorData
-      clientDataJSON = requestdata.clientDataJSON
+      rawid = requestdata.rawId
+      authenticatordata = requestdata.authenticatorData
+      clientdatajson = requestdata.clientDataJSON
       signature = requestdata.signature
     } else {
       if (typeof (requestdata.verifyCode) != 'string') {
@@ -164,9 +164,9 @@ exports.main = async (event) => {
         data: {
           email: email,
           code: verifycode,
-          rawId: rawId,
-          authenticatorData: authenticatorData,
-          clientDataJSON: clientDataJSON,
+          rawid: rawid,
+          authenticatordata: authenticatordata,
+          clientdatajson: clientdatajson,
           signature: signature
         },
         permission: []

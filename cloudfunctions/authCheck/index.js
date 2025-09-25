@@ -369,7 +369,7 @@ exports.main = async (event) => {
     }
     if (event.type == 'passkey') {
       const passkeyres = await db.collection('externalaccount').where({
-        openid: checkdata.rawId,
+        openid: checkdata.rawid,
         platform: 'passkey'
       }).get()
       if (passkeyres.data.length == 0) {
@@ -389,30 +389,38 @@ exports.main = async (event) => {
       }
       function base64urlToBuffer(base64url) {
         let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/')
-        const padLength = (4 - (base64.length % 4)) % 4
-        base64 += '='.repeat(padLength)
+        const padlength = (4 - (base64.length % 4)) % 4
+        base64 += '='.repeat(padlength)
         return Buffer.from(base64, 'base64')
       }
-      const clientDataJSONBuffer = base64urlToBuffer(checkdata.clientDataJSON)
-      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientDataJSONBuffer))).challenge !== base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
+      const authenticatordatabuffer = base64urlToBuffer(checkdata.authenticatordata)
+      const signcount = authenticatordatabuffer.readUInt32BE(33)
+      if (!Number.isInteger(signcount) || signcount <= passkeyres.data[0].signCount) {
+        return {
+          errCode: 3060,
+          errMsg: 'signCount校验失败',
+          errFix: '传递有效的authenticatorData'
+        }
+      }
+      const clientdatajsonbuffer = base64urlToBuffer(checkdata.clientdatajson)
+      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer))).challenge !== base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',
           errFix: '传递有效的clientDataJSON'
         }
       }
-      const publicKey = crypto.createPublicKey({
+      const publickey = crypto.createPublicKey({
         key: base64urlToBuffer(passkeyres.data[0].publicKey),
         format: 'der',
         type: 'spki'
       })
-      const authenticatorDataBuffer = base64urlToBuffer(checkdata.authenticatorData)
-      const signatureBuffer = base64urlToBuffer(checkdata.signature)
-      const clientDataHash = crypto.createHash('sha256').update(clientDataJSONBuffer).digest()
-      const dataToVerify = Buffer.concat([authenticatorDataBuffer, clientDataHash])
+      const signaturebuffer = base64urlToBuffer(checkdata.signature)
+      const clientdatahash = crypto.createHash('sha256').update(clientdatajsonbuffer).digest()
+      const datatoverify = Buffer.concat([authenticatordatabuffer, clientdatahash])
       const verify = crypto.createVerify('sha256')
-      verify.update(dataToVerify)
-      if (!verify.verify(publicKey, signatureBuffer)) {
+      verify.update(datatoverify)
+      if (!verify.verify(publickey, signaturebuffer)) {
         return {
           errCode: 3060,
           errMsg: 'signature校验失败',
@@ -423,6 +431,12 @@ exports.main = async (event) => {
       const accountres = await db.collection('account').where({
         _id: uid
       }).get()
+      await db.collection('externalaccount').where({
+        openid: checkdata.rawid,
+        platform: 'passkey'
+      }).update({
+        signCount: signcount
+      })
       return {
         errCode: 0,
         errMsg: '成功',

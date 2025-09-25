@@ -125,6 +125,7 @@ exports.main = async (event) => {
           openid: requestdata.rawId,
           platform: 'passkey',
           publicKey: requestdata.publicKey,
+          signCount: 0,
           uid: uid
         })
         return {

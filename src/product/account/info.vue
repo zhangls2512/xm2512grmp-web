@@ -762,6 +762,7 @@ async function getEmailCodea() {
       <tiny-grid :data="passkey">
         <tiny-grid-column field="openid" title="ID" align="center"></tiny-grid-column>
         <tiny-grid-column field="publicKey" title="公钥" align="center"></tiny-grid-column>
+        <tiny-grid-column field="signCount" title="使用次数" align="center"></tiny-grid-column>
         <tiny-grid-column title="操作" align="center">
           <template #default="{ row }">
             <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"

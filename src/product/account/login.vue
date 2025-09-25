@@ -110,8 +110,6 @@ async function loginByPasskey() {
     message: '登录成功',
     status: 'success'
   })
-  //console.log('服务端生成的挑战值：' + base64url(challenge))
-  //console.log('publicKey：' + base64url(resa.response.getPublicKey()))
 }
 async function getEmailCode() {
   if (!validator.isEmail(email.value)) {
