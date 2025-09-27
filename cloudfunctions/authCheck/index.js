@@ -547,9 +547,8 @@ exports.main = async (event) => {
               platform: 'huawei',
               uid: addres.id
             })
-            const uid = externalaccount.data[0].uid
             const accountres = await db.collection('account').where({
-              _id: uid
+              _id: addres.id
             }).get()
             return {
               errCode: 0,

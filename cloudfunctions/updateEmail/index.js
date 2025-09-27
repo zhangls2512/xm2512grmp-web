@@ -60,7 +60,7 @@ exports.main = async (event) => {
         errFix: '传递有效的newEmailCode参数'
       }
     }
-    if (requestdata.email == requestdata.newEmail) {
+    if (email == requestdata.newEmail) {
       return {
         errCode: 8000,
         errMsg: '新邮箱与原邮箱相同',
@@ -82,8 +82,9 @@ exports.main = async (event) => {
     if (res.result.errCode != 0) {
       return res.result
     } else {
+      const uid = res.result.account._id
       const validhuaweitypes = ['huaweiaipasswordmemoapp']
-      if (validhuaweitypes.includes(requestdata.verifyType) && res.result.account[0].email) {
+      if (validhuaweitypes.includes(requestdata.verifyType) && res.result.account.email) {
         return {
           errCode: 8002,
           errMsg: '账号已绑定邮箱',
@@ -115,7 +116,7 @@ exports.main = async (event) => {
           }
         }
         await db.collection('account').where({
-          email: requestdata.email
+          _id: uid
         }).update({
           email: requestdata.newEmail
         })
