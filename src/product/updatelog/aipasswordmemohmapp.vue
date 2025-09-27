@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.2.2',
+    releaseDate: '2025-09-27',
+    logs: [
+      {
+        type: 'A',
+        content: '账号支持绑定通行密钥、使用通行密钥登录（此功能目前无法使用，为能力预埋）'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 账号 新增 通用密钥静默登录（此功能目前无法使用，为能力预埋）'
+      },
+      {
+        type: 'U',
+        content: '云服务、会员中心入口移至 我的'
+      },
+      {
+        type: 'U',
+        content: '“网络测试”页面优化，新增“请求地址”，下线值为 NaN 的属性，修改“请求总耗时”数据计算方式使其符合实际'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.2.1',
     releaseDate: '2025-09-24',
     logs: [

@@ -176,7 +176,8 @@ async function updateEmail() {
     apiPath: '/account/updateEmail',
     body: {
       email: accountinfo.value.email,
-      emailCode: code.value,
+      verifyType: 'emailcode',
+      verifyCode: code.value,
       newEmail: newemail.value,
       newEmailCode: newemailcode.value
     }

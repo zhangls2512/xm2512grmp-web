@@ -240,12 +240,15 @@ exports.main = async (event) => {
             const accountres = await db.collection('account').where({
               _id: invitationcodeinfo.uid
             }).get()
-            await nodemailer.createTransport(mailerconfig).sendMail({
-              from: 'zhangls2512@vip.qq.com',
-              to: accountres.data[0].email,
-              subject: '免费会员到账通知',
-              text: '您的账号“' + productwz + '”产品成功邀请一位新用户，已获得7天免费会员。'
-            })
+            const email = accountres.data[0].email
+            if (email) {
+              await nodemailer.createTransport(mailerconfig).sendMail({
+                from: 'zhangls2512@vip.qq.com',
+                to: email,
+                subject: '免费会员到账通知',
+                text: '您的账号“' + productwz + '”产品成功邀请一位新用户，已获得7天免费会员。'
+              })
+            }
           }
           return {
             errCode: 0,

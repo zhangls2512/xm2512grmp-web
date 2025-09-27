@@ -8,6 +8,7 @@ exports.main = async (event) => {
   const nodemailer = require('nodemailer')
   const { sm4 } = require('sm-crypto-v2')
   const speakeasy = require('speakeasy')
+  const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
   const mailerconfig = {
@@ -427,16 +428,16 @@ exports.main = async (event) => {
           errFix: '传递有效的signature'
         }
       }
-      const uid = passkeyres.data[0].uid
-      const accountres = await db.collection('account').where({
-        _id: uid
-      }).get()
       await db.collection('externalaccount').where({
         openid: checkdata.rawid,
         platform: 'passkey'
       }).update({
         signCount: signcount
       })
+      const uid = passkeyres.data[0].uid
+      const accountres = await db.collection('account').where({
+        _id: uid
+      }).get()
       return {
         errCode: 0,
         errMsg: '成功',
@@ -504,10 +505,57 @@ exports.main = async (event) => {
           platform: 'huawei'
         }).get()
         if (externalaccount.data.length == 0) {
-          return {
-            errCode: 3061,
-            errMsg: '此外部平台账号未绑定账号',
-            errFix: '传递绑定账号的外部平台账号的code'
+          if (!event.register) {
+            return {
+              errCode: 3061,
+              errMsg: '此外部平台账号未绑定账号',
+              errFix: '传递绑定账号的外部平台账号的code'
+            }
+          }
+          if (event.register) {
+            const addres = await db.collection('account').add({
+              accessKey: [],
+              accessToken: '',
+              duration: 7,
+              email: '',
+              endDate: 0,
+              mfa: '',
+              password: '',
+              passwordVerifyTimes: 0,
+              permission: {
+                account: true,
+                admin: false,
+                password: true,
+                resource: true,
+                resourcecreator: false,
+                smdztj: true,
+                ssl: true,
+                todo: true
+              },
+              service: []
+            })
+            const accesstoken = addres.id + '\0' + nanoid(60)
+            const encryptaccesstoken = sm4.encrypt(accesstoken, process.env.key)
+            await db.collection('account').where({
+              _id: addres.id
+            }).update({
+              accessToken: encryptaccesstoken,
+              endDate: Date.now() + 172800000
+            })
+            await db.collection('externalaccount').add({
+              openid: huaweitokeninfores.data.union_id,
+              platform: 'huawei',
+              uid: addres.id
+            })
+            const uid = externalaccount.data[0].uid
+            const accountres = await db.collection('account').where({
+              _id: uid
+            }).get()
+            return {
+              errCode: 0,
+              errMsg: '成功',
+              account: accountres.data[0]
+            }
           }
         }
         const uid = externalaccount.data[0].uid

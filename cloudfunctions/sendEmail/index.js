@@ -31,15 +31,23 @@ exports.main = async (event) => {
         _id: event.uid
       }).get()
       if (accountres.data.length > 0) {
-        await nodemailer.createTransport(mailerconfig).sendMail({
-          from: 'zhangls2512@vip.qq.com',
-          to: accountres.data[0].email,
-          subject: event.subject,
-          text: event.text
-        })
+        const email = accountres.data[0].email
+        if (email) {
+          await nodemailer.createTransport(mailerconfig).sendMail({
+            from: 'zhangls2512@vip.qq.com',
+            to: email,
+            subject: event.subject,
+            text: event.text
+          })
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        }
         return {
-          errCode: 0,
-          errMsg: '成功'
+          errCode: 8001,
+          errMsg: '账号未绑定邮箱',
+          errFix: '绑定邮箱'
         }
       }
       return {

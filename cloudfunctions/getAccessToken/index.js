@@ -169,7 +169,8 @@ exports.main = async (event) => {
           clientdatajson: clientdatajson,
           signature: signature
         },
-        permission: []
+        permission: [],
+        register: true
       }
     })
     if (res.result.errCode != 0) {
@@ -242,12 +243,14 @@ exports.main = async (event) => {
         ua: useragent,
         uid: account._id
       })
-      await nodemailer.createTransport(mailerconfig).sendMail({
-        from: 'zhangls2512@vip.qq.com',
-        to: account.email,
-        subject: '轩铭2512统一账号登录提醒',
-        text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipaddress + '（IP：' + requestip + '）'
-      })
+      if (account.email) {
+        await nodemailer.createTransport(mailerconfig).sendMail({
+          from: 'zhangls2512@vip.qq.com',
+          to: account.email,
+          subject: '轩铭2512统一账号登录提醒',
+          text: '您的账号于北京时间' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm') + '登录。\n' + '验证方式：' + verifytypetext + '\n' + '登录地点：' + ipaddress + '（IP：' + requestip + '）'
+        })
+      }
       return {
         errCode: 0,
         errMsg: '成功',

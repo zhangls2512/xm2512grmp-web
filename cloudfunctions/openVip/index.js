@@ -166,12 +166,15 @@ exports.main = async (event) => {
         const accountres = await db.collection('account').where({
           _id: uid
         }).get()
-        await nodemailer.createTransport(mailerconfig).sendMail({
-          from: 'zhangls2512@vip.qq.com',
-          to: accountres.data[0].email,
-          subject: '会员' + typewz + '成功通知',
-          text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseOrderid
-        })
+        const email = accountres.data[0].email
+        if (email) {
+          await nodemailer.createTransport(mailerconfig).sendMail({
+            from: 'zhangls2512@vip.qq.com',
+            to: email,
+            subject: '会员' + typewz + '成功通知',
+            text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseOrderid
+          })
+        }
         return {
           errCode: 0,
           errMsg: '成功'

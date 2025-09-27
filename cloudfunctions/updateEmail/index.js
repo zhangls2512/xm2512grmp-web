@@ -13,18 +13,37 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
+    const validtypes = ['emailcode', 'huaweiaipasswordmemoapp']
+    if (!validtypes.includes(requestdata.verifyType)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的email参数'
+        errFix: '传递有效的verifyType参数'
       }
     }
-    if (typeof (requestdata.emailCode) != 'string' || requestdata.emailCode.length != 8) {
+    if (typeof (requestdata.verifyCode) != 'string') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的emailCode参数'
+        errFix: '传递有效的verifyCode参数'
+      }
+    }
+    let email = ''
+    if (requestdata.verifyType == 'emailcode') {
+      if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的email参数'
+        }
+      }
+      email = requestdata.email
+      if (requestdata.verifyCode.length != 8) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的verifyCode参数'
+        }
       }
     }
     if (typeof (requestdata.newEmail) != 'string' || !validator.isEmail(requestdata.newEmail)) {
@@ -51,17 +70,26 @@ exports.main = async (event) => {
     const res = await app.callFunction({
       name: 'authCheck',
       data: {
-        type: 'emailcode',
+        type: requestdata.verifyType,
         data: {
-          email: requestdata.email,
-          code: requestdata.emailCode
+          email: email,
+          code: requestdata.verifyCode
         },
-        permission: []
+        permission: [],
+        register: false
       }
     })
     if (res.result.errCode != 0) {
       return res.result
     } else {
+      const validhuaweitypes = ['huaweiaipasswordmemoapp']
+      if (validhuaweitypes.includes(requestdata.verifyType) && res.result.account[0].email) {
+        return {
+          errCode: 8002,
+          errMsg: '账号已绑定邮箱',
+          errFix: '使用邮箱验证码验证'
+        }
+      }
       const newres = await app.callFunction({
         name: 'authCheck',
         data: {
