@@ -90,9 +90,9 @@ async function newOrder() {
       })
       return
     }
-    if (certificatetype.value != 'classic' && domains.value.length > 25) {
+    if (certificatetype.value != 'classic' && certificatetype.value != 'tlsclient' && domains.value.length > 25) {
       TinyModal.message({
-        message: '非经典证书类型最多仅支持添加 25 个域名 / IP 地址',
+        message: '非经典、TLS 客户端证书类型最多仅支持添加 25 个域名 / IP 地址',
         status: 'warning'
       })
       return
