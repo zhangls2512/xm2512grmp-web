@@ -7,18 +7,18 @@ exports.main = async (event) => {
   const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
   const { nanoid } = await import('nanoid')
-  const mailerconfig = {
+  const app = tcb.init()
+  const auth = app.auth()
+  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
+  const db = app.database()
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
-  const app = tcb.init()
-  const auth = app.auth()
-  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
-  const db = app.database()
+  })
   let requestdata = ''
   let requestip = ''
   let useragent = ''
@@ -209,7 +209,7 @@ exports.main = async (event) => {
           const data = await httpsget('https://ip.cn/ip/' + requestip + '.html')
           ipaddress = data.match(/<span\s+id="tab0_address"\s*>(.*?)<\/span>/)[1]
         } catch (err) {
-          await nodemailer.createTransport(mailerconfig).sendMail({
+          await nodemailertransport.sendMail({
             from: 'zhangls2512@vip.qq.com',
             to: '2300990296@qq.com',
             subject: '获取IP归属地失败通知',
@@ -244,7 +244,7 @@ exports.main = async (event) => {
         uid: account._id
       })
       if (account.email) {
-        await nodemailer.createTransport(mailerconfig).sendMail({
+        await nodemailertransport.sendMail({
           from: 'zhangls2512@vip.qq.com',
           to: account.email,
           subject: '轩铭2512统一账号登录提醒',
@@ -261,7 +261,7 @@ exports.main = async (event) => {
       }
     }
   } catch (err) {
-    await nodemailer.createTransport(mailerconfig).sendMail({
+    await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '登录接口内部错误通知',

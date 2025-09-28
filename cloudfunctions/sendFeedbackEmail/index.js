@@ -2,14 +2,14 @@
 exports.main = async (event) => {
   const nodemailer = require('nodemailer')
   const validator = require('validator')
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -62,7 +62,7 @@ exports.main = async (event) => {
       contacttype = requestdata.contactType
       contactvalue = requestdata.contactValue
     }
-    await nodemailer.createTransport(mailerconfig).sendMail({
+    await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '有新反馈',

@@ -8,14 +8,14 @@ exports.main = async (event) => {
   const nodemailer = require('nodemailer')
   const app = tcb.init()
   const db = app.database()
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   try {
     let aid = ''
     let product = ''
@@ -168,7 +168,7 @@ exports.main = async (event) => {
         }).get()
         const email = accountres.data[0].email
         if (email) {
-          await nodemailer.createTransport(mailerconfig).sendMail({
+          await nodemailertransport.sendMail({
             from: 'zhangls2512@vip.qq.com',
             to: email,
             subject: '会员' + typewz + '成功通知',

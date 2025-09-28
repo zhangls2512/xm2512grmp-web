@@ -3,14 +3,14 @@ exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const nodemailer = require('nodemailer')
   const app = tcb.init()
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -77,7 +77,7 @@ exports.main = async (event) => {
       if (payload.notificationMetaData.refundRequestData.refundReason == 'OTHER') {
         reason = '其他原因'
       }
-      await nodemailer.createTransport(mailerconfig).sendMail({
+      await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
         to: '2300990296@qq.com',
         subject: '有新退款申请',

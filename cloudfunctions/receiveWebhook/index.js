@@ -2,14 +2,14 @@
 exports.main = async (event) => {
   const axios = require('axios')
   const nodemailer = require('nodemailer')
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -77,7 +77,7 @@ exports.main = async (event) => {
           errMsg: '成功'
         }
       } else {
-        await nodemailer.createTransport(mailerconfig).sendMail({
+        await nodemailertransport.sendMail({
           from: 'zhangls2512@vip.qq.com',
           to: '2300990296@qq.com',
           subject: '推送通知失败通知',
@@ -90,7 +90,7 @@ exports.main = async (event) => {
         }
       }
     } catch (err) {
-      await nodemailer.createTransport(mailerconfig).sendMail({
+      await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
         to: '2300990296@qq.com',
         subject: '请求推送通知接口失败通知',

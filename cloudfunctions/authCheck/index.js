@@ -11,14 +11,14 @@ exports.main = async (event) => {
   const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   try {
     const checkdata = event.data
     if (event.type == 'emailcode') {
@@ -157,7 +157,7 @@ exports.main = async (event) => {
         }
         if (!await argon2.verify(password, checkdata.code)) {
           if (data.passwordVerifyTimes == 4) {
-            nodemailer.createTransport(mailerconfig).sendMail({
+            nodemailertransport.sendMail({
               from: 'zhangls2512@vip.qq.com',
               to: checkdata.email,
               subject: '轩铭2512统一账号停用密码验证方式通知',

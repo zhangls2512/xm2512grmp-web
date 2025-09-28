@@ -6,14 +6,14 @@ exports.main = async (event) => {
   const { customAlphabet } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
-  const mailerconfig = {
+  const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
     secure: true,
     auth: {
       user: 'zhangls2512@vip.qq.com',
       pass: process.env.mailtoken
     }
-  }
+  })
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -52,7 +52,7 @@ exports.main = async (event) => {
         used: false,
         verifyTimes: 0
       })
-      await nodemailer.createTransport(mailerconfig).sendMail({
+      await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
         to: requestdata.email,
         subject: '轩铭2512统一账号邮箱验证码',
@@ -72,7 +72,7 @@ exports.main = async (event) => {
       used: false,
       verifyTimes: 0
     })
-    await nodemailer.createTransport(mailerconfig).sendMail({
+    await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: requestdata.email,
       subject: '轩铭2512统一账号邮箱验证码',
