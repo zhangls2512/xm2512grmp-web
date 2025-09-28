@@ -2,6 +2,44 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.0',
+    releaseDate: '2025-09-28',
+    logs: [
+      {
+        type: 'A',
+        content: '“密码”新增标签筛选'
+      },
+      {
+        type: 'A',
+        content: '密码、常用信息、标签支持多选批量删除、云备份'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 新增 背景图'
+      },
+      {
+        type: 'U',
+        content: '优化新增、修改、筛选密码弹窗中推荐标签的样式'
+      },
+      {
+        type: 'U',
+        content: '密码“图标”类型信息、“图标”类型常用信息不支持云备份'
+      },
+      {
+        type: 'F',
+        content: '“密码”中无标签的密码底部有错误间距'
+      },
+      {
+        type: 'F',
+        content: '“密码”“常用信息”“标签”深色模式下部分颜色与“我的”不一致'
+      },
+      {
+        type: 'F',
+        content: '新增、修改密码弹窗中“自动新增标签”功能新增标签的默认颜色错误为透明'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.2.4',
     releaseDate: '2025-09-28',
     logs: [
