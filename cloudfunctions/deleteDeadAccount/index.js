@@ -18,20 +18,25 @@ exports.main = async () => {
     service: []
   }).get()
   res.data.forEach(async (item) => {
-    await db.collection('account').where({
-      _id: item._id
-    }).remove()
-    await db.collection('loginlog').where({
+    const banres = await db.collection('banlog').where({
       uid: item._id
-    }).remove()
-    const email = item.email
-    if (email) {
-      nodemailertransport.sendMail({
-        from: 'zhangls2512@vip.qq.com',
-        to: email,
-        subject: '轩铭2512统一账号被系统自动注销通知',
-        text: '您的账号因未开通任何服务、长期未登录，为了节省服务器资源，已被系统自动注销。如需继续使用，请重新注册，谢谢。给您带来的不便，敬请谅解。'
-      })
+    }).count()
+    if (banres.total == 0) {
+      await db.collection('account').where({
+        _id: item._id
+      }).remove()
+      await db.collection('loginlog').where({
+        uid: item._id
+      }).remove()
+      const email = item.email
+      if (email) {
+        nodemailertransport.sendMail({
+          from: 'zhangls2512@vip.qq.com',
+          to: email,
+          subject: '轩铭2512统一账号被系统自动注销通知',
+          text: '您的账号因未开通任何服务、长期未登录，为了节省服务器资源，已被系统自动注销。如需继续使用，请重新注册，谢谢。给您带来的不便，敬请谅解。'
+        })
+      }
     }
   })
 }

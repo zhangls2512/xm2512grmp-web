@@ -71,19 +71,12 @@ exports.main = async (event) => {
           errFix: '取消开通所有产品/功能'
         }
       }
-      if (!Object.values(account.permission).every(value => value === true || value === undefined || (typeof (value) == 'number' && Date.now() > value))) {
-        return {
-          errCode: 8001,
-          errMsg: '存在被封禁的权限',
-          errFix: '联系客服'
-        }
-      }
       const banres = await db.collection('banlog').where({
         uid: account._id
       }).count()
       if (banres.total > 0) {
         return {
-          errCode: 8002,
+          errCode: 8001,
           errMsg: '存在违规记录',
           errFix: '联系客服'
         }

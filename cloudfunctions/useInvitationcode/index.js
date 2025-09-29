@@ -101,8 +101,8 @@ exports.main = async (event) => {
         product: requestdata.product,
         type: 'invitationcode',
         uid: uid
-      }).get()
-      if (viplogres.data.length > 0) {
+      }).count()
+      if (viplogres.total > 0) {
         return {
           errCode: 8002,
           errMsg: '账号使用过邀请码',

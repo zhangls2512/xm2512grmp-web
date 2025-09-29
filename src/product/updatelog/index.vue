@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.12',
+    releaseDate: '2025-09-29',
+    logs: [
+      {
+        type: 'U',
+        content: '修订成员“宋佳懿”的岗位'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.11',
     releaseDate: '2025-05-06',
     logs: [

@@ -102,8 +102,8 @@ exports.main = async (event) => {
         const passkeyres = await db.collection('externalaccount').where({
           openid: requestdata.rawId,
           platform: 'passkey'
-        }).get()
-        if (passkeyres.data.length > 0) {
+        }).count()
+        if (passkeyres.total > 0) {
           return {
             errCode: 8000,
             errMsg: '已存在openid为rawId的passkey',
@@ -139,8 +139,8 @@ exports.main = async (event) => {
         const externalaccountres = await db.collection('externalaccount').where({
           platform: platform,
           uid: uid
-        }).get()
-        if (externalaccountres.data.length > 0) {
+        }).count()
+        if (externalaccountres.total > 0) {
           return {
             errCode: 8000,
             errMsg: '账号已绑定此外部平台',
@@ -159,8 +159,8 @@ exports.main = async (event) => {
           const externalaccountres = await db.collection('externalaccount').where({
             openid: wxres.data.openid,
             platform: 'sslwxxcx'
-          }).get()
-          if (externalaccountres.data.length > 0) {
+          }).count()
+          if (externalaccountres.total > 0) {
             return {
               errCode: 8002,
               errMsg: '此外部平台账号已绑定其他账号',
@@ -206,8 +206,8 @@ exports.main = async (event) => {
             const externalaccountres = await db.collection('externalaccount').where({
               openid: huaweitokeninfores.data.union_id,
               platform: 'huawei'
-            }).get()
-            if (externalaccountres.data.length > 0) {
+            }).count()
+            if (externalaccountres.total > 0) {
               return {
                 errCode: 8002,
                 errMsg: '此外部平台账号已绑定其他账号',
