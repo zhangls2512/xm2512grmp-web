@@ -2,6 +2,32 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.1',
+    releaseDate: '2025-09-30',
+    logs: [
+      {
+        type: 'U',
+        content: '新增、修改密码时不云备份“图标”类型信息'
+      },
+      {
+        type: 'U',
+        content: '删除云备份 更名为 取消云备份'
+      },
+      {
+        type: 'U',
+        content: '从图库中选择图片时强制为原图，无需手动勾选'
+      },
+      {
+        type: 'F',
+        content: '新增、修改常用信息弹窗中“图标”类型时“云备份”开关可能错误为开启状态'
+      },
+      {
+        type: 'F',
+        content: '我的 - 设置中加载动画下方间距不正确'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.0',
     releaseDate: '2025-09-28',
     logs: [
