@@ -24,6 +24,10 @@ const tabs = [
     label: '密码智能备忘录'
   },
   {
+    id: 'synologydsmhelperhmapp',
+    label: '群晖 DSM 助手'
+  },
+  {
     id: 'resource',
     label: '资源'
   },

@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.13',
+    releaseDate: '2025-10-06',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 新增 群晖 DSM 助手'
+      },
+      {
+        type: 'U',
+        content: '更新日志 新增 群晖 DSM 助手'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.12',
     releaseDate: '2025-09-29',
     logs: [
@@ -17,7 +31,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品 新增 密码智能备忘录（邀请测试）'
+        content: '产品 新增 密码智能备忘录'
+      },
+      {
+        type: 'U',
+        content: '更新日志 新增 密码智能备忘录'
       }
     ]
   },
@@ -51,6 +69,10 @@ const data = [
     logs: [
       {
         type: 'U',
+        content: '产品 - 个人名片 新增 微信小程序'
+      },
+      {
+        type: 'U',
         content: '更新日志 新增 个人名片（微信小程序）'
       }
     ]
@@ -61,7 +83,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 成员 新增 于梓浩、郭怡航'
+        content: '成员 新增 于梓浩、郭怡航'
       }
     ]
   },
@@ -71,7 +93,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品 新增 资源投稿'
+        content: '产品 新增 资源投稿'
       },
       {
         type: 'U',
@@ -89,7 +111,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品 新增 资源'
+        content: '产品 新增 资源、SSL 证书（微信小程序）'
       },
       {
         type: 'U',
@@ -107,7 +129,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '更新 nodejs-acmeclient 产品 logo'
+        content: '产品 nodejs-acmeclient 更新 logo'
       }
     ]
   },
@@ -115,6 +137,10 @@ const data = [
     versionNumber: '1.0.3',
     releaseDate: '2025-03-09',
     logs: [
+      {
+        type: 'U',
+        content: '产品 新增 图片处理'
+      },
       {
         type: 'U',
         content: '更新日志 新增 图片处理'
@@ -127,7 +153,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品 新增 统一账号、管理后台'
+        content: '产品 新增 统一账号、管理后台'
+      },
+      {
+        type: 'U',
+        content: '更新日志 新增 统一账号、管理后台'
       }
     ]
   },
@@ -137,7 +167,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '首页 - 产品 - SSL 证书 新增 网页'
+        content: '产品 - SSL 证书 新增 网页'
       },
       {
         type: 'U',

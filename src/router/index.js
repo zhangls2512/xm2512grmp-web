@@ -65,6 +65,10 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/aipasswordmemohmapp.vue')
         },
         {
+          path: 'synologydsmhelperhmapp',
+          component: () => import('/src/product/updatelog/synologydsmhelperhmapp.vue')
+        },
+        {
           path: 'resource',
           component: () => import('/src/product/updatelog/resource.vue')
         },

@@ -41,6 +41,14 @@ const endyear = new Date().getFullYear()
           </a>
         </div>
         <div class="sp" style="align-items: stretch">
+          <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.synologydsmhelper" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
+                <div class="large-bold-text">群晖 DSM 助手</div>
+              </div>
+            </div>
+          </a>
           <router-link to="/product/resource" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -57,6 +65,8 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
+        </div>
+        <div class="sp" style="align-items: stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/logossl.png" loading="lazy"></img>
@@ -67,8 +77,6 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </div>
-        </div>
-        <div class="sp" style="align-items: stretch">
           <router-link to="/qrcodetp.jpg" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -198,7 +206,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.12</div>
+          <div class="footer-text">Version 1.0.13</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
