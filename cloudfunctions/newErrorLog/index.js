@@ -21,12 +21,20 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    if (requestdata.key !== process.env.key) {
+    const validproducts = ['password', 'synologydsmhelper']
+    if (!validproducts.includes(requestdata.product)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递正确的key'
+        errFix: '传递有效的product参数'
       }
+    }
+    let productwz = ''
+    if (requestdata.product == 'password') {
+      productwz = '密码智能备忘录'
+    }
+    if (requestdata.product == 'synologydsmhelper') {
+      productwz = '群晖DSM助手'
     }
     if (typeof (requestdata.object) != 'object') {
       return {
@@ -36,13 +44,14 @@ exports.main = async (event) => {
       }
     }
     await db.collection('errorlog').add({
+      product: requestdata.product,
       object: requestdata.object
     })
     await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '有新错误日志',
-      text: JSON.stringify(requestdata.object)
+      text: '产品：' + productwz + '\n' + JSON.stringify(requestdata.object)
     })
     return {
       errCode: 0,

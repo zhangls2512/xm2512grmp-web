@@ -26,13 +26,20 @@ exports.main = async (event) => {
         errFix: '传递正确的key'
       }
     }
-    const validproducts = ['密码智能备忘录']
+    const validproducts = ['password', 'synologydsmhelper']
     if (!validproducts.includes(requestdata.product)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的product参数'
       }
+    }
+    let productwz = ''
+    if (requestdata.product == 'password') {
+      productwz = '密码智能备忘录'
+    }
+    if (requestdata.product == 'synologydsmhelper') {
+      productwz = '群晖DSM助手'
     }
     if (typeof (requestdata.content) != 'string' || !requestdata.content) {
       return {
@@ -66,7 +73,7 @@ exports.main = async (event) => {
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '有新反馈',
-      text: '产品：' + requestdata.product + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
+      text: '产品：' + productwz + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
     })
     return {
       errCode: 0,
