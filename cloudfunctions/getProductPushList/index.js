@@ -12,7 +12,7 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    const validproducts = ['password']
+    const validproducts = ['password', 'synologydsmhelper']
     if (!validproducts.includes(requestdata.product)) {
       return {
         errCode: 1001,

@@ -58,7 +58,7 @@ exports.main = async (event) => {
         errFix: '传递有效的platform参数'
       }
     }
-    if (requestdata.platform === 'passkey') {
+    if (requestdata.platform == 'passkey') {
       if (typeof (requestdata.rawId) != 'string' || !requestdata.rawId) {
         return {
           errCode: 1001,

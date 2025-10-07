@@ -19,13 +19,6 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    if (requestdata.key !== process.env.key) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递正确的key'
-      }
-    }
     const validproducts = ['password', 'synologydsmhelper']
     if (!validproducts.includes(requestdata.product)) {
       return {

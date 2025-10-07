@@ -83,7 +83,7 @@ exports.main = async (event) => {
         platform: requestdata.platform,
         uid: uid
       }).get()
-      if (requestdata.platform === 'passkey') {
+      if (requestdata.platform == 'passkey') {
         if (!externalaccountres.data.some(item => item.openid == requestdata.openid)) {
           return {
             errCode: 8000,

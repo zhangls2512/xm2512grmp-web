@@ -90,11 +90,11 @@ async function getExternalAccount() {
   passkey.value = res.data.map(item => ({
     ...item,
     platformwz: platformmap[item.platform]
-  })).filter(item => item.platformwz === '通行密钥')
+  })).filter(item => item.platformwz == '通行密钥')
   externalaccount.value = res.data.map(item => ({
     ...item,
     platformwz: platformmap[item.platform]
-  })).filter(item => item.platformwz !== '通行密钥')
+  })).filter(item => item.platformwz != '通行密钥')
 }
 async function get() {
   await getAccountInfo()

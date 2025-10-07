@@ -3,6 +3,7 @@ exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const axios = require('axios')
   const jsonwebtoken = require('jsonwebtoken')
+  const privatekey = require('./privatekey.json')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -130,12 +131,17 @@ exports.main = async (event) => {
         kid = 'c877ccb0de5c49118131812b4e3495ef'
         projectid = '461323198429770355'
       }
+      if (product == 'synologydsmhelper') {
+        iss = '115494321'
+        kid = '3ab377fe42ec40738b03316abdb7aa76'
+        projectid = '461323198430545654'
+      }
       const jwt = jsonwebtoken.sign({
         iss: iss,
         aud: 'https://oauth-login.cloud.huawei.com/oauth2/v3/token',
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 60
-      }, process.env.keystart + process.env.keyend, {
+      }, privatekey[product], {
         algorithm: 'PS256',
         header: {
           kid: kid,
