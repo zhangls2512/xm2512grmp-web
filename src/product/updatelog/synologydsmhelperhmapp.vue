@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.1.1',
+    releaseDate: '2025-10-07',
+    logs: [
+      {
+        type: 'U',
+        content: '支持登录开启 MFA 二次验证的账号'
+      },
+      {
+        type: 'F',
+        content: '手动关闭通知权限后，应用冷启动时会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.0',
     releaseDate: '2025-10-07',
     logs: [
