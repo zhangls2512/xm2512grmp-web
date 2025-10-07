@@ -2,6 +2,52 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.2',
+    releaseDate: '2025-10-07',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 数据与隐私 - 权限管理 新增 系统授权'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 了解我们如何使用您的数据 - 已收集个人信息清单 新增 删除时机'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 更多 - 应用服务模式优化模式说明文本'
+      },
+      {
+        type: 'U',
+        content: '“网络测试”页面 Number 类型参数初始值修改为 -1'
+      },
+      {
+        type: 'U',
+        content: 'Webview 组件滚动不与父组件联动'
+      },
+      {
+        type: 'U',
+        content: '更新《关于轩铭密码智能备忘录与隐私的声明》'
+      },
+      {
+        type: 'F',
+        content: '“我的”中“退出登录”逻辑错误'
+      },
+      {
+        type: 'F',
+        content: '我的 - 设置 - 数据 - 导入与导出未选择文件、文件夹直接关闭系统文件选择器时会报错'
+      },
+      {
+        type: 'F',
+        content: '用本应用打开文件管理、微信等第三方应用中的 txt、csv 文件时导入功能未生效'
+      },
+      {
+        type: 'F',
+        content: '导入空 csv 文件时会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.1',
     releaseDate: '2025-09-30',
     logs: [

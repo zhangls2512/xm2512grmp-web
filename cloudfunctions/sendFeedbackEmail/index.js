@@ -44,23 +44,16 @@ exports.main = async (event) => {
     let contacttype = '未知'
     let contactvalue = '未知'
     const validcontacttypes = ['邮箱', '微信', 'QQ']
-    if (validcontacttypes.includes(requestdata.contactType)) {
-      if (typeof (requestdata.contactValue) != 'string' || !requestdata.contactValue) {
-        return {
-          errCode: 1001,
-          errMsg: '请求参数错误',
-          errFix: '传递有效的contactValue参数'
-        }
-      }
-      if (requestdata.contactType == '邮箱' && !validator.isEmail(requestdata.contactValue)) {
-        return {
-          errCode: 1001,
-          errMsg: '请求参数错误',
-          errFix: '传递有效的contactValue参数'
-        }
-      }
+    if (validcontacttypes.includes(requestdata.contactType) && typeof (requestdata.contactValue) == 'string' && requestdata.contactValue) {
       contacttype = requestdata.contactType
       contactvalue = requestdata.contactValue
+    }
+    if (contacttype == '邮箱' && !validator.isEmail(contactvalue) && contactvalue != '未知') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的contactValue参数'
+      }
     }
     await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
