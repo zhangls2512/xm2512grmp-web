@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.3',
+    releaseDate: '2025-10-09',
+    logs: [
+      {
+        type: 'U',
+        content: '自动上传故障日志类型默认值调整为“js 运行异常、应用崩溃、应用冻屏、应用查杀、资源泄漏、地址越界”（默认关闭与性能相关的类型，降低因故障日志自动上传导致操作被中断的概率）'
+      },
+      {
+        type: 'F',
+        content: '手动关闭通知权限后，应用冷启动时会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.2',
     releaseDate: '2025-10-07',
     logs: [
