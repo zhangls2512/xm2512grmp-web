@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.1.3',
+    releaseDate: '2025-10-10',
+    logs: [
+      {
+        type: 'U',
+        content: '支持使用 QuickConnect ID 登录'
+      },
+      {
+        type: 'U',
+        content: '请求 DSM 失败弹窗文本改为“DSM 请求失败，错误码：xxx”（以前为“请求失败 / 发生错误，错误码：xxx”）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.2',
     releaseDate: '2025-10-09',
     logs: [
