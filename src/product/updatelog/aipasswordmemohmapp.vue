@@ -2,6 +2,32 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.4',
+    releaseDate: '2025-10-12',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 应用 - 图标模式仅在使用未个性化定制应用图标的主题时生效'
+      },
+      {
+        type: 'U',
+        content: '删除底部导航栏页面与底部导航栏之间的间距'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏背景添加模糊效果'
+      },
+      {
+        type: 'U',
+        content: '功能下线：底部导航栏（Tab 组件）背后变模糊并叠加在上方页面之上（原因：可能遮挡上方页面底部的内容）'
+      },
+      {
+        type: 'F',
+        content: '全局捕获到异常时可能会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.3',
     releaseDate: '2025-10-09',
     logs: [
