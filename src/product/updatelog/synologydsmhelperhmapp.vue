@@ -2,6 +2,86 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.2',
+    releaseDate: '2025-10-13',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 更多 新增 流量下载提醒'
+      },
+      {
+        type: 'U',
+        content: '进入新建文件夹、重命名页面时输入框自动获焦'
+      },
+      {
+        type: 'U',
+        content: '支持应用在后台时下载文件'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 更多 - 启动时检查更新选项“仅 WLAN 下”调整为“非流量下”'
+      },
+      {
+        type: 'U',
+        content: '应用字体最大放大倍数调整为 2'
+      },
+      {
+        type: 'U',
+        content: '功能下线：我的 - 设置 - 通用 - 通用 - 界面 - 敏感页面禁止截、录屏（原因：系统默认在输入密码时开启禁止截、录屏）'
+      },
+      {
+        type: 'U',
+        content: '功能下线：车机（原因：本应用部分功能不支持在此类型设备上使用）'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.2.1',
+    releaseDate: '2025-10-13',
+    logs: [
+      {
+        type: 'A',
+        content: '“文件”新增搜索框（非根目录时可见）、左上角返回上级目录按钮、下拉刷新'
+      },
+      {
+        type: 'A',
+        content: '清理数据 新增 无用数据'
+      },
+      {
+        type: 'U',
+        content: '支持预览文件的大小上限调整为 1 GB'
+      },
+      {
+        type: 'U',
+        content: '删除底部导航栏页面与底部导航栏之间的间距'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏背景添加模糊效果'
+      },
+      {
+        type: 'F',
+        content: '深色模式下卡片背景颜色不正确'
+      },
+      {
+        type: 'F',
+        content: '预览临时文件存储目录错误'
+      },
+      {
+        type: 'F',
+        content: '文件下载成功时可能会报错'
+      },
+      {
+        type: 'F',
+        content: '根目录文件夹重命名成功后文件夹消失'
+      },
+      {
+        type: 'F',
+        content: '全局捕获到异常时可能会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.0',
     releaseDate: '2025-10-11',
     logs: [
