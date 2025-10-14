@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.3.5',
+    releaseDate: '2025-10-14',
+    logs: [
+      {
+        type: 'U',
+        content: '优化“密码”中搜索框的上、下间距'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 更多 - 启动时检查更新选项“仅 WLAN 下”调整为“非流量下”'
+      },
+      {
+        type: 'U',
+        content: '应用字体最大放大倍数调整为 2'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.4',
     releaseDate: '2025-10-12',
     logs: [

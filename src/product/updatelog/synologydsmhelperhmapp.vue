@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.3',
+    releaseDate: '2025-10-14',
+    logs: [
+      {
+        type: 'U',
+        content: '修改校验下载文件完整性的逻辑'
+      },
+      {
+        type: 'U',
+        content: '未联网状态应用冷启动时不检查更新'
+      },
+      {
+        type: 'F',
+        content: '导入账号时可能会报错'
+      },
+      {
+        type: 'F',
+        content: '登录态自动续期触发时机错误'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.2',
     releaseDate: '2025-10-13',
     logs: [
