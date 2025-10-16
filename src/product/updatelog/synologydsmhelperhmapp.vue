@@ -2,6 +2,44 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.4',
+    releaseDate: '2025-10-16',
+    logs: [
+      {
+        type: 'A',
+        content: '支持复制、移动文件（夹）'
+      },
+      {
+        type: 'U',
+        content: '“文件”中“新建文件夹”按钮调整为圆形透明图标按钮'
+      },
+      {
+        type: 'U',
+        content: '新建文件夹、重命名文件（夹）成功时才刷新“文件”页面'
+      },
+      {
+        type: 'U',
+        content: '修改校验下载文件完整性的逻辑'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 更多 - 流量下载提醒 调整为 流量使用提醒'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 无用数据 调整为 临时文件、无用通用设置'
+      },
+      {
+        type: 'U',
+        content: '应用字体最大放大倍数调整为 1.75'
+      },
+      {
+        type: 'F',
+        content: '会话注销失败时错误删除了账号'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.3',
     releaseDate: '2025-10-14',
     logs: [

@@ -55,6 +55,13 @@ exports.main = async (event) => {
         errFix: '传递有效的contactValue参数'
       }
     }
+    if (contacttype == 'QQ' && !/^\d+$/.test(contactvalue) && contactvalue != '未知') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的contactValue参数'
+      }
+    }
     await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
