@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.5',
+    releaseDate: '2025-10-19',
+    logs: [
+      {
+        type: 'A',
+        content: '音视频文件预览方式调整为在线播放'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.4',
     releaseDate: '2025-10-16',
     logs: [
