@@ -2,6 +2,42 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.8',
+    releaseDate: '2025-10-22',
+    logs: [
+      {
+        type: 'U',
+        content: '“文件”顶部操作区不跟随页面滚动'
+      },
+      {
+        type: 'U',
+        content: '复制、移动文件时右上角叉、勾图标颜色分别改为红、绿'
+      },
+      {
+        type: 'F',
+        content: '“文件”刷新逻辑错误'
+      },
+      {
+        type: 'F',
+        content: '部分界面未适配大字场景'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.2.7',
+    releaseDate: '2025-10-22',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 账号 新增 设备间同步'
+      },
+      {
+        type: 'U',
+        content: '适配大字场景'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.6',
     releaseDate: '2025-10-20',
     logs: [
