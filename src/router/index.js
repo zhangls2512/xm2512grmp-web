@@ -61,12 +61,12 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/baxk.vue')
         },
         {
-          path: 'aipasswordmemohmapp',
-          component: () => import('/src/product/updatelog/aipasswordmemohmapp.vue')
+          path: 'aipasswordmemo',
+          component: () => import('/src/product/updatelog/aipasswordmemo.vue')
         },
         {
-          path: 'synologydsmhelperhmapp',
-          component: () => import('/src/product/updatelog/synologydsmhelperhmapp.vue')
+          path: 'synologydsmhelper',
+          component: () => import('/src/product/updatelog/synologydsmhelper.vue')
         },
         {
           path: 'resource',

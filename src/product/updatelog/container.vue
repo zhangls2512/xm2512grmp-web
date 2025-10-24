@@ -20,11 +20,11 @@ const tabs = [
     label: '备案许可'
   },
   {
-    id: 'aipasswordmemohmapp',
+    id: 'aipasswordmemo',
     label: '密码智能备忘录'
   },
   {
-    id: 'synologydsmhelperhmapp',
+    id: 'synologydsmhelper',
     label: '群晖 DSM 助手'
   },
   {

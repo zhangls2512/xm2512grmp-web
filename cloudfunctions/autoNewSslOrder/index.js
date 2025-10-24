@@ -117,7 +117,7 @@ exports.main = async () => {
         return
       }
       let desc = item.desc
-      if (desc.endsWith != '（自动续期）') {
+      if (!desc.endsWith('（自动续期）')) {
         desc = desc + '（自动续期）'
       }
       const orderres = await db.collection('sslorder').add({
@@ -402,7 +402,7 @@ exports.main = async () => {
         return
       }
       let desc = item.desc
-      if (desc.endsWith != '（自动续期）') {
+      if (!desc.endsWith('（自动续期）')) {
         desc = desc + '（自动续期）'
       }
       const orderres = await db.collection('sslorder').add({
