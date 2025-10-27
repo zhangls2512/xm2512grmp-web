@@ -25,6 +25,9 @@ exports.main = async () => {
       await db.collection('account').where({
         _id: item._id
       }).remove()
+      await db.collection('externalaccount').where({
+        uid: item._id
+      }).remove()
       await db.collection('loginlog').where({
         uid: item._id
       }).remove()
