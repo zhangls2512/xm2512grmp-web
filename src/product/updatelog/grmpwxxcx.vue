@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.7',
+    releaseDate: '2025-10-29',
+    logs: [
+      {
+        type: 'U',
+        content: '开发产品 新增 群晖 DSM 助手'
+      },
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.6',
     releaseDate: '2025-09-07',
     logs: [
