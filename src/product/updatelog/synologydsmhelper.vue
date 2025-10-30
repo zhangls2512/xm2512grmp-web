@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.9',
+    releaseDate: '2025-10-30',
+    logs: [
+      {
+        type: 'A',
+        content: '文件支持多选批量复制、移动、删除'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 关于 新增 资质证照'
+      },
+      {
+        type: 'U',
+        content: '“文件”支持侧滑返回上级文件夹'
+      },
+      {
+        type: 'U',
+        content: '显示方向跟随传感器旋转'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.8',
     releaseDate: '2025-10-22',
     logs: [
