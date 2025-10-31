@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.10',
+    releaseDate: '2025-10-31',
+    logs: [
+      {
+        type: 'F',
+        content: '横屏时底部导航栏页面无上间距'
+      },
+      {
+        type: 'F',
+        content: '“文件”多选界面未适配大字场景'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.9',
     releaseDate: '2025-10-30',
     logs: [
