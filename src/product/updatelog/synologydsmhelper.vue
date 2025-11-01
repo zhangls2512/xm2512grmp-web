@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.11',
+    releaseDate: '2025-11-01',
+    logs: [
+      {
+        type: 'U',
+        content: '调试 - 设置 - 网络 新增 连接 DSM 时跳过 SSL 验证'
+      },
+      {
+        type: 'F',
+        content: '解析消息获取其时间时可能会报错'
+      },
+      {
+        type: 'F',
+        content: '无后缀名文件获取其对应类型的图标时会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.10',
     releaseDate: '2025-10-31',
     logs: [
