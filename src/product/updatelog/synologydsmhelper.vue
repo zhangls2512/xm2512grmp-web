@@ -2,6 +2,32 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.12',
+    releaseDate: '2025-11-03',
+    logs: [
+      {
+        type: 'U',
+        content: '“文件”修改刷新动画显示位置'
+      },
+      {
+        type: 'U',
+        content: '电脑端部分组件鼠标悬浮在其上时其背景颜色会变化'
+      },
+      {
+        type: 'F',
+        content: '移动单个文件（夹）时错误执行了复制操作'
+      },
+      {
+        type: 'F',
+        content: '进入我的 - 设置 - 关于时可能会报错'
+      },
+      {
+        type: 'F',
+        content: '电脑端鼠标右键未弹出菜单'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.11',
     releaseDate: '2025-11-01',
     logs: [
