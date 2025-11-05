@@ -86,7 +86,7 @@ async function getUserInfo() {
     'ssl_email_certificatenearexpire',
     'ssl_webhook_certificatenearexpire'
   ]
-  noticenames.value.forEach(item => {
+  noticenames.forEach(item => {
     if (noticesetting.includes(item)) {
       noticeszt.value[item] = true
     } else {
