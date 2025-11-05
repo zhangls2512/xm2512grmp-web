@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.2.13',
+    releaseDate: '2025-11-05',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 界面 - 窗口置顶调整为仅电脑端可用'
+      },
+      {
+        type: 'U',
+        content: '修改公安备案注册时间'
+      },
+      {
+        type: 'F',
+        content: '请求 IP 与登录 IP 不一致时会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.12',
     releaseDate: '2025-11-03',
     logs: [

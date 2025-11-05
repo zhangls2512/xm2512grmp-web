@@ -20,6 +20,6 @@
     "@vitejs/plugin-vue": "latest",
     "unplugin-auto-import": "latest",
     "unplugin-vue-components": "latest",
-    "vite": "latest"
+    "vite": "~7.1.12"
   }
 }
