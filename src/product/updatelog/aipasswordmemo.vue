@@ -2,6 +2,64 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.4.0',
+    releaseDate: '2025-11-07',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 密码安全检查 新增 强度'
+      },
+      {
+        type: 'U',
+        content: '密码、常用信息、标签页面顶部操作区不跟随页面滚动、修改刷新动画显示位置'
+      },
+      {
+        type: 'U',
+        content: '进入我的 - 设置 - 云备份 - 密钥 - 导入 - 自定义时输入框自动获焦'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 - 窗口置顶调整为仅电脑端可用'
+      },
+      {
+        type: 'U',
+        content: '电脑端部分组件鼠标悬浮在其上时其背景颜色会变化'
+      },
+      {
+        type: 'U',
+        content: '适配大字场景'
+      },
+      {
+        type: 'U',
+        content: '显示方向跟随传感器旋转'
+      },
+      {
+        type: 'U',
+        content: '应用字体最大放大倍数调整为 1.75'
+      },
+      {
+        type: 'U',
+        content: '功能下线：智能客服（原因：功能建设中，建设完毕后恢复）'
+      },
+      {
+        type: 'F',
+        content: '进入“新增常用信息”页面时“内容”输入框未自动获焦'
+      },
+      {
+        type: 'F',
+        content: '我的 - 设置 - 数据 - 设备间同步 - 自动同步（推送）到以下设备、可信设备中类型错误显示为 undefined'
+      },
+      {
+        type: 'F',
+        content: '电脑端鼠标右键未弹出菜单'
+      },
+      {
+        type: 'F',
+        content: '设备间无法成功同步数据'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.3.5',
     releaseDate: '2025-10-14',
     logs: [
