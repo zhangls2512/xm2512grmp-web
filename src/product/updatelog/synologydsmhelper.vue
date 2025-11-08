@@ -2,6 +2,46 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.3.1',
+    releaseDate: '2025-11-08',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 文件 新增 自定义下载位置'
+      },
+      {
+        type: 'U',
+        content: '修改校验下载文件完整性的逻辑'
+      },
+      {
+        type: 'F',
+        content: '使用 QuickConnect ID 登录时预览、下载文件功能异常'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.3.0',
+    releaseDate: '2025-11-08',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 系统 - 重启、关机（登录账号时可见）'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 新增 文件 - 预览方式、在线预览音视频'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 更多 新增 应用启动后拉起切换账号弹窗、缓存 API 版本号'
+      },
+      {
+        type: 'U',
+        content: '功能下线：智能客服（原因：功能建设中，建设完毕后恢复）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2.13',
     releaseDate: '2025-11-05',
     logs: [
