@@ -2,6 +2,36 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.4.1',
+    releaseDate: '2025-11-09',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 数据 - 设备间同步 - 推送、拉取添加加载弹窗'
+      },
+      {
+        type: 'U',
+        content: '设备间同步数据成功后对端设备数据列表自动刷新'
+      },
+      {
+        type: 'U',
+        content: '修改设备间数据同步结果弹窗文本'
+      },
+      {
+        type: 'F',
+        content: '我的 - 会员中心 - 付费开通系统未登录华为账号时会报错'
+      },
+      {
+        type: 'F',
+        content: '接收对端设备推送的常用信息、标签数据的逻辑错误'
+      },
+      {
+        type: 'F',
+        content: '接收对端设备推送的数据成功后未自动备份'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.4.0',
     releaseDate: '2025-11-07',
     logs: [
