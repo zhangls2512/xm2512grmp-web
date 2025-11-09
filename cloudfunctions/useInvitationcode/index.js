@@ -149,19 +149,21 @@ exports.main = async (event) => {
             errFix: '联系客服'
           }
         }
-        const devicestatus = getdevicestatusres.data
-        if (devicestatus.bundleName && devicestatus.bundleName != bundlename) {
-          return {
-            errCode: 8004,
-            errMsg: 'deviceToken来源应用与product不匹配',
-            errFix: '传递来源于product的deviceToken'
+        if (getdevicestatusres.data.errorCodes == 'OK') {
+          const devicestatus = getdevicestatusres.data
+          if (devicestatus.bundleName && devicestatus.bundleName != bundlename) {
+            return {
+              errCode: 8004,
+              errMsg: 'deviceToken来源应用与product不匹配',
+              errFix: '传递来源于product的deviceToken'
+            }
           }
-        }
-        if (devicestatus.errorCodes != 'NotFound' || devicestatus.bit0) {
-          return {
-            errCode: 8005,
-            errMsg: '此设备已使用过邀请码',
-            errFix: '无修复建议'
+          if (devicestatus.bit0) {
+            return {
+              errCode: 8005,
+              errMsg: '此设备已使用过邀请码',
+              errFix: '无修复建议'
+            }
           }
         }
         try {
