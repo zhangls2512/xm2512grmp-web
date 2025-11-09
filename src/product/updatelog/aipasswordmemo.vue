@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.4.2',
+    releaseDate: '2025-11-09',
+    logs: [
+      {
+        type: 'U',
+        content: '从其他设备导入图片调整为非手机端可用'
+      },
+      {
+        type: 'F',
+        content: '新增、修改密码 - 密码随机生成显示方向未跟随传感器旋转'
+      },
+      {
+        type: 'F',
+        content: '我的 - 密码工具 - 安全检查 - 重复统计逻辑错误'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.4.1',
     releaseDate: '2025-11-09',
     logs: [
@@ -37,7 +55,7 @@ const data = [
     logs: [
       {
         type: 'A',
-        content: '我的 - 密码安全检查 新增 强度'
+        content: '我的 - 密码工具 - 安全检查 新增 强度'
       },
       {
         type: 'U',
