@@ -142,7 +142,7 @@ exports.main = async (event) => {
             bundleName: bundlename
           }
         })
-        if (getdevicestatusres.data.errorCodes != 'OK') {
+        if (getdevicestatusres.data.errorCodes != 'OK' && getdevicestatusres.data.errorCodes != 'NotFound') {
           return {
             errCode: 8003,
             errMsg: '查询设备标记状态失败，原因：' + getdevicestatusres.data.errorCodes,
