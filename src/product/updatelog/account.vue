@@ -91,7 +91,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品管理页面已开通的产品 新增 去使用'
+        content: '“产品管理”页面已开通的产品 新增 去使用'
       }
     ]
   },
@@ -115,7 +115,7 @@ const data = [
       },
       {
         type: 'F',
-        content: '注册账号页面无法输入验证码'
+        content: '“注册账号”页面无法输入验证码'
       }
     ]
   },

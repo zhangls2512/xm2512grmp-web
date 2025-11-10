@@ -7,7 +7,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '新增资源页面支持 AI 生成简介、标签'
+        content: '“新增资源”页面支持 AI 生成简介、标签'
       }
     ]
   },
@@ -17,7 +17,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '新增资源（完整）页面支持快速添加常用标签'
+        content: '“新增资源（完整）”页面支持快速添加常用标签'
       }
     ]
   },

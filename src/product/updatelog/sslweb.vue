@@ -37,7 +37,7 @@ const data = [
     logs: [
       {
         type: 'F',
-        content: '修复 新增订单页面“存入模板”开关关闭时仍存入模板'
+        content: '修复“新增订单”页面“存入模板”开关关闭时仍存入模板'
       }
     ]
   },
@@ -47,7 +47,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '订单详情页面支持复制订单 ID'
+        content: '“订单详情”页面支持复制订单 ID'
       }
     ]
   },
