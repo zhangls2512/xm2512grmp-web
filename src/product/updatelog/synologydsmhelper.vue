@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.3.5',
+    releaseDate: '2025-11-13',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 网络 新增 自定义 DNS 服务器'
+      },
+      {
+        type: 'U',
+        content: '消息层级、类别、主题用户友好化'
+      },
+      {
+        type: 'U',
+        content: '默认开启我的 - 设置 - 通用 - 更多 - 缓存 API 版本号'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3.4',
     releaseDate: '2025-11-13',
     logs: [
