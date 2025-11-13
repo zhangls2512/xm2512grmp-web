@@ -2,6 +2,48 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.4.6',
+    releaseDate: '2025-11-13',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 新增 应用启动时清理历史版本故障日志'
+      }
+    ]
+  },
+  {
+    versionNumber: '2.0.4.5',
+    releaseDate: '2025-11-12',
+    logs: [
+      {
+        type: 'U',
+        content: '调试 - 设置 - 基础 - 进程缓存后快速启动调整为非平板端可用'
+      }
+    ]
+  },
+  {
+    versionNumber: '2.0.4.4',
+    releaseDate: '2025-11-12',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 新增 首页隐藏标签'
+      },
+      {
+        type: 'U',
+        content: '满足评分条件（新版本发布且距上次评分已经一年）进入我的 - 设置 - 关于时拉起应用评分弹窗'
+      },
+      {
+        type: 'U',
+        content: '应用冷启动时预加载应用入口所使用的系统 so，优化应用的冷启动性能'
+      },
+      {
+        type: 'U',
+        content: '不再使用系统废弃 API'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.4.3',
     releaseDate: '2025-11-10',
     logs: [
