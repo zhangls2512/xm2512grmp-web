@@ -31,24 +31,26 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
-          <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aipasswordmemo" target="_blank">
-            <div class="kuang">
-              <div class="cz">
-                <img class="image" src="/password.png" loading="lazy"></img>
-                <div class="large-bold-text">密码智能备忘录</div>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/password.png" loading="lazy"></img>
+              <div class="large-bold-text">密码智能备忘录</div>
+              <div class="sp">
+                <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aipasswordmemo" target="_blank">正式</a>
               </div>
             </div>
-          </a>
+          </div>
         </div>
         <div class="sp" style="align-items: stretch">
-          <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.synologydsmhelper" target="_blank">
-            <div class="kuang">
-              <div class="cz">
-                <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
-                <div class="large-bold-text">群晖 DSM 助手</div>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
+              <div class="large-bold-text">群晖 DSM 助手</div>
+              <div class="sp">
+                <a href="https://appgallery.huawei.com/apptest/73MXaoycx0C" target="_blank">邀请测试</a>
               </div>
             </div>
-          </a>
+          </div>
           <router-link to="/product/resource" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -206,7 +208,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.13</div>
+          <div class="footer-text">Version 1.0.14</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
