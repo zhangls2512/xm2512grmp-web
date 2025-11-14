@@ -33,7 +33,7 @@ exports.main = async () => {
       }).remove()
       const email = item.email
       if (email) {
-        nodemailertransport.sendMail({
+        await nodemailertransport.sendMail({
           from: 'zhangls2512@vip.qq.com',
           to: email,
           subject: '轩铭2512统一账号被系统自动注销通知',
