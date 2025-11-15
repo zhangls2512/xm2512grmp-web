@@ -2,6 +2,36 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.0.3.6',
+    releaseDate: '2025-11-15',
+    logs: [
+      {
+        type: 'U',
+        content: '修改“我的”中“退出登录”按钮样式'
+      },
+      {
+        type: 'U',
+        content: '“登录”弹窗、调试 - 设置 - 网络 - 自定义 DNS 服务器中“端口”输入框显示默认值'
+      },
+      {
+        type: 'U',
+        content: '按钮（Button 组件）长度占满一行'
+      },
+      {
+        type: 'U',
+        content: '单击（鼠标左键）图标按钮时其背景颜色会变化'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏位置适配 PuraX 外屏'
+      },
+      {
+        type: 'F',
+        content: '基本模式下调试 - 设置 - 基础 - 保存故障日志、应用启动时清理历史版本故障日志开关错误被禁用'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3.5',
     releaseDate: '2025-11-13',
     logs: [

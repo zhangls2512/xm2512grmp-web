@@ -2,6 +2,50 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.4.8',
+    releaseDate: '2025-11-15',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 关于 新增 产品路线图'
+      }
+    ]
+  },
+  {
+    versionNumber: '2.0.4.7',
+    releaseDate: '2025-11-15',
+    logs: [
+      {
+        type: 'U',
+        content: '修改“我的”中“退出登录”按钮样式'
+      },
+      {
+        type: 'U',
+        content: '我的 - 会员中心 - 更多 - 邀请新用户，免费得会员中邀请二维码显示位置调整为水平居中'
+      },
+      {
+        type: 'U',
+        content: '部分按钮（Button 组件）长度占满一行'
+      },
+      {
+        type: 'U',
+        content: '部分透明按钮移除柔和点光源效果（测试发现柔和点光源效果会被截断导致不美观）'
+      },
+      {
+        type: 'U',
+        content: '图标按钮鼠标悬浮在其上（仅蓝色图标按钮）、单击（鼠标左键）其时其背景颜色会变化'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏位置适配 PuraX 外屏'
+      },
+      {
+        type: 'F',
+        content: '基本模式下调试 - 设置 - 基础 - 保存故障日志、应用启动时清理历史版本故障日志开关错误被禁用'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.4.6',
     releaseDate: '2025-11-13',
     logs: [
