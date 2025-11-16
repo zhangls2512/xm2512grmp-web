@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.0.0',
+    releaseDate: '2025-11-16',
+    logs: [
+      {
+        type: 'A',
+        content: '新增“相册”（需开启我的 - 设置 - 通用 - 相册 - 显示开关）'
+      },
+      {
+        type: 'U',
+        content: '“登录”弹窗、调试 - 设置 - 网络 - 自定义 DNS 服务器中“端口”禁止为 0'
+      },
+      {
+        type: 'U',
+        content: '“切换账号”弹窗右上角新增“+”图标，单击（鼠标左键）可拉起“登录”弹窗以登录切换到新账号'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 关于 新增 产品路线图'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.3.6',
     releaseDate: '2025-11-15',
     logs: [
