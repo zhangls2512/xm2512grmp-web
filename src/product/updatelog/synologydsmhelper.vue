@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.1.0',
+    releaseDate: '2025-11-17',
+    logs: [
+      {
+        type: 'A',
+        content: '相册支持预览图片、查看图片详情、下载图片、删除图片、查看相册中的图片'
+      },
+      {
+        type: 'U',
+        content: '注销会话退出登录时不删除本地存储的账号数据'
+      },
+      {
+        type: 'F',
+        content: '复制、移动、删除文件时弹窗提示成功但实际未执行完成'
+      },
+      {
+        type: 'F',
+        content: '“切换账号”弹窗底部间距不正确'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.0.0',
     releaseDate: '2025-11-16',
     logs: [
