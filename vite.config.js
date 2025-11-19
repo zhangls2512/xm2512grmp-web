@@ -12,8 +12,5 @@ export default defineConfig({
     AutoImport({
       resolvers: [TinyVueSingleResolver]
     })
-  ],
-  define: {
-    'process.env': { ...process.env }
-  }
+  ]
 })
