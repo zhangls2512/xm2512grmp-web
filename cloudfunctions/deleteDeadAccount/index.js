@@ -16,7 +16,7 @@ exports.main = async () => {
   const res = await db.collection('account').where({
     endDate: db.command.lte(startdate),
     service: []
-  }).get()
+  }).orderBy('endDate', 'asc').get()
   res.data.forEach(async (item) => {
     const banres = await db.collection('banlog').where({
       uid: item._id

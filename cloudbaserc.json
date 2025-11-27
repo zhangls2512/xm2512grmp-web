@@ -178,6 +178,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteSslOrderPrivateKey",
+      "timeout": 60,
+      "runtime": "Nodejs18.15",
+      "installDependency": true
+    },
+    {
       "name": "deleteSslTemplate",
       "timeout": 60,
       "runtime": "Nodejs18.15",

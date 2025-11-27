@@ -72,6 +72,20 @@ function download(url) {
   link.click()
   document.body.removeChild(link)
 }
+async function deletePrivateKey() {
+  await request({
+    apiPath: '/ssl/deleteOrderPrivateKey',
+    body: {
+      accessToken: accesstoken,
+      id: id
+    }
+  })
+  TinyModal.message({
+    message: '删除成功',
+    status: 'success'
+  })
+  get()
+}
 function openUpdateDescDialog() {
   updatedescdialog.value = true
 }
@@ -172,6 +186,12 @@ async function revokeCertificate() {
     <div v-if="data.privateKey != ''" class="sp">
       <div class="bold-text">私钥</div>
       <tiny-button type="success" @click="download(data.privateKey)">下载</tiny-button>
+      <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
+        @confirm="deletePrivateKey()">
+        <template #reference>
+          <tiny-button type="danger">删除</tiny-button>
+        </template>
+      </tiny-popconfirm>
       <div>下载链接有效期 5 分钟，刷新页面可获取新的下载链接</div>
     </div>
     <div v-if="data.certificate.length > 0" class="sp">

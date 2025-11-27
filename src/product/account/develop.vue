@@ -494,6 +494,11 @@ const apis = ref([
   },
   {
     product: 'SSL 证书',
+    name: 'ssl_deleteOrderPrivateKey',
+    desc: '删除订单私钥'
+  },
+  {
+    product: 'SSL 证书',
     name: 'ssl_revokeCertificate',
     desc: '吊销证书'
   },

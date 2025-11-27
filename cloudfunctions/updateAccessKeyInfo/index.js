@@ -137,6 +137,7 @@ exports.main = async (event) => {
       'ssl_deleteUselessStatusOrder',
       'ssl_deactivateAuthorization',
       'ssl_respondChallenge',
+      'ssl_deleteOrderPrivateKey',
       'ssl_revokeCertificate',
       'ssl_getDnsTaskCount',
       'ssl_getDnsTaskList',

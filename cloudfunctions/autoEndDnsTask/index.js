@@ -7,7 +7,7 @@ exports.main = async () => {
   const res = await db.collection('dnstask').where({
     status: db.command.in(['setpending', 'submitpending']),
     updateDate: db.command.lte(startdate)
-  }).get()
+  }).orderBy('updateDate', 'asc').get()
   res.data.forEach(async (item) => {
     await db.collection('dnstask').where({
       _id: item._id

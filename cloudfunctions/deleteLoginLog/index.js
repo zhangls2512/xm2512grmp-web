@@ -6,6 +6,5 @@ exports.main = async () => {
   const startdate = Date.now() - 2592000000
   await db.collection('loginlog').where({
     date: db.command.lte(startdate)
-  }).remove()
-  return 'success'
+  }).orderBy('date', 'asc').remove()
 }
