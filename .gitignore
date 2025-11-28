@@ -1,4 +1,4 @@
-*.ps1
-node_modules
 privatekey.json
+node_modules
 gabeian.png
+*.ps1
