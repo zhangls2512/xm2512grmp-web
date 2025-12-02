@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.1.1',
+    releaseDate: '2025-12-02',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 相册 - 显示默认开启'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据多选框右对齐显示、本地文件类清理项显示大小、使用 API21 中的新 API 清理应用缓存'
+      },
+      {
+        type: 'U',
+        content: '支持在系统分享弹窗中分享 txt 文件到本应用以导入账号数据'
+      },
+      {
+        type: 'U',
+        content: '根据纵向断点（以前为设备类型）动态调整横竖屏布局模式'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.0',
     releaseDate: '2025-11-17',
     logs: [

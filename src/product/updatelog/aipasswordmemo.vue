@@ -2,6 +2,40 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.5.0',
+    releaseDate: '2025-12-02',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 云备份 - 管理多选框右对齐显示'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据多选框右对齐显示、本地文件类清理项显示大小、使用 API21 中的新 API 清理应用缓存'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 关于 新增 获得奖项'
+      },
+      {
+        type: 'U',
+        content: '支持在系统分享弹窗中分享 txt、csv 文件到本应用以导入数据'
+      },
+      {
+        type: 'U',
+        content: '生成随机数前开启硬件熵源，提升安全性'
+      },
+      {
+        type: 'U',
+        content: '提升数据库查询性能'
+      },
+      {
+        type: 'U',
+        content: '根据纵向断点（以前为设备类型）动态调整横竖屏布局模式'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.4.8',
     releaseDate: '2025-11-15',
     logs: [
