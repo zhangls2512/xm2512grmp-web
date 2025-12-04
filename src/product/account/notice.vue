@@ -119,7 +119,7 @@ async function changeWebhookNewbanlog(zt) {
       <tiny-alert :closable="false"
         description="邮箱发件人：zhangls2512@vip.qq.com；Webhook 请求 IP：81.68.129.229。建议添加白名单防止通知推送被拦截。"></tiny-alert>
       <div class="large-bold-text">邮箱</div>
-      <tiny-alert :closable="false" description="默认将账号注册邮箱用作通知推送的收件箱，目前暂不支持修改。"></tiny-alert>
+      <tiny-alert :closable="false" description="默认将账号注册邮箱用作通知推送的收件箱，目前不支持修改。"></tiny-alert>
       <div class="large-bold-text">Webhook</div>
       <tiny-alert :closable="false"
         description="设置后，服务器会向地址发送 HTTP POST 请求推送通知，请求体为 JSON 对象，含有 noticeName 和其他字段，其他字段因通知类型不同有差异。"></tiny-alert>

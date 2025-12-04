@@ -89,11 +89,11 @@ exports.main = async (event) => {
               errFix: '放置正确的webhhookToken'
             }
           }
-        } catch {
+        } catch (err) {
           return {
             errCode: 8001,
-            errMsg: '请求webhookUrl失败',
-            errFix: '发起测试请求排查问题'
+            errMsg: '请求webhookUrl失败，原因：' + err.message,
+            errFix: '参考原因发起测试请求排查问题或联系客服'
           }
         }
       }
