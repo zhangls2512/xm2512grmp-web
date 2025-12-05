@@ -739,7 +739,7 @@ async function getEmailCodea() {
         <div>{{ accountinfo.endDate }}</div>
       </div>
       <tiny-alert :closable="false"
-        description="系统会在登录账号时使用邮箱 zhangls2512@vip.qq.com 作为发件人发送登录提醒邮件到邮箱。当发现登录行为可疑时，可使用下方的冻结账号、强制登出功能，防止账号被他人非法使用。"></tiny-alert>
+        description="系统会在登录账号时使用邮箱 zhangls2512@vip.qq.com 作为发件人发送登录提醒邮件到邮箱。当发现登录行为可疑时，可使用下方冻结账号、强制登出功能，防止账号被他人非法使用。"></tiny-alert>
       <div class="sp">
         <tiny-button type="info" @click="freezeOpen">冻结账号</tiny-button>
         <tiny-popconfirm title="提示" message="执行此操作后所有产品将退出登录，确定执行？" type="warning" trigger="hover"

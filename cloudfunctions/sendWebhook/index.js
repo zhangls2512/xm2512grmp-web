@@ -2,6 +2,8 @@
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const axios = require('axios')
+  const crypto = require('crypto')
+  const fs = require('fs')
   const app = tcb.init()
   const db = app.database()
   try {
@@ -22,18 +24,24 @@ exports.main = async (event) => {
       const webhookurl = res.data[0].webhookUrl
       if (webhookurl) {
         try {
-          await axios.post(webhookurl, event.data, {
+          const privatekey = fs.readFileSync('./privatekey.txt')
+          const datahash = crypto.createHash('sha512').update(JSON.stringify(event.data)).digest('base64')
+          const signature = crypto.createSign('sha512').update(datahash).sign(privatekey).toString('base64')
+          await axios.post(webhookurl, {
+            data: event.data,
+            signature: signature
+          }, {
             timeout: 20000
           })
           return {
             errCode: 0,
             errMsg: '成功'
           }
-        } catch {
+        } catch (err) {
           return {
             errCode: 8001,
-            errMsg: '请求webhookUrl失败',
-            errFix: '无修复建议'
+            errMsg: '请求webhookUrl失败，原因：' + err.message,
+            errFix: '参考原因发起测试请求排查问题或联系客服'
           }
         }
       }

@@ -122,10 +122,13 @@ async function changeWebhookNewbanlog(zt) {
       <tiny-alert :closable="false" description="默认将账号注册邮箱用作通知推送的收件箱，目前不支持修改。"></tiny-alert>
       <div class="large-bold-text">Webhook</div>
       <tiny-alert :closable="false"
-        description="设置后，服务器会向地址发送 HTTP POST 请求推送通知，请求体为 JSON 对象，含有 noticeName 和其他字段，其他字段因通知类型不同有差异。"></tiny-alert>
+        description="设置后，服务器会向地址发送 HTTP POST 请求推送通知，请求体为 JSON 对象，含有 data 和 signature 两个字段，其中 data 字段含有 noticeName 和其他字段，其他字段由通知类型决定。目前提供两种方式验证请求是否来源于轩铭 2512 服务器：下载下方证书使用其中的公钥验签（具体步骤可参考下方文档）、验证请求 IP 是否为 81.68.129.229，推荐使用前者。"></tiny-alert>
       <div class="sp">
-        <div>推送地址：<span v-if="!webhookurl">未设置</span><span v-if="webhookurl">{{ webhookurl }}</span>
-        </div>
+        <a href="https://www.zhangls2512.cn/xm2512_root_ca_2025.cer" download>下载证书</a>
+        <a href="https://docs.qq.com/doc/p/df778231415ac18a60f0aaf5f27a03b26bdf3778" target="_blank">公钥验签具体步骤参考</a>
+      </div>
+      <div class="sp">
+        <div>推送地址：<span v-if="!webhookurl">未设置</span><span v-if="webhookurl">{{ webhookurl }}</span></div>
         <tiny-button type="info" @click="openWebhookDialog">设置</tiny-button>
       </div>
       <div class="large-bold-text">接收状态</div>

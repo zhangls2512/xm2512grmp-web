@@ -1,6 +1,8 @@
 'use strict'
 exports.main = async (event) => {
   const axios = require('axios')
+  const crypto = require('crypto')
+  const fs = require('fs')
   const nodemailer = require('nodemailer')
   const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
@@ -26,7 +28,16 @@ exports.main = async (event) => {
   }
   try {
     const requestdata = JSON.parse(event.body)
-    if (requestdata.noticeName != 'resource_webhook_versionupdate') {
+    const datahash = crypto.createHash('sha512').update(JSON.stringify(requestdata.data)).digest('base64')
+    const publickey = fs.readFileSync('./publickey.txt')
+    if (!crypto.createVerify('sha512').update(datahash).verify(publickey, Buffer.from(requestdata.signature, 'base64'))) {
+      return {
+        errCode: 1003,
+        errMsg: 'signature校验失败',
+        errFix: '传递有效的signature'
+      }
+    }
+    if (requestdata.data.noticeName != 'resource_webhook_versionupdate') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -35,7 +46,7 @@ exports.main = async (event) => {
     }
     let channelname = ''
     let url = ''
-    const resourceid = requestdata.resourceId
+    const resourceid = requestdata.data.resourceId
     const validresourceids = ['0e7893fb67e67aec0012ffd02eae679a', 'b013194767e67b6600146b805c3a6ba5', '80a8bd4f67e67bb6001344e3625c0400', '9f86c65667e67c2f00130c9f5b343245']
     if (!validresourceids.includes(resourceid)) {
       return {
@@ -61,7 +72,7 @@ exports.main = async (event) => {
       url = 'https://aka.ms/releasepreviewLatest'
     }
     try {
-      const { data } = await axios.post('http://api.chuckfang.com:12580/subscribe/openBroadcast', channelname + '频道有新版本：' + requestdata.newVersion + '。', {
+      const { data } = await axios.post('http://api.chuckfang.com:12580/subscribe/openBroadcast', channelname + '频道有新版本：' + requestdata.data.newVersion + '。', {
         params: {
           channelId: 'dfe6398536a54e1dad34928d6b812944',
           unionId: process.env.unionid,
