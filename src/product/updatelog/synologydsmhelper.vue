@@ -2,6 +2,32 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.1.4',
+    releaseDate: '2025-12-06',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 更多 新增 API 版本号缓存'
+      },
+      {
+        type: 'U',
+        content: '提升“相册”图片列表滚动性能'
+      },
+      {
+        type: 'U',
+        content: '调整页面与屏幕左、右边缘的间距'
+      },
+      {
+        type: 'F',
+        content: '相册 - 照片同一个日期可能会显示多次'
+      },
+      {
+        type: 'F',
+        content: '应用启动后拉起的“切换账号”弹窗标题栏重复显示'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.3',
     releaseDate: '2025-12-05',
     logs: [

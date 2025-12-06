@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.5.1',
+    releaseDate: '2025-12-06',
+    logs: [
+      {
+        type: 'U',
+        content: '调整页面与屏幕左、右边缘的间距'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.5.0',
     releaseDate: '2025-12-02',
     logs: [
