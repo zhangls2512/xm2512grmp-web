@@ -2,6 +2,40 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.1.5',
+    releaseDate: '2025-12-09',
+    logs: [
+      {
+        type: 'U',
+        content: '“相册”支持视频'
+      },
+      {
+        type: 'U',
+        content: '未切换账号非首次进入“相册”时相册 - 照片不刷新'
+      },
+      {
+        type: 'U',
+        content: '提升获取 API 版本号缓存性能（读取内存，以前为读取文件）'
+      },
+      {
+        type: 'U',
+        content: 'API 版本号缓存损坏（JSON 解析失败）时自动清空重新建立缓存，提升稳定性'
+      },
+      {
+        type: 'U',
+        content: '功能下线：底部导航栏（Tab 组件）可以通过滑动上方页面进行页面切换（原因：降低手势冲突概率）'
+      },
+      {
+        type: 'F',
+        content: '切换账号后“文件”“相册”可能会刷新切换前账号的资源导致 DSM 接口调用失败'
+      },
+      {
+        type: 'F',
+        content: '导入的账号登录状态错误均为已登录'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.4',
     releaseDate: '2025-12-06',
     logs: [
