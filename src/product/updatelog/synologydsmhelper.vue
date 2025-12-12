@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.2.0',
+    releaseDate: '2025-12-12',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 传输任务（登录账号时可见）'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 新增 传输 - 下载目录（非手机端可用）'
+      },
+      {
+        type: 'A',
+        content: '文件支持多选批量下载'
+      },
+      {
+        type: 'A',
+        content: '账号支持设置备注（长按或鼠标右键“切换账号”弹窗中的账号，在弹出菜单中选择“编辑备注”）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.5',
     releaseDate: '2025-12-09',
     logs: [
