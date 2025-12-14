@@ -6,7 +6,7 @@ exports.main = async () => {
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,
     id: '0e7893fb67e67aec0012ffd02eae679a',
-    version: windowscanaryres.data.match(/\b\d{5}\b/g)[0]
+    version: windowscanaryres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
   })
   const windowsdevres = await axios.get('https://aka.ms/devLatest')
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
