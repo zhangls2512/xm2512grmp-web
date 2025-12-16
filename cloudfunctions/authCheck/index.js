@@ -370,14 +370,14 @@ exports.main = async (event) => {
     }
     if (event.type == 'passkey') {
       const passkeyres = await db.collection('externalaccount').where({
-        openid: checkdata.rawid,
+        openid: checkdata.credentialid,
         platform: 'passkey'
       }).get()
       if (passkeyres.data.length == 0) {
         return {
           errCode: 3061,
-          errMsg: 'ID为rawId的passkey未绑定账号',
-          errFix: '传递绑定账号的passkey的rawId'
+          errMsg: 'ID为credentialId的passkey未绑定账号',
+          errFix: '传递绑定账号的passkey的credentialId'
         }
       }
       function base64url(buffer) {
@@ -429,7 +429,7 @@ exports.main = async (event) => {
         }
       }
       await db.collection('externalaccount').where({
-        openid: checkdata.rawid,
+        openid: checkdata.credentialid,
         platform: 'passkey'
       }).update({
         signCount: signcount

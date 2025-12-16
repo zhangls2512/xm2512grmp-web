@@ -35,6 +35,9 @@ exports.main = async (event) => {
     if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 50) {
       limit = requestdata.limit
     }
+    if (Number.isInteger(requestdata.count) && requestdata.count > 0 && requestdata.count <= 50) {
+      limit = requestdata.count
+    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {

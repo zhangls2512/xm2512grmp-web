@@ -59,11 +59,11 @@ exports.main = async (event) => {
       }
     }
     if (requestdata.platform == 'passkey') {
-      if (typeof (requestdata.rawId) != 'string' || !requestdata.rawId) {
+      if (typeof (requestdata.credentialId) != 'string' || !requestdata.credentialId) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
-          errFix: '传递有效的rawId参数'
+          errFix: '传递有效的credentialId参数'
         }
       }
       if (typeof (requestdata.publicKey) != 'string' || !requestdata.publicKey) {
@@ -100,14 +100,14 @@ exports.main = async (event) => {
       let platform = requestdata.platform
       if (platform == 'passkey') {
         const passkeyres = await db.collection('externalaccount').where({
-          openid: requestdata.rawId,
+          openid: requestdata.credentialId,
           platform: 'passkey'
         }).count()
         if (passkeyres.total > 0) {
           return {
             errCode: 8000,
-            errMsg: '已存在openid为rawId的passkey',
-            errFix: '传递其他rawId再试'
+            errMsg: '已存在openid为credentialId的passkey',
+            errFix: '传递其他credentialId再试'
           }
         }
         const externalaccountres = await db.collection('externalaccount').where({
@@ -122,7 +122,7 @@ exports.main = async (event) => {
           }
         }
         await db.collection('externalaccount').add({
-          openid: requestdata.rawId,
+          openid: requestdata.credentialId,
           platform: 'passkey',
           publicKey: requestdata.publicKey,
           signCount: 0,

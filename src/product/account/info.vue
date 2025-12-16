@@ -23,7 +23,7 @@ const newpassworda = ref('')
 const newpasswordb = ref('')
 const duration = ref('')
 let platform = ''
-let rawid = ''
+let credentialid = ''
 let publickey = ''
 const updateemailbutton = ref(false)
 const setmfabutton = ref(false)
@@ -181,6 +181,12 @@ async function updateEmail() {
       newEmail: newemail.value,
       newEmailCode: newemailcode.value
     }
+  })
+  await PublicKeyCredential.signalCurrentUserDetails({
+    rpId: 'www.zhangls2512.cn',
+    userId: accountinfo.value.uid,
+    name: newemail.value,
+    displayName: newemail.value
   })
   closeDialog()
   TinyModal.message({
@@ -515,10 +521,20 @@ async function newPasskeyOpen() {
   const res = await navigator.credentials.create({
     publicKey: {
       challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
-      pubKeyCredParams: [{
-        type: 'public-key',
-        alg: -7
-      }],
+      pubKeyCredParams: [
+        {
+          type: 'public-key',
+          alg: -8
+        },
+        {
+          type: 'public-key',
+          alg: -7
+        },
+        {
+          type: 'public-key',
+          alg: -257
+        }
+      ],
       rp: {
         name: 'xm2512'
       },
@@ -529,7 +545,7 @@ async function newPasskeyOpen() {
       }
     }
   })
-  rawid = base64url(res.rawId)
+  credentialid = res.id
   publickey = base64url(res.response.getPublicKey())
   dialog.value = true
   yzmmfatext.value = true
@@ -558,7 +574,7 @@ async function newPasskey() {
       verifyType: type.value,
       verifyCode: code.value,
       platform: 'passkey',
-      rawId: rawid,
+      credentialId: credentialid,
       publicKey: publickey
     }
   })
@@ -574,7 +590,7 @@ function deletePasskeyOpen(openid) {
   yzmmfatext.value = true
   deletepasskeybutton.value = true
   type.value = 'mfa'
-  rawid = openid
+  credentialid = openid
 }
 async function deletePasskey() {
   if (type.value == 'mfa' && code.value.length != 6) {
@@ -598,8 +614,12 @@ async function deletePasskey() {
       verifyType: type.value,
       verifyCode: code.value,
       platform: 'passkey',
-      openid: rawid
+      openid: credentialid
     }
+  })
+  await PublicKeyCredential.signalUnknownCredential({
+    rpId: 'www.zhangls2512.cn',
+    credentialId: credentialid
   })
   closeDialog()
   TinyModal.message({

@@ -77,16 +77,16 @@ exports.main = async (event) => {
       verifytypetext = '华为账号'
     }
     let verifycode = ''
-    let rawid = ''
+    let credentialid = ''
     let authenticatordata = ''
     let clientdatajson = ''
     let signature = ''
     if (verifytype == 'passkey') {
-      if (typeof (requestdata.rawId) != 'string' || !requestdata.rawId) {
+      if (typeof (requestdata.credentialId) != 'string' || !requestdata.credentialId) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
-          errFix: '传递有效的rawId参数'
+          errFix: '传递有效的credentialId参数'
         }
       }
       if (typeof (requestdata.authenticatorData) != 'string' || !requestdata.authenticatorData) {
@@ -110,7 +110,7 @@ exports.main = async (event) => {
           errFix: '传递有效的signature参数'
         }
       }
-      rawid = requestdata.rawId
+      credentialid = requestdata.credentialId
       authenticatordata = requestdata.authenticatorData
       clientdatajson = requestdata.clientDataJSON
       signature = requestdata.signature
@@ -164,7 +164,7 @@ exports.main = async (event) => {
         data: {
           email: email,
           code: verifycode,
-          rawid: rawid,
+          credentialid: credentialid,
           authenticatordata: authenticatordata,
           clientdatajson: clientdatajson,
           signature: signature

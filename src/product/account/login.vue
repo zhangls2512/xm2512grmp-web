@@ -93,7 +93,7 @@ async function loginByPasskey() {
     functionName: 'getAccessToken',
     data: {
       verifyType: 'passkey',
-      rawId: base64url(resa.rawId),
+      credentialId: resa.id,
       authenticatorData: base64url(resa.response.authenticatorData),
       clientDataJSON: base64url(resa.response.clientDataJSON),
       signature: base64url(resa.response.signature),
