@@ -86,7 +86,8 @@ async function login() {
 async function loginByPasskey() {
   const resa = await navigator.credentials.get({
     publicKey: {
-      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')
+      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
+      timeout: 100000
     }
   })
   const resb = await callfunction({

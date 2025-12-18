@@ -536,12 +536,15 @@ async function newPasskeyOpen() {
         }
       ],
       rp: {
-        name: 'xm2512'
+        name: 'www.zhangls2512.cn'
       },
       user: {
         id: new TextEncoder().encode(accountinfo.value.uid),
         name: accountinfo.value.email,
         displayName: accountinfo.value.email
+      },
+      authenticatorSelection: {
+        residentKey: 'preferred'
       }
     }
   })
