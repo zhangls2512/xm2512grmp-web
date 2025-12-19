@@ -177,13 +177,6 @@ exports.main = async (event) => {
       return res.result
     } else {
       const account = res.result.account
-      if (!account) {
-        return {
-          errCode: 8000,
-          errMsg: '未获取到账号的accessToken',
-          errFix: '请稍后再试，如仍有此问题请联系客服'
-        }
-      }
       if (account.accessToken == '已冻结') {
         return {
           errCode: 3001,
