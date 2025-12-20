@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.2.1',
+    releaseDate: '2025-12-20',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 账号 新增 碰一碰 / 隔空传送同步到邻近设备（非平板端可用）'
+      },
+      {
+        type: 'U',
+        content: '兼容 1.1.2.0 之前版本生成的账号数据'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.2.0',
     releaseDate: '2025-12-12',
     logs: [
