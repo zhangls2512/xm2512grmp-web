@@ -396,7 +396,7 @@ exports.main = async (event) => {
       }
       const authenticatordatabuffer = base64urlToBuffer(checkdata.authenticatordata)
       const signcount = authenticatordatabuffer.readUInt32BE(33)
-      if (!Number.isInteger(signcount) || (signcount <= passkeyres.data[0].signCount && signcount != 0)) {
+      if (!Number.isInteger(signcount) || (signcount <= passkeyres.data[0].signCount && passkeyres.data[0].signCount != 0)) {
         return {
           errCode: 3060,
           errMsg: 'signCount校验失败',
