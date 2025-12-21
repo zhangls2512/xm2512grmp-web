@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 资源'
 const data = [
   {
+    versionNumber: '1.0.7',
+    releaseDate: '2025-12-21',
+    logs: [
+      {
+        type: 'U',
+        content: '个人中心 - 功能设置 新增 个性化推荐'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.6',
     releaseDate: '2025-03-26',
     logs: [

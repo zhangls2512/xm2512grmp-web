@@ -1,17 +1,23 @@
 <script setup>
 import { ref } from 'vue'
+import cookie from 'js-cookie'
 import request from '../../request'
+const accesstoken = cookie.get('accessToken')
 const data = ref([])
 const keyword = ref('')
 const type = ref('grid')
 const count = ref('12')
 const showdesc = ref(false)
 async function get() {
+  const body = {
+    limit: Number(count.value)
+  }
+  if (accesstoken) {
+    body.accessToken = accesstoken
+  }
   const res = await request({
     apiPath: '/resource/getRandomResourceList',
-    body: {
-      limit: Number(count.value)
-    }
+    body: body
   })
   TinyModal.message({
     message: '获取数据成功',

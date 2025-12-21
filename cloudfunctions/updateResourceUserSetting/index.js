@@ -19,12 +19,19 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    const validsettingnames = ['tag']
+    const validsettingnames = ['personalizedRecommendation', 'tag']
     if (!validsettingnames.includes(requestdata.settingName)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的settingName参数'
+      }
+    }
+    if (requestdata.settingName == 'personalizedRecommendation' && typeof (requestdata.settingValue) != 'boolean') {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的settingValue参数'
       }
     }
     if (requestdata.settingName == 'tag' && (!Array.isArray(requestdata.settingValue) || !requestdata.settingValue.every(item => Array.isArray(item)))) {
@@ -53,7 +60,7 @@ exports.main = async (event) => {
         },
         permission: ['account', 'resource'],
         service: ['resource'],
-        apiName: 'resource_updateResourceUserSetting'
+        apiName: 'resource_updateUserSetting'
       }
     })
     if (res.result.errCode != 0) {

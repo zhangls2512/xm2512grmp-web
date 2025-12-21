@@ -123,6 +123,7 @@ exports.main = async (event) => {
           noticeSetting: [],
           product: 'resource',
           setting: {
+            personalizedRecommendation: false,
             tag: []
           },
           webhookToken: nanoid(15) + uid + nanoid(15),

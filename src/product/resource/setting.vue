@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
 const accesstoken = cookie.get('accessToken')
+const personalizedrecommendation = ref(false)
 const tags = ref([])
 const dialog = ref(false)
 const tag = ref([])
@@ -21,10 +22,26 @@ async function getUserInfo() {
     message: '获取数据成功',
     status: 'success'
   })
+  personalizedrecommendation.value = res.data.setting.personalizedRecommendation ? true : false
   tags.value = res.data.setting.tag
   inputtags.value = [...res.data.setting.tag]
 }
 getUserInfo()
+async function change(name, value) {
+  await request({
+    apiPath: '/resource/updateUserSetting',
+    body: {
+      accessToken: accesstoken,
+      settingName: name,
+      settingValue: value
+    }
+  })
+  TinyModal.message({
+    message: '设置成功',
+    status: 'success'
+  })
+  getUserInfo()
+}
 async function set() {
   await request({
     apiPath: '/resource/updateUserSetting',
@@ -79,6 +96,12 @@ function removeTag(index) {
 
 <template>
   <div class="cz">
+    <div class="sp">
+      <div>个性化推荐</div>
+      <tiny-switch v-model="personalizedrecommendation"
+        @change="(zt) => change('personalizedRecommendation', zt)"></tiny-switch>
+    </div>
+    <tiny-alert :closable="false" description="开启后首页将使用下方设置的标签个性化推荐资源。"></tiny-alert>
     <div class="sp">
       <div class="large-bold-text">标签</div>
       <tiny-button type="info" @click="openDialog">编辑</tiny-button>

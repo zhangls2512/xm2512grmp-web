@@ -284,7 +284,7 @@ const apis = ref([
   },
   {
     product: '管理后台',
-    name: 'admin_SearchSslUser',
+    name: 'admin_searchSslUser',
     desc: '搜索单个 SSL 证书用户'
   },
   {
@@ -314,8 +314,13 @@ const apis = ref([
   },
   {
     product: '管理后台',
-    name: 'admin_SearchPasswordUser',
+    name: 'admin_searchPasswordUser',
     desc: '搜索单个密码智能备忘录用户'
+  },
+  {
+    product: '资源',
+    name: 'resource_getRandomResourceList',
+    desc: '随机获取资源列表'
   },
   {
     product: '资源',
@@ -354,7 +359,7 @@ const apis = ref([
   },
   {
     product: '资源',
-    name: 'resource_updateResourceUserSetting',
+    name: 'resource_updateUserSetting',
     desc: '修改用户功能设置'
   },
   {
