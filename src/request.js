@@ -1,4 +1,3 @@
-import axios from 'axios'
 async function request({ apiPath, body }) {
   const loading = TinyLoading.service({
     lock: true,
@@ -6,22 +5,36 @@ async function request({ apiPath, body }) {
     background: 'rgba(0, 0, 0, 0.5)'
   })
   try {
-    const res = await axios.post('https://api.zhangls2512.cn' + apiPath, body)
+    const res = await fetch('https://api.zhangls2512.cn' + apiPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
     loading.close()
-    if (res.data.errCode == 0) {
-      return res.data
+    if (res.status !== 200) {
+      TinyModal.message({
+        message: 'HTTP 请求失败，状态码：' + res.status,
+        status: 'error'
+      })
+      throw '失败'
+    }
+    const data = await res.json()
+    if (data.errCode === 0) {
+      return data
     }
     TinyNotify({
       type: 'error',
-      title: '接口调用失败，错误码：' + String(res.data.errCode),
-      message: '错误信息：' + res.data.errMsg + '，修复方法：' + res.data.errFix,
+      title: '接口调用失败，错误码：' + data.errCode,
+      message: '错误信息：' + data.errMsg + '，修复方法：' + data.errFix,
       position: 'top-right'
     })
-    throw '接口调用失败'
+    throw '失败'
   } catch (err) {
     loading.close()
-    if (err == '接口调用失败') {
-      throw new Error('接口调用失败')
+    if (err === '失败') {
+      throw err
     }
     TinyModal.message({
       message: '请求失败：' + err.message,

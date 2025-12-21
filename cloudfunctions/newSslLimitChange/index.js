@@ -114,7 +114,7 @@ exports.main = async (event) => {
           uid: requestdata.uid,
           noticeName: 'ssl_email_limitchange',
           subject: 'SSL证书产品额度变更通知',
-          text: '您的账号“SSL证书”产品额度发生变更，详情如下。\n' + '类型：' + changetypewz + '\n' + '数量：' + String(requestdata.number) + '\n' + '原因：' + requestdata.reason + '\n' + '时间：' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
+          text: '您的账号“SSL证书”产品额度发生变更，详情如下。\n' + '类型：' + changetypewz + '\n' + '数量：' + requestdata.number + '\n' + '原因：' + requestdata.reason + '\n' + '时间：' + moment().tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
         }
       })
       app.callFunction({

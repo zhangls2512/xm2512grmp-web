@@ -6,7 +6,6 @@
   "dependencies": {
     "@cloudbase/js-sdk": "latest",
     "@opentiny/vue": "latest",
-    "axios": "latest",
     "js-cookie": "latest",
     "moment-timezone": "latest",
     "qrcode": "latest",

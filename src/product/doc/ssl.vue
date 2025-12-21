@@ -1,10 +1,10 @@
 <script setup>
 document.title = '轩铭2512 - 文档中心 - SSL 证书'
 import { ref } from 'vue'
-import axios from 'axios'
 const link = ref('')
 async function getLink() {
-  const { data } = await axios.get('https://acme-v02.api.letsencrypt.org/directory')
+  const res = await fetch('https://acme-v02.api.letsencrypt.org/directory')
+  const data = await res.json()
   link.value = data.meta.termsOfService
 }
 getLink()
