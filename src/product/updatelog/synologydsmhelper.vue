@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.2.2',
+    releaseDate: '2025-12-22',
+    logs: [
+      {
+        type: 'U',
+        content: '应用预加载到 AbilityStage 创建完成阶段（以前为到 WindowStage 创建完成阶段）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.2.1',
     releaseDate: '2025-12-20',
     logs: [
