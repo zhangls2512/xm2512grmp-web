@@ -34,6 +34,13 @@ exports.main = async (event) => {
     if (requestdata.product == 'synologydsmhelper') {
       productwz = '群晖DSM助手'
     }
+    if (typeof (requestdata.version) != 'string' || !/^\d+\.\d+\.\d+\.\d+$/.test(requestdata.version)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的version参数'
+      }
+    }
     if (typeof (requestdata.content) != 'string' || !requestdata.content) {
       return {
         errCode: 1001,
@@ -66,7 +73,7 @@ exports.main = async (event) => {
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
       subject: '有新反馈',
-      text: '产品：' + productwz + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
+      text: '产品：' + productwz + '\n版本：' + requestdata.version + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
     })
     return {
       errCode: 0,
