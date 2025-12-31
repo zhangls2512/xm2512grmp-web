@@ -2,6 +2,46 @@
 document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
 const data = [
   {
+    versionNumber: '1.1.3.1',
+    releaseDate: '2026-01-01',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 关于修改底部版权声明中的年份'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.1.3.0',
+    releaseDate: '2025-12-31',
+    logs: [
+      {
+        type: 'A',
+        content: '卡片 新增 存储空间信息、硬盘信息、网络信息、资源监控'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 新增 卡片'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 应用 新增 状态栏（仅电脑端可用）'
+      },
+      {
+        type: 'A',
+        content: '新增静态快捷方式（长按桌面应用图标）：卡片、文件、相册'
+      },
+      {
+        type: 'U',
+        content: '初步适配 6.x 版本 DSM'
+      },
+      {
+        type: 'U',
+        content: '优化自动上传故障日志流程'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.2.2',
     releaseDate: '2025-12-22',
     logs: [

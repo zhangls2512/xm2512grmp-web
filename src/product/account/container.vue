@@ -21,7 +21,7 @@ const endyear = new Date().getFullYear()
           <tiny-divider direction="vertical"></tiny-divider>
           <div class="footer-text">联系微信：gerenyinsi_z07x17m</div>
         </div>
-        <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <div class="footer-text">Copyright © 2025-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备2号-W" target="_blank">轩铭2512品备2号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>

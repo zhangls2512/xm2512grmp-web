@@ -143,7 +143,7 @@ const tabClick = (data) => {
     <div class="empty"></div>
     <div class="footer">
       <div class="cz">
-        <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+        <div class="footer-text">Copyright © 2025-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备3号-W" target="_blank">轩铭2512品备3号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>

@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.7.1',
+    releaseDate: '2026-01-01',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 设置 - 关于修改底部版权声明中的年份'
+      },
+      {
+        type: 'F',
+        content: '云空间同步数据成功后数据列表未自动刷新'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.7.0',
     releaseDate: '2025-12-27',
     logs: [

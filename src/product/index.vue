@@ -203,7 +203,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备1号-W" target="_blank">轩铭2512品备1号-W</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有
+          <div class="footer-text">Copyright © 2025-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有
           </div>
           <tiny-divider direction="vertical"></tiny-divider>
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>

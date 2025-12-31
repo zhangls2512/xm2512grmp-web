@@ -39,7 +39,7 @@ const tabClick = (data) => {
     </div>
     <div class="empty"></div>
     <div class="footer">
-      <div class="footer-text">Copyright © {{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
+      <div class="footer-text">Copyright © 2025-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
     </div>
   </div>
 </template>
