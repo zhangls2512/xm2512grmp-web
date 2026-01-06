@@ -19,13 +19,6 @@ exports.main = async (event) => {
       errFix: '使用POST方法请求'
     }
   }
-  if (event.headers['x-real-ip'] != '81.68.129.229') {
-    return {
-      errCode: 1002,
-      errMsg: '请求IP非法',
-      errFix: '使用合法IP请求'
-    }
-  }
   try {
     const requestdata = JSON.parse(event.body)
     if (Date.now() - requestdata.timeStamp > 5000) {

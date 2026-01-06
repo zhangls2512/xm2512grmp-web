@@ -59,13 +59,6 @@ exports.main = async (event) => {
     if (requestdata.type == 'tag') {
       typewz = '标签（输出一维数组）'
     }
-    let directoryurl = ''
-    if (requestdata.accountType == 'production') {
-      directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
-    }
-    if (requestdata.accountType == 'staging') {
-      directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
-    }
     let type = ''
     let code = ''
     if (requestdata.accessToken) {
