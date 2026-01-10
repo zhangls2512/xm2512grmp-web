@@ -2,7 +2,7 @@
   "main": "index.js",
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
-    "argon2": "0.41.1",
+    "@node-rs/argon2": "latest",
     "axios": "latest",
     "ipaddr.js": "latest",
     "nanoid": "latest",

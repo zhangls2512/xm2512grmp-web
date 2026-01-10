@@ -1,7 +1,0 @@
-{
-  "main": "index.js",
-  "dependencies": {
-    "axios": "latest",
-    "nodemailer": "latest"
-  }
-}

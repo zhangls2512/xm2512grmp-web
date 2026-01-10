@@ -1,9 +1,0 @@
-{
-  "main": "index.js",
-  "dependencies": {
-    "@cloudbase/node-sdk": "latest",
-    "cidr-js": "latest",
-    "nanoid": "latest",
-    "sm-crypto-v2": "latest"
-  }
-}

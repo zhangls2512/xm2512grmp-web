@@ -9,7 +9,6 @@ exports.main = async (event) => {
   const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
   const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
@@ -19,43 +18,16 @@ exports.main = async (event) => {
       pass: process.env.mailtoken
     }
   })
-  let requestdata = ''
-  let requestip = ''
-  let useragent = ''
-  if (issdk) {
-    requestdata = event
-    requestip = auth.getClientIP()
-    useragent = event.userAgent
-  } else {
-    requestip = event.headers['x-real-ip']
-    useragent = event.headers['user-agent']
-    if (event.httpMethod != 'POST') {
-      return {
-        errCode: 1000,
-        errMsg: '请求方法错误',
-        errFix: '使用POST方法请求'
-      }
-    }
-    try {
-      requestdata = JSON.parse(event.body)
-    } catch {
-      return {
-        errCode: 5000,
-        errMsg: '内部错误',
-        errFix: '联系客服'
-      }
-    }
-  }
   try {
     const validtypes = ['emailcode', 'mfa', 'password', 'passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp']
-    if (!validtypes.includes(requestdata.verifyType)) {
+    if (!validtypes.includes(event.verifyType)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的verifyType参数'
       }
     }
-    let verifytype = requestdata.verifyType
+    let verifytype = event.verifyType
     let verifytypetext = ''
     if (verifytype == 'emailcode') {
       verifytypetext = '邮箱验证码'
@@ -82,74 +54,74 @@ exports.main = async (event) => {
     let clientdatajson = ''
     let signature = ''
     if (verifytype == 'passkey') {
-      if (typeof (requestdata.credentialId) != 'string' || !requestdata.credentialId) {
+      if (typeof (event.credentialId) != 'string' || !event.credentialId) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的credentialId参数'
         }
       }
-      if (typeof (requestdata.authenticatorData) != 'string' || !requestdata.authenticatorData) {
+      if (typeof (event.authenticatorData) != 'string' || !event.authenticatorData) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的authenticatorData参数'
         }
       }
-      if (typeof (requestdata.clientDataJSON) != 'string' || !requestdata.clientDataJSON) {
+      if (typeof (event.clientDataJSON) != 'string' || !event.clientDataJSON) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的clientDataJSON参数'
         }
       }
-      if (typeof (requestdata.signature) != 'string' || !requestdata.signature) {
+      if (typeof (event.signature) != 'string' || !event.signature) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的signature参数'
         }
       }
-      credentialid = requestdata.credentialId
-      authenticatordata = requestdata.authenticatorData
-      clientdatajson = requestdata.clientDataJSON
-      signature = requestdata.signature
+      credentialid = event.credentialId
+      authenticatordata = event.authenticatorData
+      clientdatajson = event.clientDataJSON
+      signature = event.signature
     } else {
-      if (typeof (requestdata.verifyCode) != 'string') {
+      if (typeof (event.verifyCode) != 'string') {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的verifyCode参数'
         }
       }
-      verifycode = requestdata.verifyCode
+      verifycode = event.verifyCode
     }
     let email = ''
     const platforms = ['passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp']
-    if (!platforms.includes(requestdata.verifyType)) {
-      if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
+    if (!platforms.includes(event.verifyType)) {
+      if (typeof (event.email) != 'string' || !validator.isEmail(event.email)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的email参数'
         }
       }
-      email = requestdata.email
-      if (requestdata.verifyType == 'emailcode' && requestdata.verifyCode.length != 8) {
+      email = event.email
+      if (event.verifyType == 'emailcode' && event.verifyCode.length != 8) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的verifyCode参数'
         }
       }
-      if (requestdata.verifyType == 'mfa' && requestdata.verifyCode.length != 6) {
+      if (event.verifyType == 'mfa' && event.verifyCode.length != 6) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的verifyCode参数'
         }
       }
-      if (requestdata.verifyType == 'password' && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 30)) {
+      if (event.verifyType == 'password' && (event.verifyCode.length < 8 || event.verifyCode.length > 30)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
@@ -160,7 +132,7 @@ exports.main = async (event) => {
     const res = await app.callFunction({
       name: 'authCheck',
       data: {
-        type: requestdata.verifyType,
+        type: event.verifyType,
         data: {
           email: email,
           code: verifycode,
@@ -181,7 +153,7 @@ exports.main = async (event) => {
         return {
           errCode: 3001,
           errMsg: '账号已冻结',
-          errFix: '解冻账号'
+          errFix: '无修复建议'
         }
       }
       let accesstoken = account.accessToken
@@ -197,6 +169,7 @@ exports.main = async (event) => {
         endDate: enddate
       })
       let ipaddress = '未知'
+      let requestip = auth.getClientIP()
       if (requestip) {
         try {
           const data = await httpsget('https://ip.cn/ip/' + requestip + '.html')
@@ -233,7 +206,7 @@ exports.main = async (event) => {
         ip: requestip,
         ipAddress: ipaddress,
         verifyType: verifytype,
-        ua: useragent,
+        ua: event.userAgent,
         uid: account._id
       })
       if (account.email) {

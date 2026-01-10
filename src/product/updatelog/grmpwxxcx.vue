@@ -17,7 +17,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '开发产品 新增 群晖 DSM 助手'
+        content: '开发产品 新增 SynDSM 助手'
       },
       {
         type: 'F',

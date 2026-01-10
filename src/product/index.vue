@@ -46,7 +46,7 @@ const endyear = new Date().getFullYear()
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
-              <div class="large-bold-text">群晖 DSM 助手</div>
+              <div class="large-bold-text">SynDSM 助手</div>
               <div class="sp">
                 <a href="https://appgallery.huawei.com/apptest/73MXaoycx0C" target="_blank">邀请测试</a>
               </div>

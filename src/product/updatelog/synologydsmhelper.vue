@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - 群晖 DSM 助手'
+document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
     versionNumber: '1.1.3.1',

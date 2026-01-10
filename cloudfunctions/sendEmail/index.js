@@ -24,7 +24,7 @@ exports.main = async (event) => {
         return {
           errCode: 8000,
           errMsg: '通知未开启',
-          errFix: '开启通知'
+          errFix: '无修复建议'
         }
       }
       const accountres = await db.collection('account').where({
@@ -47,19 +47,19 @@ exports.main = async (event) => {
         return {
           errCode: 8001,
           errMsg: '账号未绑定邮箱',
-          errFix: '绑定邮箱'
+          errFix: '无修复建议'
         }
       }
       return {
         errCode: 3000,
         errMsg: '账号不存在',
-        errFix: '传递有效的uid'
+        errFix: '无修复建议'
       }
     }
     return {
       errCode: 3002,
       errMsg: '产品/功能未开通',
-      errFix: '开通产品/功能'
+      errFix: '无修复建议'
     }
   } catch {
     return {

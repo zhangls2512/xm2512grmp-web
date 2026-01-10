@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('argon2')
+  const argon2 = require('@node-rs/argon2')
   const axios = require('axios')
   const crypto = require('crypto')
   const ipaddr = require('ipaddr.js')
@@ -31,7 +31,7 @@ exports.main = async (event) => {
           return {
             errCode: 3013,
             errMsg: '邮箱验证码错误尝试次数过多',
-            errFix: '获取新的邮箱验证码'
+            errFix: '无修复建议'
           }
         }
         if (checkdata.code != data.emailCode) {
@@ -45,21 +45,21 @@ exports.main = async (event) => {
           return {
             errCode: 3010,
             errMsg: '邮箱验证码错误',
-            errFix: '传递正确的邮箱验证码'
+            errFix: '无修复建议'
           }
         }
         if (Date.now() > data.timeStamp + 300000) {
           return {
             errCode: 3011,
             errMsg: '邮箱验证码已过期',
-            errFix: '获取新的邮箱验证码'
+            errFix: '无修复建议'
           }
         }
         if (data.used) {
           return {
             errCode: 3012,
             errMsg: '邮箱验证码已使用',
-            errFix: '获取新的邮箱验证码'
+            errFix: '无修复建议'
           }
         }
         await db.collection('emailcode').where({
@@ -87,13 +87,13 @@ exports.main = async (event) => {
         return {
           errCode: 3000,
           errMsg: '邮箱未注册账号',
-          errFix: '为邮箱注册账号'
+          errFix: '无修复建议'
         }
       }
       return {
         errCode: 3010,
         errMsg: '邮箱验证码错误',
-        errFix: '传递正确的邮箱验证码'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'mfa') {
@@ -107,7 +107,7 @@ exports.main = async (event) => {
           return {
             errCode: 3021,
             errMsg: '账号未设置MFA',
-            errFix: '使用其他验证方式'
+            errFix: '无修复建议'
           }
         }
         const result = speakeasy.totp.verify({
@@ -119,7 +119,7 @@ exports.main = async (event) => {
           return {
             errCode: 3020,
             errMsg: 'MFA错误',
-            errFix: '传递正确的MFA'
+            errFix: '无修复建议'
           }
         }
         return {
@@ -131,7 +131,7 @@ exports.main = async (event) => {
       return {
         errCode: 3000,
         errMsg: '邮箱未注册账号',
-        errFix: '为邮箱注册账号'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'password') {
@@ -145,14 +145,14 @@ exports.main = async (event) => {
           return {
             errCode: 3031,
             errMsg: '账号未设置密码',
-            errFix: '使用其他验证方式'
+            errFix: '无修复建议'
           }
         }
         if (data.passwordVerifyTimes >= 5) {
           return {
             errCode: 3032,
             errMsg: '密码错误尝试次数过多',
-            errFix: '使用其他验证方式'
+            errFix: '无修复建议'
           }
         }
         if (!await argon2.verify(password, checkdata.code)) {
@@ -174,7 +174,7 @@ exports.main = async (event) => {
           return {
             errCode: 3030,
             errMsg: '密码错误',
-            errFix: '传递正确的密码'
+            errFix: '无修复建议'
           }
         }
         return {
@@ -186,7 +186,7 @@ exports.main = async (event) => {
       return {
         errCode: 3000,
         errMsg: '邮箱未注册账号',
-        errFix: '为邮箱注册账号'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'accesstoken') {
@@ -201,28 +201,28 @@ exports.main = async (event) => {
           return {
             errCode: 3001,
             errMsg: '账号已冻结',
-            errFix: '解冻账号'
+            errFix: '无修复建议'
           }
         }
         if (checkdata.code != data.accessToken) {
           return {
             errCode: 3040,
             errMsg: '无效的accessToken',
-            errFix: '传递有效的accessToken'
+            errFix: '无修复建议'
           }
         }
         if (Date.now() > data.endDate) {
           return {
             errCode: 3041,
             errMsg: 'accessToken已过期',
-            errFix: '获取新的accessToken'
+            errFix: '无修复建议'
           }
         }
         if (!event.service.every(item => data.service.includes(item))) {
           return {
             errCode: 3002,
             errMsg: '产品/功能未开通',
-            errFix: '开通产品/功能'
+            errFix: '无修复建议'
           }
         }
         const permission = data.permission
@@ -242,7 +242,7 @@ exports.main = async (event) => {
       return {
         errCode: 3040,
         errMsg: '无效的accessToken',
-        errFix: '传递有效的accessToken'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'accesskey') {
@@ -257,7 +257,7 @@ exports.main = async (event) => {
           return {
             errCode: 3001,
             errMsg: '账号已冻结',
-            errFix: '解冻账号'
+            errFix: '无修复建议'
           }
         }
         const accesskeys = data.accessKey
@@ -266,7 +266,7 @@ exports.main = async (event) => {
           return {
             errCode: 3050,
             errMsg: '无效的accessKey',
-            errFix: '传递有效的accessKey'
+            errFix: '无修复建议'
           }
         }
         const accesskeyinfo = accesskeys.find(item => item.value == checkdata.code)
@@ -274,35 +274,35 @@ exports.main = async (event) => {
           return {
             errCode: 3051,
             errMsg: 'accessKey已过期',
-            errFix: '延长到期时间'
+            errFix: '无修复建议'
           }
         }
         if (!accesskeyinfo.status) {
           return {
             errCode: 3052,
             errMsg: 'accessKey未启用',
-            errFix: '启用accessKey'
+            errFix: '无修复建议'
           }
         }
         if (!accesskeyinfo.allowApi.includes(event.apiName)) {
           return {
             errCode: 3053,
             errMsg: 'accessKey无此接口调用权限',
-            errFix: '开启此接口调用权限'
+            errFix: '无修复建议'
           }
         }
         if (!accesskeyinfo.allowIp.some(item => ipaddr.parse(checkdata.requestIp).match(ipaddr.parseCIDR(item)))) {
           return {
             errCode: 3054,
             errMsg: '请求IP不在IP白名单内',
-            errFix: '使用在IP白名单内的IP请求'
+            errFix: '无修复建议'
           }
         }
         if (!event.service.every(item => data.service.includes(item))) {
           return {
             errCode: 3002,
             errMsg: '产品/功能未开通',
-            errFix: '开通产品/功能'
+            errFix: '无修复建议'
           }
         }
         const permission = data.permission
@@ -332,7 +332,7 @@ exports.main = async (event) => {
       return {
         errCode: 3050,
         errMsg: '无效的accessKey',
-        errFix: '传递有效的accessKey'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'cloudfunction') {
@@ -345,7 +345,7 @@ exports.main = async (event) => {
           return {
             errCode: 3002,
             errMsg: '产品/功能未开通',
-            errFix: '开通产品/功能'
+            errFix: '无修复建议'
           }
         }
         const permission = data.permission
@@ -365,7 +365,7 @@ exports.main = async (event) => {
       return {
         errCode: 3000,
         errMsg: '账号不存在',
-        errFix: '传递有效的uid'
+        errFix: '无修复建议'
       }
     }
     if (event.type == 'passkey') {
@@ -377,7 +377,7 @@ exports.main = async (event) => {
         return {
           errCode: 3061,
           errMsg: 'ID为credentialId的passkey未绑定账号',
-          errFix: '传递绑定账号的passkey的credentialId'
+          errFix: '无修复建议'
         }
       }
       function base64url(buffer) {
@@ -400,7 +400,7 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'signCount校验失败',
-          errFix: '传递有效的authenticatorData'
+          errFix: '无修复建议'
         }
       }
       const clientdatajsonbuffer = base64urlToBuffer(checkdata.clientdatajson)
@@ -408,7 +408,7 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',
-          errFix: '传递有效的clientDataJSON'
+          errFix: '无修复建议'
         }
       }
       const publickey = crypto.createPublicKey({
@@ -425,7 +425,7 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'signature校验失败',
-          errFix: '传递有效的signature'
+          errFix: '无修复建议'
         }
       }
       await db.collection('externalaccount').where({
@@ -450,7 +450,7 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'code校验失败，原因：' + wxres.data.errmsg,
-          errFix: '传递有效的code'
+          errFix: '无修复建议'
         }
       }
       const externalaccount = await db.collection('externalaccount').where({
@@ -461,7 +461,7 @@ exports.main = async (event) => {
         return {
           errCode: 3061,
           errMsg: '此外部平台账号未绑定账号',
-          errFix: '传递绑定账号的外部平台账号的code'
+          errFix: '无修复建议'
         }
       }
       const uid = externalaccount.data[0].uid
@@ -509,7 +509,7 @@ exports.main = async (event) => {
             return {
               errCode: 3061,
               errMsg: '此外部平台账号未绑定账号',
-              errFix: '传递绑定账号的外部平台账号的code'
+              errFix: '无修复建议'
             }
           }
           if (event.register) {
@@ -570,7 +570,7 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'code校验失败，原因：' + err.response.data.error_description,
-          errFix: '传递有效的code'
+          errFix: '无修复建议'
         }
       }
     }

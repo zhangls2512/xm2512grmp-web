@@ -107,7 +107,7 @@ exports.main = async (event) => {
           return {
             errCode: 8000,
             errMsg: '已存在openid为credentialId的passkey',
-            errFix: '传递其他credentialId再试'
+            errFix: '使用新的通行密钥再试'
           }
         }
         const externalaccountres = await db.collection('externalaccount').where({
@@ -153,7 +153,7 @@ exports.main = async (event) => {
             return {
               errCode: 8001,
               errMsg: 'code校验失败，原因：' + wxres.data.errmsg,
-              errFix: '传递有效的code'
+              errFix: '无修复建议'
             }
           }
           const externalaccountres = await db.collection('externalaccount').where({
@@ -164,7 +164,7 @@ exports.main = async (event) => {
             return {
               errCode: 8002,
               errMsg: '此外部平台账号已绑定其他账号',
-              errFix: '解除此外部平台账号与其他账号的绑定'
+              errFix: '无修复建议'
             }
           }
           await db.collection('externalaccount').add({
@@ -211,7 +211,7 @@ exports.main = async (event) => {
               return {
                 errCode: 8002,
                 errMsg: '此外部平台账号已绑定其他账号',
-                errFix: '解除此外部平台账号与其他账号的绑定'
+                errFix: '无修复建议'
               }
             }
             await db.collection('externalaccount').add({
@@ -227,7 +227,7 @@ exports.main = async (event) => {
             return {
               errCode: 8001,
               errMsg: 'code校验失败，原因：' + err.response.data.error_description,
-              errFix: '传递有效的code'
+              errFix: '无修复建议'
             }
           }
         }

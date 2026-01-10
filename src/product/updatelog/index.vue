@@ -21,7 +21,7 @@ const data = [
       },
       {
         type: 'U',
-        content: '产品 - 群晖 DSM 助手 新增 邀请测试'
+        content: '产品 - SynDSM 助手 新增 邀请测试'
       }
     ]
   },
@@ -31,11 +31,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品 新增 群晖 DSM 助手'
+        content: '产品 新增 SynDSM 助手'
       },
       {
         type: 'U',
-        content: '更新日志 新增 群晖 DSM 助手'
+        content: '更新日志 新增 SynDSM 助手'
       }
     ]
   },

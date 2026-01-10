@@ -6,34 +6,9 @@ exports.main = async (event) => {
   const validator = require('validator')
   const app = tcb.init()
   const auth = app.auth()
-  const issdk = (auth.getUserInfo().isAnonymous || auth.getUserInfo().openId)
   const db = app.database()
-  let requestdata = ''
-  let requestip = ''
-  if (issdk) {
-    requestdata = event
-    requestip = auth.getClientIP()
-  } else {
-    requestip = event.headers['x-real-ip']
-    if (event.httpMethod != 'POST') {
-      return {
-        errCode: 1000,
-        errMsg: '请求方法错误',
-        errFix: '使用POST方法请求'
-      }
-    }
-    try {
-      requestdata = JSON.parse(event.body)
-    } catch {
-      return {
-        errCode: 5000,
-        errMsg: '内部错误',
-        errFix: '联系客服'
-      }
-    }
-  }
   try {
-    if (typeof (requestdata.accessToken) != 'string' && typeof (requestdata.accessKey) != 'string') {
+    if (typeof (event.accessToken) != 'string' && typeof (event.accessKey) != 'string') {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -45,18 +20,18 @@ exports.main = async (event) => {
     let desc = ''
     let keytype = ''
     let keysize = ''
-    if (typeof (requestdata.desc) == 'string' && requestdata.desc.length <= 20) {
-      desc = requestdata.desc
+    if (typeof (event.desc) == 'string' && event.desc.length <= 20) {
+      desc = event.desc
     }
-    if (typeof (requestdata.csr) != 'string' || requestdata.csr === '') {
-      if (!Array.isArray(requestdata.domains) || requestdata.domains.length == 0 || requestdata.domains.length > 100) {
+    if (typeof (event.csr) != 'string' || event.csr === '') {
+      if (!Array.isArray(event.domains) || event.domains.length == 0 || event.domains.length > 100) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的domains参数'
         }
       }
-      domains = [...new Set(requestdata.domains)]
+      domains = [...new Set(event.domains)]
       if (domains.some(item => !validator.isFQDN(item, {
         allow_wildcard: true
       }) && !net.isIP(item))) {
@@ -67,33 +42,33 @@ exports.main = async (event) => {
         }
       }
       const validkeytypes = ['rsa', 'ecdsa']
-      if (!validkeytypes.includes(requestdata.keyType)) {
+      if (!validkeytypes.includes(event.keyType)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的keyType参数'
         }
       }
-      keytype = requestdata.keyType
+      keytype = event.keyType
       const validrsakeysizes = [2048, 3072, 4096]
       const validecdsakeysizes = ['prime256v1', 'secp384r1']
-      if (requestdata.keyType == 'rsa' && !validrsakeysizes.includes(requestdata.keySize)) {
+      if (event.keyType == 'rsa' && !validrsakeysizes.includes(event.keySize)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的keySize参数'
         }
       }
-      if (requestdata.keyType == 'ecdsa' && !validecdsakeysizes.includes(requestdata.keySize)) {
+      if (event.keyType == 'ecdsa' && !validecdsakeysizes.includes(event.keySize)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的keySize参数'
         }
       }
-      keysize = requestdata.keySize
+      keysize = event.keySize
     } else {
-      const csrres = acme.crypto.getCsrInfo(requestdata.csr)
+      const csrres = acme.crypto.getCsrInfo(event.csr)
       domains = [...new Set([...csrres.subjectAltName, csrres.commonName])]
       if (domains.length == 0 || domains.length > 100) {
         return {
@@ -102,7 +77,7 @@ exports.main = async (event) => {
           errFix: '传递有效的csr参数'
         }
       }
-      csr = requestdata.csr
+      csr = event.csr
       const keyres = acme.crypto.getKeyInfo(csrres.publicKey)
       keytype = keyres.keyType.toLowerCase()
       if (keyres.keyType == 'RSA') {
@@ -113,7 +88,7 @@ exports.main = async (event) => {
       }
     }
     const validenvironmenttypes = ['production', 'staging']
-    if (!validenvironmenttypes.includes(requestdata.environmentType)) {
+    if (!validenvironmenttypes.includes(event.environmentType)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -121,21 +96,21 @@ exports.main = async (event) => {
       }
     }
     const validcertificatetypes = ['classic', 'shortlived', 'tlsserver', 'tlsclient']
-    if (!validcertificatetypes.includes(requestdata.certificateType)) {
+    if (!validcertificatetypes.includes(event.certificateType)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的certificateType参数'
       }
     }
-    if (requestdata.certificateType != 'shortlived' && domains.some(item => net.isIP(item))) {
+    if (event.certificateType != 'shortlived' && domains.some(item => net.isIP(item))) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的certificateType参数'
       }
     }
-    if (requestdata.certificateType != 'classic' && requestdata.certificateType != 'tlsclient' && domains.length > 25) {
+    if (event.certificateType != 'classic' && event.certificateType != 'tlsclient' && domains.length > 25) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -143,7 +118,7 @@ exports.main = async (event) => {
       }
     }
     const validautoneworder = ['ari', 'nearexpire', 'close']
-    if (!validautoneworder.includes(requestdata.autoNewOrder)) {
+    if (!validautoneworder.includes(event.autoNewOrder)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -152,12 +127,12 @@ exports.main = async (event) => {
     }
     let type = ''
     let code = ''
-    if (requestdata.accessToken) {
+    if (event.accessToken) {
       type = 'accesstoken'
-      code = requestdata.accessToken
+      code = event.accessToken
     } else {
       type = 'accesskey'
-      code = requestdata.accessKey
+      code = event.accessKey
     }
     const res = await app.callFunction({
       name: 'authCheck',
@@ -165,7 +140,7 @@ exports.main = async (event) => {
         type: type,
         data: {
           code: code,
-          requestIp: requestip
+          requestIp: auth.getClientIP()
         },
         permission: ['account', 'ssl'],
         service: ['ssl'],
@@ -180,35 +155,35 @@ exports.main = async (event) => {
         uid: res.result.account._id
       }).get()
       const userdata = userres.data[0]
-      if (requestdata.environmentType == 'production' && userdata.productionLimit <= 0) {
+      if (event.environmentType == 'production' && userdata.productionLimit <= 0) {
         return {
           errCode: 8000,
           errMsg: '额度耗尽',
-          errFix: '提高额度'
+          errFix: '无修复建议'
         }
       }
-      if (requestdata.environmentType == 'staging' && userdata.stagingLimit <= 0) {
+      if (event.environmentType == 'staging' && userdata.stagingLimit <= 0) {
         return {
           errCode: 8000,
           errMsg: '额度耗尽',
-          errFix: '提高额度'
+          errFix: '无修复建议'
         }
       }
       let directoryurl = ''
-      if (requestdata.environmentType == 'production') {
+      if (event.environmentType == 'production') {
         directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
       }
-      if (requestdata.environmentType == 'staging') {
+      if (event.environmentType == 'staging') {
         directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
       }
-      const accountkey = userdata.accountKey[requestdata.environmentType]
+      const accountkey = userdata.accountKey[event.environmentType]
       let acmeorder = {}
       try {
         const acmeorderres = await acme.api.newOrder({
           directoryUrl: directoryurl,
           accountKey: accountkey,
           domains: domains,
-          profile: requestdata.certificateType
+          profile: event.certificateType
         })
         acmeorder = acmeorderres
       } catch (err) {
@@ -221,16 +196,16 @@ exports.main = async (event) => {
       const orderres = await db.collection('sslorder').add({
         ariEndDate: 0,
         ariStartDate: 0,
-        autoNewOrder: requestdata.autoNewOrder,
+        autoNewOrder: event.autoNewOrder,
         certificate: [],
         certificateEndDate: 0,
         certificateStartDate: 0,
-        certificateType: requestdata.certificateType,
+        certificateType: event.certificateType,
         createDate: Date.now(),
         csr: csr,
         desc: desc,
         domains: domains,
-        environmentType: requestdata.environmentType,
+        environmentType: event.environmentType,
         isAutoNewOrder: false,
         isNoticeCertificateNearexpire: false,
         isNoticeOrderNearexpire: false,
@@ -242,7 +217,7 @@ exports.main = async (event) => {
         status: 'pending',
         uid: res.result.account._id
       })
-      if (requestdata.environmentType == 'production') {
+      if (event.environmentType == 'production') {
         await db.collection('productuser').where({
           product: 'ssl',
           uid: res.result.account._id
@@ -277,7 +252,7 @@ exports.main = async (event) => {
           })
         }
       }
-      if (requestdata.environmentType == 'staging') {
+      if (event.environmentType == 'staging') {
         await db.collection('productuser').where({
           product: 'ssl',
           uid: res.result.account._id

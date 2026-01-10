@@ -1,7 +1,0 @@
-{
-  "main": "index.js",
-  "dependencies": {
-    "@cloudbase/node-sdk": "latest",
-    "cidr-js": "latest"
-  }
-}

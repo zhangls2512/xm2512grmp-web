@@ -25,7 +25,7 @@ const tabs = [
   },
   {
     id: 'synologydsmhelper',
-    label: '群晖 DSM 助手'
+    label: 'SynDSM 助手'
   },
   {
     id: 'resource',

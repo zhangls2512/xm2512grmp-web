@@ -22,7 +22,7 @@ async function get() {
     return
   }
   const res = await request({
-    apiPath: '/baxk/getBaxkInfo',
+    apiPath: '/getBaxkInfo',
     body: {
       baxkNumber: baxknumber.value
     }

@@ -1,9 +1,0 @@
-{
-  "main": "index.js",
-  "dependencies": {
-    "@cloudbase/node-sdk": "latest",
-    "nanoid": "latest",
-    "nodemailer": "latest",
-    "validator": "latest"
-  }
-}
