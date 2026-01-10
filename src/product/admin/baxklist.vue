@@ -186,7 +186,7 @@ async function deleteBaxk(t) {
       id: t
     }
   })
-  TinyMessage({
+  TinyModal.message({
     message: '注销成功',
     status: 'success'
   })

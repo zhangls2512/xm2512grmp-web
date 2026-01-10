@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.7.2',
+    releaseDate: '2026-01-10',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 新增 全局闪控球显示密码 MFA 类型信息（非电脑端可用）'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.7.1',
     releaseDate: '2026-01-01',
     logs: [

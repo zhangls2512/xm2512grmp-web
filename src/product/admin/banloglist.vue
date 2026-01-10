@@ -57,7 +57,7 @@ async function deleteBanlog(t) {
       id: t
     }
   })
-  TinyMessage({
+  TinyModal.message({
     message: '删除成功',
     status: 'success'
   })

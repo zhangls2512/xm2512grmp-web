@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.3.2',
+    releaseDate: '2026-01-10',
+    logs: [
+      {
+        type: 'A',
+        content: '文件 新增 全选、取消全选'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.3.1',
     releaseDate: '2026-01-01',
     logs: [
