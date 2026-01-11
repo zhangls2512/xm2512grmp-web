@@ -82,6 +82,12 @@
       "installDependency": true
     },
     {
+      "name": "deleteExpiredTicket",
+      "timeout": 60,
+      "runtime": "Nodejs20.19",
+      "installDependency": true
+    },
+    {
       "name": "deleteLoginLog",
       "timeout": 60,
       "runtime": "Nodejs20.19",

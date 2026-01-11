@@ -3,6 +3,7 @@ document.title = '轩铭2512 - 统一账号 - 登录'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
+import qrcode from 'qrcode'
 import validator from 'validator'
 import callfunction from '../../callfunction'
 import request from '../../request'
@@ -15,6 +16,9 @@ const code = ref('')
 const countdown = ref(60)
 const buttondisabled = ref(false)
 const buttontext = ref('获取验证码')
+let ticket = ''
+const qrcodeimg = ref('')
+const ticketexpired = ref(true)
 function base64url(buffer) {
   let binary = ''
   const bytes = new Uint8Array(buffer)
@@ -31,8 +35,23 @@ function routePush() {
     router.push('/product/account/panel')
   }
 }
+async function getTicket() {
+  ticketexpired.value = false
+  const res = await request({
+    apiPath: '/account/getTicket'
+  })
+  ticket = res.ticket
+  qrcodeimg.value = await qrcode.toDataURL('https://www.zhangls2512.cn/product/account/login?ticket=' + res.ticket, {
+    type: 'image/png'
+  })
+  setTimeout(() => {
+    ticketexpired.value = true
+  }, 60000)
+}
 if (cookie.get('accessToken')) {
   routePush()
+} else {
+  getTicket()
 }
 async function login() {
   if (!validator.isEmail(email.value)) {
@@ -112,6 +131,26 @@ async function loginByPasskey() {
     status: 'success'
   })
 }
+async function loginByTicket() {
+  const res = await callfunction({
+    functionName: 'getAccessToken',
+    data: {
+      verifyType: 'ticket',
+      verifyCode: ticket,
+      userAgent: navigator.userAgent
+    }
+  })
+  cookie.set('accessToken', res.accessToken, {
+    expires: new Date(res.endDate),
+    secure: true,
+    sameSite: 'strict'
+  })
+  routePush()
+  TinyModal.message({
+    message: '登录成功',
+    status: 'success'
+  })
+}
 async function getEmailCode() {
   if (!validator.isEmail(email.value)) {
     TinyModal.message({
@@ -151,44 +190,57 @@ async function getEmailCode() {
     <div class="kuang">
       <div class="cz">
         <div class="title">登录</div>
-        <tiny-form>
-          <tiny-form-item label="方式">
-            <tiny-radio-group v-model="type">
-              <tiny-radio label="password">密码</tiny-radio>
-              <tiny-radio label="mfa">MFA</tiny-radio>
-              <tiny-radio label="emailcode">邮箱验证码</tiny-radio>
-            </tiny-radio-group>
-          </tiny-form-item>
-          <tiny-form-item label="邮箱">
-            <div class="sp">
-              <tiny-input v-model="email" type="email" clearable autocomplete="email" placeholder="请输入邮箱"></tiny-input>
-              <tiny-button v-if="type == 'emailcode'" :disabled="buttondisabled" clearable @click="getEmailCode">{{
-                buttontext }}</tiny-button>
-            </div>
-          </tiny-form-item>
-          <tiny-form-item v-if="type == 'password'" label="密码">
-            <tiny-input v-model="code" type="password" clearable minlength="8" maxlength="30" autocomplete="password"
-              placeholder="请输入密码"></tiny-input>
-          </tiny-form-item>
-          <tiny-form-item v-if="type == 'mfa'" label="MFA">
-            <tiny-input v-model="code" clearable minlength="6" maxlength="6" autocomplete="one-time-code"
-              placeholder="请输入 MFA"></tiny-input>
-          </tiny-form-item>
-          <tiny-form-item v-if="type == 'emailcode'" label="验证码">
-            <tiny-input v-model="code" clearable minlength="8" maxlength="8" autocomplete="one-time-code"
-              placeholder="请输入验证码"></tiny-input>
-          </tiny-form-item>
-          <tiny-form-item>
-            <div class="sp">
-              <tiny-button type='success' @click="login">登录</tiny-button>
-              <tiny-button type='info' @click="loginByPasskey">通行密钥登录</tiny-button>
-            </div>
-          </tiny-form-item>
-        </tiny-form>
         <div class="sp">
-          <router-link to="/product/account/register">注册账号</router-link>
-          <tiny-divider direction="vertical"></tiny-divider>
-          <router-link to="/product/account/unfreeze">解冻账号</router-link>
+          <div class="cz">
+            <tiny-alert v-if="ticketexpired == false" :closable="false"
+              description="使用轩铭密码智能备忘录（App）、SSL 证书（微信小程序）扫描下方二维码"></tiny-alert>
+            <img v-if="ticketexpired == false" class="qrcode" :src="qrcodeimg" loading="lazy"></img>
+            <tiny-button v-if="ticketexpired == false" type="success" @click="loginByTicket">我已扫码并确认登录</tiny-button>
+            <tiny-alert v-if="ticketexpired == true" type="error" :closable="false" description="二维码已过期"></tiny-alert>
+            <tiny-button v-if="ticketexpired == true" type="info" @click="getTicket">重新获取</tiny-button>
+          </div>
+          <div class="cz">
+            <tiny-form>
+              <tiny-form-item label="方式">
+                <tiny-radio-group v-model="type">
+                  <tiny-radio label="password">密码</tiny-radio>
+                  <tiny-radio label="mfa">MFA</tiny-radio>
+                  <tiny-radio label="emailcode">邮箱验证码</tiny-radio>
+                </tiny-radio-group>
+              </tiny-form-item>
+              <tiny-form-item label="邮箱">
+                <div class="sp">
+                  <tiny-input v-model="email" type="email" clearable autocomplete="email"
+                    placeholder="请输入邮箱"></tiny-input>
+                  <tiny-button v-if="type == 'emailcode'" :disabled="buttondisabled" clearable @click="getEmailCode">{{
+                    buttontext }}</tiny-button>
+                </div>
+              </tiny-form-item>
+              <tiny-form-item v-if="type == 'password'" label="密码">
+                <tiny-input v-model="code" type="password" clearable minlength="8" maxlength="30"
+                  autocomplete="password" placeholder="请输入密码"></tiny-input>
+              </tiny-form-item>
+              <tiny-form-item v-if="type == 'mfa'" label="MFA">
+                <tiny-input v-model="code" clearable minlength="6" maxlength="6" autocomplete="one-time-code"
+                  placeholder="请输入 MFA"></tiny-input>
+              </tiny-form-item>
+              <tiny-form-item v-if="type == 'emailcode'" label="验证码">
+                <tiny-input v-model="code" clearable minlength="8" maxlength="8" autocomplete="one-time-code"
+                  placeholder="请输入验证码"></tiny-input>
+              </tiny-form-item>
+              <tiny-form-item>
+                <div class="sp">
+                  <tiny-button type="success" @click="login">登录</tiny-button>
+                  <tiny-button type="info" @click="loginByPasskey">通行密钥登录</tiny-button>
+                </div>
+              </tiny-form-item>
+            </tiny-form>
+            <div class="sp">
+              <router-link to="/product/account/register">注册账号</router-link>
+              <tiny-divider direction="vertical"></tiny-divider>
+              <router-link to="/product/account/unfreeze">解冻账号</router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -198,6 +250,10 @@ async function getEmailCode() {
 <style scoped>
 .sp {
   justify-content: center;
+}
+
+.cz {
+  align-items: center;
 }
 
 .title {

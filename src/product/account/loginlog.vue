@@ -21,6 +21,7 @@ async function get() {
     mfa: 'MFA',
     password: '密码',
     passkey: '通行密钥',
+    ticket: '票证',
     sslwxxcx: 'SSL 证书（微信小程序）',
     huawei: '华为账号'
   }

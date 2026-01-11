@@ -131,4 +131,8 @@
 .logo {
   width: 20px;
 }
+
+.qrcode {
+  width: 200px;
+}
 </style>

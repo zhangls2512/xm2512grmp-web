@@ -889,9 +889,3 @@ async function getEmailCodea() {
     </tiny-dialog-box>
   </div>
 </template>
-
-<style scoped>
-.qrcode {
-  width: 200px;
-}
-</style>

@@ -444,6 +444,44 @@ exports.main = async (event) => {
         account: accountres.data[0]
       }
     }
+    if (event.type == 'ticket') {
+      const ticketres = await db.collection('ticket').where({
+        ticket: checkdata.code
+      }).get()
+      if (ticketres.data.length == 0) {
+        return {
+          errCode: 3060,
+          errMsg: 'ticket不存在',
+          errFix: '无修复建议'
+        }
+      }
+      const ticket = ticketres.data[0]
+      if (ticket.endDate < Date.now()) {
+        return {
+          errCode: 3061,
+          errMsg: 'ticket已过期',
+          errFix: '无修复建议'
+        }
+      }
+      if (!ticket.uid) {
+        return {
+          errCode: 3062,
+          errMsg: 'ticket未确认',
+          errFix: '无修复建议'
+        }
+      }
+      await db.collection('ticket').where({
+        _id: ticket._id
+      }).remove()
+      const accountres = await db.collection('account').where({
+        _id: ticket.uid
+      }).get()
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        account: accountres.data[0]
+      }
+    }
     if (event.type == 'sslwxxcx') {
       const wxres = await axios.get('https://api.weixin.qq.com/sns/jscode2session?appid=wxd46f84216a1a856e&secret=' + process.env.sslappsecret + '&js_code=' + checkdata.code + '&grant_type=authorization_code')
       if (wxres.data.errcode) {

@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.12',
+    releaseDate: '2026-01-11',
+    logs: [
+      {
+        type: 'U',
+        content: '登录方式 新增 扫描二维码'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.11',
     releaseDate: '2025-09-24',
     logs: [

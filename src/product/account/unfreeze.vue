@@ -109,7 +109,7 @@ async function getEmailCode() {
               placeholder="请输入验证码"></tiny-input>
           </tiny-form-item>
           <tiny-form-item>
-            <tiny-button type='info' @click="unfreeze">解冻</tiny-button>
+            <tiny-button type="info" @click="unfreeze">解冻</tiny-button>
           </tiny-form-item>
         </tiny-form>
       </div>

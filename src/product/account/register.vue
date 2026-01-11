@@ -122,7 +122,7 @@ async function getEmailCode() {
               autocomplete="new-password" placeholder="请再次输入密码"></tiny-input>
           </tiny-form-item>
           <tiny-form-item>
-            <tiny-button type='info' @click="register">注册</tiny-button>
+            <tiny-button type="info" @click="register">注册</tiny-button>
           </tiny-form-item>
         </tiny-form>
       </div>
