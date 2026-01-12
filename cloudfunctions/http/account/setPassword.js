@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('@node-rs/argon2')
+  const argon2 = require('argon2')
   const validator = require('validator')
   const app = tcb.init()
   const db = app.database()

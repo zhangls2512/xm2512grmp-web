@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('@node-rs/argon2')
+  const argon2 = require('argon2')
   const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
   const { nanoid } = await import('nanoid')

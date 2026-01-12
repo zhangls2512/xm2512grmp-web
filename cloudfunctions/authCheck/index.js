@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('@node-rs/argon2')
+  const argon2 = require('argon2')
   const axios = require('axios')
   const crypto = require('crypto')
   const ipaddr = require('ipaddr.js')
