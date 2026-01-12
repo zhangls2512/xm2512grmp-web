@@ -8,6 +8,9 @@ exports.main = async (event) => {
       pass: process.env.mailtoken
     }
   })
+  console.log('请求路径：' + event.path)
+  console.log('请求入参：' + event.body)
+  console.log('请求头：' + JSON.stringify(event.headers))
   let path = ''
   try {
     const count = event.path.split('/').length - 1
@@ -17,17 +20,16 @@ exports.main = async (event) => {
     if (count == 2) {
       path = __dirname + event.path
     }
-    console.log(event.body)
     const res = await require(path).main(event)
     if (res.errCode != 0) {
       await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
         to: '2300990296@qq.com',
         subject: '接口调用失败通知',
-        text: '请求路径：' + event.path + '\n请求入参：' + event.body + '\n失败响应：' + JSON.stringify(res)
+        text: '请求路径：' + event.path + '\n请求入参：' + event.body + '\n失败响应：' + JSON.stringify(res) + '\n请求头：' + JSON.stringify(event.headers)
       })
     }
-    console.log(JSON.stringify(res))
+    console.log('失败响应：' + JSON.stringify(res))
     return res
   } catch (err) {
     await nodemailertransport.sendMail({
