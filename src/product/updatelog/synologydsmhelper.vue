@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.3.3',
+    releaseDate: '2026-01-12',
+    logs: [
+      {
+        type: 'F',
+        content: '“存储空间信息”卡片中“存储池”应为“存储空间”且序号与实际不符'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.3.2',
     releaseDate: '2026-01-10',
     logs: [
@@ -39,7 +49,7 @@ const data = [
       },
       {
         type: 'A',
-        content: '新增静态快捷方式（长按桌面应用图标）：卡片、文件、相册'
+        content: '新增静态快捷方式（长按或鼠标右键桌面应用图标）：卡片、文件、相册'
       },
       {
         type: 'U',

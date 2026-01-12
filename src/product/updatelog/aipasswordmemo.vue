@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.7.3',
+    releaseDate: '2026-01-12',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 扫码登录（登录轩铭 2512 统一账号时可见）'
+      },
+      {
+        type: 'U',
+        content: '进入我的 - 会员中心 - 更多 - 兑换码时输入框自动获焦'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.7.2',
     releaseDate: '2026-01-10',
     logs: [
@@ -687,7 +701,7 @@ const data = [
       },
       {
         type: 'A',
-        content: '我的 - 密码安全检查 新增 近一年未修改'
+        content: '我的 - 密码工具 - 安全检查 新增 近一年未修改'
       },
       {
         type: 'A',
@@ -699,7 +713,7 @@ const data = [
       },
       {
         type: 'U',
-        content: '“密码详情”弹窗中“MFA”类型信息支持长按复制其的 otpauthUri 字符串（点击复制的是数字）'
+        content: '“密码详情”弹窗中“MFA”类型信息支持长按（鼠标右键）复制其的 otpauthUri 字符串（点击复制的是数字）'
       },
       {
         type: 'U',
@@ -879,7 +893,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '密码详情弹窗中非“图标”“MFA”“URL”类型信息内容支持长按复制粘贴、识别其中的特殊实体（包括但不限于 URL）'
+        content: '“密码详情”弹窗中非“图标”“MFA”“URL”类型信息内容支持长按（鼠标右键）复制粘贴、识别其中的特殊实体（包括但不限于 URL）'
       },
       {
         type: 'U',
@@ -1143,7 +1157,7 @@ const data = [
       },
       {
         type: 'F',
-        content: '静态快捷方式（长按桌面图标）图标未适配深色模式'
+        content: '静态快捷方式（长按或鼠标右键桌面应用图标）图标未适配深色模式'
       },
       {
         type: 'F',
@@ -1265,7 +1279,7 @@ const data = [
     logs: [
       {
         type: 'A',
-        content: '新增静态快捷方式（长按桌面应用图标）：新增密码、搜索密码'
+        content: '新增静态快捷方式（长按或鼠标右键桌面应用图标）：新增密码、搜索密码'
       },
       {
         type: 'A',
