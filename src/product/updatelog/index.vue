@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.16',
+    releaseDate: '2026-01-13',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 - SynDSM 助手 新增 正式'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.15',
     releaseDate: '2025-11-19',
     logs: [

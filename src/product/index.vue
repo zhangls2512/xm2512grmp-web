@@ -48,6 +48,8 @@ const endyear = new Date().getFullYear()
               <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
               <div class="large-bold-text">SynDSM 助手</div>
               <div class="sp">
+                <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.synologydsmhelper"
+                  target="_blank">正式</a>
                 <a href="https://appgallery.huawei.com/apptest/73MXaoycx0C" target="_blank">邀请测试</a>
               </div>
             </div>
@@ -209,7 +211,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.15</div>
+          <div class="footer-text">Version 1.0.16</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
