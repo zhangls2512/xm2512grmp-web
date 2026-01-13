@@ -39,11 +39,11 @@ exports.main = async () => {
     id: '80a8bd4f67e68074001383b1504da293',
     version: wxwindowsversions[0]
   })
-  const wxkfzgjres = await axios.get('https://developers.weixin.qq.com/miniprogram/dev/devtools/nightly.html')
+  const wxkfzgjres = await axios.get('https://devtools.wxqcloud.qq.com.cn/WechatWebDev/nightly/versions/config.json')
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,
     id: '11bc22f267e2adb2008bbe7e48ec3c7d',
-    version: wxkfzgjres.data.match(/2\.01\.\d+/)[0]
+    version: wxkfzgjres.data.channels.find(item => item.id === 'nightly').version
   })
   const nodejsres = await axios.get('https://nodejs.org')
   const nodejsversions = [...new Set(nodejsres.data.match(/v(\d+\.\d+\.\d+)/g))].map(item => item.replace('v', ''))
