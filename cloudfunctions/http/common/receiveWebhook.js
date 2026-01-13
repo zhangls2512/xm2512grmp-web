@@ -71,45 +71,46 @@ exports.main = async (event) => {
     channelname = 'Releasepreview'
     url = 'https://aka.ms/releasepreviewLatest'
   }
-  const { data } = await axios.post('http://api.chuckfang.com:12580/subscribe/openBroadcast', channelname + '频道有新版本：' + receivedata.newVersion + '。', {
-    params: {
-      channelId: 'dfe6398536a54e1dad34928d6b812944',
-      unionId: process.env.unionid,
-      url: url
-    },
-    headers: {
-      'Content-Type': 'text/plain'
+  try {
+    const { data } = await axios.post('http://api.chuckfang.com:12580/subscribe/openBroadcast', channelname + '频道有新版本：' + receivedata.newVersion + '。', {
+      params: {
+        channelId: 'dfe6398536a54e1dad34928d6b812944',
+        unionId: process.env.unionid,
+        url: url
+      },
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    if (data.status == 200) {
+      return {
+        errCode: 0,
+        errMsg: '成功'
+      }
+    } else {
+      await nodemailertransport.sendMail({
+        from: 'zhangls2512@vip.qq.com',
+        to: '2300990296@qq.com',
+        subject: '推送通知失败通知',
+        text: '推送通知失败，原因：' + data.msg
+      })
+      return {
+        errCode: 8001,
+        errMsg: '推送通知失败，原因：' + data.msg,
+        errFix: '无修复建议'
+      }
     }
-  })
-  if (data.status == 200) {
-    return {
-      errCode: 0,
-      errMsg: '成功'
-    }
-  } else {
+  } catch (err) {
     await nodemailertransport.sendMail({
       from: 'zhangls2512@vip.qq.com',
       to: '2300990296@qq.com',
-      subject: '推送通知失败通知',
-      text: '推送通知失败，原因：' + data.msg
+      subject: '请求推送通知接口失败通知',
+      text: '请求推送通知接口失败，原因：' + err.response.data.error
     })
     return {
-      errCode: 8001,
-      errMsg: '推送通知失败，原因：' + data.msg,
+      errCode: 8000,
+      errMsg: '请求推送通知接口失败，原因：' + err.response.data.error,
       errFix: '无修复建议'
     }
   }
-} catch (err) {
-  await nodemailertransport.sendMail({
-    from: 'zhangls2512@vip.qq.com',
-    to: '2300990296@qq.com',
-    subject: '请求推送通知接口失败通知',
-    text: '请求推送通知接口失败，原因：' + err.response.data.error
-  })
-  return {
-    errCode: 8000,
-    errMsg: '请求推送通知接口失败，原因：' + err.response.data.error,
-    errFix: '无修复建议'
-  }
-}
 }
