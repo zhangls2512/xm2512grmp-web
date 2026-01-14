@@ -2,7 +2,6 @@
   "main": "index.js",
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
-    "axios": "latest",
-    "validator": "latest"
+    "axios": "latest"
   }
 }

@@ -6,5 +6,5 @@ exports.main = async () => {
   const startdate = Date.now() - 604800000
   await db.collection('dnstask').where({
     updateDate: db.command.lte(startdate)
-  }).orderBy('updateDate', 'asc').remove()
+  }).remove()
 }
