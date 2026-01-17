@@ -39,9 +39,9 @@ exports.main = async (event) => {
     }, process.env.key, {
       algorithm: 'ES256',
       header: {
-        alg: 'ES256',
+        kid: '131ad2fc-d07d-4a0d-b09d-aa569c0dbe25',
         typ: 'JWT',
-        kid: '131ad2fc-d07d-4a0d-b09d-aa569c0dbe25'
+        alg: 'ES256'
       }
     })
     const authorization = 'Bearer ' + jwt
@@ -73,14 +73,7 @@ exports.main = async (event) => {
       } else {
         jws = queryres.data.jwsPurchaseOrder
       }
-      const parts = jws.split('.')
-      const payloadbase64url = parts[1]
-      let base64 = payloadbase64url.replace(/-/g, '+').replace(/_/g, '/')
-      const padding = base64.length % 4
-      if (padding) {
-        base64 += '='.repeat(4 - padding)
-      }
-      const payload = JSON.parse(Buffer.from(base64, 'base64').toString('utf8'))
+      const payload = jsonwebtoken.decode(jws)
       let productid = ''
       let purchaseOrderid = ''
       let uid = ''

@@ -1,6 +1,8 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const crypto = require('crypto')
+  const jsonwebtoken = require('jsonwebtoken')
   const nodemailer = require('nodemailer')
   const app = tcb.init()
   const nodemailertransport = nodemailer.createTransport({
@@ -26,27 +28,46 @@ exports.main = async (event) => {
       errFix: '传递有效的jwsNotification参数'
     }
   }
-  const parts = requestdata.jwsNotification.split('.')
-  if (parts.length != 3) {
-    return {
-      errCode: 1001,
-      errMsg: '请求参数错误',
-      errFix: '传递有效的jwsNotification参数'
+  function verifyJwtWithX5C(jwt) {
+    try {
+      const decoded = jsonwebtoken.decode(jwt, {
+        complete: true
+      })
+      const header = decoded.header
+      if (header.x5c.length != 3) {
+        return false
+      }
+      if (header.x5c[2] != 'MIICGjCCAaGgAwIBAgIIShhpn519jNAwCgYIKoZIzj0EAwMwUzELMAkGA1UEBhMCQ04xDzANBgNVBAoMBkh1YXdlaTETMBEGA1UECwwKSHVhd2VpIENCRzEeMBwGA1UEAwwVSHVhd2VpIENCRyBSb290IENBIEcyMB4XDTIwMDMxNjAzMDQzOVoXDTQ5MDMxNjAzMDQzOVowUzELMAkGA1UEBhMCQ04xDzANBgNVBAoMBkh1YXdlaTETMBEGA1UECwwKSHVhd2VpIENCRzEeMBwGA1UEAwwVSHVhd2VpIENCRyBSb290IENBIEcyMHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEWidkGnDSOw3/HE2y2GHl+fpWBIa5S+IlnNrsGUvwC1I2QWvtqCHWmwFlFK95zKXiM8s9yV3VVXh7ivN8ZJO3SC5N1TCrvB2lpHMBwcz4DA0kgHCMm/wDec6kOHx1xvCRo0IwQDAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUo45a9Vq8cYwqaiVyfkiS4pLcIAAwCgYIKoZIzj0EAwMDZwAwZAIwMypeB7P0IbY7c6gpWcClhRznOJFj8uavrNu2PIoz9KIqr3jnBlBHJs0myI7ntYpEAjBbm8eDMZY5zq5iMZUC6H7UzYSix4Uy1YlsLVV738PtKP9hFTjgDHctXJlC5L7+ZDY=') {
+        return false
+      }
+      const certificates = header.x5c.map(item => new crypto.X509Certificate(Buffer.from(item, 'base64')))
+      for (let i = 0; i < certificates.length - 1; i++) {
+        const subjectcert = certificates[i]
+        const issuercert = certificates[i + 1]
+        if (!subjectcert.checkIssued(issuercert) || !subjectcert.verify(issuercert.publicKey)) {
+          return false
+        }
+      }
+      jsonwebtoken.verify(jwt, certificates[0].publicKey)
+      return true
+    } catch {
+      return false
     }
   }
-  const payloadbase64url = parts[1]
-  let base64 = payloadbase64url.replace(/-/g, '+').replace(/_/g, '/')
-  const padding = base64.length % 4
-  if (padding) {
-    base64 += '='.repeat(4 - padding)
+  if (!verifyJwtWithX5C(requestdata.jwsNotification)) {
+    return {
+      errCode: 1001,
+      errMsg: 'jwsNotification签名校验失败',
+      errFix: '无修复建议'
+    }
   }
-  const payload = JSON.parse(Buffer.from(base64, 'base64').toString('utf8'))
+  const payload = jsonwebtoken.decode(requestdata.jwsNotification)
   const validnotificationtypes = ['DID_NEW_TRANSACTION', 'REFUND_REQUEST']
   if (!validnotificationtypes.includes(payload.notificationType)) {
     return {
       errCode: 1001,
-      errMsg: '请求参数错误',
-      errFix: '传递有效的jwsNotification参数'
+      errMsg: '暂不支持处理此notificationType',
+      errFix: '无修复建议'
     }
   }
   if (payload.notificationType == 'DID_NEW_TRANSACTION') {

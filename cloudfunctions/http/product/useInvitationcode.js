@@ -4,6 +4,7 @@ exports.main = async (event) => {
   const axios = require('axios')
   const jsonwebtoken = require('jsonwebtoken')
   const nodemailer = require('nodemailer')
+  const privatekey = require(__dirname + '/privatekey.json')
   const app = tcb.init()
   const db = app.database()
   const nodemailertransport = nodemailer.createTransport({
@@ -119,7 +120,7 @@ exports.main = async (event) => {
       aud: 'https://oauth-login.cloud.huawei.com/oauth2/v3/token',
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 60
-    }, process.env.keystart + process.env.keyend, {
+    }, privatekey.privateKey, {
       algorithm: 'PS256',
       header: {
         kid: 'ed7352354a6f4d7a9c27750d83e3fa39',
