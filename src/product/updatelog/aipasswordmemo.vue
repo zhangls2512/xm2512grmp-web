@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.1',
+    releaseDate: '2026-01-20',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 无用数据 新增 旧邀请二维码图片'
+      },
+      {
+        type: 'A',
+        content: '调试 新增 信息'
+      },
+      {
+        type: 'F',
+        content: 'ImagePacker、ImageSource、PixelMap 对象使用完成后未主动、及时释放其内存'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.0',
     releaseDate: '2026-01-19',
     logs: [
