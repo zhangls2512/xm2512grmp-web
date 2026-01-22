@@ -147,34 +147,36 @@ exports.main = async () => {
             }
           })
         } catch (err) {
-          await db.collection('dnstask').where({
-            _id: item._id
-          }).update({
-            error: err.detail,
-            status: 'submitfail',
-            updateDate: Date.now()
-          })
-          app.callFunction({
-            name: 'sendEmail',
-            data: {
-              uid: item.uid,
-              noticeName: 'ssl_email_autodnstaskstatuschange',
-              subject: 'SSL证书DNS自动配置任务状态变更通知',
-              text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为提交挑战验证失败。'
-            }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: item.uid,
+          if (err.detail) {
+            await db.collection('dnstask').where({
+              _id: item._id
+            }).update({
+              error: err.detail,
+              status: 'submitfail',
+              updateDate: Date.now()
+            })
+            app.callFunction({
+              name: 'sendEmail',
               data: {
-                noticeName: 'ssl_webhook_autodnstaskstatuschange',
-                dnstaskId: item._id,
-                status: 'submitfail',
-                error: err.detail
+                uid: item.uid,
+                noticeName: 'ssl_email_autodnstaskstatuschange',
+                subject: 'SSL证书DNS自动配置任务状态变更通知',
+                text: '您的账号“SSL证书”产品DNS自动配置任务（ID：' + item._id + '）状态已变更为提交挑战验证失败。'
               }
-            }
-          })
+            })
+            app.callFunction({
+              name: 'sendWebhook',
+              data: {
+                uid: item.uid,
+                data: {
+                  noticeName: 'ssl_webhook_autodnstaskstatuschange',
+                  dnstaskId: item._id,
+                  status: 'submitfail',
+                  error: err.detail
+                }
+              }
+            })
+          }
         }
       }
     }
