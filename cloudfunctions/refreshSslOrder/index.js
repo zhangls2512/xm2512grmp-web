@@ -77,8 +77,10 @@ exports.main = async (event) => {
         try {
           const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
           status = acmeorderres.status
-        } catch {
-          status = 'invalid'
+        } catch (err) {
+          if (err.status == 404) {
+            status = 'invalid'
+          }
         }
         await db.collection('sslorder').where({
           _id: event.id
@@ -95,8 +97,10 @@ exports.main = async (event) => {
         try {
           const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
           status = acmeorderres.status
-        } catch {
-          status = 'invalid'
+        } catch (err) {
+          if (err.status == 404) {
+            status = 'invalid'
+          }
         }
         await db.collection('sslorder').where({
           _id: event.id
@@ -113,8 +117,10 @@ exports.main = async (event) => {
         try {
           const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
           status = acmeorderres.status
-        } catch {
-          status = 'invalid'
+        } catch (err) {
+          if (err.status == 404) {
+            status = 'invalid'
+          }
         }
         await db.collection('sslorder').where({
           _id: event.id

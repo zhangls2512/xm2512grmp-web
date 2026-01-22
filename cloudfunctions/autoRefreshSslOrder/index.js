@@ -26,9 +26,11 @@ exports.main = async () => {
       if (acmeorderres.status == 'invalid') {
         statuswz = '已失效'
       }
-    } catch {
-      status = 'invalid'
-      statuswz = '已失效'
+    } catch (err) {
+      if (err.status == 404) {
+        status = 'invalid'
+        statuswz = '已失效'
+      }
     }
     if (statuswz) {
       await db.collection('sslorder').where({
@@ -187,8 +189,10 @@ exports.main = async () => {
     try {
       const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
       status = acmeorderres.status
-    } catch {
-      status = 'invalid'
+    } catch (err) {
+      if (err.status == 404) {
+        status = 'invalid'
+      }
     }
     if (status == 'invalid') {
       await db.collection('sslorder').where({
@@ -226,8 +230,10 @@ exports.main = async () => {
     try {
       const acmeorderres = await acme.api.getOrderInfo(item.orderUrl)
       status = acmeorderres.status
-    } catch {
-      status = 'invalid'
+    } catch (err) {
+      if (err.status == 404) {
+        status = 'invalid'
+      }
     }
     if (status == 'invalid') {
       await db.collection('sslorder').where({
