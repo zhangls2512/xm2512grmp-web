@@ -115,28 +115,6 @@ exports.main = async () => {
               }
             }
           })
-        } else {
-          app.callFunction({
-            name: 'sendEmail',
-            data: {
-              uid: item.uid,
-              noticeName: 'ssl_email_autoneworderresult',
-              subject: 'SSL证书产品自动新增续期订单结果',
-              text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：请求CA服务器失败，错误信息：' + err.code + '。'
-            }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: item.uid,
-              data: {
-                noticeName: 'ssl_webhook_autoneworderresult',
-                status: 'fail',
-                reason: 'requestcaserverfail',
-                errmsg: err.code
-              }
-            }
-          })
         }
         return
       }
@@ -421,28 +399,6 @@ exports.main = async () => {
                 status: 'fail',
                 reason: 'caerror',
                 errmsg: err.detail
-              }
-            }
-          })
-        } else {
-          app.callFunction({
-            name: 'sendEmail',
-            data: {
-              uid: item.uid,
-              noticeName: 'ssl_email_autoneworderresult',
-              subject: 'SSL证书产品自动新增续期订单结果',
-              text: '您的账号“SSL证书”产品自动新增续期订单失败，原因：请求CA服务器失败，错误信息：' + err.code + '。'
-            }
-          })
-          app.callFunction({
-            name: 'sendWebhook',
-            data: {
-              uid: item.uid,
-              data: {
-                noticeName: 'ssl_webhook_autoneworderresult',
-                status: 'fail',
-                reason: 'requestcaserverfail',
-                errmsg: err.code
               }
             }
           })
