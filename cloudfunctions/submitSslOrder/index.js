@@ -101,10 +101,18 @@ exports.main = async (event) => {
           csr: csr
         })
       } catch (err) {
-        return {
-          errCode: 8002,
-          errMsg: 'CA返回错误，错误信息：' + err.detail,
-          errFix: '联系客服'
+        if (err.detail) {
+          return {
+            errCode: 8002,
+            errMsg: 'CA返回错误，错误信息：' + err.detail,
+            errFix: '联系客服'
+          }
+        } else {
+          return {
+            errCode: 8003,
+            errMsg: '请求CA服务器失败，错误信息：' + err.code,
+            errFix: '联系客服'
+          }
         }
       }
       if (privatekey) {
