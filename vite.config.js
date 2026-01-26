@@ -12,5 +12,20 @@ export default defineConfig({
     AutoImport({
       resolvers: [TinyVueSingleResolver]
     })
-  ]
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames(assetInfo) {
+          const name = assetInfo.names[0]
+          if (name.endsWith('.css')) {
+            return 'css/[name]-[hash][extname]'
+          }
+          return 'assets/[name]-[hash][extname]'
+        },
+        chunkFileNames: 'js/[name]-[hash].js',
+        entryFileNames: 'js/[name]-[hash].js'
+      }
+    }
+  }
 })
