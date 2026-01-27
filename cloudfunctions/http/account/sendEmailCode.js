@@ -51,12 +51,20 @@ exports.main = async (event) => {
       used: false,
       verifyTimes: 0
     })
-    await nodemailertransport.sendMail({
-      from: 'zhangls2512@vip.qq.com',
-      to: requestdata.email,
-      subject: '轩铭2512统一账号邮箱验证码',
-      text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
-    })
+    try {
+      await nodemailertransport.sendMail({
+        from: 'zhangls2512@vip.qq.com',
+        to: requestdata.email,
+        subject: '轩铭2512统一账号邮箱验证码',
+        text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
+      })
+    } catch (err) {
+      return {
+        errCode: 8001,
+        errMsg: '发送验证码邮件失败，错误信息：' + err.message,
+        errFix: '联系客服'
+      }
+    }
     return {
       errCode: 0,
       errMsg: '成功'
@@ -71,12 +79,20 @@ exports.main = async (event) => {
     used: false,
     verifyTimes: 0
   })
-  await nodemailertransport.sendMail({
-    from: 'zhangls2512@vip.qq.com',
-    to: requestdata.email,
-    subject: '轩铭2512统一账号邮箱验证码',
-    text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
-  })
+  try {
+    await nodemailertransport.sendMail({
+      from: 'zhangls2512@vip.qq.com',
+      to: requestdata.email,
+      subject: '轩铭2512统一账号邮箱验证码',
+      text: '验证码：' + emailcode + '，有效期5分钟。请勿泄露给他人。'
+    })
+  } catch (err) {
+    return {
+      errCode: 8001,
+      errMsg: '发送验证码邮件失败，错误信息：' + err.message,
+      errFix: '联系客服'
+    }
+  }
   return {
     errCode: 0,
     errMsg: '成功'

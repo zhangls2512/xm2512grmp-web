@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.2',
+    releaseDate: '2026-01-27',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 数据与隐私 - 权限管理 新增 联网'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏组件改为 HdsTabs、页面导航组件改为 HdsNavigation、HdsNavDestination'
+      },
+      {
+        type: 'F',
+        content: '我的 - 设置 - 数据 - 设备间同步 - 可信未同步删除操作'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.1',
     releaseDate: '2026-01-20',
     logs: [

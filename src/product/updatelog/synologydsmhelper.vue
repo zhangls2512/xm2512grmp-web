@@ -2,6 +2,80 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.3.4',
+    releaseDate: '2026-01-27',
+    logs: [
+      {
+        type: 'A',
+        content: '卡片 新增 套件、Docker 容器'
+      },
+      {
+        type: 'A',
+        content: 'zip 文件支持长按（鼠标右键）解压缩'
+      },
+      {
+        type: 'A',
+        content: '我的 - 登录 新增 备注'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 数据与隐私 - 权限管理 新增 联网'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 缓存 新增 相册照片缩略图'
+      },
+      {
+        type: 'A',
+        content: '调试 新增 信息'
+      },
+      {
+        type: 'U',
+        content: '“卡片”支持自定义展示顺序'
+      },
+      {
+        type: 'U',
+        content: '消息主题用户友好化'
+      },
+      {
+        type: 'U',
+        content: '“相册”页面优化内存占用'
+      },
+      {
+        type: 'U',
+        content: '相册 - 照片顶部显示照片、视频个数'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 设置清理成功后弹窗提示“需重启应用生效”'
+      },
+      {
+        type: 'U',
+        content: '应用启动时自动切换登录与当前登录账号备注相同且非空所有账号中最快建立连接的账号'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏组件改为 HdsTabs、页面导航组件改为 HdsNavigation、HdsNavDestination'
+      },
+      {
+        type: 'F',
+        content: '进入“卡片”页面时未立即刷新卡片'
+      },
+      {
+        type: 'F',
+        content: '无法成功新建名称为纯数字的文件夹、将文件（夹）重命名为纯数字'
+      },
+      {
+        type: 'F',
+        content: 'Navigation、NavDestination 组件页面标题过长时遮挡右上角“关闭”图标按钮'
+      },
+      {
+        type: 'F',
+        content: 'ImagePacker、ImageSource、PixelMap 对象使用完成后未主动、及时释放其内存'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.3.3',
     releaseDate: '2026-01-12',
     logs: [
