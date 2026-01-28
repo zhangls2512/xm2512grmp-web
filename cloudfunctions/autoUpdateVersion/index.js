@@ -43,7 +43,7 @@ exports.main = async () => {
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,
     id: '11bc22f267e2adb2008bbe7e48ec3c7d',
-    version: wxkfzgjres.data.channels.find(item => item.id === 'nightly').version
+    version: wxkfzgjres.data.channels.find(item => item.id == 'nightly').version
   })
   const nodejsres = await axios.get('https://nodejs.org')
   const nodejsversions = [...new Set(nodejsres.data.match(/v(\d+\.\d+\.\d+)/g))].map(item => item.replace('v', ''))

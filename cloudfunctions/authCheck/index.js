@@ -404,7 +404,7 @@ exports.main = async (event) => {
         }
       }
       const clientdatajsonbuffer = base64urlToBuffer(checkdata.clientdatajson)
-      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer))).challenge !== base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
+      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer))).challenge != base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',

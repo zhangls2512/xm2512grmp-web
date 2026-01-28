@@ -13,7 +13,7 @@ async function request({ apiPath, body }) {
       body: JSON.stringify(body)
     })
     loading.close()
-    if (res.status !== 200) {
+    if (res.status != 200) {
       TinyModal.message({
         message: 'HTTP 请求失败，状态码：' + res.status,
         status: 'error'
@@ -21,7 +21,7 @@ async function request({ apiPath, body }) {
       throw '失败'
     }
     const data = await res.json()
-    if (data.errCode === 0) {
+    if (data.errCode == 0) {
       return data
     }
     TinyNotify({
@@ -33,7 +33,7 @@ async function request({ apiPath, body }) {
     throw '失败'
   } catch (err) {
     loading.close()
-    if (err === '失败') {
+    if (err == '失败') {
       throw err
     }
     TinyModal.message({
