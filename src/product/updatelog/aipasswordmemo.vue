@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.3',
+    releaseDate: '2026-01-29',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 应用 - 沙箱文件删除工具 升级为 沙箱文件管理器'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.2',
     releaseDate: '2026-01-27',
     logs: [
