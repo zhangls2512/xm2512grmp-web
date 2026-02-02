@@ -22,7 +22,7 @@ exports.main = async (event) => {
     }
     const res = await require(path).main(event)
     console.log('响应：' + JSON.stringify(res))
-    if (res.errCode != 0) {
+    if (res.errCode != 0 && event.httpMethod == 'POST' && event.body) {
       await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
         to: '2300990296@qq.com',
