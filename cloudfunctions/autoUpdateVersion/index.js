@@ -90,7 +90,7 @@ exports.main = async () => {
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,
     id: '586080e067e18454007b71e82ef6ce5f',
-    version: gitres.data[gitres.data.length - 1].name.match(/v(.*?)\.windows/)[1]
+    version: gitres.data[gitres.data.length - 1].name.slice(1, -1)
   })
   const rufusres = await axios.get('https://rufus.ie/zh')
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
