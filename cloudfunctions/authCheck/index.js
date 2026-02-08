@@ -395,7 +395,22 @@ exports.main = async (event) => {
         return Buffer.from(base64, 'base64')
       }
       const authenticatordatabuffer = base64urlToBuffer(checkdata.authenticatordata)
-      const signcount = authenticatordatabuffer.readUInt32BE(33)
+      if (authenticatordatabuffer.length < 37) {
+        return {
+          errCode: 3060,
+          errMsg: 'authenticatorData校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      const rpidhash = authenticatordatabuffer.subarray(0, 32)
+      if (!crypto.timingSafeEqual(rpidhash, crypto.createHash('sha256').update('www.zhangls2512.cn').digest())) {
+        return {
+          errCode: 3060,
+          errMsg: 'rpIdHash校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      const signcount = authenticatordatabuffer.subarray(33, 37).readUInt32BE()
       if (!Number.isInteger(signcount) || (signcount <= passkeyres.data[0].signCount && passkeyres.data[0].signCount != 0)) {
         return {
           errCode: 3060,
@@ -404,10 +419,25 @@ exports.main = async (event) => {
         }
       }
       const clientdatajsonbuffer = base64urlToBuffer(checkdata.clientdatajson)
-      if (JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer))).challenge != base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
+      const clientdatajson = JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer)))
+      if (clientdatajson.challenge != base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (clientdatajson.origin != 'https://www.zhangls2512.cn') {
+        return {
+          errCode: 3060,
+          errMsg: 'origin校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (clientdatajson.crossOrigin) {
+        return {
+          errCode: 3060,
+          errMsg: 'crossOrigin校验失败',
           errFix: '无修复建议'
         }
       }

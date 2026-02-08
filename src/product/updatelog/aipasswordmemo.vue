@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.6',
+    releaseDate: '2026-02-08',
+    logs: [
+      {
+        type: 'U',
+        content: '电脑端文件右键菜单文本修改为操作名称（以前为应用名称）'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.5',
     releaseDate: '2026-02-05',
     logs: [
