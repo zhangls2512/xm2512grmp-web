@@ -22,6 +22,10 @@ const products = ref([
   {
     value: 'synologydsmhelper',
     label: 'SynDSM 助手'
+  },
+  {
+    value: 'webdavhelper',
+    label: 'WebDAV 助手'
   }
 ])
 async function get() {
@@ -48,7 +52,8 @@ async function get() {
   })
   const productmap = {
     password: '密码智能备忘录',
-    synologydsmhelper: 'SynDSM 助手'
+    synologydsmhelper: 'SynDSM 助手',
+    webdavhelper: 'WebDAV 助手'
   }
   data.value = res.data.map(item => ({
     ...item,

@@ -21,7 +21,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validproducts = ['password', 'synologydsmhelper']
+  const validproducts = ['password', 'synologydsmhelper', 'webdavhelper']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,
@@ -35,6 +35,9 @@ exports.main = async (event) => {
   }
   if (requestdata.product == 'synologydsmhelper') {
     productwz = 'SynDSM助手'
+  }
+  if (requestdata.product == 'webdavhelper') {
+    productwz = 'WebDAV助手'
   }
   if (typeof (requestdata.version) != 'string' || !/^\d+\.\d+\.\d+\.\d+$/.test(requestdata.version)) {
     return {
