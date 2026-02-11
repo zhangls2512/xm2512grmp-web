@@ -20,10 +20,10 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  if (Date.now() - requestdata.timeStamp > 5000) {
+  if (!Number.isInteger(requestdata.timeStamp) || Date.now() - requestdata.timeStamp > 5000 || requestdata.timeStamp > Date.now()) {
     return {
       errCode: 1003,
-      errMsg: 'timeStamp过旧',
+      errMsg: 'timeStamp校验失败',
       errFix: '无修复建议'
     }
   }

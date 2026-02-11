@@ -69,6 +69,10 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/synologydsmhelper.vue')
         },
         {
+          path: 'webdavhelper',
+          component: () => import('/src/product/updatelog/webdavhelper.vue')
+        },
+        {
           path: 'resource',
           component: () => import('/src/product/updatelog/resource.vue')
         },

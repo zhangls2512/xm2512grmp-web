@@ -28,6 +28,10 @@ const tabs = [
     label: 'SynDSM 助手'
   },
   {
+    id: 'webdavhelper',
+    label: 'WebDAV 助手'
+  },
+  {
     id: 'resource',
     label: '资源'
   },

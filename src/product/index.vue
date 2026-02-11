@@ -54,6 +54,17 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </div>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/webdavhelper.png" loading="lazy"></img>
+              <div class="large-bold-text">WebDAV 助手</div>
+              <div class="sp">
+                <a href="https://appgallery.huawei.com/app/detail?id=com.zhuzx.webdavhelper" target="_blank">正式</a>
+                <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=1019f3cd5ad03a34213185bc77f591cd&invitationCode=9hNj0q2zjqF"
+                  target="_blank">邀请测试</a>
+              </div>
+            </div>
+          </div>
           <router-link to="/product/resource" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -211,7 +222,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.16</div>
+          <div class="footer-text">Version 1.0.17</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
