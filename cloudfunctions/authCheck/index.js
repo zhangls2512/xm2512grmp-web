@@ -563,11 +563,6 @@ exports.main = async (event) => {
             access_token: huaweitokenres.data.access_token
           }
         })
-        await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/revoke', null, {
-          params: {
-            token: huaweitokenres.data.access_token
-          }
-        })
         const externalaccount = await db.collection('externalaccount').where({
           openid: huaweitokeninfores.data.union_id,
           platform: 'huawei'
