@@ -424,10 +424,10 @@ exports.main = async (event) => {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',
-          errFix: '无修复建议'
+          errFix: '请重试'
         }
       }
-      if (clientdatajson.origin != 'https://www.zhangls2512.cn') {
+      if (clientdatajson.origin != 'https://www.zhangls2512.cn' && !clientdatajson.origin.startsWith('ohos:app-id:')) {
         return {
           errCode: 3060,
           errMsg: 'origin校验失败',

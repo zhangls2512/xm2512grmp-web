@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.7',
+    releaseDate: '2026-02-12',
+    logs: [
+      {
+        type: 'U',
+        content: '网络请求最低 TLS 版本调整为 1.2，提高安全性'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.6',
     releaseDate: '2026-02-08',
     logs: [
