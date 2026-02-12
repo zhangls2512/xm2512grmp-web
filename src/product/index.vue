@@ -60,8 +60,7 @@ const endyear = new Date().getFullYear()
               <div class="large-bold-text">WebDAV 助手</div>
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.zhuzx.webdavhelper" target="_blank">正式</a>
-                <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=1019f3cd5ad03a34213185bc77f591cd&invitationCode=9hNj0q2zjqF"
-                  target="_blank">邀请测试</a>
+                <a href="https://appgallery.huawei.com/apptest/71oWIm6wkNt" target="_blank">邀请测试</a>
               </div>
             </div>
           </div>
