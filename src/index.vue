@@ -56,6 +56,13 @@ age = outputage()
         </div>
       </div>
       <div class="sp">
+        <img class="tp" src="/zsd.png" loading="lazy"></img>
+        <div class="cz">
+          <div class="large-bold-text">腾讯技术菁英班结课证书</div>
+          <div class="large-text">证书编号：TCAMP20260212000458</div>
+        </div>
+      </div>
+      <div class="sp">
         <img class="tp" src="/rjzzqmchd.png" loading="lazy"></img>
         <div class="cz">
           <div class="large-bold-text">MC活动软件——计算机软件著作权转让合同登记证书</div>
@@ -133,7 +140,7 @@ age = outputage()
       </div>
       <div class="footer-text">Copyright © 2025-{{ endyear }} Zhang Xuanming. All Rights Reserved. 张轩铭 版权所有</div>
       <div class="sp">
-        <div class="footer-text">Version 1.0.2</div>
+        <div class="footer-text">Version 1.0.3</div>
         <tiny-divider direction="vertical"></tiny-divider>
         <router-link class="footer-text" to="/product/updatelog/grmpweb" target="_blank">更新日志</router-link>
       </div>

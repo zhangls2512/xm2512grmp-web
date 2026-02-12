@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.1',
+    releaseDate: '2026-02-12',
+    logs: [
+      {
+        type: 'U',
+        content: '我的 - 登录弹窗中“协议”默认值调整为“https”'
+      },
+      {
+        type: 'U',
+        content: '优化桌面、锁屏卡片的描述'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.0',
     releaseDate: '2026-02-09',
     logs: [

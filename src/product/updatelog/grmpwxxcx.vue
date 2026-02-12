@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.11',
+    releaseDate: '2026-02-12',
+    logs: [
+      {
+        type: 'U',
+        content: '技能证书 新增 腾讯技术菁英班结课证书'
+      },
+      {
+        type: 'U',
+        content: '开发产品 新增 WebDAV 助手'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.10',
     releaseDate: '2026-01-21',
     logs: [

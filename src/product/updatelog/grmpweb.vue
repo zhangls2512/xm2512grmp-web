@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（网页）'
 const data = [
   {
+    versionNumber: '1.0.3',
+    releaseDate: '2026-02-12',
+    logs: [
+      {
+        type: 'U',
+        content: '技能证书 新增 腾讯技术菁英班结课证书'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.2',
     releaseDate: '2025-09-15',
     logs: [
