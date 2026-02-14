@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.0.1',
+    releaseDate: '2026-02-14',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 - 自动上传故障日志类型 新增 音频卡顿'
+      },
+      {
+        type: 'U',
+        content: '自动上传故障日志类型默认值调整为“js 运行异常、崩溃”（默认关闭日志不详细的类型，降低因故障日志自动上传导致操作被中断的概率）'
+      },
+      {
+        type: 'U',
+        content: '应用启动时自动清理无用数据，同时下线我的 - 设置 - 更多 - 其他 - 清理数据 - 无用数据'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.0',
     releaseDate: '2026-02-11',
     logs: [
