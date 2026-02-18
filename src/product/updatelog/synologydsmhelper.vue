@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.3',
+    releaseDate: '2026-02-18',
+    logs: [
+      {
+        type: 'A',
+        content: '“相册”支持将图片或视频加入相册、从相册中删除，重命名、删除相册'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.2',
     releaseDate: '2026-02-14',
     logs: [
