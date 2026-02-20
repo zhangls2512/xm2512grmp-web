@@ -57,6 +57,19 @@ exports.main = async () => {
     id: '93aa0c2e67e29ab00088f4356abd3d5f',
     version: nodejsversions[1]
   })
+  const minecraftbedrockserverres = await axios.get('https://net-secondary.web.minecraft-services.net/api/v1.0/download/links')
+  const link1 = minecraftbedrockserverres.data.result.links.find(item => item.downloadType == 'serverBedrockLinux').downloadUrl
+  const link2 = minecraftbedrockserverres.data.result.links.find(item => item.downloadType == 'serverBedrockPreviewLinux').downloadUrl
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: 'f9fbf60c6997f7c60128e4a5635f3deb',
+    version: link1.substring(link1.lastIndexOf('-') + 1).slice(0, -4)
+  })
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: 'f9fbf60c6997fa4901290d054a26fc3e',
+    version: link2.substring(link2.lastIndexOf('-') + 1).slice(0, -4)
+  })
   const crystaldiskres = await axios.get('https://crystalmark.info')
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,

@@ -142,7 +142,9 @@ async function get() {
     }
   })
   count.value = total.value - countres.count
-  percent.value = ((count.value / total.value) * 100).toFixed(0)
+  if (total.value > 0) {
+    percent.value = ((count.value / total.value) * 100).toFixed(0)
+  }
 }
 async function getTotal() {
   const totalres = await request({
