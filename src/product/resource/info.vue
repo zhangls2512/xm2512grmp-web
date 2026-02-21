@@ -163,8 +163,8 @@ function update() {
       <tiny-alert :closable="false" description="如果发现以上信息与实际不符或涉嫌违规，可联系客服举报。"></tiny-alert>
       <tiny-divider></tiny-divider>
       <div>
-        <tiny-button v-if="added == false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
-        <tiny-button v-if="added == true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>
+        <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
+        <tiny-button v-if="added === true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>
         <tiny-button type="info" @click="update">修改</tiny-button>
       </div>
     </div>

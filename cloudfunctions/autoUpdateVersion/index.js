@@ -70,6 +70,12 @@ exports.main = async () => {
     id: 'f9fbf60c6997fa4901290d054a26fc3e',
     version: link2.substring(link2.lastIndexOf('-') + 1).slice(0, -4)
   })
+  const minecraftbedrockandroidres = await axios.get('https://mcapks.com/api/get-vslist.php')
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: '21515ff067e21edf0082426b2b8533b2',
+    version: minecraftbedrockandroidres.data.data.versions.find(item => !item.beta).version
+  })
   const crystaldiskres = await axios.get('https://crystalmark.info')
   axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
     accessKey: process.env.accesskey,
