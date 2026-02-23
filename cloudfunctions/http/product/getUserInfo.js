@@ -44,7 +44,7 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', requestdata.product],
+      permission: [],
       service: [requestdata.product],
       apiName: 'product_getUserInfo'
     }
