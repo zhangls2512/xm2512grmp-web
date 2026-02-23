@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.8.9',
+    releaseDate: '2026-02-23',
+    logs: [
+      {
+        type: 'U',
+        content: '桌面、锁屏卡片中显示快捷入口名称'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.8',
     releaseDate: '2026-02-13',
     logs: [

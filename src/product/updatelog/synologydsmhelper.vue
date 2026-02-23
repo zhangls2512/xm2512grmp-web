@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.4',
+    releaseDate: '2026-02-23',
+    logs: [
+      {
+        type: 'U',
+        content: '桌面、锁屏卡片中显示快捷入口名称'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.3',
     releaseDate: '2026-02-18',
     logs: [
