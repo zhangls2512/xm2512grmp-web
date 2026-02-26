@@ -27,7 +27,7 @@ exports.main = async (event) => {
       errFix: '无修复建议'
     }
   }
-  const hash = crypto.createHash('sha512').update(requestdata.data + '\0' + requestdata.timeStamp).digest('base64')
+  const hash = crypto.createHash('sha512').update(requestdata.data + '\0' + requestdata.timeStamp).digest()
   const publickey = fs.readFileSync(__dirname + '/publickey.txt')
   if (!crypto.createVerify('sha512').update(hash).verify(publickey, Buffer.from(requestdata.signature, 'base64'))) {
     return {
