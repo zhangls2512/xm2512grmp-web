@@ -22,7 +22,7 @@ async function callfunction({ functionName, data }) {
     TinyNotify({
       type: 'error',
       title: '接口调用失败，错误码：' + res.result.errCode,
-      message: '错误信息：' + res.result.errMsg + '，修复方法：' + res.result.errFix,
+      message: '错误信息：' + res.result.errMsg + '；修复方法：' + res.result.errFix,
       position: 'top-right'
     })
     throw '接口调用失败'

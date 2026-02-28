@@ -27,7 +27,7 @@ async function request({ apiPath, body }) {
     TinyNotify({
       type: 'error',
       title: '接口调用失败，错误码：' + data.errCode,
-      message: '错误信息：' + data.errMsg + '，修复方法：' + data.errFix,
+      message: '错误信息：' + data.errMsg + '；修复方法：' + data.errFix,
       position: 'top-right'
     })
     throw '失败'
