@@ -57,6 +57,25 @@ exports.main = async () => {
     id: '93aa0c2e67e29ab00088f4356abd3d5f',
     version: nodejsversions[1]
   })
+  const nvidiares = await axios.get('https://gfwsl.geforce.cn/nvidia_web_services/controller.gfeclientcontent.NG.php/com.nvidia.services.GFEClientContent_NG.getDispDrvrByDevid/' + encodeURI(JSON.stringify({
+    dIDa: ['28E0_10DE_3B53_17AA_1'],
+    osC: '10.0',
+    osB: '26300',
+    is6: '1',
+    lg: '2052',
+    iLp: '1',
+    prvMd: '0',
+    gcV: '11.0.6.383',
+    gIsB: '0',
+    dch: '1',
+    upCRD: '0',
+    isCRD: '0'
+  })))
+  axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+    accessKey: process.env.accesskey,
+    id: '1ec4d34469a3c8c3002201fe7ba57e7e',
+    version: nvidiares.data.DriverAttributes.Version
+  })
   const minecraftbedrockserverres = await axios.get('https://net-secondary.web.minecraft-services.net/api/v1.0/download/links')
   const link1 = minecraftbedrockserverres.data.result.links.find(item => item.downloadType == 'serverBedrockLinux').downloadUrl
   const link2 = minecraftbedrockserverres.data.result.links.find(item => item.downloadType == 'serverBedrockPreviewLinux').downloadUrl
