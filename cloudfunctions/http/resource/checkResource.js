@@ -63,14 +63,15 @@ exports.main = async (event) => {
       }
     }
     let added = false
-    let canUpdate = false
+    let canupdate = false
     const data = resourceres.data[0]
     if (data.uid == res.result.account._id) {
-      canUpdate = true
+      canupdate = true
     }
     if (!data.uid) {
-      if (data.allowUpdateUser.length == 0 || data.allowUpdateUser.includes(uid))
-        canUpdate = true
+      if (data.allowUpdateUser.length == 0 || data.allowUpdateUser.includes(uid)) {
+        canupdate = true
+      }
     }
     const resourceaddres = await db.collection('resourceadd').where({
       resourceId: requestdata.resourceId,
@@ -83,7 +84,7 @@ exports.main = async (event) => {
       errCode: 0,
       errMsg: '成功',
       added: added,
-      canUpdate: canUpdate
+      canUpdate: canupdate
     }
   }
 }
