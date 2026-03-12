@@ -9,6 +9,7 @@ const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref({})
 const added = ref('')
+const canupdate = ref('')
 const dialog = ref(false)
 const tags = ref([])
 const tag = ref('')
@@ -26,14 +27,15 @@ async function get() {
   })
   data.value = res.data
   if (accesstoken) {
-    const addres = await request({
-      apiPath: '/resource/checkResourceAdded',
+    const checkres = await request({
+      apiPath: '/resource/checkResource',
       body: {
         accessToken: accesstoken,
         resourceId: id
       }
     })
-    added.value = addres.added
+    added.value = checkres.added
+    canupdate.value = checkres.canUpdate
     const tagres = await request({
       apiPath: '/product/getUserInfo',
       body: {
@@ -165,7 +167,7 @@ function update() {
       <div>
         <tiny-button v-if="added === false" type="success" @click="newAddOpen">添加到我的资源</tiny-button>
         <tiny-button v-if="added === true" type="danger" @click="deleteAdd">从我的资源中删除</tiny-button>
-        <tiny-button type="info" @click="update">修改</tiny-button>
+        <tiny-button v-if="canupdate === true" type="info" @click="update">修改</tiny-button>
       </div>
     </div>
     <tiny-dialog-box class="dialog" :visible="dialog" title="设置标签" @close="newAddClose">

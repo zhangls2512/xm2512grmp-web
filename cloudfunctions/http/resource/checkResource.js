@@ -44,27 +44,46 @@ exports.main = async (event) => {
       },
       permission: [],
       service: ['resource'],
-      apiName: 'resource_checkResourceAdded'
+      apiName: 'resource_checkResource'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
+    const uid = res.result.account._id
+    const resourceres = await db.collection('resource').where({
+      _id: requestdata.resourceId,
+      releaseStatus: 'release'
+    }).get()
+    if (resourceres.data.length == 0) {
+      return {
+        errCode: 8000,
+        errMsg: '资源不存在',
+        errFix: '无修复建议'
+      }
+    }
+    let added = false
+    let canUpdate = false
+    const data = resourceres.data[0]
+    if (data.uid == res.result.account._id) {
+      canUpdate = true
+    }
+    if (!data.uid) {
+      if (data.allowUpdateUser.length == 0 || data.allowUpdateUser.includes(uid))
+        canUpdate = true
+    }
     const resourceaddres = await db.collection('resourceadd').where({
       resourceId: requestdata.resourceId,
-      uid: res.result.account._id
+      uid: uid
     }).get()
     if (resourceaddres.data.length == 0) {
-      return {
-        errCode: 0,
-        errMsg: '成功',
-        added: false
-      }
+      added = true
     }
     return {
       errCode: 0,
       errMsg: '成功',
-      added: true
+      added: added,
+      canUpdate: canUpdate
     }
   }
 }

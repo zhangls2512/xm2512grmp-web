@@ -354,8 +354,8 @@ const apis = ref([
   },
   {
     product: '资源',
-    name: 'resource_checkResourceAdded',
-    desc: '检查资源是否添加到我的资源'
+    name: 'resource_checkResource',
+    desc: '检查资源是否添加、有权修改'
   },
   {
     product: '资源',

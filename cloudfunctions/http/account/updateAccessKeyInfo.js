@@ -108,7 +108,7 @@ exports.main = async (event) => {
     'resource_updateAddResource',
     'resource_syncAddResourceInfo',
     'resource_deleteAddResource',
-    'resource_checkResourceAdded',
+    'resource_checkResource',
     'resource_updateUserSetting',
     'resourcecreator_aiGenerateResourceInfo',
     'resourcecreator_newResource',
