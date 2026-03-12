@@ -76,7 +76,7 @@ exports.main = async (event) => {
       resourceId: requestdata.resourceId,
       uid: uid
     }).get()
-    if (resourceaddres.data.length == 0) {
+    if (resourceaddres.data.length > 0) {
       added = true
     }
     return {
