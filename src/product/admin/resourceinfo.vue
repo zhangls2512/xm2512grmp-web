@@ -9,15 +9,11 @@ const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref({})
-let date = ''
 const auudialog = ref(false)
 const uvwrdialog = ref(false)
 const auu = ref([])
 const auuuser = ref('')
 const uvwr = ref('')
-const reviewstatus = ref('')
-const reviewinvalidreason = ref('')
-const disallowupdate = ref(false)
 async function get() {
   const res = await request({
     apiPath: '/admin/getResourceInfo',
@@ -32,21 +28,12 @@ async function get() {
   })
   const dataout = res.data
   dataout.createDate = moment(dataout.createDate).format('YYYY-MM-DD HH:mm:ss')
-  disallowupdate.value = dataout.disallowUpdate
-  date = dataout.submitReviewDate
   dataout.submitReviewDate = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
   data.value = dataout
-  if (dataout.reviewStatus == 'valid') {
-    reviewstatus.value = 'invalid'
-  }
-  if (dataout.reviewStatus == 'invalid') {
-    reviewstatus.value = 'valid'
-  }
-  reviewinvalidreason.value = dataout.reviewInvalidReason
 }
 get()
-function copy() {
-  navigator.clipboard.writeText(data.value._id)
+async function copy() {
+  await navigator.clipboard.writeText(data.value._id)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'
@@ -114,33 +101,16 @@ async function updateUvwr() {
   })
   get()
 }
-async function updateReviewResult() {
-  if (reviewstatus.value == 'invalid' && !reviewinvalidreason.value) {
-    TinyModal.message({
-      message: '请输入不通过原因',
-      status: 'warning'
-    })
-    return
-  }
+async function reReview() {
   await request({
-    apiPath: '/admin/updateResourceReviewResult',
+    apiPath: '/admin/reReviewResource',
     body: {
       accessToken: accesstoken,
-      id: id,
-      status: reviewstatus.value,
-      reason: reviewinvalidreason.value,
-      disallowUpdate: disallowupdate.value,
-      date: date,
-      name: data.value.reviewInfo.name,
-      desc: data.value.reviewInfo.desc,
-      version: data.value.reviewInfo.version,
-      location: data.value.reviewInfo.location,
-      tag: data.value.reviewInfo.tag,
-      info: data.value.reviewInfo.info
+      id: id
     }
   })
   TinyModal.message({
-    message: '提交成功',
+    message: '重新审核成功',
     status: 'success'
   })
   get()
@@ -232,18 +202,7 @@ async function updateReviewResult() {
       </div>
       <div v-if="data.reviewInvalidReason != ''" class="bold-text">不通过原因</div>
       <div v-if="data.reviewInvalidReason != ''">{{ data.reviewInvalidReason }}</div>
-      <tiny-radio-group v-if="data.reviewStatus != 'pending'" v-model="reviewstatus">
-        <tiny-radio label="valid"
-          :disabled="data.reviewStatus != 'processing' && data.reviewStatus != 'invalid'">通过</tiny-radio>
-        <tiny-radio label="invalid">不通过</tiny-radio>
-      </tiny-radio-group>
-      <tiny-input v-if="reviewstatus == 'invalid'" v-model="reviewinvalidreason" type="textarea" autosize
-        show-word-limit maxlength="500" placeholder="请输入不通过原因"></tiny-input>
-      <div v-if="reviewstatus == 'invalid'" class="sp">
-        <div class="bold-text">禁止修改、提交审核</div>
-        <tiny-switch v-model="disallowupdate"></tiny-switch>
-      </div>
-      <tiny-button v-if="data.reviewStatus != 'pending'" type="info" @click="updateReviewResult">提交</tiny-button>
+      <tiny-button v-if="data.reviewStatus == 'invalid'" type="info" @click="reReview">重新审核</tiny-button>
       <div v-if="data.reviewStatus != 'pending'" class="sp">
         <div class="bold-text">提交审核时间</div>
         <div>{{ data.submitReviewDate }}</div>

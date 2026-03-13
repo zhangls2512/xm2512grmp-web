@@ -46,8 +46,8 @@ async function deactivateAuthorization(url) {
   })
   get()
 }
-function copy(value) {
-  navigator.clipboard.writeText(value)
+async function copy(value) {
+  await navigator.clipboard.writeText(value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

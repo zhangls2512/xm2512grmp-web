@@ -133,7 +133,7 @@ exports.main = async (event) => {
       }
     }
     const data = resourceres.data[0]
-    if (data.reviewStatus == 'pending') {
+    if (data.reviewStatus != 'processing') {
       return {
         errCode: 8001,
         errMsg: '审核版本未提交审核',

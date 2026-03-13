@@ -123,6 +123,7 @@ async function get() {
     releasestatus.value = dataout.releaseStatus
     date = dataout.submitReviewDate
     submitreviewdate.value = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+    reviewinvalidreason.value = dataout.reviewInvalidReason
     name.value = dataout.reviewInfo.name
     desc.value = dataout.reviewInfo.desc
     version.value = dataout.reviewInfo.version
@@ -237,8 +238,8 @@ function addInfo() {
 function removeInfo(index) {
   info.value.splice(index, 1)
 }
-function copy() {
-  navigator.clipboard.writeText(id.value)
+async function copy() {
+  await navigator.clipboard.writeText(id.value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

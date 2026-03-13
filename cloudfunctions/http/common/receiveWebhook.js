@@ -94,11 +94,6 @@ exports.main = async (event) => {
         subject: '推送通知失败通知',
         text: '推送通知失败，原因：' + data.msg
       })
-      return {
-        errCode: 8001,
-        errMsg: '推送通知失败，原因：' + data.msg,
-        errFix: '无修复建议'
-      }
     }
   } catch (err) {
     await nodemailertransport.sendMail({
@@ -107,10 +102,9 @@ exports.main = async (event) => {
       subject: '请求推送通知接口失败通知',
       text: '请求推送通知接口失败，原因：' + err.response.data.error
     })
-    return {
-      errCode: 8000,
-      errMsg: '请求推送通知接口失败，原因：' + err.response.data.error,
-      errFix: '无修复建议'
-    }
+  }
+  return {
+    errCode: 0,
+    errMsg: '成功'
   }
 }

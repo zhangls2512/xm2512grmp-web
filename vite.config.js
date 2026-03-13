@@ -14,7 +14,7 @@ export default defineConfig({
     })
   ],
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         assetFileNames(assetInfo) {
           const name = assetInfo.names[0]

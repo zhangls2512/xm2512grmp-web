@@ -97,7 +97,7 @@ async function getExternalAccount() {
   })).filter(item => item.platformwz != '通行密钥')
 }
 async function get() {
-  await getAccountInfo()
+  getAccountInfo()
   getExternalAccount()
 }
 get()
@@ -106,8 +106,8 @@ function logOut() {
   cookie.remove('email')
   router.push('/product/account/login')
 }
-function copy(value) {
-  navigator.clipboard.writeText(value)
+async function copy(value) {
+  await navigator.clipboard.writeText(value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

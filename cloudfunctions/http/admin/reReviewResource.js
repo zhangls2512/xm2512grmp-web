@@ -42,17 +42,16 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', 'resourcecreator'],
-      service: ['resourcecreator'],
-      apiName: 'resourcecreator_submitReviewResource'
+      permission: ['account', 'admin'],
+      service: ['admin'],
+      apiName: 'admin_reReviewResource'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
     const resourceres = await db.collection('resource').where({
-      _id: requestdata.id,
-      uid: res.result.account._id
+      _id: requestdata.id
     }).get()
     if (resourceres.data.length == 0) {
       return {
@@ -62,23 +61,17 @@ exports.main = async (event) => {
       }
     }
     const data = resourceres.data[0]
-    if (data.reviewStatus == 'processing') {
+    if (data.reviewStatus != 'invalid') {
       return {
         errCode: 8001,
-        errMsg: '审核版本审核中',
+        errMsg: '审核版本未处于审核不通过状态',
         errFix: '无修复建议'
-      }
-    }
-    if (data.disallowUpdate) {
-      return {
-        errCode: 8002,
-        errMsg: '禁止修改审核版本',
-        errFix: '联系客服'
       }
     }
     await db.collection('resource').where({
       _id: requestdata.id
     }).update({
+      disallowUpdate: false,
       reviewStatus: 'processing',
       submitReviewDate: Date.now()
     })

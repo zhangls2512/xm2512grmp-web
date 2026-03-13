@@ -2,6 +2,11 @@
 exports.main = async (event) => {
   const axios = require('axios')
   const tweetnacl = require('tweetnacl')
+  /*const requestdata = JSON.parse(event.body)
+  return {
+    plain_token: requestdata.d.plain_token,
+    signature: Buffer.from(tweetnacl.sign.detached(Buffer.from(requestdata.d.event_ts + requestdata.d.plain_token), tweetnacl.sign.keyPair.fromSeed(Buffer.from(process.env.qqbotsecret)).secretKey), 'hex').toString('hex')
+  }*/
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,

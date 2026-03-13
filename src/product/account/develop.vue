@@ -274,6 +274,11 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_reReviewResource',
+    desc: '重新审核资源'
+  },
+  {
+    product: '管理后台',
     name: 'admin_getSslUserCount',
     desc: '获取 SSL 证书用户总数'
   },

@@ -87,6 +87,7 @@ exports.main = async (event) => {
     'admin_getProcessingReviewResource',
     'admin_getProcessingReviewResourceCount',
     'admin_updateResourceReviewResult',
+    'admin_reReviewResource',
     'admin_getSslUserCount',
     'admin_getSslUserList',
     'admin_searchSslUser',

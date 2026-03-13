@@ -95,8 +95,8 @@ async function getUserInfo() {
   })
 }
 getUserInfo()
-function copy() {
-  navigator.clipboard.writeText(webhooktoken.value)
+async function copy() {
+  await navigator.clipboard.writeText(webhooktoken.value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

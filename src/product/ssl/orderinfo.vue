@@ -57,8 +57,8 @@ async function refresh() {
   }
   get()
 }
-function copy() {
-  navigator.clipboard.writeText(data.value._id)
+async function copy() {
+  await navigator.clipboard.writeText(data.value._id)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

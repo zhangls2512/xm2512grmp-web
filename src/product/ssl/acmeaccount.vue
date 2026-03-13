@@ -21,8 +21,8 @@ async function getAcmeAccountInfo() {
   staging.value = res.staging
 }
 getAcmeAccountInfo()
-function copy(id) {
-  navigator.clipboard.writeText(id)
+async function copy(id) {
+  await navigator.clipboard.writeText(id)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

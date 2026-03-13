@@ -79,8 +79,8 @@ function pagesizeChange(t) {
 function newVipcode() {
   router.push('/product/admin/newvipcode')
 }
-function copy(value) {
-  navigator.clipboard.writeText(value)
+async function copy(value) {
+  await navigator.clipboard.writeText(value)
   TinyModal.message({
     message: '内容已复制',
     status: 'success'

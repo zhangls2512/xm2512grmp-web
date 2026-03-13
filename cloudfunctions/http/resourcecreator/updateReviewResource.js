@@ -148,9 +148,8 @@ exports.main = async (event) => {
         tag: requestdata.tag,
         version: requestdata.version
       },
-      reviewInvalidReason: '',
       reviewStatus: status,
-      submitReviewDate: Date.now(),
+      submitReviewDate: status == 'processing' ? Date.now() : data.submitReviewDate,
       uid: uid
     })
     if (status == 'processing') {
