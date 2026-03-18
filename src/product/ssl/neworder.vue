@@ -49,6 +49,13 @@ function add() {
     })
     return
   }
+  if (domains.value.includes(domain.value)) {
+    TinyModal.message({
+      message: '域名 / IP 地址已存在',
+      status: 'warning'
+    })
+    return
+  }
   domains.value.push(domain.value)
   domain.value = ''
 }
@@ -67,7 +74,7 @@ async function newOrder() {
   let keytypeused = ''
   let keysizeused = ''
   if (type.value == 'csr') {
-    if (csr.value == '') {
+    if (!csr.value) {
       TinyModal.message({
         message: '请输入 CSR',
         status: 'warning'

@@ -21,12 +21,12 @@ exports.main = async (event) => {
   let product = db.command.neq('')
   let uid = db.command.neq('')
   let startdate = 0
-  let enddate = Date.now() + 86400000
+  let enddate = Date.now()
   const validproducts = ['password']
   if (validproducts.includes(requestdata.product)) {
     product = requestdata.product
   }
-  if (typeof (requestdata.uid) == 'string' && requestdata.uid) {
+  if (typeof (requestdata.uid) == 'string' && requestdata.uid.length == 32) {
     uid = requestdata.uid
   }
   if (Number.isInteger(requestdata.startDate) && requestdata.startDate >= 0) {
@@ -49,6 +49,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

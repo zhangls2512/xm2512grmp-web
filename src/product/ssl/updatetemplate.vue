@@ -38,6 +38,13 @@ function add() {
     })
     return
   }
+  if (domains.value.includes(domain.value)) {
+    TinyModal.message({
+      message: '域名 / IP 地址已存在',
+      status: 'warning'
+    })
+    return
+  }
   domains.value.push(domain.value)
   domain.value = ''
 }

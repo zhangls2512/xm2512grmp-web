@@ -20,10 +20,10 @@ exports.main = async (event) => {
   }
   let id = db.command.neq('')
   let uid = db.command.neq('')
-  if (typeof (requestdata.id) == 'string' && requestdata.id) {
+  if (typeof (requestdata.id) == 'string' && requestdata.id.length == 32) {
     id = requestdata.id
   }
-  if (typeof (requestdata.uid) == 'string' && requestdata.uid) {
+  if (typeof (requestdata.uid) == 'string' && requestdata.uid.length == 32) {
     uid = requestdata.uid
   }
   let skip = 0
@@ -40,6 +40,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

@@ -54,6 +54,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -85,13 +92,13 @@ exports.main = async (event) => {
         platform: requestdata.platform,
         keyId: requestdata.keyId,
         keySecret: requestdata.keySecret,
-        domains: requestdata.domains
+        domains: [...new Set(requestdata.domains)]
       })
     } else {
       dns[index].platform = requestdata.platform
       dns[index].keyId = requestdata.keyId
       dns[index].keySecret = requestdata.keySecret
-      dns[index].domains = requestdata.domains
+      dns[index].domains = [...new Set(requestdata.domains)]
     }
     await db.collection('productuser').where({
       product: 'ssl',

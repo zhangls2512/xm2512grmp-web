@@ -9,21 +9,21 @@ const uid = ref('')
 const content = ref('')
 const method = ref('')
 async function newBanlog() {
-  if (uid.value == '') {
+  if (uid.value.length != 32) {
     TinyModal.message({
-      message: '请输入 UID',
+      message: '请输入有效的 UID',
       status: 'warning'
     })
     return
   }
-  if (content.value == '') {
+  if (!content.value) {
     TinyModal.message({
       message: '请输入违规内容',
       status: 'warning'
     })
     return
   }
-  if (method.value == '') {
+  if (!method.value) {
     TinyModal.message({
       message: '请输入处罚方式',
       status: 'warning'

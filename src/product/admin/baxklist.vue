@@ -156,7 +156,7 @@ function closeDialog() {
   desc.value = ''
 }
 async function updateBaxkDesc() {
-  if (desc.value == '') {
+  if (!desc.value) {
     TinyModal.message({
       message: '请输入描述',
       status: 'warning'

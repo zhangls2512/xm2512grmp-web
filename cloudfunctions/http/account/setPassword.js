@@ -49,7 +49,7 @@ exports.main = async (event) => {
       errFix: '传递有效的verifyCode参数'
     }
   }
-  if (requestdata.verifyType == 'password' && (requestdata.verifyCode && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 30))) {
+  if (requestdata.verifyType == 'password' && (requestdata.verifyCode && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 32))) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -63,7 +63,7 @@ exports.main = async (event) => {
       errFix: '传递有效的newPassword参数'
     }
   }
-  if (requestdata.newPassword && (requestdata.newPassword.length < 8 || requestdata.newPassword.length > 30)) {
+  if (requestdata.newPassword && (requestdata.newPassword.length < 8 || requestdata.newPassword.length > 32)) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',

@@ -26,8 +26,14 @@ exports.main = async (event) => {
     })
   }
   let tag = db.command.neq(null)
-  if (Array.isArray(requestdata.tag) && requestdata.tag.length > 0) {
-    tag = db.command.all(requestdata.tag)
+  if (Array.isArray(requestdata.tag) && requestdata.tag.length > 0 && requestdata.tag.every(item => {
+    if (typeof (item) == 'string' && item) {
+      return true
+    } else {
+      return false
+    }
+  })) {
+    tag = db.command.all([...new Set(requestdata.tag)])
   }
   let checkversionupdate = false
   if (requestdata.checkVersionUpdate === true) {
@@ -47,6 +53,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

@@ -12,7 +12,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  if (typeof (requestdata.accessToken) != 'string') {
+  if (typeof (requestdata.accessToken) != 'string' || !requestdata.accessToken) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -26,14 +26,14 @@ exports.main = async (event) => {
       errFix: '传递有效的index参数'
     }
   }
-  if (typeof (requestdata.name) != 'string' || requestdata.name.length < 1 || requestdata.name.length > 10) {
+  if (typeof (requestdata.name) != 'string' || !requestdata.name || requestdata.name.length > 10) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的name参数'
     }
   }
-  if (!Number.isInteger(requestdata.endDate)) {
+  if (!Number.isInteger(requestdata.endDate) || requestdata.endDate < 0) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -198,8 +198,8 @@ exports.main = async (event) => {
     const accesskey = accesskeys[requestdata.index]
     accesskey.name = requestdata.name
     accesskey.endDate = requestdata.endDate
-    accesskey.allowApi = requestdata.allowApi
-    accesskey.allowIp = requestdata.allowIp
+    accesskey.allowApi = [...new Set(requestdata.allowApi)]
+    accesskey.allowIp = [...new Set(requestdata.allowIp)]
     accesskeys[requestdata.index] = accesskey
     await db.collection('account').where({
       _id: account._id

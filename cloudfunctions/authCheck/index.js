@@ -190,7 +190,16 @@ exports.main = async (event) => {
       }
     }
     if (event.type == 'accesstoken') {
-      const accesstoken = sm4.decrypt(checkdata.code, process.env.key).split('\0')
+      let accesstoken = []
+      try {
+        accesstoken = sm4.decrypt(checkdata.code, process.env.key).split('\0')
+      } catch {
+        return {
+          errCode: 3040,
+          errMsg: '无效的accessToken',
+          errFix: '无修复建议'
+        }
+      }
       const uid = accesstoken[0]
       const res = await db.collection('account').where({
         _id: uid
@@ -246,7 +255,16 @@ exports.main = async (event) => {
       }
     }
     if (event.type == 'accesskey') {
-      const accesskey = sm4.decrypt(checkdata.code, process.env.key).split('\0')
+      let accesskey = []
+      try {
+        accesskey = sm4.decrypt(checkdata.code, process.env.key).split('\0')
+      } catch {
+        return {
+          errCode: 3050,
+          errMsg: '无效的accessKey',
+          errFix: '无修复建议'
+        }
+      }
       const uid = accesskey[0]
       const res = await db.collection('account').where({
         _id: uid

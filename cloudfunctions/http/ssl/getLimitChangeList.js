@@ -20,7 +20,7 @@ exports.main = async (event) => {
   }
   let changetype = db.command.neq('')
   let startdate = 0
-  let enddate = Date.now() + 86400000
+  let enddate = Date.now()
   const validchangetypes = ['add', 'minus']
   if (validchangetypes.includes(requestdata.changeType)) {
     changetype = requestdata.changeType
@@ -45,6 +45,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

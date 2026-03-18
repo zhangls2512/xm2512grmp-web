@@ -269,7 +269,7 @@ function setPasswordOpen() {
   type.value = 'password'
 }
 async function setPassword() {
-  if (type.value == 'password' && (code.value.length < 8 || code.value.length > 30)) {
+  if (type.value == 'password' && (code.value.length < 8 || code.value.length > 32)) {
     TinyModal.message({
       message: '请输入有效的密码',
       status: 'warning'
@@ -290,7 +290,7 @@ async function setPassword() {
     })
     return
   }
-  if (newpassworda.value.length < 8 || newpassworda.value.length > 30) {
+  if (newpassworda.value.length < 8 || newpassworda.value.length > 32) {
     TinyModal.message({
       message: '请输入有效的新密码',
       status: 'warning'
@@ -327,7 +327,7 @@ function removePasswordOpen() {
   type.value = 'password'
 }
 async function removePassword() {
-  if (type.value == 'password' && (code.value.length < 8 || code.value.length > 30)) {
+  if (type.value == 'password' && (code.value.length < 8 || code.value.length > 32)) {
     TinyModal.message({
       message: '请输入有效的密码',
       status: 'warning'
@@ -851,7 +851,7 @@ async function getEmailCodea() {
         <tiny-input v-if="type == 'password'" v-model="code" type="password" clearable minlength="8" maxlength="30"
           autocomplete="current-password" placeholder="请输入密码"></tiny-input>
         <tiny-input v-if="setpasswordbutton == true" v-model="newpassworda" type="password" clearable minlength="8"
-          maxlength="30" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 30 位）"></tiny-input>
+          maxlength="30" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 32 位）"></tiny-input>
         <tiny-input v-if="setpasswordbutton == true" v-model="newpasswordb" type="password" clearable minlength="8"
           maxlength="30" autocomplete="new-password" placeholder="请再次输入新密码"></tiny-input>
         <tiny-input v-if="updatedurationbutton == true" v-model="duration" clearable minlength="1" maxlength="2"

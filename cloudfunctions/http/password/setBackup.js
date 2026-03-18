@@ -33,14 +33,14 @@ exports.main = async (event) => {
       errFix: '传递有效的id参数'
     }
   }
-  if (typeof (requestdata.content) != 'string') {
+  if (typeof (requestdata.content) != 'string' || !requestdata.content) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的content参数'
     }
   }
-  if (typeof (requestdata.iv) != 'string') {
+  if (typeof (requestdata.iv) != 'string' || !requestdata.iv) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -53,6 +53,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

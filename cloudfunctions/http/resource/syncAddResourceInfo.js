@@ -18,7 +18,13 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (!Array.isArray(requestdata.id) || requestdata.id.length == 0 || requestdata.id.length > 20) {
+  if (!Array.isArray(requestdata.id) || requestdata.id.length == 0 || requestdata.id.length > 20 || !requestdata.id.every(item => {
+    if (typeof (item) == 'string' && item.length == 32) {
+      return true
+    } else {
+      return false
+    }
+  })) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -31,6 +37,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -50,7 +63,7 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const promisesa = requestdata.id.map(async (resourceaddid) => {
+    const promisesa = [...new Set(requestdata.id)].map(async (resourceaddid) => {
       const resourceaddres = await db.collection('resourceadd').where({
         _id: resourceaddid,
         uid: res.result.account._id

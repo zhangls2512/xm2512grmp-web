@@ -13,7 +13,7 @@ exports.main = async (event) => {
         errFix: '传递有效的accessToken或accessKey参数'
       }
     }
-    if (typeof (event.id) != 'string') {
+    if (typeof (event.id) != 'string' || event.id.length != 32) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
@@ -26,6 +26,13 @@ exports.main = async (event) => {
       type = 'accesstoken'
       code = event.accessToken
     } else {
+      if (!event.accessKey) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的accessKey参数'
+        }
+      }
       type = 'accesskey'
       code = event.accessKey
     }

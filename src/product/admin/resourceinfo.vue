@@ -40,9 +40,9 @@ async function copy() {
   })
 }
 function add() {
-  if (auuuser.value == '') {
+  if (auuuser.value.length != 32) {
     TinyModal.message({
-      message: '请输入 UID',
+      message: '请输入有效的 UID',
       status: 'warning'
     })
     return
@@ -86,6 +86,13 @@ function updateUvwrClose() {
   uvwr.value = ''
 }
 async function updateUvwr() {
+  if (uvwr.value && uvwr.value.length != 32) {
+    TinyModal.message({
+      message: '请输入有效的 UID',
+      status: 'warning'
+    })
+    return
+  }
   await request({
     apiPath: '/admin/updateResourceUvwr',
     body: {
@@ -136,18 +143,17 @@ async function reReview() {
       </div>
       <div class="sp">
         <div class="bold-text">可修改用户</div>
-        <div v-if="data.allowUpdateUser.length == 0 && data.uid == ''">全部</div>
+        <div v-if="data.allowUpdateUser.length == 0 && !data.uid">全部</div>
         <div v-if="data.uid != ''">{{ data.uid }}</div>
-        <tiny-button v-if="data.uid == ''" type="info" @click="updateAuuOpen">修改</tiny-button>
+        <tiny-button v-if="!data.uid" type="info" @click="updateAuuOpen">修改</tiny-button>
       </div>
-      <div v-for="(item, index) in data.allowUpdateUser" v-if="data.allowUpdateUser.length > 0 && data.uid == ''"
-        class="sp">
+      <div v-for="(item, index) in data.allowUpdateUser" v-if="data.allowUpdateUser.length > 0 && !data.uid" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>{{ item }}</div>
       </div>
       <div class="sp">
         <div class="bold-text">免审更新版本号</div>
-        <div v-if="data.updateVersionWithoutReview == ''">未设置</div>
+        <div v-if="!data.updateVersionWithoutReview">未设置</div>
         <div v-if="data.updateVersionWithoutReview != ''">{{ data.updateVersionWithoutReview }}</div>
         <tiny-button type="info" @click="updateUvwrOpen">修改</tiny-button>
       </div>

@@ -19,7 +19,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.orderId) != 'string') {
+  if (typeof (requestdata.orderId) != 'string' || requestdata.orderId.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -27,9 +27,12 @@ exports.main = async (event) => {
     }
   }
   const validreasons = [0, 1, 4, 5]
-  let reason = 0
-  if (validreasons.includes(requestdata.reason)) {
-    reason = requestdata.reason
+  if (!validreasons.includes(requestdata.reason)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的reason参数'
+    }
   }
   let type = ''
   let code = ''
@@ -37,6 +40,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -90,7 +100,7 @@ exports.main = async (event) => {
         directoryUrl: directoryurl,
         accountKey: accountkey,
         certificate: certificateres.fileContent.toString(),
-        reason: reason
+        reason: requestdata.reason
       })
     } catch (err) {
       if (err.detail) {

@@ -10,9 +10,9 @@ const changetype = ref('add')
 const number = ref('')
 const reason = ref('')
 async function newLimitChange() {
-  if (uid.value == '') {
+  if (uid.value.length != 32) {
     TinyModal.message({
-      message: '请输入 UID',
+      message: '请输入有效的 UID',
       status: 'warning'
     })
     return
@@ -25,7 +25,7 @@ async function newLimitChange() {
     })
     return
   }
-  if (reason.value == '') {
+  if (!reason.value) {
     TinyModal.message({
       message: '请输入原因',
       status: 'warning'

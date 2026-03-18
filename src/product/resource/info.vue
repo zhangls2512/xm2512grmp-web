@@ -55,7 +55,7 @@ async function copy(value) {
   })
 }
 function addTag() {
-  if (tag.value == '') {
+  if (!tag.value) {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'

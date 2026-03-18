@@ -65,9 +65,16 @@ function closeDialog() {
   dialog.value = false
 }
 function addIntag() {
-  if (inputtag.value == '') {
+  if (!inputtag.value) {
     TinyModal.message({
       message: '请输入内容',
+      status: 'warning'
+    })
+    return
+  }
+  if (tag.value.includes(inputtag.value)) {
+    TinyModal.message({
+      message: '标签已存在',
       status: 'warning'
     })
     return

@@ -18,10 +18,13 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  let types = ['password', 'info', 'tag']
   const validtypes = ['password', 'info', 'tag']
-  if (Array.isArray(requestdata.types) && requestdata.types.length > 0 && requestdata.types.every(item => validtypes.includes(item))) {
-    types = requestdata.types
+  if (!Array.isArray(requestdata.types) || requestdata.types.length == 0 || !requestdata.types.every(item => validtypes.includes(item))) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的types参数'
+    }
   }
   let type = ''
   let code = ''
@@ -29,6 +32,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -49,7 +59,7 @@ exports.main = async (event) => {
     return res.result
   } else {
     const passwordres = await db.collection('password').where({
-      type: db.command.in(types),
+      type: db.command.in([...new Set(requestdata.types)]),
       uid: res.result.account._id
     }).remove()
     if (passwordres.deleted == 0) {

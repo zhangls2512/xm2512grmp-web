@@ -14,7 +14,7 @@ if (typeof (route.query.baxknumber) == 'string') {
 }
 async function get() {
   visible.value = false
-  if (baxknumber.value == '') {
+  if (!baxknumber.value) {
     TinyModal.message({
       message: '请输入备案/许可号',
       status: 'warning'

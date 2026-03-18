@@ -18,7 +18,7 @@ const permission = ref('')
 const enddate = ref('')
 const enddateforever = ref('false')
 async function newVipcode() {
-  if (duration.value == '') {
+  if (!duration.value) {
     TinyModal.message({
       message: '请输入时长',
       status: 'warning'
@@ -33,7 +33,7 @@ async function newVipcode() {
     })
     return
   }
-  if (permission.value == '') {
+  if (!permission.value) {
     TinyModal.message({
       message: '请输入权限',
       status: 'warning'
@@ -55,7 +55,7 @@ async function newVipcode() {
   if (enddateforever.value == 'true') {
     enddateout = 0
   }
-  if (enddateforever.value == 'false' && enddate.value == '') {
+  if (enddateforever.value == 'false' && !enddate.value) {
     TinyModal.message({
       message: '请选择截止时间',
       status: 'warning'

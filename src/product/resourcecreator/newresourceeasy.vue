@@ -12,7 +12,7 @@ const aidesc = ref('')
 const location = ref('')
 const submitreview = ref(true)
 async function aiGenerate() {
-  if (name.value == '') {
+  if (!name.value) {
     TinyModal.message({
       message: '请输入名称',
       status: 'warning'
@@ -37,14 +37,14 @@ function inputDesc() {
   desc.value = aidesc.value
 }
 async function newResource() {
-  if (name.value == '') {
+  if (!name.value) {
     TinyModal.message({
       message: '请输入名称',
       status: 'warning'
     })
     return
   }
-  if (location.value == '') {
+  if (!location.value) {
     TinyModal.message({
       message: '请输入地址',
       status: 'warning'

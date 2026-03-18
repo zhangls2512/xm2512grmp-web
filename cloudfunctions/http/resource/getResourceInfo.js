@@ -11,7 +11,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  if (typeof (requestdata.id) != 'string') {
+  if (typeof (requestdata.id) != 'string' || requestdata.id.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',

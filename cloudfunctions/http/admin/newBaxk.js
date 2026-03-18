@@ -26,32 +26,25 @@ exports.main = async (event) => {
       errFix: '传递有效的mainType参数'
     }
   }
-  if (typeof (requestdata.desc) != 'string') {
+  if (typeof (requestdata.desc) != 'string' || !requestdata.desc) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的desc参数'
     }
   }
-  if (requestdata.mainType != '1' && typeof (requestdata.productNumber) != 'string') {
+  if (requestdata.mainType != '1' && (typeof (requestdata.productNumber) != 'string' || !requestdata.productNumber)) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的productNumber参数'
     }
   }
-  if (requestdata.mainType == '1' && typeof (requestdata.productName) != 'string') {
+  if (requestdata.mainType == '1' && (typeof (requestdata.productName) != 'string' || !requestdata.productName)) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的productName参数'
-    }
-  }
-  if (requestdata.mainType != '3' && typeof (requestdata.specificType) != 'string') {
-    return {
-      errCode: 1001,
-      errMsg: '请求参数错误',
-      errFix: '传递有效的specificType参数'
     }
   }
   const avalidspecifictypes = ['0', '1']
@@ -155,6 +148,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

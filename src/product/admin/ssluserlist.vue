@@ -41,9 +41,9 @@ async function pagesizeChange(t) {
   get()
 }
 async function search() {
-  if (uid.value == '') {
+  if (uid.value.length != 32) {
     TinyModal.message({
-      message: '请输入 UID',
+      message: '请输入有效的 UID',
       status: 'warning'
     })
     return

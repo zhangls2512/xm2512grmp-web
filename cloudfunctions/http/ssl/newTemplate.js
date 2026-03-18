@@ -42,6 +42,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -74,7 +81,7 @@ exports.main = async (event) => {
     }
     await db.collection('ssltemplate').add({
       desc: requestdata.desc,
-      domains: requestdata.domains,
+      domains: [...new Set(requestdata.domains)],
       uid: uid,
       updateDate: Date.now()
     })

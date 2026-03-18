@@ -18,14 +18,20 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.id) != 'string') {
+  if (typeof (requestdata.id) != 'string' || requestdata.id.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的id参数'
     }
   }
-  if (!Array.isArray(requestdata.allowUpdateUser)) {
+  if (!Array.isArray(requestdata.allowUpdateUser) || !requestdata.allowUpdateUser.every(item => {
+    if (typeof (item) == 'string' && item.length == 32) {
+      return true
+    } else {
+      return false
+    }
+  })) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -38,6 +44,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -70,7 +83,7 @@ exports.main = async (event) => {
     await db.collection('resource').where({
       _id: requestdata.id
     }).update({
-      allowUpdateUser: requestdata.allowUpdateUser
+      allowUpdateUser: [...new Set(requestdata.allowUpdateUser)]
     })
     return {
       errCode: 0,

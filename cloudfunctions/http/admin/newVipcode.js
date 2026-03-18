@@ -40,7 +40,7 @@ exports.main = async (event) => {
       errFix: '传递有效的duration参数'
     }
   }
-  if (!Number.isInteger(requestdata.endDate) || requestdata.endDate < 0) {
+  if (!Number.isInteger(requestdata.endDate) || (requestdata.endDate != 0 && requestdata.endDate <= Date.now())) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -53,6 +53,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

@@ -643,7 +643,7 @@ function chooseApi(t) {
   accesskeyallowapi = t.selection.map(item => item.name)
 }
 function add() {
-  if (ip.value == '') {
+  if (!ip.value) {
     TinyModal.message({
       message: '请输入 CIDR 表达式',
       status: 'warning'
@@ -657,14 +657,14 @@ function remove(index) {
   accesskeyallowip.value.splice(index, 1)
 }
 async function newAccessKey() {
-  if (accesskeyname.value == '') {
+  if (!accesskeyname.value) {
     TinyModal.message({
       message: '请输入备注',
       status: 'warning'
     })
     return
   }
-  if (accesskeyenddate.value == '' && !accesskeyforever.value) {
+  if (!accesskeyenddate.value && !accesskeyforever.value) {
     TinyModal.message({
       message: '请选择到期时间',
       status: 'warning'
@@ -739,14 +739,14 @@ function updateAccessKeyClose() {
   accesskeyallowip.value = []
 }
 async function updateAccessKey() {
-  if (accesskeyname.value == '') {
+  if (!accesskeyname.value) {
     TinyModal.message({
       message: '请输入备注',
       status: 'warning'
     })
     return
   }
-  if (accesskeyenddate.value == '' && !accesskeyforever.value) {
+  if (!accesskeyenddate.value && !accesskeyforever.value) {
     TinyModal.message({
       message: '请选择到期时间',
       status: 'warning'

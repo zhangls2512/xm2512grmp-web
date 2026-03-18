@@ -11,14 +11,14 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  if (typeof (requestdata.accessToken) != 'string') {
+  if (typeof (requestdata.accessToken) != 'string' || !requestdata.accessToken) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的accessToken参数'
     }
   }
-  if (typeof (requestdata.ticket) != 'string' || !requestdata.ticket) {
+  if (typeof (requestdata.ticket) != 'string' || requestdata.ticket.length != 60) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',

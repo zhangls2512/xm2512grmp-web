@@ -33,7 +33,16 @@ exports.main = async (event) => {
       errFix: '传递有效的settingValue参数'
     }
   }
-  if (requestdata.settingName == 'tag' && (!Array.isArray(requestdata.settingValue) || !requestdata.settingValue.every(item => Array.isArray(item)))) {
+  if (requestdata.settingName == 'tag' && (!Array.isArray(requestdata.settingValue) || requestdata.settingValue.length == 0 || !requestdata.settingValue.every(item => {
+    if (!Array.isArray(item) || !item.every(i => typeof (i) == 'string' && i)) {
+      return false
+    }
+    const quchongtag = [...new Set(item)]
+    if (quchongtag.length != item.length) {
+      return false
+    }
+    return true
+  }))) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -46,6 +55,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }

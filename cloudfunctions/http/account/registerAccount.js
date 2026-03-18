@@ -30,7 +30,7 @@ exports.main = async (event) => {
     }
   }
   let password = ''
-  if (typeof (requestdata.password) == 'string' && requestdata.password.length >= 8 && requestdata.password.length <= 30) {
+  if (typeof (requestdata.password) == 'string' && requestdata.password.length >= 8 && requestdata.password.length <= 32) {
     password = requestdata.password
   }
   const res = await app.callFunction({

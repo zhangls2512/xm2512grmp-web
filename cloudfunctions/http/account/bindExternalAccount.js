@@ -73,7 +73,7 @@ exports.main = async (event) => {
       }
     }
   } else {
-    if (typeof (requestdata.code) != 'string') {
+    if (typeof (requestdata.code) != 'string' || !requestdata.code) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',

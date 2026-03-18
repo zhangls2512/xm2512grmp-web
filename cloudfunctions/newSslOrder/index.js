@@ -23,8 +23,8 @@ exports.main = async (event) => {
     if (typeof (event.desc) == 'string' && event.desc.length <= 20) {
       desc = event.desc
     }
-    if (typeof (event.csr) != 'string' || event.csr === '') {
-      if (!Array.isArray(event.domains) || event.domains.length == 0 || event.domains.length > 100) {
+    if (typeof (event.csr) != 'string' || !event.csr) {
+      if (!Array.isArray(event.domains)) {
         return {
           errCode: 1001,
           errMsg: '请求参数错误',
@@ -32,6 +32,13 @@ exports.main = async (event) => {
         }
       }
       domains = [...new Set(event.domains)]
+      if (domains.length == 0 || domains.length > 100) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的domains参数'
+        }
+      }
       if (domains.some(item => !validator.isFQDN(item, {
         allow_wildcard: true
       }) && !net.isIP(item))) {
@@ -75,6 +82,15 @@ exports.main = async (event) => {
           errCode: 1001,
           errMsg: '请求参数错误',
           errFix: '传递有效的csr参数'
+        }
+      }
+      if (domains.some(item => !validator.isFQDN(item, {
+        allow_wildcard: true
+      }) && !net.isIP(item))) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的domains参数'
         }
       }
       csr = event.csr
@@ -131,6 +147,13 @@ exports.main = async (event) => {
       type = 'accesstoken'
       code = event.accessToken
     } else {
+      if (!event.accessKey) {
+        return {
+          errCode: 1001,
+          errMsg: '请求参数错误',
+          errFix: '传递有效的accessKey参数'
+        }
+      }
       type = 'accesskey'
       code = event.accessKey
     }

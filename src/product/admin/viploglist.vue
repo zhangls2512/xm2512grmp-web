@@ -31,6 +31,13 @@ function formatDuration(t) {
   }
 }
 async function get() {
+  if (uid.value && uid.value.length != 32) {
+    TinyModal.message({
+      message: '请输入有效的 UID',
+      status: 'warning'
+    })
+    return
+  }
   let startdate = 0
   let enddate = Date.now()
   if (date.value && date.value.length > 0) {

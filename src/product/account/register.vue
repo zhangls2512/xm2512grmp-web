@@ -27,7 +27,7 @@ async function register() {
     })
     return
   }
-  if (setpassword.value && passworda.value.length < 8 || passwordb.value.length > 30) {
+  if (setpassword.value && passworda.value.length < 8 || passwordb.value.length > 32) {
     TinyModal.message({
       message: '请输入有效的密码',
       status: 'warning'
@@ -115,7 +115,7 @@ async function getEmailCode() {
           </tiny-form-item>
           <tiny-form-item v-if="setpassword == true" label="密码">
             <tiny-input v-model="passworda" type="password" clearable minlength="8" maxlength="30"
-              autocomplete="new-password" placeholder="请输入密码（长度 8 - 30 位）"></tiny-input>
+              autocomplete="new-password" placeholder="请输入密码（长度 8 - 32 位）"></tiny-input>
           </tiny-form-item>
           <tiny-form-item v-if="setpassword == true" label="确认密码">
             <tiny-input v-model="passwordb" type="password" clearable minlength="8" maxlength="30"

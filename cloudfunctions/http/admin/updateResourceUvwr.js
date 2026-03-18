@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.id) != 'string') {
+  if (typeof (requestdata.id) != 'string' || requestdata.id.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -32,12 +32,26 @@ exports.main = async (event) => {
       errFix: '传递有效的updateVersionWithoutReview参数'
     }
   }
+  if (requestdata.updateVersionWithoutReview && requestdata.updateVersionWithoutReview.length != 32) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的updateVersionWithoutReview参数'
+    }
+  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -65,6 +79,19 @@ exports.main = async (event) => {
         errCode: 8000,
         errMsg: '资源不存在',
         errFix: '无修复建议'
+      }
+    }
+    if (requestdata.updateVersionWithoutReview) {
+      const userres = await db.collection('productuser').where({
+        product: 'resourcecreator',
+        uid: requestdata.updateVersionWithoutReview
+      }).get()
+      if (userres.data.length == 0) {
+        return {
+          errCode: 8001,
+          errMsg: '用户不存在',
+          errFix: '无修复建议'
+        }
       }
     }
     await db.collection('resource').where({

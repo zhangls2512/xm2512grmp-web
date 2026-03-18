@@ -110,15 +110,22 @@ function closeDialog() {
   domains.value = []
 }
 function add() {
-  if (validator.isFQDN(domain.value)) {
-    domains.value.push(domain.value)
-    domain.value = ''
-  } else {
+  if (!validator.isFQDN(domain.value)) {
     TinyModal.message({
       message: '请输入有效的域名',
       status: 'warning'
     })
+    return
   }
+  if (domains.value.includes(domain.value)) {
+    TinyModal.message({
+      message: '域名已存在',
+      status: 'warning'
+    })
+    return
+  }
+  domains.value.push(domain.value)
+  domain.value = ''
 }
 function remove(index) {
   domains.value.splice(index, 1)

@@ -103,19 +103,6 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyCode参数'
       }
     }
-    verifycode = requestdata.verifyCode
-  }
-  let email = ''
-  const platforms = ['passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp']
-  if (!platforms.includes(requestdata.verifyType)) {
-    if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
-      return {
-        errCode: 1001,
-        errMsg: '请求参数错误',
-        errFix: '传递有效的email参数'
-      }
-    }
-    email = requestdata.email
     if (requestdata.verifyType == 'emailcode' && requestdata.verifyCode.length != 8) {
       return {
         errCode: 1001,
@@ -130,13 +117,33 @@ exports.main = async (event) => {
         errFix: '传递有效的verifyCode参数'
       }
     }
-    if (requestdata.verifyType == 'password' && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 30)) {
+    if (requestdata.verifyType == 'password' && (requestdata.verifyCode.length < 8 || requestdata.verifyCode.length > 32)) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的verifyCode参数'
       }
     }
+    if (requestdata.verifyType == 'ticket' && requestdata.verifyCode.length != 60) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的verifyCode参数'
+      }
+    }
+    verifycode = requestdata.verifyCode
+  }
+  let email = ''
+  const platforms = ['passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp']
+  if (!platforms.includes(requestdata.verifyType)) {
+    if (typeof (requestdata.email) != 'string' || !validator.isEmail(requestdata.email)) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的email参数'
+      }
+    }
+    email = requestdata.email
   }
   const res = await app.callFunction({
     name: 'authCheck',

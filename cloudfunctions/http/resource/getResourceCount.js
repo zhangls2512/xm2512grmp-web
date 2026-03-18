@@ -19,8 +19,14 @@ exports.main = async (event) => {
     })
   }
   let tag = db.command.neq(null)
-  if (Array.isArray(requestdata.tag) && requestdata.tag.length > 0) {
-    tag = db.command.all(requestdata.tag)
+  if (Array.isArray(requestdata.tag) && requestdata.tag.length > 0 && requestdata.tag.every(item => {
+    if (typeof (item) == 'string' && item) {
+      return true
+    } else {
+      return false
+    }
+  })) {
+    tag = db.command.all([...new Set(requestdata.tag)])
   }
   const resourceres = await db.collection('resource').where({
     name: keyword,

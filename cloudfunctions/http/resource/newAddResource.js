@@ -18,14 +18,20 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.resourceId) != 'string') {
+  if (typeof (requestdata.resourceId) != 'string' || requestdata.resourceId.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的resourceId参数'
     }
   }
-  if (!Array.isArray(requestdata.tag)) {
+  if (!Array.isArray(requestdata.tag) || !requestdata.tag.every(item => {
+    if (typeof (item) == 'string' && item) {
+      return true
+    } else {
+      return false
+    }
+  })) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -38,6 +44,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -76,7 +89,7 @@ exports.main = async (event) => {
       await db.collection('resourceadd').add({
         name: resourceres.data[0].name,
         resourceId: requestdata.resourceId,
-        tag: requestdata.tag,
+        tag: [...new Set(requestdata.tag)],
         uid: res.result.account._id,
         version: resourceres.data[0].version
       })

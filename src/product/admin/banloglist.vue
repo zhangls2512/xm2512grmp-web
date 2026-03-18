@@ -12,6 +12,20 @@ const total = ref(0)
 const id = ref('')
 const uid = ref('')
 async function get() {
+  if (id.value && id.value.length != 32) {
+    TinyModal.message({
+      message: '请输入有效的 ID',
+      status: 'warning'
+    })
+    return
+  }
+  if (uid.value && uid.value.length != 32) {
+    TinyModal.message({
+      message: '请输入有效的 UID',
+      status: 'warning'
+    })
+    return
+  }
   const countres = await request({
     apiPath: '/admin/getBanlogCount',
     body: {

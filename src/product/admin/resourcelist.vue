@@ -46,6 +46,13 @@ const reviewstatuss = ref([
   }
 ])
 async function get() {
+  if (id.value && id.value.length != 32) {
+    TinyModal.message({
+      message: '请输入有效的 ID',
+      status: 'warning'
+    })
+    return
+  }
   const countres = await request({
     apiPath: '/admin/getResourceCount',
     body: {
@@ -171,9 +178,9 @@ async function deleteResource(id) {
               @click="release(row._id)">上架</tiny-button>
             <tiny-button v-if="row.releaseStatus == 'release'" type="danger"
               @click="unrelease(row._id)">下架</tiny-button>
-            <tiny-button type="info" v-if="row.uid == ''" @click="update(row._id)">修改</tiny-button>
-            <tiny-popconfirm v-if="row.releaseStatus == 'unrelease' && row.uid == ''" title="提示"
-              message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover" @confirm="deleteResource(row._id)">
+            <tiny-button type="info" v-if="!row.uid" @click="update(row._id)">修改</tiny-button>
+            <tiny-popconfirm v-if="row.releaseStatus == 'unrelease' && !row.uid" title="提示" message="删除成功后无法恢复，确定删除？"
+              type="warning" trigger="hover" @confirm="deleteResource(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>
               </template>

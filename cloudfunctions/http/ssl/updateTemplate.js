@@ -20,7 +20,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.id) != 'string') {
+  if (typeof (requestdata.id) != 'string' || requestdata.id.length != 32) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -49,6 +49,13 @@ exports.main = async (event) => {
     type = 'accesstoken'
     code = requestdata.accessToken
   } else {
+    if (!requestdata.accessKey) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的accessKey参数'
+      }
+    }
     type = 'accesskey'
     code = requestdata.accessKey
   }
@@ -74,7 +81,7 @@ exports.main = async (event) => {
       uid: uid
     }).update({
       desc: requestdata.desc,
-      domains: requestdata.domains,
+      domains: [...new Set(requestdata.domains)],
       updateDate: Date.now()
     })
     if (templateres.updated == 0) {

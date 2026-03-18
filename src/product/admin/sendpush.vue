@@ -15,14 +15,14 @@ const badge = ref(false)
 const foregroundshow = ref(true)
 const test = ref(false)
 async function send() {
-  if (title.value == '') {
+  if (!title.value) {
     TinyModal.message({
       message: '请输入标题',
       status: 'warning'
     })
     return
   }
-  if (body.value == '') {
+  if (!body.value) {
     TinyModal.message({
       message: '请输入内容',
       status: 'warning'
