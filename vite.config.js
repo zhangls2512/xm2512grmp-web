@@ -14,6 +14,10 @@ export default defineConfig({
     })
   ],
   build: {
+    target: 'esnext',
+    modulePreload: {
+      polyfill: false
+    },
     rolldownOptions: {
       output: {
         assetFileNames(assetInfo) {
