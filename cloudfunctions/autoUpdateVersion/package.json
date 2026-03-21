@@ -2,6 +2,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "latest",
-    "json5": "latest"
+    "json5": "latest",
+    "nodemailer": "latest"
   }
 }
