@@ -12,6 +12,10 @@ exports.main = async () => {
     }
   })
   try {
+    try {
+      await axios.get('https://api.zhangls2512.cn/test')
+    } catch {
+    }
     /*const windowscanaryres = await axios.get('https://aka.ms/canaryLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
