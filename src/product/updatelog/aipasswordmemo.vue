@@ -2,6 +2,40 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.9.0',
+    releaseDate: '2026-03-23',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 会员中心 - 更多 - 开通记录 新增 申请发票'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 设置 新增 高级，支持按键粒度清理'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 - 自动上传故障日志类型 新增 ArkWeb 抛滑丢帧'
+      },
+      {
+        type: 'U',
+        content: '持久化用户首选项存储模式调整为 GSKV（以前为 XML），提升读写性能'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏（HdsTabs 组件）适配 API23 悬浮样式、沉浸光感视效'
+      },
+      {
+        type: 'U',
+        content: '电脑端左侧导航栏调整为侧边栏（HdsSideMenu 组件）'
+      },
+      {
+        type: 'U',
+        content: 'Navigation、NavDestination 组件标题栏适配 API23 沉浸光感视效'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.8.9',
     releaseDate: '2026-02-23',
     logs: [

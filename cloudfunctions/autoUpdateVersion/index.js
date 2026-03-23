@@ -12,10 +12,6 @@ exports.main = async () => {
     }
   })
   try {
-    try {
-      await axios.get('https://api.zhangls2512.cn/test')
-    } catch {
-    }
     /*const windowscanaryres = await axios.get('https://aka.ms/canaryLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
@@ -23,11 +19,14 @@ exports.main = async () => {
       version: windowscanaryres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
     })*/
     const windowsdevres = await axios.get('https://aka.ms/devLatest')
-    await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
-      accessKey: process.env.accesskey,
-      id: 'b013194767e67b6600146b805c3a6ba5',
-      version: windowsdevres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
-    })
+    try {
+      await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+        accessKey: process.env.accesskey,
+        id: 'b013194767e67b6600146b805c3a6ba5',
+        version: windowsdevres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
+      })
+    } catch {
+    }
     const windowsbetares = await axios.get('https://aka.ms/betaLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
