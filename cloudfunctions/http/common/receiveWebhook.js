@@ -22,7 +22,7 @@ exports.main = async (event) => {
   const requestdata = JSON.parse(event.body)
   if (!Number.isInteger(requestdata.timeStamp) || Date.now() - requestdata.timeStamp > 5000 || requestdata.timeStamp > Date.now()) {
     return {
-      errCode: 1003,
+      errCode: 1001,
       errMsg: 'timeStamp校验失败',
       errFix: '无修复建议'
     }
@@ -31,7 +31,7 @@ exports.main = async (event) => {
   const publickey = fs.readFileSync(__dirname + '/publickey.txt')
   if (!crypto.createVerify('sha512').update(hash).verify(publickey, Buffer.from(requestdata.signature, 'base64'))) {
     return {
-      errCode: 1004,
+      errCode: 1001,
       errMsg: 'signature校验失败',
       errFix: '无修复建议'
     }
