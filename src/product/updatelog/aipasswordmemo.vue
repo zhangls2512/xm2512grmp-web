@@ -49,7 +49,7 @@ const data = [
       },
       {
         type: 'U',
-        content: 'Navigation、NavDestination 组件标题栏适配 API23 沉浸光感视效'
+        content: 'HdsNavigation、HdsNavDestination 组件标题栏适配 API23 沉浸光感视效'
       }
     ]
   },
