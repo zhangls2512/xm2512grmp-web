@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.0.9.1',
+    releaseDate: '2026-03-25',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 关于 新增 邀请测试'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用部分设置移动到“功能”分类下'
+      },
+      {
+        type: 'U',
+        content: '功能下线：显示方向跟随传感器旋转'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.9.0',
     releaseDate: '2026-03-23',
     logs: [
