@@ -31,13 +31,16 @@ exports.main = async (event) => {
         errFix: '无修复建议'
       }
     }
-    try {
-      JSON.parse(event.body)
-    } catch {
-      return {
-        errCode: 1003,
-        errMsg: '请求体解析失败',
-        errFix: '传递合法的JSON请求体'
+    const notparsebodypaths = ['/account/getTicket', '/test']
+    if (!notparsebodypaths.includes(event.path)) {
+      try {
+        JSON.parse(event.body)
+      } catch {
+        return {
+          errCode: 1003,
+          errMsg: '请求体解析失败',
+          errFix: '传递合法的JSON请求体'
+        }
       }
     }
     let path = ''
