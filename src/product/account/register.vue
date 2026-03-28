@@ -114,11 +114,11 @@ async function getEmailCode() {
             <tiny-switch v-model="setpassword"></tiny-switch>
           </tiny-form-item>
           <tiny-form-item v-if="setpassword == true" label="密码">
-            <tiny-input v-model="passworda" type="password" clearable minlength="8" maxlength="30"
+            <tiny-input v-model="passworda" type="password" clearable show-password minlength="8" maxlength="32"
               autocomplete="new-password" placeholder="请输入密码（长度 8 - 32 位）"></tiny-input>
           </tiny-form-item>
           <tiny-form-item v-if="setpassword == true" label="确认密码">
-            <tiny-input v-model="passwordb" type="password" clearable minlength="8" maxlength="30"
+            <tiny-input v-model="passwordb" type="password" clearable show-password minlength="8" maxlength="32"
               autocomplete="new-password" placeholder="请再次输入密码"></tiny-input>
           </tiny-form-item>
           <tiny-form-item>

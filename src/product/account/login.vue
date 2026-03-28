@@ -217,7 +217,7 @@ async function getEmailCode() {
                 </div>
               </tiny-form-item>
               <tiny-form-item v-if="type == 'password'" label="密码">
-                <tiny-input v-model="code" type="password" clearable minlength="8" maxlength="30"
+                <tiny-input v-model="code" type="password" clearable show-password minlength="8" maxlength="32"
                   autocomplete="password" placeholder="请输入密码"></tiny-input>
               </tiny-form-item>
               <tiny-form-item v-if="type == 'mfa'" label="MFA">

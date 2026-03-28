@@ -848,12 +848,12 @@ async function getEmailCodea() {
           autocomplete="one-time-code" placeholder="请输入新邮箱验证码"></tiny-input>
         <tiny-input v-if="type == 'mfa'" v-model="code" clearable minlength="6" maxlength="6"
           autocomplete="one-time-code" placeholder="请输入 MFA"></tiny-input>
-        <tiny-input v-if="type == 'password'" v-model="code" type="password" clearable minlength="8" maxlength="30"
+        <tiny-input v-if="type == 'password'" v-model="code" type="password" clearable show-password minlength="8" maxlength="32"
           autocomplete="current-password" placeholder="请输入密码"></tiny-input>
-        <tiny-input v-if="setpasswordbutton == true" v-model="newpassworda" type="password" clearable minlength="8"
-          maxlength="30" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 32 位）"></tiny-input>
-        <tiny-input v-if="setpasswordbutton == true" v-model="newpasswordb" type="password" clearable minlength="8"
-          maxlength="30" autocomplete="new-password" placeholder="请再次输入新密码"></tiny-input>
+        <tiny-input v-if="setpasswordbutton == true" v-model="newpassworda" type="password" clearable show-password minlength="8"
+          maxlength="32" autocomplete="new-password" placeholder="请输入新密码（长度 8 - 32 位）"></tiny-input>
+        <tiny-input v-if="setpasswordbutton == true" v-model="newpasswordb" type="password" clearable show-password minlength="8"
+          maxlength="32" autocomplete="new-password" placeholder="请再次输入新密码"></tiny-input>
         <tiny-input v-if="updatedurationbutton == true" v-model="duration" clearable minlength="1" maxlength="2"
           placeholder="范围：1 - 60，单位：天"></tiny-input>
       </div>
