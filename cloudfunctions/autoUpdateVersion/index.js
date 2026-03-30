@@ -2,15 +2,6 @@
 exports.main = async () => {
   const axios = require('axios')
   const json5 = require('json5')
-  const nodemailer = require('nodemailer')
-  const nodemailertransport = nodemailer.createTransport({
-    host: 'smtp.qq.com',
-    secure: true,
-    auth: {
-      user: 'zhangls2512@vip.qq.com',
-      pass: process.env.mailtoken
-    }
-  })
   try {
     /*const windowscanaryres = await axios.get('https://aka.ms/canaryLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
@@ -155,12 +146,6 @@ exports.main = async () => {
       id: '0e7893fb67e62980000df4bd6eddfee3',
       version: msysres.data.match(/msys2-x86_64-(.*?)\.exe/)[1]
     })
-  } catch (err) {
-    await nodemailertransport.sendMail({
-      from: 'zhangls2512@vip.qq.com',
-      to: '2300990296@qq.com',
-      subject: '版本号自动更新失败通知',
-      text: err.stack
-    })
+  } catch {
   }
 }
