@@ -122,11 +122,11 @@ exports.main = async () => {
       id: '5b79d91867e2aaec008968d03de7911d',
       version: hrappstoreres.request.res.responseUrl.match(/-(.*?)\.exe/)[1]
     })
-    const navidiaappres = await axios.get('https://www.nvidia.cn/software/nvidia-app')
+    const nvidiaappres = await axios.get('https://www.nvidia.cn/software/nvidia-app')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: '1bbb9dca67e29b9900891b5a58064b7b',
-      version: navidiaappres.data.match(/NVIDIA_app_v(.*)(?=\.exe)/)[1]
+      version: nvidiaappres.data.match(/NVIDIA_app_v(.*)(?=\.exe)/)[1]
     })
     const gitres = await axios.get('https://registry.npmmirror.com/-/binary/git-for-windows')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
@@ -139,6 +139,13 @@ exports.main = async () => {
       accessKey: process.env.accesskey,
       id: 'ed153fc76804a5ad017dd25f29e43879',
       version: rufusres.data.match(/rufus-(.+?)\.exe/)[1]
+    })
+    const rssres = await axios.get('https://letsencrypt.org/feed.xml')
+    const latestitem = rssres.data.substring(rssres.data.indexOf('<item>') + 6, rssres.data.indexOf('</item>'))
+    await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+      accessKey: process.env.accesskey,
+      id: '9f5d149069ce2d690298fcad5db418da',
+      version: latestitem.substring(latestitem.indexOf('<title>') + 7, latestitem.indexOf('</title>'))
     })
     const msysres = await axios.get('https://www.msys2.org')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
