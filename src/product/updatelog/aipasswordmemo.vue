@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.0.0',
+    releaseDate: '2026-04-12',
+    logs: [
+      {
+        type: 'A',
+        content: '首页右上角新增小艺智能体图标按钮，点击可拉起小艺智能体，然后在其中使用自然语言操作应用。目前支持新增密码、搜索密码、新增常用信息、新增标签（非电脑端可用）'
+      }
+    ]
+  },
+  {
     versionNumber: '2.0.9.2',
     releaseDate: '2026-03-29',
     logs: [
