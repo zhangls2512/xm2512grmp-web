@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.1.1',
+    releaseDate: '2026-04-13',
+    logs: [
+      {
+        type: 'F',
+        content: '上传、下载文件时可能会报错'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.0',
     releaseDate: '2026-04-08',
     logs: [
