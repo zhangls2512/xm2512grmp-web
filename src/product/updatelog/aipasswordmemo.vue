@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.0.1',
+    releaseDate: '2026-04-14',
+    logs: [
+      {
+        type: 'U',
+        content: '首页右上角小艺智能体图标按钮添加柔和点光源效果'
+      },
+      {
+        type: 'U',
+        content: '打包 hap 时，libs 库以压缩方式存储'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.0.0',
     releaseDate: '2026-04-12',
     logs: [

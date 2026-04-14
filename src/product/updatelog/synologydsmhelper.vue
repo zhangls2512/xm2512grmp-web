@@ -2,6 +2,56 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.5',
+    releaseDate: '2026-04-14',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 新增 性能 - 刷新最佳地址、最佳地址'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 设置 新增 高级，支持按键粒度清理'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 关于 新增 邀请测试'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 - 自动上传故障日志类型 新增 ArkWeb 抛滑丢帧'
+      },
+      {
+        type: 'U',
+        content: '“相册”中“详情”弹窗中地图显示审图号'
+      },
+      {
+        type: 'U',
+        content: '持久化用户首选项存储模式调整为 GSKV（以前为 XML），提升读写性能'
+      },
+      {
+        type: 'U',
+        content: '底部导航栏（HdsTabs 组件）适配 API23 悬浮样式、沉浸光感视效'
+      },
+      {
+        type: 'U',
+        content: '电脑端左侧导航栏调整为侧边栏（HdsSideMenu 组件）'
+      },
+      {
+        type: 'U',
+        content: 'HdsNavigation、HdsNavDestination 组件标题栏适配 API23 沉浸光感视效'
+      },
+      {
+        type: 'U',
+        content: '打包 hap 时，libs 库以压缩方式存储'
+      },
+      {
+        type: 'U',
+        content: '功能下线：显示方向跟随传感器旋转'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.4',
     releaseDate: '2026-02-23',
     logs: [
