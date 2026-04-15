@@ -1,6 +1,7 @@
 'use strict'
 exports.main = async (event) => {
-  const crypto = require('crypto')
+  const tcb = require('@cloudbase/node-sdk')
+  const app = tcb.init()
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -9,7 +10,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validtypes = []
+  const validtypes = ['homeassistanthelper']
   if (!validtypes.includes(requestdata.type)) {
     return {
       errCode: 1001,
@@ -17,28 +18,17 @@ exports.main = async (event) => {
       errFix: '传递有效的type参数'
     }
   }
-  if (typeof (requestdata.hash) != 'string') {
-    return {
-      errCode: 1001,
-      errMsg: '请求参数错误',
-      errFix: '传递有效的hash参数'
-    }
-  }
-  const parameter = require(__dirname + '/' + requestdata.type + '.json')
-  const hash = crypto.createHash('sha256').update(parameter).digest('hex')
-  if (hash != requestdata.hash) {
-    return {
-      errCode: 0,
-      errMsg: '成功',
-      hasUpdate: true,
-      parameter: parameter
-    }
-  }
-  if (hash == requestdata.hash) {
-    return {
-      errCode: 0,
-      errMsg: '成功',
-      hasUpdate: false
-    }
+  const res = await app.getTempFileURL({
+    fileList: [
+      {
+        fileID: 'cloud://zhangls2512-5ggbio7hc46f4036.7a68-zhangls2512-5ggbio7hc46f4036-1333179018/' + requestdata.type + '.txt',
+        maxAge: 300
+      }
+    ]
+  })
+  return {
+    errCode: 0,
+    errMsg: '成功',
+    downloadUrl: res.fileList[0].tempFileURL
   }
 }
