@@ -18,23 +18,18 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validproducts = ['password', 'synologydsmhelper', 'webdavhelper']
-  if (!validproducts.includes(requestdata.product)) {
+  const productmap = {
+    password: '密码智能备忘录',
+    synologydsmhelper: 'SynDSM助手',
+    homeassistanthelper: 'Home Assistant助手',
+    webdavhelper: 'WebDAV助手'
+  }
+  if (typeof (requestdata.product) != 'string' || !productmap[requestdata.product]) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的product参数'
     }
-  }
-  let productwz = ''
-  if (requestdata.product == 'password') {
-    productwz = '密码智能备忘录'
-  }
-  if (requestdata.product == 'synologydsmhelper') {
-    productwz = 'SynDSM助手'
-  }
-  if (requestdata.product == 'webdavhelper') {
-    productwz = 'WebDAV助手'
   }
   if (typeof (requestdata.version) != 'string' || !/^\d+\.\d+\.\d+\.\d+$/.test(requestdata.version)) {
     return {
@@ -75,7 +70,7 @@ exports.main = async (event) => {
     from: 'zhangls2512@vip.qq.com',
     to: '2300990296@qq.com',
     subject: '有新反馈',
-    text: '产品：' + productwz + '\n版本：' + requestdata.version + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
+    text: '产品：' + productmap[requestdata.product] + '\n版本：' + requestdata.version + '\n内容：' + requestdata.content + '\n联系方式：' + contactvalue + '（' + contacttype + '）'
   })
   return {
     errCode: 0,

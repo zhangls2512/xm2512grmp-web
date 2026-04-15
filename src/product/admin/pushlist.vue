@@ -24,6 +24,10 @@ const products = ref([
     label: 'SynDSM 助手'
   },
   {
+    value: 'homeassistanthelper',
+    label: 'Home Assistant 助手'
+  },
+  {
     value: 'webdavhelper',
     label: 'WebDAV 助手'
   }

@@ -142,6 +142,11 @@ exports.main = async (event) => {
       kid = '3ab377fe42ec40738b03316abdb7aa76'
       projectid = '461323198430545654'
     }
+    if (product == 'homeassistanthelper') {
+      iss = '117424491'
+      kid = '3030d7ebbbe141e2ad569335c51e1b75'
+      clientid = '101653523863876502'
+    }
     if (product == 'webdavhelper') {
       iss = '116869175'
       kid = '1f98fef6f2674625bc61a4355e362ea8'

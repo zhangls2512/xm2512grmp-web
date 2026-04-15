@@ -11,7 +11,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validproducts = ['password', 'synologydsmhelper', 'webdavhelper']
+  const validproducts = ['password', 'synologydsmhelper', 'homeassistanthelper', 'webdavhelper']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,
