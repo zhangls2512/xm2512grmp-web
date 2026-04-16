@@ -43,6 +43,12 @@
   padding: 20px 5% 20px 5%;
 }
 
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background-color: #242424;
+  }
+}
+
 .sp {
   align-items: center;
   display: flex;
