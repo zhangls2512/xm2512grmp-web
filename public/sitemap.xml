@@ -52,6 +52,10 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.zhangls2512.cn/updatelog/homeassistanthelper</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.zhangls2512.cn/updatelog/webdavhelper</loc>
     <priority>0.5</priority>
   </url>

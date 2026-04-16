@@ -69,6 +69,10 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/synologydsmhelper.vue')
         },
         {
+          path: 'homeassistanthelper',
+          component: () => import('/src/product/updatelog/homeassistanthelper.vue')
+        },
+        {
           path: 'webdavhelper',
           component: () => import('/src/product/updatelog/webdavhelper.vue')
         },

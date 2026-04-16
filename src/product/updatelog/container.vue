@@ -28,6 +28,10 @@ const tabs = [
     label: 'SynDSM 助手'
   },
   {
+    id: 'homeassistanthelper',
+    label: 'Home Assistant 助手'
+  },
+  {
     id: 'webdavhelper',
     label: 'WebDAV 助手'
   },
