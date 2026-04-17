@@ -61,8 +61,7 @@ const endyear = new Date().getFullYear()
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.homeassistanthelper"
                   target="_blank">正式</a>
-                <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=35b4d90e4ed98741dee160cacf8f4d65&invitationCode=40KvBHeSwz3"
-                  target="_blank">邀请测试</a>
+                <a href="https://appgallery.huawei.com/apptest/6EFjlnhZIk5" target="_blank">邀请测试</a>
               </div>
             </div>
           </div>
