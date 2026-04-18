@@ -2,6 +2,34 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.0.2',
+    releaseDate: '2026-04-18',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 日志 新增 HTTP 请求 Home Assistant 服务器失败'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 新增 保存 HTTP 请求 Home Assistant 服务器失败日志'
+      },
+      {
+        type: 'U',
+        content: '优化首页 - 状态显示效果'
+      }
+    ]
+  },
+  {
+    versionNumber: '1.0.0.1',
+    releaseDate: '2026-04-18',
+    logs: [
+      {
+        type: 'U',
+        content: '首页 - 服务 - 调用支持输入类型新增 entity、config_entry、theme、object、statistic、state、conversation_agent、media、area、duration、color_rgb、color_temp'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.0',
     releaseDate: '2026-04-16',
     logs: [
