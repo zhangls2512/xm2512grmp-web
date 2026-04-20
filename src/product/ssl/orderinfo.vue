@@ -3,9 +3,9 @@ document.title = '轩铭2512 - SSL 证书 - 订单详情'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
-import moment from 'moment-timezone'
 import callfunction from '../../callfunction'
 import request from '../../request'
+import time from '../../time'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
@@ -29,12 +29,12 @@ async function get() {
     status: 'success'
   })
   const resdata = res.data
-  resdata.ariEndDate = moment(resdata.ariEndDate).format('YYYY-MM-DD HH:mm:ss')
-  resdata.ariStartDate = moment(resdata.ariStartDate).format('YYYY-MM-DD HH:mm:ss')
-  resdata.certificateEndDate = moment(resdata.certificateEndDate).format('YYYY-MM-DD HH:mm:ss')
-  resdata.certificateStartDate = moment(resdata.certificateStartDate).format('YYYY-MM-DD HH:mm:ss')
-  resdata.createDate = moment(resdata.createDate).format('YYYY-MM-DD HH:mm:ss')
-  resdata.orderEndDate = moment(resdata.orderEndDate).format('YYYY-MM-DD HH:mm:ss')
+  resdata.ariEndDate = time(resdata.ariEndDate)
+  resdata.ariStartDate = time(resdata.ariStartDate)
+  resdata.certificateEndDate = time(resdata.certificateEndDate)
+  resdata.certificateStartDate = time(resdata.certificateStartDate)
+  resdata.createDate = time(resdata.createDate)
+  resdata.orderEndDate = time(resdata.orderEndDate)
   data.value = resdata
   desc.value = resdata.desc
   autoneworder.value = resdata.autoNewOrder

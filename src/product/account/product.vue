@@ -2,9 +2,9 @@
 document.title = '轩铭2512 - 统一账号 - 产品管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
-import moment from 'moment-timezone'
 import callfunction from '../../callfunction'
 import request from '../../request'
+import time from '../../time'
 const accesstoken = cookie.get('accessToken')
 const products = [
   {
@@ -45,8 +45,8 @@ const products = [
 ]
 const validproducts = products.map(item => item.name).concat(['password'])
 const productszt = ref(validproducts.reduce((out, item) => {
-  out[`${item}ktzt`] = false
-  out[`${item}fjzt`] = false
+  out[item + 'ktzt'] = false
+  out[item + 'fjzt'] = false
   return out
 }, {}))
 async function getAccountInfo() {
@@ -63,12 +63,12 @@ async function getAccountInfo() {
   const service = res.data.service
   const permission = res.data.permission
   validproducts.forEach(item => {
-    productszt.value[`${item}ktzt`] = service.includes(item)
+    productszt.value[item + 'ktzt'] = service.includes(item)
     if (permission[item] === false) {
-      productszt.value[`${item}fjzt`] = true
+      productszt.value[item + 'fjzt'] = true
     }
     if (typeof (permission[item]) == 'number' && Date.now() <= permission[item]) {
-      productszt.value[`${item}fjzt`] = moment(permission[item]).format('YYYY-MM-DD HH:mm:ss')
+      productszt.value[item + 'fjzt'] = time(permission[item])
     }
   })
 }
@@ -136,22 +136,22 @@ function openAppDetail(bundleName) {
             <div class="bold-text">{{ item.title }}</div>
           </div>
           <div class="sp">
-            <tiny-tag v-if="productszt[`${item.name}ktzt`] == false" type="danger">未开通</tiny-tag>
-            <tiny-tag v-if="productszt[`${item.name}ktzt`] == true" type="success">已开通</tiny-tag>
-            <tiny-tag v-if="productszt[`${item.name}fjzt`] === true" type="danger">永久封禁</tiny-tag>
-            <tiny-tag v-if="typeof (productszt[`${item.name}fjzt`]) == 'string'" type="danger">封禁至 {{
-              productszt[`${item.name}fjzt`] }}</tiny-tag>
+            <tiny-tag v-if="productszt[item.name + 'ktzt'] == false" type="danger">未开通</tiny-tag>
+            <tiny-tag v-if="productszt[item.name + 'ktzt'] == true" type="success">已开通</tiny-tag>
+            <tiny-tag v-if="productszt[item.name + 'fjzt'] === true" type="danger">永久封禁</tiny-tag>
+            <tiny-tag v-if="typeof (productszt[item.name + 'fjzt']) == 'string'" type="danger">封禁至 {{
+              productszt[item.name + 'fjzt'] }}</tiny-tag>
           </div>
           <div>{{ item.desc }}</div>
           <tiny-alert
-            v-if="item.defaultallow == false && productszt[`${item.name}ktzt`] == false && productszt[`${item.name}fjzt`] != false"
+            v-if="item.defaultallow == false && productszt[item.name + 'ktzt'] == false && productszt[item.name + 'fjzt'] != false"
             :closable="false" description="如需开通，请联系客服"></tiny-alert>
           <div class="sp">
-            <tiny-button v-if="productszt[`${item.name}ktzt`] == true && productszt[`${item.name}fjzt`] == false"
+            <tiny-button v-if="productszt[item.name + 'ktzt'] == true && productszt[item.name + 'fjzt'] == false"
               type="info" @click="use(item.name)">去使用</tiny-button>
-            <tiny-button v-if="productszt[`${item.name}ktzt`] == false" type="success"
-              :disabled="productszt[`${item.name}fjzt`]" @click="open(item.name)">开通</tiny-button>
-            <tiny-button v-if="productszt[`${item.name}ktzt`] == true" type="danger"
+            <tiny-button v-if="productszt[item.name + 'ktzt'] == false" type="success"
+              :disabled="productszt[item.name + 'fjzt']" @click="open(item.name)">开通</tiny-button>
+            <tiny-button v-if="productszt[item.name + 'ktzt'] == true" type="danger"
               @click="close(item.name)">取消开通</tiny-button>
           </div>
         </div>

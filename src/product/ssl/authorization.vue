@@ -3,8 +3,8 @@ document.title = '轩铭2512 - SSL 证书 - 授权'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
-import moment from 'moment-timezone'
 import callfunction from '../../callfunction'
+import time from '../../time'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
@@ -23,10 +23,10 @@ async function get() {
   })
   data.value = res.authorization.map(item => ({
     ...item,
-    expires: moment(item.expires).format('YYYY-MM-DD HH:mm:ss'),
+    expires: time(item.expires),
     challenges: item.challenges.map(item => ({
       ...item,
-      validated: moment(item.expires).format('YYYY-MM-DD HH:mm:ss')
+      validated: time(item.expires)
     }))
   }))
 }

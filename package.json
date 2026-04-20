@@ -9,7 +9,6 @@
     "@cloudbase/js-sdk": "latest",
     "@opentiny/vue": "latest",
     "js-cookie": "latest",
-    "moment-timezone": "latest",
     "qrcode": "latest",
     "sortablejs": "latest",
     "validator": "latest",

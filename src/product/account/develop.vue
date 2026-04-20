@@ -2,8 +2,8 @@
 document.title = '轩铭2512 - 统一账号 - 账号管理 - 开发管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
-import moment from 'moment-timezone'
 import request from '../../request'
+import time from '../../time'
 const accesstoken = cookie.get('accessToken')
 const accesskeys = ref([])
 const newaccesskeydialog = ref(false)
@@ -610,7 +610,7 @@ function formatEnddate(t) {
   if (enddate == 0) {
     return '永久'
   }
-  return moment(enddate).format('YYYY-MM-DD HH:mm:ss')
+  return time(enddate)
 }
 async function getAccessKeys() {
   const res = await request({

@@ -1,4 +1,4 @@
-async function request({ apiPath, body }) {
+export default async function request({ apiPath, body }) {
   const loading = TinyLoading.service({
     lock: true,
     size: 'large',
@@ -43,4 +43,3 @@ async function request({ apiPath, body }) {
     throw err
   }
 }
-export default request

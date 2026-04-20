@@ -1,11 +1,11 @@
 <script setup>
 document.title = '轩铭2512 - 管理后台 - 资源审核'
 import { ref } from 'vue'
-import moment from 'moment-timezone'
 import cookie from 'js-cookie'
 import sortable from 'sortablejs'
 import request from '../../request'
 import router from '../../router'
+import time from '../../time'
 const accesstoken = cookie.get('accessToken')
 let date = ''
 const total = ref(0)
@@ -122,7 +122,7 @@ async function get() {
     id.value = dataout._id
     releasestatus.value = dataout.releaseStatus
     date = dataout.submitReviewDate
-    submitreviewdate.value = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+    submitreviewdate.value = time(dataout.submitReviewDate)
     reviewinvalidreason.value = dataout.reviewInvalidReason
     name.value = dataout.reviewInfo.name
     desc.value = dataout.reviewInfo.desc

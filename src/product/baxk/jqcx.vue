@@ -3,8 +3,8 @@ document.title = '轩铭2512 - 备案许可'
 const endyear = new Date().getFullYear()
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import moment from 'moment-timezone'
 import request from '../../request'
+import time from '../../time'
 const route = useRoute()
 const baxknumber = ref('')
 const visible = ref(false)
@@ -72,7 +72,7 @@ async function get() {
   }
   data.specificType = specificmap[res.data.mainType][res.data.specificType]
   data.mainType = maintypemap[res.data.mainType]
-  data.date = moment(res.data.date).format('YYYY-MM-DD HH:mm:ss')
+  data.date = time(res.data.date)
   info.value = data
   visible.value = true
 }

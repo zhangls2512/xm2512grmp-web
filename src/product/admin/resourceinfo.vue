@@ -2,9 +2,9 @@
 document.title = '轩铭2512 - 管理后台 - 资源详情'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import moment from 'moment-timezone'
 import cookie from 'js-cookie'
 import request from '../../request'
+import time from '../../time'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')
@@ -27,8 +27,8 @@ async function get() {
     status: 'success'
   })
   const dataout = res.data
-  dataout.createDate = moment(dataout.createDate).format('YYYY-MM-DD HH:mm:ss')
-  dataout.submitReviewDate = moment(dataout.submitReviewDate).format('YYYY-MM-DD HH:mm:ss')
+  dataout.createDate = time(dataout.createDate)
+  dataout.submitReviewDate = time(dataout.submitReviewDate)
   data.value = dataout
 }
 get()

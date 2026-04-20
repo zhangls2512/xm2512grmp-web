@@ -2,8 +2,8 @@
 document.title = '轩铭2512 - 管理后台 - 产品用户列表 - 密码智能备忘录'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
-import moment from 'moment-timezone'
 import request from '../../request'
+import time from '../../time'
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
 const currentpage = ref(1)
@@ -19,7 +19,7 @@ function formatVipenddate(t) {
     return '终身'
   }
   if (vipenddate > 0) {
-    return moment(vipenddate).format('YYYY-MM-DD HH:mm:ss')
+    return time(vipenddate)
   }
 }
 async function get() {

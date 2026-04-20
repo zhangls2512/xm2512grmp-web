@@ -1,5 +1,5 @@
 import cloudbase from '@cloudbase/js-sdk'
-async function callfunction({ functionName, data }) {
+export default async function callfunction({ functionName, data }) {
   const loading = TinyLoading.service({
     lock: true,
     size: 'large',
@@ -40,4 +40,3 @@ async function callfunction({ functionName, data }) {
     throw err
   }
 }
-export default callfunction
