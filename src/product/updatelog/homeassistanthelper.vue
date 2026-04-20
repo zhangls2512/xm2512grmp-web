@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.0.4',
+    releaseDate: '2026-04-20',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 缓存 新增 实体图标'
+      },
+      {
+        type: 'U',
+        content: '优化首页 - 状态显示效果'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.3',
     releaseDate: '2026-04-19',
     logs: [
