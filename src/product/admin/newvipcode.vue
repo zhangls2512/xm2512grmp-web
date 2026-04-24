@@ -10,6 +10,10 @@ const products = ref([
   {
     value: 'password',
     label: '密码智能备忘录'
+  },
+  {
+    value: 'todo',
+    label: '智能待办'
   }
 ])
 const duration = ref('')
@@ -20,7 +24,7 @@ const enddateforever = ref('false')
 async function newVipcode() {
   if (!duration.value) {
     TinyModal.message({
-      message: '请输入时长',
+      message: '请输入时长 / 个数',
       status: 'warning'
     })
     return
@@ -28,7 +32,14 @@ async function newVipcode() {
   const durationout = Number(duration.value)
   if (!Number.isInteger(durationout) || durationout < 0) {
     TinyModal.message({
-      message: '请输入有效的时长',
+      message: '请输入有效的时长 / 个数',
+      status: 'warning'
+    })
+    return
+  }
+  if (product.value == 'todo' && durationout == 0) {
+    TinyModal.message({
+      message: '请输入有效的个数',
       status: 'warning'
     })
     return
@@ -100,8 +111,8 @@ async function newVipcode() {
           <tiny-option v-for="item in products" :value="item.value" :label="item.label"></tiny-option>
         </tiny-base-select>
       </tiny-form-item>
-      <tiny-form-item label="时长">
-        <tiny-input v-model="duration" type="number" clearable placeholder="请输入时长，单位：天，终身输入 0"></tiny-input>
+      <tiny-form-item label="时长 / 个数">
+        <tiny-input v-model="duration" type="number" clearable placeholder="请输入时长 / 个数，终身输入 0"></tiny-input>
       </tiny-form-item>
       <tiny-form-item label="权限类型">
         <tiny-radio-group v-model="permissiontype">

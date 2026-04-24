@@ -18,13 +18,13 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  let skip = 0
-  let limit = 10
-  if (Number.isInteger(requestdata.skip)) {
-    skip = requestdata.skip
-  }
-  if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
-    limit = requestdata.limit
+  const validproducts = ['ssl', 'password', 'todo']
+  if (!validproducts.includes(requestdata.product)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的product参数'
+    }
   }
   let type = ''
   let code = ''
@@ -52,24 +52,19 @@ exports.main = async (event) => {
       },
       permission: ['account', 'admin'],
       service: ['admin'],
-      apiName: 'admin_getSslUserList'
+      apiName: 'admin_getProductUserCount'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
     const userres = await db.collection('productuser').where({
-      product: 'ssl'
-    }).skip(skip).limit(limit).field({
-      _id: false,
-      uid: true,
-      productionLimit: true,
-      stagingLimit: true
-    }).get()
+      product: requestdata.product
+    }).count()
     return {
       errCode: 0,
       errMsg: '成功',
-      data: userres.data
+      count: userres.total
     }
   }
 }

@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.0.5',
+    releaseDate: '2026-04-24',
+    logs: [
+      {
+        type: 'U',
+        content: '平板端支持使用碰一碰、隔空传送功能'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.4',
     releaseDate: '2026-04-20',
     logs: [

@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 统一账号'
 const data = [
   {
+    versionNumber: '1.0.13',
+    releaseDate: '2026-04-24',
+    logs: [
+      {
+        type: 'U',
+        content: '产品管理 新增 智能待办'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.12',
     releaseDate: '2026-01-11',
     logs: [

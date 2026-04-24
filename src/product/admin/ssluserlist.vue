@@ -11,16 +11,18 @@ const total = ref(0)
 const uid = ref('')
 async function get() {
   const countres = await request({
-    apiPath: '/admin/getSslUserCount',
+    apiPath: '/admin/getProductUserCount',
     body: {
-      accessToken: accesstoken
+      accessToken: accesstoken,
+      product: 'ssl'
     }
   })
   total.value = countres.count
   const res = await request({
-    apiPath: '/admin/getSslUserList',
+    apiPath: '/admin/getProductUserList',
     body: {
       accessToken: accesstoken,
+      product: 'ssl',
       skip: (currentpage.value - 1) * pagesize.value,
       limit: pagesize.value
     }
@@ -53,9 +55,10 @@ async function search() {
     return
   }
   const userres = await request({
-    apiPath: '/admin/searchSslUser',
+    apiPath: '/admin/searchProductUser',
     body: {
       accessToken: accesstoken,
+      product: 'ssl',
       uid: uid.value
     }
   })

@@ -193,7 +193,7 @@ async function getEmailCode() {
         <div class="sp">
           <div class="cz">
             <tiny-alert v-if="ticketexpired == false" :closable="false"
-              description="使用轩铭密码智能备忘录（App）、SSL 证书（微信小程序）扫描下方二维码"></tiny-alert>
+              description="使用轩铭密码智能备忘录（App）、轩铭智能待办（App）、SSL 证书（微信小程序）扫描下方二维码"></tiny-alert>
             <img v-if="ticketexpired == false" class="qrcode" :src="qrcodeimg" loading="lazy"></img>
             <tiny-button v-if="ticketexpired == false" type="success" @click="loginByTicket">我已扫码并确认登录</tiny-button>
             <tiny-alert v-if="ticketexpired == true" type="error" :closable="false" description="二维码已过期"></tiny-alert>

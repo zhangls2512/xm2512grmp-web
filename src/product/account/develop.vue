@@ -149,6 +149,21 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_getProductUserCount',
+    desc: '获取产品用户总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getProductUserList',
+    desc: '获取产品用户列表'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_searchProductUser',
+    desc: '搜索单个产品用户'
+  },
+  {
+    product: '管理后台',
     name: 'admin_newVipcode',
     desc: '新增会员兑换码'
   },
@@ -279,21 +294,6 @@ const apis = ref([
   },
   {
     product: '管理后台',
-    name: 'admin_getSslUserCount',
-    desc: '获取 SSL 证书用户总数'
-  },
-  {
-    product: '管理后台',
-    name: 'admin_getSslUserList',
-    desc: '获取 SSL 证书用户列表'
-  },
-  {
-    product: '管理后台',
-    name: 'admin_searchSslUser',
-    desc: '搜索单个 SSL 证书用户'
-  },
-  {
-    product: '管理后台',
     name: 'admin_newSslLimitChange',
     desc: '新增 SSL 证书额度变更'
   },
@@ -306,21 +306,6 @@ const apis = ref([
     product: '管理后台',
     name: 'admin_getSslLimitChangeList',
     desc: '获取 SSL 证书额度变更列表'
-  },
-  {
-    product: '管理后台',
-    name: 'admin_getPasswordUserCount',
-    desc: '获取密码智能备忘录用户总数'
-  },
-  {
-    product: '管理后台',
-    name: 'admin_getPasswordUserList',
-    desc: '获取密码智能备忘录用户列表'
-  },
-  {
-    product: '管理后台',
-    name: 'admin_searchPasswordUser',
-    desc: '搜索单个密码智能备忘录用户'
   },
   {
     product: '资源',
@@ -595,6 +580,31 @@ const apis = ref([
   {
     product: '密码智能备忘录',
     name: 'password_clearBackup',
+    desc: '清空备份'
+  },
+  {
+    product: '智能待办',
+    name: 'todo_setBackup',
+    desc: '设置备份'
+  },
+  {
+    product: '智能待办',
+    name: 'todo_getBackupCount',
+    desc: '获取备份总数'
+  },
+  {
+    product: '智能待办',
+    name: 'todo_getBackupList',
+    desc: '获取备份列表'
+  },
+  {
+    product: '智能待办',
+    name: 'todo_deleteBackup',
+    desc: '删除备份'
+  },
+  {
+    product: '智能待办',
+    name: 'todo_clearBackup',
     desc: '清空备份'
   }
 ])

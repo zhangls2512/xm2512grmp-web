@@ -18,17 +18,12 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  let product = db.command.neq('')
-  const validproducts = ['password', 'todo', 'synologydsmhelper', 'homeassistanthelper', 'webdavhelper']
-  if (validproducts.includes(requestdata.product)) {
-    product = requestdata.product
-  }
   let skip = 0
   let limit = 10
   if (Number.isInteger(requestdata.skip)) {
     skip = requestdata.skip
   }
-  if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
+  if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 50) {
     limit = requestdata.limit
   }
   let type = ''
@@ -55,27 +50,24 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', 'admin'],
-      service: ['admin'],
-      apiName: 'admin_getPushList'
+      permission: [],
+      service: ['todo'],
+      apiName: 'todo_getBackupList'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const pushres = await db.collection('push').where({
-      product: product
-    }).skip(skip).limit(limit).get()
-    if (pushres.data.length > 0) {
-      pushres.data.forEach(item => {
-        item.pushTokenCount = item.pushToken.length
-        delete item.pushToken
-      })
-    }
+    const todores = await db.collection('todo').where({
+      uid: res.result.account._id
+    }).skip(skip).limit(limit).field({
+      _id: false,
+      uid: false
+    }).get()
     return {
       errCode: 0,
       errMsg: '成功',
-      data: pushres.data
+      data: todores.data
     }
   }
 }

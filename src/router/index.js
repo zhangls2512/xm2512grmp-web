@@ -199,6 +199,10 @@ const router = createRouter({
           component: () => import('/src/product/admin/passworduserlist.vue')
         },
         {
+          path: '/product/admin/todouserlist',
+          component: () => import('/src/product/admin/todouserlist.vue')
+        },
+        {
           path: '/product/admin/newvipcode',
           component: () => import('/src/product/admin/newvipcode.vue')
         },

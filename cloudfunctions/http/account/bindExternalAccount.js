@@ -132,7 +132,7 @@ exports.main = async (event) => {
         errMsg: '成功'
       }
     } else {
-      if (requestdata.platform == 'huaweiaipasswordmemoapp') {
+      if (requestdata.platform == 'huaweiaipasswordmemoapp' || requestdata.platform == 'huaweiaitodoapp') {
         platform = 'huawei'
       }
       const externalaccountres = await db.collection('externalaccount').where({
@@ -182,6 +182,10 @@ exports.main = async (event) => {
         if (requestdata.platform == 'huaweiaipasswordmemoapp') {
           clientid = '6917568345502278703'
           clientsecret = process.env.huaweiaipasswordmemoappclientsecret
+        }
+        if (requestdata.platform == 'huaweiaitodoapp') {
+          clientid = '6917571182378882466'
+          clientsecret = process.env.huaweiaitodoappclientsecret
         }
         try {
           const huaweitokenres = await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', null, {

@@ -26,6 +26,11 @@ exports.main = async (event) => {
       product = 'password'
       productwz = '密码智能备忘录'
     }
+    if (event.notificationMetaData.packageName == 'com.zhangxm.aitodo') {
+      aid = '6917571182378882466'
+      product = 'todo'
+      productwz = '智能待办'
+    }
     const body = {
       purchaseToken: event.notificationMetaData.purchaseToken,
       purchaseOrderId: event.notificationMetaData.purchaseOrderId
@@ -94,6 +99,9 @@ exports.main = async (event) => {
       if (productid == 'DC3GXhbuWbw7tkpC') {
         duration = 0
       }
+      if (productid == 'iqKBj_k_muJcd3yc' || productid == 'XBCGwpIuyeAPvuk2') {
+        duration = 20
+      }
       if (productid == 'CG3_PfAJZa84niLQ' || productid == 'QIX7fU1KM3.IMVyb') {
         duration = 30
       }
@@ -103,81 +111,178 @@ exports.main = async (event) => {
       if (productid == 'ZiRMWWgpOAXq3ErF' || productid == 'Y3V08cwoFrvLTPR7') {
         duration = 365
       }
-      const userres = await db.collection('productuser').where({
-        product: product,
-        uid: uid
-      }).get()
-      let vipenddate = userres.data[0].vipEndDate
-      if (vipenddate == 0) {
-        return {
-          errCode: 8001,
-          errMsg: '已是终身会员',
-          errFix: '无修复建议'
-        }
-      }
-      try {
-        const confirmres = await axios.post(confirmurl, body, {
-          headers: {
-            Authorization: authorization
+      if (product == 'password') {
+        const userres = await db.collection('productuser').where({
+          product: product,
+          uid: uid
+        }).get()
+        let vipenddate = userres.data[0].vipEndDate
+        if (vipenddate == 0) {
+          return {
+            errCode: 8001,
+            errMsg: '已是终身会员',
+            errFix: '无修复建议'
           }
-        })
-        if (confirmres.data.responseCode != 0) {
+        }
+        try {
+          const confirmres = await axios.post(confirmurl, body, {
+            headers: {
+              Authorization: authorization
+            }
+          })
+          if (confirmres.data.responseCode != 0) {
+            return {
+              errCode: 8002,
+              errMsg: '订单确认发货失败，原因：' + queryres.data.responseMessage,
+              errFix: '联系客服'
+            }
+          }
+          let vipenddatewz = ''
+          if (duration == 0) {
+            await db.collection('productuser').where({
+              product: product,
+              uid: uid
+            }).update({
+              vipEndDate: 0
+            })
+            vipenddatewz = '终身'
+          } else {
+            if (vipenddate < Date.now()) {
+              vipenddate = Date.now()
+            }
+            await db.collection('productuser').where({
+              product: product,
+              uid: uid
+            }).update({
+              vipEndDate: vipenddate + duration * 86400000
+            })
+            vipenddatewz = moment(vipenddate + duration * 86400000).tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
+          }
+          await db.collection('viplog').add({
+            date: Date.now(),
+            duration: duration,
+            info: purchaseOrderid,
+            product: product,
+            type: 'pay',
+            uid: uid
+          })
+          const accountres = await db.collection('account').where({
+            _id: uid
+          }).get()
+          const email = accountres.data[0].email
+          if (email) {
+            await nodemailertransport.sendMail({
+              from: 'zhangls2512@vip.qq.com',
+              to: email,
+              subject: '会员' + typewz + '成功通知',
+              text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseOrderid
+            })
+          }
+          return {
+            errCode: 0,
+            errMsg: '成功'
+          }
+        } catch (err) {
           return {
             errCode: 8002,
-            errMsg: '订单确认发货失败，原因：' + queryres.data.responseMessage,
+            errMsg: '订单确认发货失败，原因：' + err.response.data.responseMessage,
             errFix: '联系客服'
           }
         }
-        let vipenddatewz = ''
-        if (duration == 0) {
-          await db.collection('productuser').where({
-            product: product,
-            uid: uid
-          }).update({
-            vipEndDate: 0
-          })
-          vipenddatewz = '终身'
-        } else {
-          if (vipenddate < Date.now()) {
-            vipenddate = Date.now()
+      }
+      if (product == 'todo') {
+        if (productid == 'iqKBj_k_muJcd3yc') {
+          try {
+            const confirmres = await axios.post(confirmurl, body, {
+              headers: {
+                Authorization: authorization
+              }
+            })
+            if (confirmres.data.responseCode != 0) {
+              return {
+                errCode: 8002,
+                errMsg: '订单确认发货失败，原因：' + queryres.data.responseMessage,
+                errFix: '联系客服'
+              }
+            }
+            await db.collection('productuser').where({
+              product: product,
+              uid: uid
+            }).update({
+              backupMaxCount: db.command.inc(duration)
+            })
+            await db.collection('viplog').add({
+              date: Date.now(),
+              duration: duration,
+              info: purchaseOrderid,
+              product: product,
+              type: 'pay',
+              uid: uid
+            })
+            const accountres = await db.collection('account').where({
+              _id: uid
+            }).get()
+            const email = accountres.data[0].email
+            if (email) {
+              await nodemailertransport.sendMail({
+                from: 'zhangls2512@vip.qq.com',
+                to: email,
+                subject: '永久云备份空间到账成功通知',
+                text: '您的账号“' + productwz + '”产品永久云备份空间到账成功。\n个数：' + duration + '\n订单号：' + purchaseOrderid
+              })
+            }
+            return {
+              errCode: 0,
+              errMsg: '成功'
+            }
+          } catch (err) {
+            return {
+              errCode: 8002,
+              errMsg: '订单确认发货失败，原因：' + err.response.data.responseMessage,
+              errFix: '联系客服'
+            }
           }
-          await db.collection('productuser').where({
-            product: product,
-            uid: uid
-          }).update({
-            vipEndDate: vipenddate + duration * 86400000
-          })
-          vipenddatewz = moment(vipenddate + duration * 86400000).tz('Asia/Shanghai').format('YYYY年MM月DD日 HH:mm')
         }
-        await db.collection('viplog').add({
-          date: Date.now(),
-          duration: duration,
-          info: purchaseOrderid,
-          product: product,
-          type: 'pay',
-          uid: uid
-        })
-        const accountres = await db.collection('account').where({
-          _id: uid
-        }).get()
-        const email = accountres.data[0].email
-        if (email) {
-          await nodemailertransport.sendMail({
-            from: 'zhangls2512@vip.qq.com',
-            to: email,
-            subject: '会员' + typewz + '成功通知',
-            text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseOrderid
-          })
-        }
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
-      } catch (err) {
-        return {
-          errCode: 8002,
-          errMsg: '订单确认发货失败，原因：' + err.response.data.responseMessage,
-          errFix: '联系客服'
+        if (productid == 'XBCGwpIuyeAPvuk2') {
+          try {
+            const confirmres = await axios.post(confirmurl, body, {
+              headers: {
+                Authorization: authorization
+              }
+            })
+            if (confirmres.data.responseCode != 0) {
+              return {
+                errCode: 8002,
+                errMsg: '订单确认发货失败，原因：' + queryres.data.responseMessage,
+                errFix: '联系客服'
+              }
+            }
+            // 此处待完成给公有云团队账号的充值逻辑
+            /*await db.collection('productuser').where({
+              product: product,
+              uid: uid
+            }).update({
+              backupMaxCount: db.command.inc(duration)
+            })
+            await db.collection('viplog').add({
+              date: Date.now(),
+              duration: duration,
+              info: purchaseOrderid,
+              product: product,
+              type: 'pay',
+              uid: uid
+            })*/
+            return {
+              errCode: 0,
+              errMsg: '成功'
+            }
+          } catch (err) {
+            return {
+              errCode: 8002,
+              errMsg: '订单确认发货失败，原因：' + err.response.data.responseMessage,
+              errFix: '联系客服'
+            }
+          }
         }
       }
     } catch (err) {

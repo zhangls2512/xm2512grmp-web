@@ -19,6 +19,10 @@ const products = ref([
   {
     value: 'password',
     label: '密码智能备忘录'
+  },
+  {
+    value: 'todo',
+    label: '智能待办'
   }
 ])
 function formatDuration(t) {
@@ -27,7 +31,7 @@ function formatDuration(t) {
     return '终身'
   }
   if (duration > 0) {
-    return duration + ' 天'
+    return duration + ' 天 / 个'
   }
 }
 function formatEnddate(t) {
@@ -60,7 +64,8 @@ async function get() {
     status: 'success'
   })
   const productmap = {
-    password: '密码智能备忘录'
+    password: '密码智能备忘录',
+    todo: '智能待办'
   }
   data.value = res.data.map(item => ({
     ...item,
@@ -120,7 +125,8 @@ async function deleteVipcode(t) {
         </template>
       </tiny-grid-column>
       <tiny-grid-column field="product" title="产品" align="center"></tiny-grid-column>
-      <tiny-grid-column field="duration" title="时长" align="center" :format-text="formatDuration"></tiny-grid-column>
+      <tiny-grid-column field="duration" title="时长 / 个数" align="center"
+        :format-text="formatDuration"></tiny-grid-column>
       <tiny-grid-column title="权限" align="center">
         <template #default="{ row }">
           <div v-if="typeof (row.permission) == 'string'">指定用户：{{ row.permission }}</div>

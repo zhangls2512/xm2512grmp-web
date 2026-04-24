@@ -18,14 +18,6 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  let skip = 0
-  let limit = 10
-  if (Number.isInteger(requestdata.skip)) {
-    skip = requestdata.skip
-  }
-  if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
-    limit = requestdata.limit
-  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
@@ -50,25 +42,27 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', 'admin'],
-      service: ['admin'],
-      apiName: 'admin_getPasswordUserList'
+      permission: [],
+      service: ['todo'],
+      apiName: 'todo_clearBackup'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const userres = await db.collection('productuser').where({
-      product: 'password'
-    }).skip(skip).limit(limit).field({
-      _id: false,
-      uid: true,
-      vipEndDate: true
-    }).get()
+    const todores = await db.collection('todo').where({
+      uid: res.result.account._id
+    }).remove()
+    if (todores.deleted == 0) {
+      return {
+        errCode: 8000,
+        errMsg: '无数据可清理',
+        errFix: '无修复建议'
+      }
+    }
     return {
       errCode: 0,
-      errMsg: '成功',
-      data: userres.data
+      errMsg: '成功'
     }
   }
 }

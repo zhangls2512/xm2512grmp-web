@@ -37,7 +37,7 @@ exports.main = async (event) => {
       errFix: '传递有效的deviceToken参数'
     }
   }
-  const validproducts = ['password']
+  const validproducts = ['password', 'todo']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,
@@ -122,6 +122,10 @@ exports.main = async (event) => {
       bundlename = 'com.zhangxm.aipasswordmemo'
       productwz = '密码智能备忘录'
     }
+    if (requestdata.product == 'todo') {
+      bundlename = 'com.zhangxm.aitodo'
+      productwz = '智能待办'
+    }
     const jwt = jsonwebtoken.sign({
       iss: '114416983',
       aud: 'https://oauth-login.cloud.huawei.com/oauth2/v3/token',
@@ -195,52 +199,96 @@ exports.main = async (event) => {
             errFix: '联系客服'
           }
         }
-        const userares = await db.collection('productuser').where({
-          product: requestdata.product,
-          uid: uid
-        }).get()
-        let vipenddatea = userares.data[0].vipEndDate
-        if (vipenddatea != 0) {
-          if (vipenddatea < Date.now()) {
-            vipenddatea = Date.now() + 2592000000
-          } else {
-            vipenddatea = vipenddatea + 2592000000
+        if (requestdata.product == 'password') {
+          const userares = await db.collection('productuser').where({
+            product: requestdata.product,
+            uid: uid
+          }).get()
+          let vipenddatea = userares.data[0].vipEndDate
+          if (vipenddatea != 0) {
+            if (vipenddatea < Date.now()) {
+              vipenddatea = Date.now() + 2592000000
+            } else {
+              vipenddatea = vipenddatea + 2592000000
+            }
+            await db.collection('productuser').where({
+              product: requestdata.product,
+              uid: uid
+            }).update({
+              vipEndDate: vipenddatea
+            })
+            await db.collection('viplog').add({
+              date: Date.now(),
+              duration: 30,
+              info: requestdata.invitationcode,
+              product: requestdata.product,
+              type: 'invitationcode',
+              uid: uid
+            })
           }
+          const userbres = await db.collection('productuser').where({
+            product: requestdata.product,
+            uid: invitationcodeinfo.uid
+          }).get()
+          let vipenddateb = userbres.data[0].vipEndDate
+          if (vipenddateb != 0) {
+            if (vipenddateb < Date.now()) {
+              vipenddateb = Date.now() + 640800000
+            } else {
+              vipenddateb = vipenddateb + 640800000
+            }
+            await db.collection('productuser').where({
+              product: requestdata.product,
+              uid: invitationcodeinfo.uid
+            }).update({
+              vipEndDate: vipenddateb
+            })
+            await db.collection('viplog').add({
+              date: Date.now(),
+              duration: 7,
+              info: requestdata.invitationcode,
+              product: requestdata.product,
+              type: 'invitenewuser',
+              uid: invitationcodeinfo.uid
+            })
+            const accountres = await db.collection('account').where({
+              _id: invitationcodeinfo.uid
+            }).get()
+            const email = accountres.data[0].email
+            if (email) {
+              await nodemailertransport.sendMail({
+                from: 'zhangls2512@vip.qq.com',
+                to: email,
+                subject: '免费会员到账通知',
+                text: '您的账号“' + productwz + '”产品成功邀请一位新用户，已获得7天免费会员。'
+              })
+            }
+          }
+        }
+        if (requestdata.product == 'todo') {
           await db.collection('productuser').where({
             product: requestdata.product,
             uid: uid
           }).update({
-            vipEndDate: vipenddatea
+            backupMaxCount: db.command.inc(10)
           })
           await db.collection('viplog').add({
             date: Date.now(),
-            duration: 30,
+            duration: 10,
             info: requestdata.invitationcode,
             product: requestdata.product,
             type: 'invitationcode',
             uid: uid
           })
-        }
-        const userbres = await db.collection('productuser').where({
-          product: requestdata.product,
-          uid: invitationcodeinfo.uid
-        }).get()
-        let vipenddateb = userbres.data[0].vipEndDate
-        if (vipenddateb != 0) {
-          if (vipenddateb < Date.now()) {
-            vipenddateb = Date.now() + 640800000
-          } else {
-            vipenddateb = vipenddateb + 640800000
-          }
           await db.collection('productuser').where({
             product: requestdata.product,
             uid: invitationcodeinfo.uid
           }).update({
-            vipEndDate: vipenddateb
+            backupMaxCount: db.command.inc(5)
           })
           await db.collection('viplog').add({
             date: Date.now(),
-            duration: 7,
+            duration: 5,
             info: requestdata.invitationcode,
             product: requestdata.product,
             type: 'invitenewuser',
@@ -254,8 +302,8 @@ exports.main = async (event) => {
             await nodemailertransport.sendMail({
               from: 'zhangls2512@vip.qq.com',
               to: email,
-              subject: '免费会员到账通知',
-              text: '您的账号“' + productwz + '”产品成功邀请一位新用户，已获得7天免费会员。'
+              subject: '免费云备份空间到账通知',
+              text: '您的账号“' + productwz + '”产品成功邀请一位新用户，已获得5个免费云备份空间。'
             })
           }
         }

@@ -18,6 +18,21 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
+  const validproducts = ['ssl', 'password', 'todo']
+  if (!validproducts.includes(requestdata.product)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的product参数'
+    }
+  }
+  if (typeof (requestdata.uid) != 'string' || requestdata.uid.length != 32) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的uid参数'
+    }
+  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
@@ -44,19 +59,27 @@ exports.main = async (event) => {
       },
       permission: ['account', 'admin'],
       service: ['admin'],
-      apiName: 'admin_getSslUserCount'
+      apiName: 'admin_searchProductUser'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
     const userres = await db.collection('productuser').where({
-      product: 'ssl'
-    }).count()
+      product: requestdata.product,
+      uid: requestdata.uid
+    }).field({
+      _id: false,
+      uid: true,
+      productionLimit: true,
+      stagingLimit: true,
+      vipEndDate: true,
+      backupMaxCount: true
+    }).get()
     return {
       errCode: 0,
       errMsg: '成功',
-      count: userres.total
+      data: userres.data
     }
   }
 }

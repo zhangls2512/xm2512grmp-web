@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.0.2',
+    releaseDate: '2026-04-24',
+    logs: [
+      {
+        type: 'U',
+        content: '平板端支持使用碰一碰、隔空传送功能'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.0.1',
     releaseDate: '2026-04-14',
     logs: [

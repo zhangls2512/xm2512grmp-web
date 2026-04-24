@@ -560,12 +560,16 @@ exports.main = async (event) => {
         account: accountres.data[0]
       }
     }
-    if (event.type == 'huaweiaipasswordmemoapp') {
+    if (event.type == 'huaweiaipasswordmemoapp' || event.type == 'huaweiaitodoapp') {
       let clientid = ''
       let clientsecret = ''
       if (event.type == 'huaweiaipasswordmemoapp') {
         clientid = '6917568345502278703'
         clientsecret = process.env.huaweiaipasswordmemoappclientsecret
+      }
+      if (event.type == 'huaweiaitodoapp') {
+        clientid = '6917571182378882466'
+        clientsecret = process.env.huaweiaitodoappclientsecret
       }
       try {
         const huaweitokenres = await axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', null, {

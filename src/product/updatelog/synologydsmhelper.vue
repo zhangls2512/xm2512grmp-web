@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.6',
+    releaseDate: '2026-04-24',
+    logs: [
+      {
+        type: 'U',
+        content: '平板端支持使用碰一碰、隔空传送功能'
+      },
+      {
+        type: 'F',
+        content: '备份文档、桌面失败'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.5',
     releaseDate: '2026-04-14',
     logs: [

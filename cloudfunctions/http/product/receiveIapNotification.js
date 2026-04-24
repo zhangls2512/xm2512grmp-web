@@ -82,6 +82,9 @@ exports.main = async (event) => {
     if (payload.notificationMetaData.packageName == 'com.zhangxm.aipasswordmemo') {
       product = '密码智能备忘录'
     }
+    if (payload.notificationMetaData.packageName == 'com.zhangxm.aitodo') {
+      product = '智能待办'
+    }
     if (payload.notificationMetaData.refundRequestData.refundReason == 'LEGAL') {
       reason = '未成年人未经允许购买'
     }

@@ -19,7 +19,7 @@ exports.main = async (event) => {
     }
   })
   try {
-    const validtypes = ['emailcode', 'mfa', 'password', 'passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp']
+    const validtypes = ['emailcode', 'mfa', 'password', 'passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp', 'huaweiaitodoapp']
     if (!validtypes.includes(event.verifyType)) {
       return {
         errCode: 1001,
@@ -47,7 +47,7 @@ exports.main = async (event) => {
     if (verifytype == 'sslwxxcx') {
       verifytypetext = 'SSL证书（微信小程序）'
     }
-    if (verifytype == 'huaweiaipasswordmemoapp') {
+    if (verifytype == 'huaweiaipasswordmemoapp' || verifytype == 'huaweiaitodoapp') {
       verifytype = 'huawei'
       verifytypetext = '华为账号'
     }
@@ -128,7 +128,7 @@ exports.main = async (event) => {
       verifycode = event.verifyCode
     }
     let email = ''
-    const platforms = ['passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp']
+    const platforms = ['passkey', 'ticket', 'sslwxxcx', 'huaweiaipasswordmemoapp', 'huaweiaitodoapp']
     if (!platforms.includes(event.verifyType)) {
       if (typeof (event.email) != 'string' || !validator.isEmail(event.email)) {
         return {

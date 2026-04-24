@@ -34,6 +34,11 @@ const tabs = [
         id: 'passworduserlist',
         label: '密码智能备忘录',
         customIcon: icon.IconLock()
+      },
+      {
+        id: 'todouserlist',
+        label: '智能待办',
+        customIcon: icon.IconCheckedTrue()
       }
     ]
   },

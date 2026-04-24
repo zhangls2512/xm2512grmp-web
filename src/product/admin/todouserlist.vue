@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 管理后台 - 产品用户列表 - 密码智能备忘录'
+document.title = '轩铭2512 - 管理后台 - 产品用户列表 - 智能待办'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
@@ -10,24 +10,12 @@ const currentpage = ref(1)
 const pagesize = ref(10)
 const total = ref(0)
 const uid = ref('')
-function formatVipenddate(t) {
-  const vipenddate = t.cellValue
-  if (vipenddate == -1) {
-    return '无'
-  }
-  if (vipenddate == 0) {
-    return '终身'
-  }
-  if (vipenddate > 0) {
-    return time(vipenddate)
-  }
-}
 async function get() {
   const countres = await request({
     apiPath: '/admin/getProductUserCount',
     body: {
       accessToken: accesstoken,
-      product: 'password'
+      product: 'todo'
     }
   })
   total.value = countres.count
@@ -35,7 +23,7 @@ async function get() {
     apiPath: '/admin/getProductUserList',
     body: {
       accessToken: accesstoken,
-      product: 'password',
+      product: 'todo',
       skip: (currentpage.value - 1) * pagesize.value,
       limit: pagesize.value
     }
@@ -71,7 +59,7 @@ async function search() {
     apiPath: '/admin/searchProductUser',
     body: {
       accessToken: accesstoken,
-      product: 'password',
+      product: 'todo',
       uid: uid.value
     }
   })
@@ -91,8 +79,7 @@ async function search() {
     </div>
     <tiny-grid :data="data">
       <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
-      <tiny-grid-column field="vipEndDate" title="会员到期时间" align="center"
-        :format-text="formatVipenddate"></tiny-grid-column>
+      <tiny-grid-column field="backupMaxCount" title="最大云备份个数" align="center"></tiny-grid-column>
     </tiny-grid>
     <tiny-pager mode="number" :current-page="currentpage" :page-size="pagesize" :page-sizes="[5, 10, 15, 20]"
       :total="total" @current-change="currentpageChange" @size-change="pagesizeChange"></tiny-pager>

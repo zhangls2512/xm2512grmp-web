@@ -1,7 +1,6 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const { nanoid } = await import('nanoid')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -19,12 +18,25 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['account', 'admin', 'resource', 'resourcecreator', 'ssl', 'password', 'todo']
-  if (!validproducts.includes(requestdata.product)) {
+  if (typeof (requestdata.id) != 'string' || requestdata.id) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
-      errFix: '传递有效的product参数'
+      errFix: '传递有效的id参数'
+    }
+  }
+  if (typeof (requestdata.content) != 'string' || !requestdata.content) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的content参数'
+    }
+  }
+  if (typeof (requestdata.iv) != 'string' || !requestdata.iv) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的iv参数'
     }
   }
   let type = ''
@@ -51,9 +63,9 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: [],
-      service: [requestdata.product],
-      apiName: 'product_getUserInfo'
+      permission: ['account', 'todo'],
+      service: ['todo'],
+      apiName: 'todo_setBackup'
     }
   })
   if (res.result.errCode != 0) {
@@ -61,29 +73,45 @@ exports.main = async (event) => {
   } else {
     const uid = res.result.account._id
     const userres = await db.collection('productuser').where({
-      product: requestdata.product,
+      product: 'todo',
       uid: uid
-    }).field({
-      _id: false,
-      accountKey: false,
-      product: false,
-      uid: false
     }).get()
-    const data = userres.data[0]
-    if (requestdata.product == 'password' && !data.invitationCode) {
-      const invitationCode = nanoid(15) + uid + nanoid(15)
-      data.invitationCode = invitationCode
-      await db.collection('productuser').where({
-        product: requestdata.product,
-        uid: uid
-      }).update({
-        invitationCode: invitationCode
-      })
+    const backupMaxCount = userres.data[0].backupMaxCount
+    const countres = await db.collection('todo').where({
+      uid: uid
+    }).count()
+    if (countres.total >= backupMaxCount) {
+      return {
+        errCode: 8000,
+        errMsg: '数量达到上限',
+        errFix: '开通会员'
+      }
     }
+    const todores = await db.collection('todo').where({
+      id: requestdata.id,
+      uid: uid
+    }).get()
+    if (todores.data.length == 0) {
+      await db.collection('todo').add({
+        content: requestdata.content,
+        id: requestdata.id,
+        iv: requestdata.iv,
+        uid: uid
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
+      }
+    }
+    await db.collection('todo').where({
+      _id: todores.data[0]._id
+    }).update({
+      content: requestdata.content,
+      iv: requestdata.iv
+    })
     return {
       errCode: 0,
-      errMsg: '成功',
-      data: data
+      errMsg: '成功'
     }
   }
 }

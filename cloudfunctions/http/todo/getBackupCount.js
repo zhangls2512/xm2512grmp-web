@@ -42,21 +42,21 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', 'admin'],
-      service: ['admin'],
-      apiName: 'admin_getPasswordUserCount'
+      permission: [],
+      service: ['todo'],
+      apiName: 'todo_getBackupCount'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const userres = await db.collection('productuser').where({
-      product: 'password'
+    const countres = await db.collection('todo').where({
+      uid: res.result.account._id
     }).count()
     return {
       errCode: 0,
       errMsg: '成功',
-      count: userres.total
+      count: countres.total
     }
   }
 }

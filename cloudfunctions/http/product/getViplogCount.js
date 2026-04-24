@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['password']
+  const validproducts = ['password', 'todo']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,

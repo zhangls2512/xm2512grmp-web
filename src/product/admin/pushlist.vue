@@ -20,6 +20,10 @@ const products = ref([
     label: '密码智能备忘录'
   },
   {
+    value: 'todo',
+    label: '智能待办'
+  },
+  {
     value: 'synologydsmhelper',
     label: 'SynDSM 助手'
   },
@@ -56,6 +60,7 @@ async function get() {
   })
   const productmap = {
     password: '密码智能备忘录',
+    todo: '智能待办',
     synologydsmhelper: 'SynDSM 助手',
     webdavhelper: 'WebDAV 助手'
   }

@@ -19,7 +19,7 @@ exports.main = async (event) => {
     }
   }
   let product = db.command.neq('')
-  const validproducts = ['password', 'synologydsmhelper', 'homeassistanthelper', 'webdavhelper']
+  const validproducts = ['password', 'todo', 'synologydsmhelper', 'homeassistanthelper', 'webdavhelper']
   if (validproducts.includes(requestdata.product)) {
     product = requestdata.product
   }

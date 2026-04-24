@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl', 'password']
+  const validservices = ['account', 'admin', 'resource', 'resourcecreator', 'ssl', 'password', 'todo']
   if (!validservices.includes(requestdata.service)) {
     return {
       errCode: 1001,
@@ -231,6 +231,42 @@ exports.main = async (event) => {
       }
       await db.collection('productuser').where({
         product: 'password',
+        uid: uid
+      }).remove()
+      await db.collection('account').where({
+        _id: uid
+      }).update({
+        service: service
+      })
+      return {
+        errCode: 0,
+        errMsg: '成功'
+      }
+    }
+    if (requestdata.service == 'todo') {
+      const todores = await db.collection('todo').where({
+        uid: uid
+      }).count()
+      if (todores.total > 0) {
+        return {
+          errCode: 8000,
+          errMsg: '存在云备份',
+          errFix: '无修复建议'
+        }
+      }
+      const viplogres = await db.collection('viplog').where({
+        product: 'todo',
+        uid: uid
+      }).count()
+      if (viplogres.total > 0) {
+        return {
+          errCode: 8001,
+          errMsg: '存在会员开通记录',
+          errFix: '无修复建议'
+        }
+      }
+      await db.collection('productuser').where({
+        product: 'todo',
         uid: uid
       }).remove()
       await db.collection('account').where({

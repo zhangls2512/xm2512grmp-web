@@ -19,6 +19,10 @@ const products = ref([
   {
     value: 'password',
     label: '密码智能备忘录'
+  },
+  {
+    value: 'todo',
+    label: '智能待办'
   }
 ])
 function formatDuration(t) {
@@ -27,7 +31,7 @@ function formatDuration(t) {
     return '终身'
   }
   if (duration > 0) {
-    return duration + ' 天'
+    return duration + ' 天 / 个'
   }
 }
 async function get() {
@@ -72,7 +76,8 @@ async function get() {
     status: 'success'
   })
   const productmap = {
-    password: '密码智能备忘录'
+    password: '密码智能备忘录',
+    todo: '智能待办'
   }
   const typemap = {
     pay: '付费',
@@ -110,7 +115,8 @@ function pagesizeChange(t) {
     <tiny-grid :data="data">
       <tiny-grid-column field="product" title="产品" align="center"></tiny-grid-column>
       <tiny-grid-column field="uid" title="UID" align="center"></tiny-grid-column>
-      <tiny-grid-column field="duration" title="时长" align="center" :format-text="formatDuration"></tiny-grid-column>
+      <tiny-grid-column field="duration" title="时长 / 个数" align="center"
+        :format-text="formatDuration"></tiny-grid-column>
       <tiny-grid-column field="type" title="类型" align="center"></tiny-grid-column>
       <tiny-grid-column field="info" title="详情" align="center"></tiny-grid-column>
       <tiny-grid-column field="date" title="时间" align="center" format-text="longDateTime"></tiny-grid-column>

@@ -43,7 +43,7 @@ const products = [
     defaultallow: true
   }
 ]
-const validproducts = products.map(item => item.name).concat(['password'])
+const validproducts = products.map(item => item.name).concat(['password', 'todo'])
 const productszt = ref(validproducts.reduce((out, item) => {
   out[item + 'ktzt'] = false
   out[item + 'fjzt'] = false
@@ -177,6 +177,29 @@ function openAppDetail(bundleName) {
               @click="open('password')">开通</tiny-button>
             <tiny-button v-if="productszt.passwordktzt == true" type="danger"
               @click="close('password')">取消开通</tiny-button>
+          </div>
+        </div>
+      </div>
+      <div class="kuang">
+        <div class="cz">
+          <div class="sp">
+            <img class="image" src="/todo.png" loading="lazy"></img>
+            <div class="bold-text">智能待办</div>
+          </div>
+          <div class="sp">
+            <tiny-tag v-if="productszt.todoktzt == false" type="danger">未开通</tiny-tag>
+            <tiny-tag v-if="productszt.todoktzt == true" type="success">已开通</tiny-tag>
+            <tiny-tag v-if="productszt.todofjzt === true" type="danger">永久封禁</tiny-tag>
+            <tiny-tag v-if="typeof (productszt.todofjzt) == 'string'" type="danger">封禁至
+              {{ productszt.todofjzt }}</tiny-tag>
+          </div>
+          <div>待办智能管理工具。</div>
+          <div class="sp">
+            <tiny-button v-if="productszt.todoktzt == true && productszt.todofjzt == false" type="info"
+              @click="openAppDetail('com.zhangxm.aitodo')">去使用</tiny-button>
+            <tiny-button v-if="productszt.todoktzt == false" type="success" :disabled="productszt.todofjzt"
+              @click="open('todo')">开通</tiny-button>
+            <tiny-button v-if="productszt.todoktzt == true" type="danger" @click="close('todo')">取消开通</tiny-button>
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ exports.main = async (event) => {
   const requestdata = JSON.parse(event.body)
   const productmap = {
     password: '密码智能备忘录',
+    todo: '智能待办',
     synologydsmhelper: 'SynDSM助手',
     homeassistanthelper: 'Home Assistant助手',
     webdavhelper: 'WebDAV助手'

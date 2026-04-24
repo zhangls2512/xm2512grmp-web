@@ -67,6 +67,9 @@ exports.main = async (event) => {
     'admin_getBaxkList',
     'admin_updateBaxkDesc',
     'admin_deleteBaxk',
+    'admin_getProductUserCount',
+    'admin_getProductUserList',
+    'admin_searchProductUser',
     'admin_newVipcode',
     'admin_getVipcodeCount',
     'admin_getVipcodeList',
@@ -93,15 +96,9 @@ exports.main = async (event) => {
     'admin_getProcessingReviewResourceCount',
     'admin_updateResourceReviewResult',
     'admin_reReviewResource',
-    'admin_getSslUserCount',
-    'admin_getSslUserList',
-    'admin_searchSslUser',
     'admin_newSslLimitChange',
     'admin_getSslLimitChangeCount',
     'admin_getSslLimitChangeList',
-    'admin_getPasswordUserCount',
-    'admin_getPasswordUserList',
-    'admin_searchPasswordUser',
     'resource_getRandomResourceList',
     'resource_newAddResource',
     'resource_getAddResourceCount',
@@ -156,7 +153,12 @@ exports.main = async (event) => {
     'password_getBackupCount',
     'password_getBackupList',
     'password_deleteBackup',
-    'password_clearBackup'
+    'password_clearBackup',
+    'todo_setBackup',
+    'todo_getBackupCount',
+    'todo_getBackupList',
+    'todo_deleteBackup',
+    'todo_clearBackup'
   ]
   if (!Array.isArray(requestdata.allowApi) || !requestdata.allowApi.every(item => validapis.includes(item))) {
     return {

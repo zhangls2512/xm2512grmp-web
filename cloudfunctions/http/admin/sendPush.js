@@ -137,6 +137,11 @@ exports.main = async (event) => {
       kid = 'c877ccb0de5c49118131812b4e3495ef'
       projectid = '461323198429770355'
     }
+    if (product == 'todo') {
+      iss = '117523259'
+      kid = 'd04acf08bf054f73bf998018d6f34ef5'
+      projectid = '461323198429859089'
+    }
     if (product == 'synologydsmhelper') {
       iss = '115494321'
       kid = '3ab377fe42ec40738b03316abdb7aa76'
@@ -145,12 +150,12 @@ exports.main = async (event) => {
     if (product == 'homeassistanthelper') {
       iss = '117424491'
       kid = '3030d7ebbbe141e2ad569335c51e1b75'
-      clientid = '101653523863876502'
+      projectid = '101653523863876502'
     }
     if (product == 'webdavhelper') {
       iss = '116869175'
       kid = '1f98fef6f2674625bc61a4355e362ea8'
-      clientid = '101653523863482794'
+      projectid = '101653523863482794'
     }
     const jwt = jsonwebtoken.sign({
       iss: iss,

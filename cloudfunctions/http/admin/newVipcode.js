@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['password']
+  const validproducts = ['password', 'todo']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,
@@ -34,6 +34,13 @@ exports.main = async (event) => {
     }
   }
   if (!Number.isInteger(requestdata.duration) || requestdata.duration < 0) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的duration参数'
+    }
+  }
+  if (requestdata.product == 'todo' && requestdata.duration == 0) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',

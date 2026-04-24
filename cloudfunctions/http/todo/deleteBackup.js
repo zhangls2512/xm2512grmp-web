@@ -18,11 +18,11 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.uid) != 'string' || requestdata.uid.length != 32) {
+  if (typeof (requestdata.id) != 'string' || !requestdata.id) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
-      errFix: '传递有效的uid参数'
+      errFix: '传递有效的id参数'
     }
   }
   let type = ''
@@ -49,26 +49,28 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', 'admin'],
-      service: ['admin'],
-      apiName: 'admin_searchPasswordUser'
+      permission: [],
+      service: ['todo'],
+      apiName: 'todo_deleteBackup'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const userres = await db.collection('productuser').where({
-      product: 'password',
-      uid: requestdata.uid
-    }).field({
-      _id: false,
-      uid: true,
-      vipEndDate: true
-    }).get()
+    const deleteres = await db.collection('todo').where({
+      id: requestdata.id,
+      uid: res.result.account._id
+    }).remove()
+    if (deleteres.deleted == 0) {
+      return {
+        errCode: 8000,
+        errMsg: '数据不存在或已被删除',
+        errFix: '无修复建议'
+      }
+    }
     return {
       errCode: 0,
-      errMsg: '成功',
-      data: userres.data
+      errMsg: '成功'
     }
   }
 }

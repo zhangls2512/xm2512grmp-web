@@ -97,48 +97,6 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      const userres = await db.collection('productuser').where({
-        product: vipcodeinfo.product,
-        uid: uid
-      }).get()
-      let vipenddate = userres.data[0].vipEndDate
-      if (vipenddate == 0) {
-        return {
-          errCode: 8004,
-          errMsg: '已是终身会员',
-          errFix: '无修复建议'
-        }
-      }
-      if (vipcodeinfo.duration == 0) {
-        await db.collection('productuser').where({
-          product: vipcodeinfo.product,
-          uid: uid
-        }).update({
-          vipEndDate: 0
-        })
-      } else {
-        if (vipenddate < Date.now()) {
-          vipenddate = Date.now()
-        }
-        await db.collection('productuser').where({
-          product: vipcodeinfo.product,
-          uid: uid
-        }).update({
-          vipEndDate: vipenddate + vipcodeinfo.duration * 86400000
-        })
-      }
-      await db.collection('viplog').add({
-        date: Date.now(),
-        duration: vipcodeinfo.duration,
-        info: vipcodeinfo._id,
-        product: vipcodeinfo.product,
-        type: 'vipcode',
-        uid: uid
-      })
-      return {
-        errCode: 0,
-        errMsg: '成功'
-      }
     }
     if (typeof (vipcodeinfo.permission) == 'number') {
       const viplogres = await db.collection('viplog').where({
@@ -166,6 +124,8 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
+    }
+    if (vipcodeinfo.product == 'password') {
       const userres = await db.collection('productuser').where({
         product: vipcodeinfo.product,
         uid: uid
@@ -196,18 +156,26 @@ exports.main = async (event) => {
           vipEndDate: vipenddate + vipcodeinfo.duration * 86400000
         })
       }
-      await db.collection('viplog').add({
-        date: Date.now(),
-        duration: vipcodeinfo.duration,
-        info: vipcodeinfo._id,
+    }
+    if (vipcodeinfo.product == 'todo') {
+      await db.collection('productuser').where({
         product: vipcodeinfo.product,
-        type: 'vipcode',
         uid: uid
+      }).update({
+        backupMaxCount: db.command.inc(vipcodeinfo.duration)
       })
-      return {
-        errCode: 0,
-        errMsg: '成功'
-      }
+    }
+    await db.collection('viplog').add({
+      date: Date.now(),
+      duration: vipcodeinfo.duration,
+      info: vipcodeinfo._id,
+      product: vipcodeinfo.product,
+      type: 'vipcode',
+      uid: uid
+    })
+    return {
+      errCode: 0,
+      errMsg: '成功'
     }
   }
 }
