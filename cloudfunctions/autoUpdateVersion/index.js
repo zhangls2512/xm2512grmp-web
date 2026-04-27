@@ -3,26 +3,41 @@ exports.main = async () => {
   const axios = require('axios')
   const json5 = require('json5')
   try {
-    /*const windowscanaryres = await axios.get('https://aka.ms/canaryLatest')
-    await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
-      accessKey: process.env.accesskey,
-      id: '0e7893fb67e67aec0012ffd02eae679a',
-      version: windowscanaryres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
-    })*/
-    const windowsdevres = await axios.get('https://aka.ms/devLatest')
+    const { data } = await axios.get('https://learn.microsoft.com/en-us/windows-insider/toc.json')
+    const versions = {
+      canary: [],
+      dev: '',
+      beta: ''
+    }
+    data.items.find(item => item.toc_title === 'Release notes').children.forEach(item => {
+      if (item.toc_title === 'Beta') {
+        versions.beta = item.children[0].toc_title.slice(-10)
+      }
+      if (item.toc_title === 'Experimental') {
+        versions.dev = item.children[0].toc_title.slice(-10)
+      }
+      if (item.toc_title === 'Experimental (26H1)' || item.toc_title === 'Experimental (Future Platforms)') {
+        versions.canary.push(item.children[0].toc_title.slice(-10))
+      }
+    })
+    versions.canary = versions.canary.join('、')
     try {
       await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
         accessKey: process.env.accesskey,
-        id: 'b013194767e67b6600146b805c3a6ba5',
-        version: windowsdevres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
+        id: '0e7893fb67e67aec0012ffd02eae679a',
+        version: versions.canary
       })
     } catch {
     }
-    const windowsbetares = await axios.get('https://aka.ms/betaLatest')
+    await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
+      accessKey: process.env.accesskey,
+      id: 'b013194767e67b6600146b805c3a6ba5',
+      version: versions.dev
+    })
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: '80a8bd4f67e67bb6001344e3625c0400',
-      version: windowsbetares.data.match(/\b\d{5}\.\d{4}\b/g)[0]
+      version: versions.beta
     })
     const windowsreleasepreviewres = await axios.get('https://aka.ms/releasepreviewLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
