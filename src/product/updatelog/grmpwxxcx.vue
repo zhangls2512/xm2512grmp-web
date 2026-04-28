@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.13',
+    releaseDate: '2026-04-28',
+    logs: [
+      {
+        type: 'U',
+        content: '开发产品 新增 Home Assistant 助手'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.12',
     releaseDate: '2026-03-19',
     logs: [

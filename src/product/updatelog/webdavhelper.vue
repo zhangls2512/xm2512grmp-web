@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.1.4',
+    releaseDate: '2026-04-28',
+    logs: [
+      {
+        type: 'A',
+        content: '传输任务支持取消、删除'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.3',
     releaseDate: '2026-04-24',
     logs: [
