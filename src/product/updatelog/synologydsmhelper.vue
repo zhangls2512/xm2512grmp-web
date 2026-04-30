@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.8',
+    releaseDate: '2026-04-29',
+    logs: [
+      {
+        type: 'F',
+        content: '相册图片经纬度未进行坐标纠偏（WGS84 坐标系转换为 GCJ02 坐标系）导致“详情”弹窗中展示位置与实际位置有偏移'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.7',
     releaseDate: '2026-04-28',
     logs: [
