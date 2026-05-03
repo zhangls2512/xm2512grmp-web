@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.1.1',
+    releaseDate: '2026-05-03',
+    logs: [
+      {
+        type: 'A',
+        content: '首页 - 状态显示属性、新增“隐藏”'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 功能 新增 隐藏实体（登录账号时可见）'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 新增 Webview'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.0',
     releaseDate: '2026-05-02',
     logs: [
