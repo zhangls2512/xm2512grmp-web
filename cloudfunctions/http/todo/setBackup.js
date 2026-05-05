@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  if (typeof (requestdata.id) != 'string' || requestdata.id) {
+  if (typeof (requestdata.id) != 'string' || !requestdata.id) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
