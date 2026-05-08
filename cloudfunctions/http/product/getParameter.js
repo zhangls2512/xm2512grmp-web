@@ -10,7 +10,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validtypes = ['homeassistanthelper']
+  const validtypes = ['homeassistanthelper', 'chineselegalfreq']
   if (!validtypes.includes(requestdata.type)) {
     return {
       errCode: 1001,
