@@ -26,7 +26,7 @@ exports.main = async (event) => {
         try {
           const data = JSON.stringify(event.data)
           const timestamp = Date.now()
-          const privatekey = fs.readFileSync('./privatekey.txt')
+          const privatekey = fs.readFileSync(__dirname + '/privatekey.txt')
           const hash = crypto.createHash('sha512').update(data + '\0' + timestamp).digest()
           const signature = crypto.createSign('sha512').update(hash).sign(privatekey).toString('base64')
           await axios.post(webhookurl, {
