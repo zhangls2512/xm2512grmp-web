@@ -31,7 +31,7 @@ exports.main = async (event) => {
         errFix: '无修复建议'
       }
     }
-    const notparsebodypaths = ['/account/getTicket', '/getSvgQrcode', '/test']
+    const notparsebodypaths = ['/account/getTicket', '/test']
     if (!notparsebodypaths.includes(event.path)) {
       try {
         JSON.parse(event.body)

@@ -10,7 +10,6 @@
     "nanoid": "latest",
     "nodejs-acmeclient": "latest",
     "nodemailer": "latest",
-    "qrcode": "latest",
     "sm-crypto-v2": "latest",
     "speakeasy": "latest",
     "tweetnacl": "latest",
