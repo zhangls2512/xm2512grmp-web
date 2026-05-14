@@ -7,20 +7,25 @@ exports.main = async () => {
     const versions = {
       canary: [],
       dev: '',
-      beta: ''
+      beta: '',
+      releasepreview: []
     }
     data.items.find(item => item.toc_title === 'Release notes').children.forEach(item => {
       if (item.toc_title === 'Beta') {
-        versions.beta = item.children[0].toc_title.slice(-10)
+        versions.beta = item.children[0].toc_title.slice(14)
       }
       if (item.toc_title === 'Experimental') {
-        versions.dev = item.children[0].toc_title.slice(-10)
+        versions.dev = item.children[0].toc_title.slice(14)
       }
       if (item.toc_title === 'Experimental (26H1)' || item.toc_title === 'Experimental (Future Platforms)') {
-        versions.canary.push(item.children[0].toc_title.slice(-10))
+        versions.canary.push(item.children[0].toc_title.slice(14))
+      }
+      if (item.toc_title === 'Release Preview 24H2/25H2' || item.toc_title === 'Release Preview 26H1') {
+        versions.releasepreview.push(item.children[0].toc_title.slice(6))
       }
     })
     versions.canary = versions.canary.join('、')
+    versions.releasepreview = versions.releasepreview.join('、')
     try {
       await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
         accessKey: process.env.accesskey,
@@ -39,11 +44,10 @@ exports.main = async () => {
       id: '80a8bd4f67e67bb6001344e3625c0400',
       version: versions.beta
     })
-    const windowsreleasepreviewres = await axios.get('https://aka.ms/releasepreviewLatest')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: '9f86c65667e67c2f00130c9f5b343245',
-      version: windowsreleasepreviewres.data.match(/\b\d{5}\.\d{4}\b/g)[0]
+      version: versions.releasepreview
     })
     const wxandroidtestres = await axios.get('https://dldir1.qq.com/weixin/android/weixin_android_alpha_config.json')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
