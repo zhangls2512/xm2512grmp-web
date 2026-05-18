@@ -20,8 +20,20 @@ const tabs = [
     label: '备案许可'
   },
   {
+    id: 'resource',
+    label: '资源'
+  },
+  {
+    id: 'resourcecreator',
+    label: '资源投稿'
+  },
+  {
     id: 'aipasswordmemo',
     label: '密码智能备忘录'
+  },
+  {
+    id: 'aitodo',
+    label: '智能待办'
   },
   {
     id: 'synologydsmhelper',
@@ -36,14 +48,6 @@ const tabs = [
     label: 'WebDAV 助手'
   },
   {
-    id: 'resource',
-    label: '资源'
-  },
-  {
-    id: 'resourcecreator',
-    label: '资源投稿'
-  },
-  {
     id: 'sslweb',
     label: 'SSL 证书（网页）'
   },
@@ -52,16 +56,16 @@ const tabs = [
     label: 'SSL 证书（微信小程序）'
   },
   {
-    id: 'tpcl',
-    label: '图片处理'
-  },
-  {
     id: 'grmpweb',
     label: '个人名片（网页）'
   },
   {
     id: 'grmpwxxcx',
     label: '个人名片（微信小程序）'
+  },
+  {
+    id: 'tpcl',
+    label: '图片处理'
   }
 ]
 const tabClick = (data) => {

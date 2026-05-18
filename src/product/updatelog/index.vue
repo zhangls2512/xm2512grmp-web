@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.19',
+    releaseDate: '2026-05-18',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 新增 智能待办'
+      },
+      {
+        type: 'U',
+        content: '更新日志 新增 智能待办'
+      },
+      {
+        type: 'U',
+        content: '修订成员“宋佳懿”的岗位'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.18',
     releaseDate: '2026-04-16',
     logs: [

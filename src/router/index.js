@@ -61,8 +61,20 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/baxk.vue')
         },
         {
+          path: 'resource',
+          component: () => import('/src/product/updatelog/resource.vue')
+        },
+        {
+          path: 'resourcecreator',
+          component: () => import('/src/product/updatelog/resourcecreator.vue')
+        },
+        {
           path: 'aipasswordmemo',
           component: () => import('/src/product/updatelog/aipasswordmemo.vue')
+        },
+        {
+          path: 'aitodo',
+          component: () => import('/src/product/updatelog/aitodo.vue')
         },
         {
           path: 'synologydsmhelper',
@@ -77,14 +89,6 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/webdavhelper.vue')
         },
         {
-          path: 'resource',
-          component: () => import('/src/product/updatelog/resource.vue')
-        },
-        {
-          path: 'resourcecreator',
-          component: () => import('/src/product/updatelog/resourcecreator.vue')
-        },
-        {
           path: 'sslweb',
           component: () => import('/src/product/updatelog/sslweb.vue')
         },
@@ -93,16 +97,16 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/sslwxxcx.vue')
         },
         {
-          path: 'tpcl',
-          component: () => import('/src/product/updatelog/tpcl.vue')
-        },
-        {
           path: 'grmpweb',
           component: () => import('/src/product/updatelog/grmpweb.vue')
         },
         {
           path: 'grmpwxxcx',
           component: () => import('/src/product/updatelog/grmpwxxcx.vue')
+        },
+        {
+          path: 'tpcl',
+          component: () => import('/src/product/updatelog/tpcl.vue')
         }
       ]
     },

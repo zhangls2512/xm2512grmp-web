@@ -31,6 +31,24 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
+          <router-link to="/product/resource" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy"></img>
+                <div class="large-bold-text">资源</div>
+              </div>
+            </div>
+          </router-link>
+          <router-link to="/product/resourcecreator" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/logo.jpg" loading="lazy"></img>
+                <div class="large-bold-text">资源投稿</div>
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="sp" style="align-items: stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/password.png" loading="lazy"></img>
@@ -38,6 +56,17 @@ const endyear = new Date().getFullYear()
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aipasswordmemo" target="_blank">正式</a>
                 <a href="https://appgallery.huawei.com/apptest/AjwiKX1siiV" target="_blank">邀请测试</a>
+              </div>
+            </div>
+          </div>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/todo.png" loading="lazy"></img>
+              <div class="large-bold-text">智能待办</div>
+              <div class="sp">
+                <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aitodo" target="_blank">正式</a>
+                <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=651bcd831160f04d15c8f83c9abadb10&invitationCode=32wxwICCXmN"
+                  target="_blank">邀请测试</a>
               </div>
             </div>
           </div>
@@ -52,8 +81,6 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </div>
-        </div>
-        <div class="sp" style="align-items: stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/homeassistanthelper.png" loading="lazy"></img>
@@ -75,22 +102,6 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </div>
-          <router-link to="/product/resource" target="_blank">
-            <div class="kuang">
-              <div class="cz">
-                <img class="image" src="/logo.jpg" loading="lazy"></img>
-                <div class="large-bold-text">资源</div>
-              </div>
-            </div>
-          </router-link>
-          <router-link to="/product/resourcecreator" target="_blank">
-            <div class="kuang">
-              <div class="cz">
-                <img class="image" src="/logo.jpg" loading="lazy"></img>
-                <div class="large-bold-text">资源投稿</div>
-              </div>
-            </div>
-          </router-link>
         </div>
         <div class="sp" style="align-items: stretch">
           <div class="kuang">
@@ -100,6 +111,16 @@ const endyear = new Date().getFullYear()
               <div class="sp">
                 <router-link to="/product/ssl" target="_blank">网页</router-link>
                 <router-link to="/qrcodessl.jpg" target="_blank">微信小程序</router-link>
+              </div>
+            </div>
+          </div>
+          <div class="kuang">
+            <div class="cz">
+              <img class="image" src="/logo.jpg" loading="lazy"></img>
+              <div class="large-bold-text">个人名片</div>
+              <div class="sp">
+                <router-link to="/" target="_blank">网页</router-link>
+                <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
               </div>
             </div>
           </div>
@@ -119,16 +140,6 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </a>
-          <div class="kuang">
-            <div class="cz">
-              <img class="image" src="/logo.jpg" loading="lazy"></img>
-              <div class="large-bold-text">个人名片</div>
-              <div class="sp">
-                <router-link to="/" target="_blank">网页</router-link>
-                <router-link to="/qrcodemp.jpg" target="_blank">微信小程序</router-link>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="title">成员</div>
         <div class="sp" style="align-items: stretch">
@@ -143,7 +154,7 @@ const endyear = new Date().getFullYear()
             <div class="cz">
               <div class="large-bold-text">宋佳懿</div>
               <div>工号：00007</div>
-              <div style="text-align: center">设计、研发、测试</div>
+              <div style="text-align: center">测试</div>
             </div>
           </div>
           <div class="kuang">
@@ -232,7 +243,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.18</div>
+          <div class="footer-text">Version 1.0.19</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
