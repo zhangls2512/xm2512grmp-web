@@ -15,7 +15,7 @@ exports.main = async (event) => {
       if (fs.statSync(__dirname + '/' + itema).isDirectory()) {
         fs.readdirSync(__dirname + '/' + itema).forEach(itemb => {
           if (itemb.endsWith('.js')) {
-            if (itema === 'common') {
+            if (itema == 'common') {
               validpaths.push('/' + itemb.replace('.js', ''))
             } else {
               validpaths.push('/' + itema + '/' + itemb.replace('.js', ''))
@@ -31,7 +31,7 @@ exports.main = async (event) => {
         errFix: '无修复建议'
       }
     }
-    const notparsebodypaths = ['/account/getTicket', '/test']
+    const notparsebodypaths = ['/test', '/account/getTicket', '/todoteam/deleteTeam', '/todoteam/getUserInfo']
     if (!notparsebodypaths.includes(event.path)) {
       try {
         JSON.parse(event.body)

@@ -3,6 +3,7 @@ exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const argon2 = require('argon2')
   const axios = require('axios')
+  const bcrypt = require('bcrypt')
   const crypto = require('crypto')
   const ipaddr = require('ipaddr.js')
   const nodemailer = require('nodemailer')
@@ -657,6 +658,75 @@ exports.main = async (event) => {
           errMsg: 'code校验失败，原因：' + err.response.data.error_description,
           errFix: '无修复建议'
         }
+      }
+    }
+    if (event.type == 'todoteam') {
+      const authorization = event.headers.authorization
+      if (typeof (authorization) != 'string' || !authorization) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      if (!authorization.startsWith('Basic ')) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      const info = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
+      if (info.length != 3) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      if (info[0].length != 36 || info[1].length != 8 || info[2].length < 8 || info[2].length > 32) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      const accountres = await db.collection('todoteamaccount').where({
+        teamId: info[0],
+        userId: info[1]
+      }).get()
+      if (accountres.data.length == 0) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      const account = accountres.data[0]
+      const passwordvalid = await bcrypt.compare(info[2], account.password)
+      if (!passwordvalid) {
+        return {
+          code: 401,
+          msg: '账号密码错误'
+        }
+      }
+      if (!account.userEnabled && !account.admin) {
+        return {
+          code: 403,
+          msg: '账号被管理员禁用'
+        }
+      }
+      const teamres = await db.collection('todoteamaccount').where({
+        teamId: info[0],
+        admin: true
+      }).get()
+      const team = teamres.data[0]
+      if (!team.teamEnabled) {
+        return {
+          code: 451,
+          msg: '团队被封禁'
+        }
+      }
+      return {
+        code: 0,
+        msg: '成功',
+        account: account,
+        team: team
       }
     }
   } catch {

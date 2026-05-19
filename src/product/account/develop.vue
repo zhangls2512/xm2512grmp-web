@@ -294,6 +294,21 @@ const apis = ref([
   },
   {
     product: '管理后台',
+    name: 'admin_newTodoteam',
+    desc: '新增待办团队'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_updateTodoteamEnabled',
+    desc: '封禁 / 解封待办团队'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_resetTodoteamAdminPassword',
+    desc: '重置待办团队管理员密码'
+  },
+  {
+    product: '管理后台',
     name: 'admin_newSslLimitChange',
     desc: '新增 SSL 证书额度变更'
   },

@@ -39,6 +39,11 @@ const tabs = [
         id: 'todouserlist',
         label: '智能待办',
         customIcon: icon.IconCheckedTrue()
+      },
+      {
+        id: 'todoteamlist',
+        label: '智能待办团队',
+        customIcon: icon.IconCheckedTrue()
       }
     ]
   },

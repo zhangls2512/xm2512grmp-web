@@ -1,0 +1,95 @@
+'use strict'
+exports.main = async (event) => {
+  const bcrypt = require('bcrypt')
+  const tcb = require('@cloudbase/node-sdk')
+  const app = tcb.init()
+  const db = app.database()
+  if (event.httpMethod != 'POST') {
+    return {
+      code: 405,
+      msg: '请求方法错误'
+    }
+  }
+  const requestdata = JSON.parse(event.body)
+  if (typeof (requestdata.name) != 'string' || !requestdata.userName) {
+    return {
+      code: 400,
+      msg: '请求参数错误'
+    }
+  }
+  if (typeof (requestdata.enabled) != 'boolean') {
+    return {
+      code: 400,
+      msg: '请求参数错误'
+    }
+  }
+  if (!Array.isArray(requestdata.permission) || !requestdata.permission.every(item => ['newTodo', 'getTodo'].includes(item))) {
+    return {
+      code: 400,
+      msg: '请求参数错误'
+    }
+  }
+  const res = await app.callFunction({
+    name: 'authCheck',
+    data: {
+      type: 'todoteam',
+      headers: event.headers
+    }
+  })
+  if (res.result.code != 0) {
+    return res.result
+  } else {
+    const team = res.result.team
+    if (!team.admin) {
+      return {
+        code: 403,
+        msg: '无权限'
+      }
+    }
+    const accountres = await db.collection('todoteamaccount').where({
+      teamId: team.teamId
+    }).count()
+    if (accountres.total >= team.userMaxCount) {
+      return {
+        code: 403,
+        msg: '用户数量达到上限'
+      }
+    }
+    function randomString8() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      let result = ''
+      for (let i = 0; i < 8; i++) {
+        const idx = Math.floor(Math.random() * chars.length)
+        result += chars[idx]
+      }
+      return result
+    }
+    let userid = randomString8()
+    let finished = false
+    while (!finished) {
+      const userres = await db.collection('todoteamaccount').where({
+        teamId: team.teamId,
+        userId: userid
+      }).count()
+      if (userres.total == 0) {
+        finished = true
+      } else {
+        userid = randomString8()
+      }
+    }
+    await db.collection('todoteamaccount').add({
+      teamId: team.teamId,
+      userId: userid,
+      userName: requestdata.name,
+      password: await bcrypt.hash(userid, 12),
+      userEnabled: requestdata.enabled,
+      admin: false,
+      permission: [...new Set(requestdata.permission)],
+      userSetting: {}
+    })
+    return {
+      code: 0,
+      msg: '成功'
+    }
+  }
+}

@@ -1,5 +1,6 @@
 'use strict'
 exports.main = async (event) => {
+  const bcrypt = require('bcrypt')
   const tcb = require('@cloudbase/node-sdk')
   const app = tcb.init()
   const db = app.database()
@@ -18,12 +19,11 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['ssl', 'password', 'todo', 'todoteam']
-  if (!validproducts.includes(requestdata.product)) {
+  if (typeof (requestdata.teamId) != 'string' || requestdata.teamId.length != 36) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
-      errFix: '传递有效的product参数'
+      errFix: '传递有效的teamId参数'
     }
   }
   let type = ''
@@ -52,30 +52,32 @@ exports.main = async (event) => {
       },
       permission: ['account', 'admin'],
       service: ['admin'],
-      apiName: 'admin_getProductUserCount'
+      apiName: 'admin_resetTodoteamAdminPassword'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    if (requestdata.product == 'todoteam') {
-      const userres = await db.collection('todoteamaccount').where({
-        admin: true
-      }).count()
+    const accountres = await db.collection('todoteamaccount').where({
+      teamId: requestdata.teamId,
+      admin: true
+    }).get()
+    if (accountres.data.length == 0) {
       return {
-        errCode: 0,
-        errMsg: '成功',
-        count: userres.total
+        errCode: 8000,
+        errMsg: '团队不存在',
+        errFix: '无修复建议'
       }
-    } else {
-      const userres = await db.collection('productuser').where({
-        product: requestdata.product
-      }).count()
-      return {
-        errCode: 0,
-        errMsg: '成功',
-        count: userres.total
-      }
+    }
+    await db.collection('todoteamaccount').where({
+      teamId: requestdata.teamId,
+      admin: true
+    }).update({
+      password: await bcrypt.hash(accountres.data[0].userId, 12)
+    })
+    return {
+      errCode: 0,
+      errMsg: '成功'
     }
   }
 }

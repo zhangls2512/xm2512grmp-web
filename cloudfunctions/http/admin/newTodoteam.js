@@ -1,5 +1,7 @@
 'use strict'
 exports.main = async (event) => {
+  const bcrypt = require('bcrypt')
+  const crypto = require('crypto')
   const tcb = require('@cloudbase/node-sdk')
   const app = tcb.init()
   const db = app.database()
@@ -18,12 +20,11 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['ssl', 'password', 'todo', 'todoteam']
-  if (!validproducts.includes(requestdata.product)) {
+  if (typeof (requestdata.name) != 'string' || !requestdata.name) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
-      errFix: '传递有效的product参数'
+      errFix: '传递有效的name参数'
     }
   }
   let type = ''
@@ -52,30 +53,49 @@ exports.main = async (event) => {
       },
       permission: ['account', 'admin'],
       service: ['admin'],
-      apiName: 'admin_getProductUserCount'
+      apiName: 'admin_newTodoteam'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    if (requestdata.product == 'todoteam') {
-      const userres = await db.collection('todoteamaccount').where({
-        admin: true
-      }).count()
+    const accountres = await db.collection('todoteamaccount').where({
+      teamName: requestdata.name
+    }).count()
+    if (accountres.total > 0) {
       return {
-        errCode: 0,
-        errMsg: '成功',
-        count: userres.total
+        errCode: 8000,
+        errMsg: '名称已存在',
+        errFix: '无修复建议'
       }
-    } else {
-      const userres = await db.collection('productuser').where({
-        product: requestdata.product
-      }).count()
-      return {
-        errCode: 0,
-        errMsg: '成功',
-        count: userres.total
+    }
+    function randomString8() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      let result = ''
+      for (let i = 0; i < 8; i++) {
+        const idx = Math.floor(Math.random() * chars.length)
+        result += chars[idx]
       }
+      return result
+    }
+    const userid = randomString8()
+    await db.collection('todoteamaccount').add({
+      teamId: crypto.randomUUID(),
+      teamName: requestdata.name,
+      teamEnabled: true,
+      userMaxCount: 2,
+      todoMaxCount: 10,
+      teamSetting: {},
+      userId: userid,
+      userName: '管理员',
+      password: await bcrypt.hash(userid, 12),
+      admin: true,
+      permission: [],
+      userSetting: {}
+    })
+    return {
+      errCode: 0,
+      errMsg: '成功'
     }
   }
 }

@@ -18,7 +18,7 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['ssl', 'password', 'todo']
+  const validproducts = ['ssl', 'password', 'todo', 'todoteam']
   if (!validproducts.includes(requestdata.product)) {
     return {
       errCode: 1001,
@@ -28,7 +28,7 @@ exports.main = async (event) => {
   }
   let skip = 0
   let limit = 10
-  if (Number.isInteger(requestdata.skip)) {
+  if (Number.isInteger(requestdata.skip) && requestdata.skip >= 0) {
     skip = requestdata.skip
   }
   if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
@@ -60,26 +60,45 @@ exports.main = async (event) => {
       },
       permission: ['account', 'admin'],
       service: ['admin'],
-      apiName: 'admin_getPasswordUserList'
+      apiName: 'admin_getProductUserList'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const userres = await db.collection('productuser').where({
-      product: requestdata.product
-    }).skip(skip).limit(limit).field({
-      _id: false,
-      uid: true,
-      productionLimit: true,
-      stagingLimit: true,
-      vipEndDate: true,
-      backupMaxCount: true
-    }).get()
-    return {
-      errCode: 0,
-      errMsg: '成功',
-      data: userres.data
+    if (requestdata.product == 'todoteam') {
+      const userres = await db.collection('todoteamaccount').where({
+        admin: true
+      }).skip(skip).limit(limit).field({
+        _id: false,
+        teamId: true,
+        teamName: true,
+        teamEnabled: true,
+        userMaxCount: true,
+        todoMaxCount: true,
+        userId: true
+      }).get()
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        data: userres.data
+      }
+    } else {
+      const userres = await db.collection('productuser').where({
+        product: requestdata.product
+      }).skip(skip).limit(limit).field({
+        _id: false,
+        uid: true,
+        productionLimit: true,
+        stagingLimit: true,
+        vipEndDate: true,
+        backupMaxCount: true
+      }).get()
+      return {
+        errCode: 0,
+        errMsg: '成功',
+        data: userres.data
+      }
     }
   }
 }

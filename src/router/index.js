@@ -207,6 +207,14 @@ const router = createRouter({
           component: () => import('/src/product/admin/todouserlist.vue')
         },
         {
+          path: '/product/admin/newtodoteam',
+          component: () => import('/src/product/admin/newtodoteam.vue')
+        },
+        {
+          path: '/product/admin/todoteamlist',
+          component: () => import('/src/product/admin/todoteamlist.vue')
+        },
+        {
           path: '/product/admin/newvipcode',
           component: () => import('/src/product/admin/newvipcode.vue')
         },
