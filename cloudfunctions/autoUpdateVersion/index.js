@@ -10,17 +10,17 @@ exports.main = async () => {
       beta: '',
       releasepreview: []
     }
-    data.items.find(item => item.toc_title === 'Release notes').children.forEach(item => {
-      if (item.toc_title === 'Beta') {
+    data.items.find(item => item.toc_title == 'Release notes').children.forEach(item => {
+      if (item.toc_title == 'Beta') {
         versions.beta = item.children[0].toc_title.slice(14)
       }
-      if (item.toc_title === 'Experimental') {
+      if (item.toc_title == 'Experimental') {
         versions.dev = item.children[0].toc_title.slice(14)
       }
-      if (item.toc_title === 'Experimental (26H1)' || item.toc_title === 'Experimental (Future Platforms)') {
+      if (item.toc_title == 'Experimental (26H1)' || item.toc_title == 'Experimental (Future Platforms)') {
         versions.canary.push(item.children[0].toc_title.slice(14))
       }
-      if (item.toc_title === 'Release Preview 24H2/25H2' || item.toc_title === 'Release Preview 26H1') {
+      if (item.toc_title == 'Release Preview 24H2/25H2' || item.toc_title == 'Release Preview 26H1') {
         versions.releasepreview.push(item.children[0].toc_title.slice(6))
       }
     })

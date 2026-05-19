@@ -41,7 +41,7 @@ exports.main = async (event) => {
   }
   let skip = 0
   let limit = 10
-  if (Number.isInteger(requestdata.skip)) {
+  if (Number.isInteger(requestdata.skip) && requestdata.skip >= 0) {
     skip = requestdata.skip
   }
   if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {

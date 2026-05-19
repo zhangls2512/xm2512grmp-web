@@ -49,11 +49,7 @@ exports.main = async (event) => {
       }
     }
     const accesskey = accesskeys[requestdata.index]
-    if (accesskey.status) {
-      accesskey.status = false
-    } else {
-      accesskey.status = true
-    }
+    accesskey.status = !accesskey.status
     accesskeys[requestdata.index] = accesskey
     await db.collection('account').where({
       _id: account._id
