@@ -25,10 +25,17 @@ exports.main = async (event) => {
       }
     })
     if (!validpaths.includes(event.path)) {
-      return {
-        errCode: 1002,
-        errMsg: '请求路径错误',
-        errFix: '无修复建议'
+      if (event.path.startsWith('/todoteam')) {
+        return {
+          code: 400,
+          msg: '请求路径错误'
+        }
+      } else {
+        return {
+          errCode: 1002,
+          errMsg: '请求路径错误',
+          errFix: '无修复建议'
+        }
       }
     }
     const notparsebodypaths = ['/test', '/account/getTicket', '/todoteam/deleteTeam', '/todoteam/getUserInfo']
@@ -36,10 +43,17 @@ exports.main = async (event) => {
       try {
         JSON.parse(event.body)
       } catch {
-        return {
-          errCode: 1003,
-          errMsg: '请求体解析失败',
-          errFix: '传递合法的JSON请求体'
+        if (event.path.startsWith('/todoteam')) {
+          return {
+            code: 400,
+            msg: '请求体解析失败'
+          }
+        } else {
+          return {
+            errCode: 1003,
+            errMsg: '请求体解析失败',
+            errFix: '传递合法的JSON请求体'
+          }
         }
       }
     }
@@ -65,10 +79,17 @@ exports.main = async (event) => {
       subject: '接口内部错误通知',
       text: '请求路径：' + event.path + '\n错误堆栈：' + err.stack + '\n请求体：' + event.body + '\n请求头：' + JSON.stringify(headers)
     })
-    return {
-      errCode: 5000,
-      errMsg: '内部错误',
-      errFix: '联系客服'
+    if (event.path.startsWith('/todoteam')) {
+      return {
+        code: 500,
+        msg: '内部错误'
+      }
+    } else {
+      return {
+        errCode: 5000,
+        errMsg: '内部错误',
+        errFix: '联系客服'
+      }
     }
   }
 }

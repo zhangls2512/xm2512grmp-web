@@ -55,7 +55,7 @@ exports.main = async (event) => {
         msg: '用户数量达到上限'
       }
     }
-    function randomString8() {
+    function generateuserid() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
       let result = ''
       for (let i = 0; i < 8; i++) {
@@ -64,7 +64,7 @@ exports.main = async (event) => {
       }
       return result
     }
-    let userid = randomString8()
+    let userid = generateuserid()
     let finished = false
     while (!finished) {
       const userres = await db.collection('todoteamaccount').where({
@@ -74,7 +74,7 @@ exports.main = async (event) => {
       if (userres.total == 0) {
         finished = true
       } else {
-        userid = randomString8()
+        userid = generateuserid()
       }
     }
     await db.collection('todoteamaccount').add({

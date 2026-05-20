@@ -18,19 +18,18 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
-  const validproducts = ['ssl', 'password', 'todo', 'todoteam']
-  if (!validproducts.includes(requestdata.product)) {
-    return {
-      errCode: 1001,
-      errMsg: '请求参数错误',
-      errFix: '传递有效的product参数'
-    }
-  }
   const uidlengthmap = {
     ssl: 32,
     password: 32,
     todo: 32,
     todoteam: 36
+  }
+  if (!Object.keys(uidlengthmap).includes(requestdata.product)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的product参数'
+    }
   }
   if (typeof (requestdata.uid) != 'string' || requestdata.uid.length != uidlengthmap[requestdata.product]) {
     return {

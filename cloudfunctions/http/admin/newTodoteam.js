@@ -69,7 +69,7 @@ exports.main = async (event) => {
         errFix: '无修复建议'
       }
     }
-    function randomString8() {
+    function generateuserid() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
       let result = ''
       for (let i = 0; i < 8; i++) {
@@ -78,7 +78,7 @@ exports.main = async (event) => {
       }
       return result
     }
-    const userid = randomString8()
+    const userid = generateuserid()
     await db.collection('todoteamaccount').add({
       teamId: crypto.randomUUID(),
       teamName: requestdata.name,
