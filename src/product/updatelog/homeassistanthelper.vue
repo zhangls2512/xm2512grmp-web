@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.1.2',
+    releaseDate: '2026-05-21',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 界面 - 深色模式 新增 跟随环境光（仅搭载环境光传感器的设备可用）'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 新增 提示系统进行 GC、转储当前线程虚拟机原始堆快照'
+      },
+      {
+        type: 'U',
+        content: '部分场景适配键盘快捷键'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.1',
     releaseDate: '2026-05-03',
     logs: [
