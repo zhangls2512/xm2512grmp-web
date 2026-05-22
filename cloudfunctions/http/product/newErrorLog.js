@@ -42,28 +42,43 @@ exports.main = async (event) => {
       errFix: '传递有效的version参数'
     }
   }
-  if (typeof (requestdata.errorObject) != 'object') {
+  if (typeof (requestdata.errorDesc) != 'string' || !requestdata.errorDesc) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的errorDesc参数'
+    }
+  }
+  if (requestdata.errorObject && typeof (requestdata.errorObject) != 'string') {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的errorObject参数'
     }
   }
-  let contacttype = '未知'
-  let contactvalue = '未知'
   const validcontacttypes = ['邮箱', '微信', 'QQ']
-  if (validcontacttypes.includes(requestdata.contactType) && typeof (requestdata.contactValue) == 'string' && requestdata.contactValue) {
-    contacttype = requestdata.contactType
-    contactvalue = requestdata.contactValue
+  if (!validcontacttypes.includes(requestdata.contactType)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的contactType参数'
+    }
   }
-  if (contacttype == '邮箱' && !validator.isEmail(contactvalue) && contactvalue != '未知') {
+  if (typeof (requestdata.contactValue) != 'string' || !requestdata.contactValue) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的contactValue参数'
     }
   }
-  if (contacttype == 'QQ' && !/^\d+$/.test(contactvalue) && contactvalue != '未知') {
+  if (requestdata.contactType == '邮箱' && !validator.isEmail(requestdata.contactValue)) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的contactValue参数'
+    }
+  }
+  if (requestdata.contactType == 'QQ' && !/^\d+$/.test(requestdata.contactValue)) {
     return {
       errCode: 1001,
       errMsg: '请求参数错误',
@@ -71,17 +86,22 @@ exports.main = async (event) => {
     }
   }
   await db.collection('errorlog').add({
-    contactType: contacttype,
-    contactValue: contactvalue,
+    contactType: requestdata.contactType,
+    contactValue: requestdata.contactValue,
+    errorDesc: requestdata.errorDesc,
     errorObject: requestdata.errorObject,
     product: requestdata.product,
     version: requestdata.version
   })
+  let text = '产品：' + productmap[requestdata.product] + '\n版本：' + requestdata.version + '\n描述：' + requestdata.errorDesc + '\n联系方式：' + requestdata.contactValue + '（' + requestdata.contactType + '）'
+  if (requestdata.errorObject) {
+    text += '\n' + requestdata.errorObject
+  }
   await nodemailertransport.sendMail({
     from: 'zhangls2512@vip.qq.com',
     to: '2300990296@qq.com',
     subject: '有新错误日志',
-    text: '产品：' + productmap[requestdata.product] + '\n版本：' + requestdata.version + '\n联系方式：' + contactvalue + '（' + contacttype + '）\n' + JSON.stringify(requestdata.errorObject)
+    text: text
   })
   return {
     errCode: 0,
