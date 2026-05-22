@@ -65,8 +65,7 @@ const endyear = new Date().getFullYear()
               <div class="large-bold-text">智能待办</div>
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.zhangxm.aitodo" target="_blank">正式</a>
-                <a href="https://appgallery.huawei.com/link/invite-test-wap?taskId=651bcd831160f04d15c8f83c9abadb10&invitationCode=32wxwICCXmN"
-                  target="_blank">邀请测试</a>
+                <a href="https://appgallery.huawei.com/apptest/8kQQiCWVrVf" target="_blank">邀请测试</a>
               </div>
             </div>
           </div>
