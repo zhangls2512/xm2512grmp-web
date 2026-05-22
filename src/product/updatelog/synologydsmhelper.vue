@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.9',
+    releaseDate: '2026-05-22',
+    logs: [
+      {
+        type: 'A',
+        content: '“文件”新增搜索框、拖拽移动文件或目录到目录、鼠标框选多选'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 - 深色模式 新增 跟随环境光（仅搭载环境光传感器的设备可用）'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 新增 提示系统进行 GC、转储当前线程虚拟机原始堆快照'
+      },
+      {
+        type: 'U',
+        content: '部分场景适配键盘快捷键'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.8',
     releaseDate: '2026-04-29',
     logs: [
