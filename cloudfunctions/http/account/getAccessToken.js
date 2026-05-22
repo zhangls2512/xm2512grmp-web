@@ -187,7 +187,7 @@ exports.main = async (event) => {
     let ipaddress = '未知'
     try {
       const data = await httpsget('https://ip.cn/ip/' + event.headers['x-real-ip'] + '.html')
-      ipaddress = data.match(/<span\s+id="tab0_address"\s*>(.*?)<\/span>/)[1]
+      ipaddress = data.match(/所在地理位置[\s\S]*?<span[^>]*>([^<]+)<\/span>/)[1]
     } catch (err) {
       await nodemailertransport.sendMail({
         from: 'zhangls2512@vip.qq.com',
