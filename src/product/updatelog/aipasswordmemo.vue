@@ -2,6 +2,36 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.1.0',
+    releaseDate: '2026-05-24',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 界面 - 深色模式 新增 跟随环境光（仅搭载环境光传感器的设备可用）'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 新增 提示系统进行 GC、转储当前线程虚拟机原始堆快照'
+      },
+      {
+        type: 'A',
+        content: '卡片新增“MFA”'
+      },
+      {
+        type: 'U',
+        content: '密码、常用信息列表支持鼠标框选多选'
+      },
+      {
+        type: 'U',
+        content: '部分场景适配键盘快捷键'
+      },
+      {
+        type: 'U',
+        content: '卡片开启模糊背板'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.0.2',
     releaseDate: '2026-04-24',
     logs: [

@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.1.3',
+    releaseDate: '2026-05-24',
+    logs: [
+      {
+        type: 'A',
+        content: '“上传故障日志”新增“故障描述”输入框、“上传故障日志”勾选框'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.2',
     releaseDate: '2026-05-21',
     logs: [
