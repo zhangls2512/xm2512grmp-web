@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.10',
+    releaseDate: '2026-05-27',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 传输 新增 下载冲突时操作'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 文件 新增 复制、移动冲突时操作'
+      },
+      {
+        type: 'U',
+        content: '多选下载文件生效我的 - 设置 - 通用 - 通用 - 传输 - 自定义下载位置设置'
+      },
+      {
+        type: 'U',
+        content: '卡片开启模糊背板'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.9',
     releaseDate: '2026-05-22',
     logs: [
