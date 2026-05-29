@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 智能待办'
 const data = [
   {
+    versionNumber: '1.0.0.2',
+    releaseDate: '2026-05-29',
+    logs: [
+      {
+        type: 'U',
+        content: '推荐待办、待办列表在不同响应式断点下显示不同列数'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.1',
     releaseDate: '2026-05-25',
     logs: [

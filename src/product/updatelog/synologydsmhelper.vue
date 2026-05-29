@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.11',
+    releaseDate: '2026-05-29',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 备份 新增 自定义备份相册'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 更多 - 其他 - 清理数据 - 缓存 新增 文件图标缩略图'
+      },
+      {
+        type: 'U',
+        content: '“文件”支持拖拽上传文件到非根目录'
+      },
+      {
+        type: 'U',
+        content: '我的 - 设置 - 通用 - 通用 - 相册 - 显示默认关闭'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.10',
     releaseDate: '2026-05-27',
     logs: [
