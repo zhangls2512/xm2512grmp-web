@@ -711,11 +711,17 @@ exports.main = async (event) => {
           msg: '账号被管理员禁用'
         }
       }
-      const teamres = await db.collection('todoteamaccount').where({
-        teamId: info[0],
-        admin: true
-      }).get()
-      const team = teamres.data[0]
+      let team = {}
+      if (!account.admin) {
+        const teamres = await db.collection('todoteamaccount').where({
+          teamId: info[0],
+          admin: true
+        }).get()
+        team = teamres.data[0]
+      }
+      if (account.admin) {
+        team = account
+      }
       if (!team.teamEnabled) {
         return {
           code: 451,

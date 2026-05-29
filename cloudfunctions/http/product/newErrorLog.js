@@ -89,7 +89,7 @@ exports.main = async (event) => {
     contactType: requestdata.contactType,
     contactValue: requestdata.contactValue,
     errorDesc: requestdata.errorDesc,
-    errorObject: requestdata.errorObject,
+    errorObject: requestdata.errorObject ?? '',
     product: requestdata.product,
     version: requestdata.version
   })
