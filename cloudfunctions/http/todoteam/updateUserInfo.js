@@ -16,7 +16,7 @@ exports.main = async (event) => {
       msg: '请求参数错误'
     }
   }
-  if (typeof (requestdata.name) != 'string' || !requestdata.userName) {
+  if (typeof (requestdata.name) != 'string' || !requestdata.name) {
     return {
       code: 400,
       msg: '请求参数错误'
@@ -56,7 +56,7 @@ exports.main = async (event) => {
     if (accountres.updated == 0) {
       return {
         code: 400,
-        msg: '用户不存在'
+        msg: '用户不存在或数据无修改'
       }
     }
     return {

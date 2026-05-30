@@ -2,6 +2,32 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.1.6',
+    releaseDate: '2026-05-30',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 传输 新增 下载冲突时操作'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 文件 新增 复制、移动冲突时操作'
+      },
+      {
+        type: 'U',
+        content: '“文件”支持拖拽上传文件到目录'
+      },
+      {
+        type: 'U',
+        content: '多选下载文件生效我的 - 设置 - 通用 - 通用 - 传输 - 自定义下载位置设置'
+      },
+      {
+        type: 'U',
+        content: '卡片开启模糊背板'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.5',
     releaseDate: '2026-05-21',
     logs: [

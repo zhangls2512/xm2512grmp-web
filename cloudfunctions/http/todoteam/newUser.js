@@ -11,7 +11,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  if (typeof (requestdata.name) != 'string' || !requestdata.userName) {
+  if (typeof (requestdata.name) != 'string' || !requestdata.name) {
     return {
       code: 400,
       msg: '请求参数错误'
