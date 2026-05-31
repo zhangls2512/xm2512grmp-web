@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - 智能待办'
 const data = [
   {
+    versionNumber: '1.1.0.0',
+    releaseDate: '2026-05-31',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 新增 团队'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 应用 新增 状态栏内容（仅电脑端可用）'
+      },
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 功能 新增 推荐待办显示已完成待办'
+      },
+      {
+        type: 'A',
+        content: '小艺智能体已可用（待办 - 右上角小艺智能体图标按钮）'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.2',
     releaseDate: '2026-05-29',
     logs: [
