@@ -28,8 +28,9 @@ exports.main = async (event) => {
   if (res.result.code != 0) {
     return res.result
   } else {
+    const account = res.result.account
     const team = res.result.team
-    if (!team.admin && !res.result.account.permission.includes('newTodo')) {
+    if (!account.admin && !account.permission.includes('newTodo')) {
       return {
         code: 403,
         msg: '无权限'

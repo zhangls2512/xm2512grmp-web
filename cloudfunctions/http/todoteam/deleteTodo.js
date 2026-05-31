@@ -26,6 +26,7 @@ exports.main = async (event) => {
   if (res.result.code != 0) {
     return res.result
   } else {
+    const account = res.result.account
     const team = res.result.team
     const todores = await db.collection('teamtodo').where({
       teamId: team.teamId,
@@ -37,7 +38,7 @@ exports.main = async (event) => {
         msg: '待办不存在'
       }
     }
-    if (!team.admin && todores.data[0].uid != res.result.account.userId) {
+    if (!account.admin && todores.data[0].uid != account.userId) {
       return {
         code: 403,
         msg: '无权限'

@@ -23,6 +23,10 @@ const products = ref([
   {
     value: 'todo',
     label: '智能待办'
+  },
+  {
+    value: 'todoteam',
+    label: '智能待办团队'
   }
 ])
 function formatDuration(t) {
@@ -77,7 +81,8 @@ async function get() {
   })
   const productmap = {
     password: '密码智能备忘录',
-    todo: '智能待办'
+    todo: '智能待办',
+    todoteam: '智能待办团队'
   }
   const typemap = {
     pay: '付费',

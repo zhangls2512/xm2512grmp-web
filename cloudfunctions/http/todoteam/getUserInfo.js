@@ -26,8 +26,6 @@ exports.main = async (event) => {
       data: {
         teamId: team.teamId,
         teamName: team.teamName,
-        userMaxCount: team.userMaxCount,
-        todoMaxCount: team.todoMaxCount,
         userId: account.userId,
         userName: account.userName,
         userEnabled: account.userEnabled,

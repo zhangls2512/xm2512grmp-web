@@ -22,7 +22,7 @@ exports.main = async (event) => {
   let uid = db.command.neq('')
   let startdate = 0
   let enddate = Date.now()
-  const validproducts = ['password', 'todo']
+  const validproducts = ['password', 'todo', 'todoteam']
   if (validproducts.includes(requestdata.product)) {
     product = requestdata.product
   }

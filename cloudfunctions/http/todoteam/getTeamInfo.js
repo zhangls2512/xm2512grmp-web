@@ -27,42 +27,24 @@ exports.main = async (event) => {
         msg: '无权限'
       }
     }
-    const viplogres = await db.collection('viplog').where({
-      product: 'todoteam',
-      uid: team.teamId
-    }).count()
-    if (viplogres.total > 0) {
-      return {
-        code: 400,
-        msg: '存在付费开通记录'
-      }
-    }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
-      admin: false
+      teamId: team.teamId
     }).count()
-    if (accountres.total > 0) {
-      return {
-        code: 400,
-        msg: '用户未清空'
-      }
-    }
     const todores = await db.collection('teamtodo').where({
       teamId: team.teamId
     }).count()
-    if (todores.total > 0) {
-      return {
-        code: 400,
-        msg: '待办未清空'
-      }
-    }
-    await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
-      admin: true
-    }).remove()
     return {
       code: 0,
-      msg: '成功'
+      msg: '成功',
+      data: {
+        teamId: team.teamId,
+        teamName: team.teamName,
+        userCount: accountres.total,
+        todoCount: todores.total,
+        userMaxCount: team.userMaxCount,
+        todoMaxCount: team.todoMaxCount,
+        teamSetting: team.teamSetting
+      }
     }
   }
 }

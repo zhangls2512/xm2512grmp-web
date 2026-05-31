@@ -38,7 +38,7 @@ exports.main = async (event) => {
         }
       }
     }
-    const notparsebodypaths = ['/test', '/account/getTicket', '/todoteam/deleteTeam', '/todoteam/getUserInfo']
+    const notparsebodypaths = ['/test', '/account/getTicket', '/todoteam/deleteTeam', '/todoteam/getTeamInfo', '/todoteam/getUserInfo']
     if (!notparsebodypaths.includes(event.path)) {
       try {
         JSON.parse(event.body)

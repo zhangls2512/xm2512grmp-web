@@ -257,21 +257,21 @@ exports.main = async (event) => {
                 errFix: '联系客服'
               }
             }
-            // 此处待完成给公有云团队账号的充值逻辑
-            /*await db.collection('productuser').where({
-              product: product,
-              uid: uid
+            await db.collection('todoteamaccount').where({
+              teamId: uid,
+              admin: true
             }).update({
-              backupMaxCount: db.command.inc(duration)
+              userMaxCount: db.command.inc(duration / 5),
+              todoMaxCount: db.command.inc(duration)
             })
             await db.collection('viplog').add({
               date: Date.now(),
               duration: duration,
               info: purchaseOrderid,
-              product: product,
+              product: 'todoteam',
               type: 'pay',
               uid: uid
-            })*/
+            })
             return {
               errCode: 0,
               errMsg: '成功'
