@@ -8,6 +8,14 @@ exports.main = async (event) => {
       msg: '请求方法错误'
     }
   }
+  const requestdata = JSON.parse(event.body)
+  const validtypes = ['complete', 'get', 'review', 'create']
+  if (!validtypes.includes(requestdata.type)) {
+    return {
+      code: 400,
+      msg: '请求参数错误'
+    }
+  }
   const res = await app.callFunction({
     name: 'authCheck',
     data: {

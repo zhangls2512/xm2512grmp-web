@@ -8,6 +8,7 @@ exports.main = async (event) => {
       msg: '请求方法错误'
     }
   }
+  const requestdata = JSON.parse(event.body)
   const res = await app.callFunction({
     name: 'authCheck',
     data: {
@@ -18,6 +19,14 @@ exports.main = async (event) => {
   if (res.result.code != 0) {
     return res.result
   } else {
+    const account = res.result.account
+    const team = res.result.team
+    if (!account.admin && !account.permission.includes('newTodo')) {
+      return {
+        code: 403,
+        msg: '无权限'
+      }
+    }
     return {
       code: 400,
       msg: '开发中'
