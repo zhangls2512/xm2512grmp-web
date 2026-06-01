@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
 const data = [
   {
+    versionNumber: '1.1.4.12',
+    releaseDate: '2026-06-01',
+    logs: [
+      {
+        type: 'F',
+        content: '上传类型传输任务不显示进度'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.11',
     releaseDate: '2026-05-29',
     logs: [
