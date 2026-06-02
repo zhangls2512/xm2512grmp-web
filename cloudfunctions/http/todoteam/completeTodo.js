@@ -50,7 +50,7 @@ exports.main = async (event) => {
     const recentCompletedTimeIndex = recentCompletedTime.findIndex(item => item.uid == account.userId)
     const reviewRecentCompletedTimeIndex = reviewRecentCompletedTime.findIndex(item => item.uid == account.userId)
     if (recentCompletedTimeIndex == -1 && reviewRecentCompletedTimeIndex == -1) {
-      if (todo.setting.completeMode == 'single' && recentCompletedTime.length > 0) {
+      if (todo.completeMode == 'single' && recentCompletedTime.length > 0) {
         return {
           code: 400,
           msg: '已完成'
@@ -63,7 +63,7 @@ exports.main = async (event) => {
           msg: '未到开始时间'
         }
       }
-      if (todo.endTime < completedTime) {
+      if (todo.endTime < completedTime && todo.endTime != -1) {
         return {
           code: 400,
           msg: '已过结束时间'

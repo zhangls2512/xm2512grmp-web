@@ -24,6 +24,10 @@ const data = [
       {
         type: 'U',
         content: '卡片开启模糊背板'
+      },
+      {
+        type: 'F',
+        content: '上传类型传输任务不显示进度'
       }
     ]
   },

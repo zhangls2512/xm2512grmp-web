@@ -37,8 +37,7 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
-      admin: false
+      teamId: team.teamId
     }).skip(skip).limit(limit).field({
       _id: false,
       password: false,

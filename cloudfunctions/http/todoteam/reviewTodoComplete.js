@@ -63,7 +63,7 @@ exports.main = async (event) => {
     }
     const completedTime = Date.now()
     if (recentCompletedTimeIndex == -1) {
-      if (todo.endTime < completedTime) {
+      if (todo.endTime < completedTime && todo.endTime != -1) {
         return {
           code: 400,
           msg: '已过结束时间'

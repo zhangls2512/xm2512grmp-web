@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.2.0',
+    releaseDate: '2026-06-02',
+    logs: [
+      {
+        type: 'A',
+        content: '我的 - 设置 - 通用 - 通用 - 应用 新增 状态栏内容（仅电脑端可用）'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.1.1',
     releaseDate: '2026-05-29',
     logs: [
