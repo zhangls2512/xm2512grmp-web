@@ -399,21 +399,7 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      function base64url(buffer) {
-        let binary = ''
-        const bytes = new Uint8Array(buffer)
-        for (let i = 0; i < bytes.byteLength; i++) {
-          binary += String.fromCharCode(bytes[i])
-        }
-        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-      }
-      function base64urlToBuffer(base64url) {
-        let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/')
-        const padlength = (4 - (base64.length % 4)) % 4
-        base64 += '='.repeat(padlength)
-        return Buffer.from(base64, 'base64')
-      }
-      const authenticatordatabuffer = base64urlToBuffer(checkdata.authenticatordata)
+      const authenticatordatabuffer = Buffer.from(checkdata.authenticatordata, 'base64url')
       if (authenticatordatabuffer.length < 37) {
         return {
           errCode: 3060,
@@ -437,9 +423,9 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      const clientdatajsonbuffer = base64urlToBuffer(checkdata.clientdatajson)
+      const clientdatajsonbuffer = Buffer.from(checkdata.clientdatajson, 'base64url')
       const clientdatajson = JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer)))
-      if (clientdatajson.challenge != base64url(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'))) {
+      if (clientdatajson.challenge != Buffer.from(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')).toString('base64url')) {
         return {
           errCode: 3060,
           errMsg: 'challenge校验失败',
@@ -461,11 +447,11 @@ exports.main = async (event) => {
         }
       }
       const publickey = crypto.createPublicKey({
-        key: base64urlToBuffer(passkeyres.data[0].publicKey),
+        key: Buffer.from(passkeyres.data[0].publicKey, 'base64url'),
         format: 'der',
         type: 'spki'
       })
-      const signaturebuffer = base64urlToBuffer(checkdata.signature)
+      const signaturebuffer = Buffer.from(checkdata.signature, 'base64url')
       const clientdatahash = crypto.createHash('sha256').update(clientdatajsonbuffer).digest()
       const datatoverify = Buffer.concat([authenticatordatabuffer, clientdatahash])
       const verify = crypto.createVerify('sha256')

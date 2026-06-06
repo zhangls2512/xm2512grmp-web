@@ -22,6 +22,12 @@ exports.main = async (event) => {
       msg: '请求参数错误'
     }
   }
+  if (typeof (requestdata.finished) != 'boolean') {
+    return {
+      code: 400,
+      msg: '请求参数错误'
+    }
+  }
   const res = await app.callFunction({
     name: 'authCheck',
     data: {
@@ -51,39 +57,47 @@ exports.main = async (event) => {
         msg: '无权限'
       }
     }
-    const recentCompletedTime = todo.recentCompletedTime
-    const reviewRecentCompletedTime = todo.reviewRecentCompletedTime
-    const recentCompletedTimeIndex = recentCompletedTime.findIndex(item => item.uid == requestdata.userId)
-    const reviewRecentCompletedTimeIndex = reviewRecentCompletedTime.findIndex(item => item.uid == requestdata.userId)
-    if (recentCompletedTimeIndex == -1 && reviewRecentCompletedTimeIndex == -1) {
-      return {
-        code: 400,
-        msg: '待办未完成'
+    const recentCompleteTime = todo.recentCompleteTime
+    const reviewRecentCompleteTime = todo.reviewRecentCompleteTime
+    const recentCompleteTimeIndex = recentCompleteTime.findIndex(item => item.uid == requestdata.userId)
+    const reviewRecentCompleteTimeIndex = reviewRecentCompleteTime.findIndex(item => item.uid == requestdata.userId)
+    if (!requestdata.finished) {
+      if (reviewRecentCompleteTimeIndex == -1 && recentCompleteTimeIndex == -1) {
+        return {
+          code: 400,
+          msg: '无完成情况'
+        }
+      }
+      if (recentCompleteTimeIndex != -1) {
+        recentCompleteTime.splice(recentCompleteTimeIndex, 1)
+      }
+      if (reviewRecentCompleteTimeIndex != -1) {
+        reviewRecentCompleteTime.splice(reviewRecentCompleteTimeIndex, 1)
       }
     }
-    const completedTime = Date.now()
-    if (recentCompletedTimeIndex == -1) {
-      if (todo.endTime < completedTime && todo.endTime != -1) {
+    if (requestdata.finished) {
+      if (reviewRecentCompleteTimeIndex == -1) {
+        return {
+          code: 400,
+          msg: '无待审核完成情况'
+        }
+      }
+      const completeTime = Date.now()
+      if (todo.endTime < completeTime && todo.endTime != -1) {
         return {
           code: 400,
           msg: '已过结束时间'
         }
       }
-      recentCompletedTime.push(reviewRecentCompletedTime[reviewRecentCompletedTimeIndex])
-      reviewRecentCompletedTime.splice(reviewRecentCompletedTimeIndex, 1)
-    }
-    if (reviewRecentCompletedTimeIndex == -1) {
-      if (todo.endTime >= completedTime) {
-        reviewRecentCompletedTime.push(recentCompletedTime[recentCompletedTimeIndex])
-      }
-      recentCompletedTime.splice(recentCompletedTimeIndex, 1)
+      recentCompleteTime.push(reviewRecentCompleteTime[reviewRecentCompleteTimeIndex])
+      reviewRecentCompleteTime.splice(reviewRecentCompleteTimeIndex, 1)
     }
     await db.collection('teamtodo').where({
       teamId: team.teamId,
       id: requestdata.todoId
     }).update({
-      recentCompletedTime: recentCompletedTime,
-      reviewRecentCompletedTime: reviewRecentCompletedTime
+      recentCompleteTime: recentCompleteTime,
+      reviewRecentCompleteTime: reviewRecentCompleteTime
     })
     return {
       code: 0,

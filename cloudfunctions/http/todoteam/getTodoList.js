@@ -17,7 +17,7 @@ exports.main = async (event) => {
       msg: '请求参数错误'
     }
   }
-  if (!Number.isInteger(requestdata.time) || requestdata.time < 0) {
+  if (!Number.isInteger(requestdata.time) || requestdata.time < -1) {
     return {
       code: 400,
       msg: '请求参数错误'
@@ -46,7 +46,7 @@ exports.main = async (event) => {
     if (requestdata.type == 'complete') {
       const todores = await db.collection('teamtodo').where({
         teamId: team.teamId,
-        startTime: db.command.lte(requestdata.time),
+        startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         allowCompleteUids: db.command.in([account.userId])
       }).skip(skip).limit(limit).field({
         _id: false,
@@ -58,28 +58,34 @@ exports.main = async (event) => {
       }).get()
       const data = todores.data
       data.forEach(item => {
-        const recentCompletedTimeIndex = item.recentCompletedTime.findIndex(item => item.uid == account.userId)
-        const reviewRecentCompletedTimeIndex = item.reviewRecentCompletedTime.findIndex(item => item.uid == account.userId)
+        const recentCompleteTimeIndex = item.recentCompleteTime.findIndex(item => item.uid == account.userId)
+        const reviewRecentCompleteTimeIndex = item.reviewRecentCompleteTime.findIndex(item => item.uid == account.userId)
         if (item.completeMode == 'single') {
-          if (item.recentCompletedTime.length > 0) {
+          if (item.recentCompleteTime.length > 0) {
             item.status = 'finished'
-          } else if (reviewRecentCompletedTimeIndex != -1) {
+            item.recentCompletedTime = item.recentCompleteTime[0].time
+          } else if (reviewRecentCompleteTimeIndex != -1) {
             item.status = 'reviewing'
+            item.recentCompletedTime = item.reviewRecentCompleteTime[reviewRecentCompleteTimeIndex].time
           } else {
             item.status = 'pending'
+            item.recentCompletedTime = -1
           }
         }
         if (item.completeMode == 'multiple') {
-          if (recentCompletedTimeIndex != -1) {
+          if (recentCompleteTimeIndex != -1) {
             item.status = 'finished'
-          } else if (reviewRecentCompletedTimeIndex != -1) {
+            item.recentCompletedTime = item.recentCompleteTime[recentCompleteTimeIndex].time
+          } else if (reviewRecentCompleteTimeIndex != -1) {
             item.status = 'reviewing'
+            item.recentCompletedTime = item.reviewRecentCompleteTime[reviewRecentCompleteTimeIndex].time
           } else {
             item.status = 'pending'
+            item.recentCompletedTime = -1
           }
         }
-        delete item.recentCompletedTime
-        delete item.reviewRecentCompletedTime
+        delete item.recentCompleteTime
+        delete item.reviewRecentCompleteTime
       })
       return {
         code: 0,
@@ -90,7 +96,7 @@ exports.main = async (event) => {
     if (requestdata.type == 'review') {
       const todores = await db.collection('teamtodo').where({
         teamId: team.teamId,
-        startTime: db.command.lte(requestdata.time),
+        startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         allowReviewUids: db.command.in([account.userId])
       }).skip(skip).limit(limit).field({
         _id: false,
@@ -110,7 +116,7 @@ exports.main = async (event) => {
       if (!account.admin && !account.permission.includes('getTodo')) {
         const todores = await db.collection('teamtodo').where({
           teamId: team.teamId,
-          startTime: db.command.lte(requestdata.time),
+          startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
           allowGetUids: db.command.in([account.userId])
         }).skip(skip).limit(limit).field({
           _id: false
@@ -123,7 +129,7 @@ exports.main = async (event) => {
       } else {
         const todores = await db.collection('teamtodo').where({
           teamId: team.teamId,
-          startTime: db.command.lte(requestdata.time)
+          startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000)
         }).skip(skip).limit(limit).field({
           _id: false
         }).get()
@@ -137,7 +143,7 @@ exports.main = async (event) => {
     if (requestdata.type == 'create') {
       const todores = await db.collection('teamtodo').where({
         teamId: team.teamId,
-        startTime: db.command.lte(requestdata.time),
+        startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         uid: account.userId
       }).skip(skip).limit(limit).field({
         _id: false

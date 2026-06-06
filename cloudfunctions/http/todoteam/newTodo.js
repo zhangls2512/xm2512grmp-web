@@ -116,8 +116,8 @@ exports.main = async (event) => {
       allowGetUids: [...new Set(requestdata.allowGetUids)],
       allowCompleteUids: [...new Set(requestdata.allowCompleteUids)],
       allowReviewUids: [...new Set(requestdata.allowReviewUids)],
-      recentCompletedTime: [],
-      reviewRecentCompletedTime: [],
+      recentCompleteTime: [],
+      reviewRecentCompleteTime: [],
       uid: account.userId,
       completeMode: requestdata.completeMode,
       updateTime: Date.now()

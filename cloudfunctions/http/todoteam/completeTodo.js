@@ -45,56 +45,56 @@ exports.main = async (event) => {
         msg: '无权限'
       }
     }
-    const recentCompletedTime = todo.recentCompletedTime
-    const reviewRecentCompletedTime = todo.reviewRecentCompletedTime
-    const recentCompletedTimeIndex = recentCompletedTime.findIndex(item => item.uid == account.userId)
-    const reviewRecentCompletedTimeIndex = reviewRecentCompletedTime.findIndex(item => item.uid == account.userId)
-    if (recentCompletedTimeIndex == -1 && reviewRecentCompletedTimeIndex == -1) {
-      if (todo.completeMode == 'single' && recentCompletedTime.length > 0) {
+    const recentCompleteTime = todo.recentCompleteTime
+    const reviewRecentCompleteTime = todo.reviewRecentCompleteTime
+    const recentCompleteTimeIndex = recentCompleteTime.findIndex(item => item.uid == account.userId)
+    const reviewRecentCompleteTimeIndex = reviewRecentCompleteTime.findIndex(item => item.uid == account.userId)
+    if (recentCompleteTimeIndex == -1 && reviewRecentCompleteTimeIndex == -1) {
+      if (todo.completeMode == 'single' && recentCompleteTime.length > 0) {
         return {
           code: 400,
           msg: '已完成'
         }
       }
-      const completedTime = Date.now()
-      if (todo.startTime > completedTime) {
+      const completeTime = Date.now()
+      if (todo.startTime > completeTime) {
         return {
           code: 400,
           msg: '未到开始时间'
         }
       }
-      if (todo.endTime < completedTime && todo.endTime != -1) {
+      if (todo.endTime < completeTime && todo.endTime != -1) {
         return {
           code: 400,
           msg: '已过结束时间'
         }
       }
       if (todo.allowReviewUids.length == 0) {
-        recentCompletedTime.push({
+        recentCompleteTime.push({
           uid: account.userId,
-          time: completedTime
+          time: completeTime
         })
       }
       if (todo.allowReviewUids.length > 0) {
-        reviewRecentCompletedTime.push({
+        reviewRecentCompleteTime.push({
           uid: account.userId,
-          time: completedTime
+          time: completeTime
         })
       }
     } else {
-      if (recentCompletedTimeIndex != -1) {
-        recentCompletedTime.splice(recentCompletedTimeIndex, 1)
+      if (recentCompleteTimeIndex != -1) {
+        recentCompleteTime.splice(recentCompleteTimeIndex, 1)
       }
-      if (reviewRecentCompletedTimeIndex != -1) {
-        reviewRecentCompletedTime.splice(reviewRecentCompletedTimeIndex, 1)
+      if (reviewRecentCompleteTimeIndex != -1) {
+        reviewRecentCompleteTime.splice(reviewRecentCompleteTimeIndex, 1)
       }
     }
     await db.collection('teamtodo').where({
       teamId: team.teamId,
       id: requestdata.id
     }).update({
-      recentCompletedTime: recentCompletedTime,
-      reviewRecentCompletedTime: reviewRecentCompletedTime
+      recentCompleteTime: recentCompleteTime,
+      reviewRecentCompleteTime: reviewRecentCompleteTime
     })
     return {
       code: 0,
