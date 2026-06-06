@@ -259,7 +259,6 @@ async function revokeCertificate() {
       <div v-if="data.certificateType == 'classic'">经典</div>
       <div v-if="data.certificateType == 'shortlived'">短期</div>
       <div v-if="data.certificateType == 'tlsserver'">TLS 服务器</div>
-      <div v-if="data.certificateType == 'tlsclient'">TLS 客户端</div>
     </div>
     <div class="sp">
       <div class="bold-text">订单创建时间</div>

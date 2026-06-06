@@ -111,7 +111,7 @@ exports.main = async (event) => {
         errFix: '传递有效的environmentType参数'
       }
     }
-    const validcertificatetypes = ['classic', 'shortlived', 'tlsserver', 'tlsclient']
+    const validcertificatetypes = ['classic', 'shortlived', 'tlsserver']
     if (!validcertificatetypes.includes(event.certificateType)) {
       return {
         errCode: 1001,
@@ -126,7 +126,7 @@ exports.main = async (event) => {
         errFix: '传递有效的certificateType参数'
       }
     }
-    if (event.certificateType != 'classic' && event.certificateType != 'tlsclient' && domains.length > 25) {
+    if (event.certificateType != 'classic' && domains.length > 25) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',

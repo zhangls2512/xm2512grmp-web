@@ -17,6 +17,7 @@ const domain = ref('')
 const keytype = ref('rsa')
 const rsakeysize = ref('2048')
 const ecdsakeysize = ref('prime256v1')
+const mldsakeysize = ref('65')
 const environmenttype = ref('production')
 const certificatetype = ref('classic')
 const autoneworder = ref('ari')
@@ -97,9 +98,9 @@ async function newOrder() {
       })
       return
     }
-    if (certificatetype.value != 'classic' && certificatetype.value != 'tlsclient' && domains.value.length > 25) {
+    if (certificatetype.value != 'classic' && domains.value.length > 25) {
       TinyModal.message({
-        message: '非经典、TLS 客户端证书类型最多仅支持添加 25 个域名 / IP 地址',
+        message: '非经典证书类型最多仅支持添加 25 个域名 / IP 地址',
         status: 'warning'
       })
       return
@@ -111,6 +112,9 @@ async function newOrder() {
     }
     if (keytype.value == 'ecdsa') {
       keysizeused = ecdsakeysize.value
+    }
+    if (keytype.value == 'mldsa') {
+      keysizeused = Number(mldsakeysize.value)
     }
   }
   await callfunction({
@@ -202,19 +206,27 @@ async function newOrder() {
         <tiny-radio-group v-model="keytype">
           <tiny-radio label="rsa">RSA</tiny-radio>
           <tiny-radio label="ecdsa">ECDSA</tiny-radio>
+          <tiny-radio label="mldsa" disabled>MLDSA</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic' && keytype == 'rsa'" label="密钥位数">
         <tiny-radio-group v-model="rsakeysize">
-          <tiny-radio label="2048">2048 位</tiny-radio>
-          <tiny-radio label="3072">3072 位</tiny-radio>
-          <tiny-radio label="4096">4096 位</tiny-radio>
+          <tiny-radio label="2048">2048</tiny-radio>
+          <tiny-radio label="3072">3072</tiny-radio>
+          <tiny-radio label="4096">4096</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item v-if="type == 'classic' && keytype == 'ecdsa'" label="密钥曲线">
         <tiny-radio-group v-model="ecdsakeysize">
-          <tiny-radio label="prime256v1">prime256v1（256 位）</tiny-radio>
-          <tiny-radio label="secp384r1">secp384r1（384 位）</tiny-radio>
+          <tiny-radio label="prime256v1">prime256v1</tiny-radio>
+          <tiny-radio label="secp384r1">secp384r1</tiny-radio>
+        </tiny-radio-group>
+      </tiny-form-item>
+      <tiny-form-item v-if="type == 'classic' && keytype == 'mldsa'" label="格维度">
+        <tiny-radio-group v-model="mldsakeysize">
+          <tiny-radio label="44">44</tiny-radio>
+          <tiny-radio label="65">65</tiny-radio>
+          <tiny-radio label="78">78</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item label="环境类型">
@@ -232,7 +244,6 @@ async function newOrder() {
           <tiny-radio label="classic">经典</tiny-radio>
           <tiny-radio label="shortlived">短期</tiny-radio>
           <tiny-radio label="tlsserver">TLS 服务器</tiny-radio>
-          <tiny-radio label="tlsclient">TLS 客户端</tiny-radio>
         </tiny-radio-group>
       </tiny-form-item>
       <tiny-form-item label="自动续期">

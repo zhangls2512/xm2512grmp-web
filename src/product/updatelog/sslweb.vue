@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（网页）'
 const data = [
   {
+    versionNumber: '1.0.8',
+    releaseDate: '2026-06-06',
+    logs: [
+      {
+        type: 'U',
+        content: '证书类型下线 TLS 客户端'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.7',
     releaseDate: '2025-11-27',
     logs: [

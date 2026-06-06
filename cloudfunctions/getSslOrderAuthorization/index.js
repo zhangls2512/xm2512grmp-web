@@ -67,21 +67,41 @@ exports.main = async (event) => {
         product: 'ssl',
         uid: res.result.account._id
       }).get()
+      let directoryurl = ''
+      if (orderres.data[0].environmentType == 'production') {
+        directoryurl = 'https://acme-v02.api.letsencrypt.org/directory'
+      }
+      if (orderres.data[0].environmentType == 'staging') {
+        directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      }
       const accountkey = userres.data[0].accountKey[orderres.data[0].environmentType]
       try {
+        const acmeaccounturl = await acme.api.getAccountUrl({
+          directoryUrl: directoryurl,
+          accountKey: accountkey
+        })
         const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
         let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
-        authorization = authorization.map((item, index) => ({
-          ...item,
+        function dnspersist01token(challenge, authorization) {
+          const arr = []
+          arr.push(challenge['issuer-domain-names'][0])
+          arr.push(acmeaccounturl)
+          if (authorization.wildcard) {
+            arr.push('policy=wildcard')
+          }
+          return arr.join(';')
+        }
+        authorization = authorization.map((aitem, index) => ({
+          ...aitem,
           url: acmeorderres.authorizations[index],
-          identifier: item.identifier.value,
-          expires: new Date(item.expires).getTime(),
-          challenges: item.challenges.map(item => ({
+          identifier: aitem.identifier.value,
+          expires: new Date(aitem.expires).getTime(),
+          challenges: aitem.challenges.map(item => ({
             ...item,
-            token: acme.api.getChallengeKeyAuthorization({
+            token: item.type != 'dns-persist-01' ? acme.api.getChallengeKeyAuthorization({
               challenge: item,
               accountKey: accountkey
-            }),
+            }) : dnspersist01token(item, aitem),
             validated: new Date(item.validated).getTime()
           }))
         }))
