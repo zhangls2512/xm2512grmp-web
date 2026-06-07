@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 智能待办'
 const data = [
   {
+    versionNumber: '1.1.1.0',
+    releaseDate: '2026-06-07',
+    logs: [
+      {
+        type: 'A',
+        content: '团队待办已可用'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.0.0',
     releaseDate: '2026-05-31',
     logs: [
