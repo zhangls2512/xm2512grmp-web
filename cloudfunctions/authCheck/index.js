@@ -660,7 +660,15 @@ exports.main = async (event) => {
           msg: '账号密码错误'
         }
       }
-      const info = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':')
+      function stringsplit(str, sep, num) {
+        const origin = str.split(sep)
+        if (origin.length <= num) {
+          return origin
+        } else {
+          return origin.slice(0, num - 1).concat(origin.slice(num - 1).join(sep))
+        }
+      }
+      const info = stringsplit(Buffer.from(authorization.replace('Basic ', ''), 'base64').toString(), ':', 3)
       if (info.length != 3) {
         return {
           code: 401,
