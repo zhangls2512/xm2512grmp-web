@@ -5,40 +5,32 @@ exports.main = async () => {
   try {
     const { data } = await axios.get('https://learn.microsoft.com/en-us/windows-insider/toc.json')
     const versions = {
-      canary: [],
-      dev: '',
-      beta: '',
+      experimental: [],
+      beta: [],
       releasepreview: []
     }
     data.items.find(item => item.toc_title == 'Release notes').children.forEach(item => {
+      if (item.toc_title == 'Experimental' || item.toc_title == 'Experimental (26H1)' || item.toc_title == 'Experimental (Future Platforms)') {
+        versions.experimental.push(item.children[0].toc_title.slice(14))
+      }
       if (item.toc_title == 'Beta' || item.toc_title == 'Beta (26H1)') {
-        versions.beta = item.children[0].toc_title.slice(14)
-      }
-      if (item.toc_title == 'Experimental') {
-        versions.dev = item.children[0].toc_title.slice(14)
-      }
-      if (item.toc_title == 'Experimental (26H1)' || item.toc_title == 'Experimental (Future Platforms)') {
-        versions.canary.push(item.children[0].toc_title.slice(14))
+        versions.beta.push(item.children[0].toc_title.slice(14))
       }
       if (item.toc_title == 'Release Preview 24H2/25H2' || item.toc_title == 'Release Preview 26H1') {
         versions.releasepreview.push(item.children[0].toc_title.slice(6))
       }
     })
-    versions.canary = versions.canary.join('、')
+    versions.experimental = versions.experimental.join('、')
+    versions.beta = versions.beta.join('、')
     versions.releasepreview = versions.releasepreview.join('、')
     try {
       await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
         accessKey: process.env.accesskey,
-        id: '0e7893fb67e67aec0012ffd02eae679a',
-        version: versions.canary
+        id: 'b013194767e67b6600146b805c3a6ba5',
+        version: versions.experimental
       })
     } catch {
     }
-    await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
-      accessKey: process.env.accesskey,
-      id: 'b013194767e67b6600146b805c3a6ba5',
-      version: versions.dev
-    })
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: '80a8bd4f67e67bb6001344e3625c0400',

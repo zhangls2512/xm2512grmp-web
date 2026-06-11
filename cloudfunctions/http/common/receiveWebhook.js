@@ -46,7 +46,7 @@ exports.main = async (event) => {
   }
   let channelname = ''
   const resourceid = receivedata.resourceId
-  const validresourceids = ['0e7893fb67e67aec0012ffd02eae679a', 'b013194767e67b6600146b805c3a6ba5', '80a8bd4f67e67bb6001344e3625c0400', '9f86c65667e67c2f00130c9f5b343245']
+  const validresourceids = ['b013194767e67b6600146b805c3a6ba5', '80a8bd4f67e67bb6001344e3625c0400', '9f86c65667e67c2f00130c9f5b343245']
   if (!validresourceids.includes(resourceid)) {
     return {
       errCode: 1001,
@@ -54,11 +54,8 @@ exports.main = async (event) => {
       errFix: '传递有效的resourceId参数'
     }
   }
-  if (resourceid == '0e7893fb67e67aec0012ffd02eae679a') {
-    channelname = 'Canary'
-  }
   if (resourceid == 'b013194767e67b6600146b805c3a6ba5') {
-    channelname = 'Dev'
+    channelname = 'Experimental'
   }
   if (resourceid == '80a8bd4f67e67bb6001344e3625c0400') {
     channelname = 'Beta'
