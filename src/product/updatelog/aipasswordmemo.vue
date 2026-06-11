@@ -849,7 +849,7 @@ const data = [
     logs: [
       {
         type: 'A',
-        content: '“密码”新增标签筛选'
+        content: '密码 新增 标签筛选'
       },
       {
         type: 'A',
@@ -891,7 +891,7 @@ const data = [
       },
       {
         type: 'A',
-        content: '“常用信息”新增类型筛选'
+        content: '常用信息 新增 类型筛选'
       },
       {
         type: 'U',

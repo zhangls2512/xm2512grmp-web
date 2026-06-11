@@ -11,7 +11,7 @@ exports.main = async () => {
       releasepreview: []
     }
     data.items.find(item => item.toc_title == 'Release notes').children.forEach(item => {
-      if (item.toc_title == 'Beta') {
+      if (item.toc_title == 'Beta' || item.toc_title == 'Beta (26H1)') {
         versions.beta = item.children[0].toc_title.slice(14)
       }
       if (item.toc_title == 'Experimental') {

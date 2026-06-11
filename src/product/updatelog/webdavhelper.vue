@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.1.7',
+    releaseDate: '2026-06-11',
+    logs: [
+      {
+        type: 'A',
+        content: '文件 新增 收藏'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.6',
     releaseDate: '2026-05-30',
     logs: [
@@ -37,7 +47,7 @@ const data = [
     logs: [
       {
         type: 'A',
-        content: '“文件”新增搜索框、拖拽移动文件或目录到目录、鼠标框选多选'
+        content: '文件 新增 搜索框、拖拽移动文件或目录到目录、鼠标框选多选'
       },
       {
         type: 'A',
