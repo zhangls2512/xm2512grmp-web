@@ -9,7 +9,7 @@ exports.main = async () => {
       beta: [],
       releasepreview: []
     }
-    data.items.find(item => item.toc_title == 'Release notes').children.forEach(item => {
+    data.items.find(item => item.toc_title == 'Release notes for Windows 11 Preview Builds').children.forEach(item => {
       if (item.toc_title == 'Experimental' || item.toc_title == 'Experimental (26H1)' || item.toc_title == 'Experimental (Future Platforms)') {
         versions.experimental.push(item.children[0].toc_title.slice(14))
       }
