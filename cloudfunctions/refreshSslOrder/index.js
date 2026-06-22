@@ -79,135 +79,84 @@ exports.main = async (event) => {
       if (data.environmentType == 'staging') {
         directoryurl = 'https://acme-staging-v02.api.letsencrypt.org/directory'
       }
-      if (data.status == 'pending') {
-        let status = ''
-        try {
-          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
-          status = acmeorderres.status
-        } catch (err) {
-          if (err.status == 404) {
-            status = 'invalid'
-          }
-        }
-        await db.collection('sslorder').where({
-          _id: event.id
-        }).update({
-          status: status
-        })
-        return {
-          errCode: 0,
-          errMsg: '成功'
+      let status = ''
+      try {
+        const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
+        status = acmeorderres.status
+      } catch (err) {
+        if (err.status == 404) {
+          status = 'invalid'
         }
       }
-      if (data.status == 'ready') {
-        let status = ''
-        try {
-          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
-          status = acmeorderres.status
-        } catch (err) {
-          if (err.status == 404) {
-            status = 'invalid'
-          }
-        }
+      if (status && data.status != 'valid') {
         await db.collection('sslorder').where({
           _id: event.id
         }).update({
           status: status
         })
-        return {
-          errCode: 0,
-          errMsg: '成功'
-        }
       }
-      if (data.status == 'processing') {
-        let status = ''
-        try {
-          const acmeorderres = await acme.api.getOrderInfo(data.orderUrl)
-          status = acmeorderres.status
-        } catch (err) {
-          if (err.status == 404) {
-            status = 'invalid'
-          }
-        }
-        await db.collection('sslorder').where({
-          _id: event.id
-        }).update({
-          status: status
+      if (data.status == 'processing' && status == 'valid') {
+        const certificatesres = await acme.api.getOrderCertificate(data.orderUrl)
+        const promise = certificatesres.map(async (item, index) => {
+          const certificateres = await app.uploadFile({
+            cloudPath: 'sslorder/' + event.id + '/' + data.domains[0] + '_' + index + '.crt',
+            fileContent: Buffer.from(item)
+          })
+          return certificateres.fileID
         })
-        if (status == 'valid') {
-          const certificatesres = await acme.api.getOrderCertificate(data.orderUrl)
-          const promise = certificatesres.map(async (item, index) => {
-            const certificateres = await app.uploadFile({
-              cloudPath: 'sslorder/' + event.id + '/' + data.domains[0] + '_' + index + '.crt',
-              fileContent: Buffer.from(item)
-            })
-            return certificateres.fileID
-          })
-          const certificatesfileid = await Promise.all(promise)
-          function getChain(info) {
-            return info[0].commonName + ' <- ' + info.map(item => item.issuerCommonName).join(' <- ')
-          }
-          const certificate = certificatesfileid.map((item, index) => {
-            return {
-              chain: getChain(acme.crypto.getCertificateInfo(certificatesres[index])),
-              value: item
-            }
-          })
-          const leafcertificateinfo = acme.crypto.getCertificateInfo(certificatesres[0])[0]
-          const certificatestartdate = (leafcertificateinfo.startDate).getTime()
-          const certificateenddate = (leafcertificateinfo.endDate).getTime()
-          const arires = await acme.api.getCertificateRenewalInfo({
-            directoryUrl: directoryurl,
-            certificate: certificatesres[0]
-          })
-          await db.collection('sslorder').where({
-            _id: event.id
-          }).update({
-            ariEndDate: new Date(arires.suggestedWindow.end).getTime(),
-            ariStartDate: new Date(arires.suggestedWindow.start).getTime(),
-            certificate: certificate,
-            certificateEndDate: certificateenddate,
-            certificateStartDate: certificatestartdate,
-            status: 'valid'
-          })
+        const certificatesfileid = await Promise.all(promise)
+        function getChain(info) {
+          return info[0].commonName + ' <- ' + info.map(item => item.issuerCommonName).join(' <- ')
+        }
+        const certificate = certificatesfileid.map((item, index) => {
           return {
-            errCode: 0,
-            errMsg: '成功'
+            chain: getChain(acme.crypto.getCertificateInfo(certificatesres[index])),
+            value: item
           }
-        }
+        })
+        const leafcertificateinfo = acme.crypto.getCertificateInfo(certificatesres[0])[0]
+        const certificatestartdate = (leafcertificateinfo.startDate).getTime()
+        const certificateenddate = (leafcertificateinfo.endDate).getTime()
+        const arires = await acme.api.getCertificateRenewalInfo({
+          directoryUrl: directoryurl,
+          certificate: certificatesres[0]
+        })
+        await db.collection('sslorder').where({
+          _id: event.id
+        }).update({
+          ariEndDate: new Date(arires.suggestedWindow.end).getTime(),
+          ariStartDate: new Date(arires.suggestedWindow.start).getTime(),
+          certificate: certificate,
+          certificateEndDate: certificateenddate,
+          certificateStartDate: certificatestartdate,
+          status: 'valid'
+        })
       }
-      if (data.status == 'valid') {
-        if (data.certificateEndDate < Date.now()) {
-          const deletefiles = []
-          if (data.privateKey) {
-            deletefiles.push(data.privateKey)
-          }
-          const certificatefiles = data.certificate.map(item => item.value)
-          certificatefiles.forEach(item => {
-            deletefiles.push(item)
-          })
-          if (deletefiles.length != 0) {
-            await app.deleteFile({
-              fileList: deletefiles
-            })
-          }
-          await db.collection('sslorder').where({
-            _id: event.id
-          }).update({
-            certificate: '',
-            privateKey: '',
-            status: 'expired'
-          })
-          return {
-            errCode: 0,
-            errMsg: '成功'
-          }
+      if (data.status == 'valid' && data.certificateEndDate < Date.now()) {
+        const deletefiles = []
+        if (data.privateKey) {
+          deletefiles.push(data.privateKey)
         }
-        return {
-          errCode: 8003,
-          errMsg: '订单状态无变更',
-          errFix: '无修复建议'
+        const certificatefiles = data.certificate.map(item => item.value)
+        certificatefiles.forEach(item => {
+          deletefiles.push(item)
+        })
+        if (deletefiles.length != 0) {
+          await app.deleteFile({
+            fileList: deletefiles
+          })
         }
+        await db.collection('sslorder').where({
+          _id: event.id
+        }).update({
+          certificate: '',
+          privateKey: '',
+          status: 'expired'
+        })
+      }
+      return {
+        errCode: 0,
+        errMsg: '成功'
       }
     }
   } catch {

@@ -32,7 +32,7 @@ exports.main = async () => {
         statuswz = '已失效'
       }
     }
-    if (statuswz) {
+    if (status && statuswz) {
       await db.collection('sslorder').where({
         _id: item._id
       }).update({
