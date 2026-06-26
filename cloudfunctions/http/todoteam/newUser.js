@@ -48,7 +48,7 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).count()
     if (accountres.total >= team.userMaxCount) {
       return {
@@ -69,7 +69,7 @@ exports.main = async (event) => {
     let finished = false
     while (!finished) {
       const userres = await db.collection('todoteamaccount').where({
-        teamId: team.teamId,
+        teamId: account.teamId,
         userId: userid
       }).count()
       if (userres.total == 0) {
@@ -79,10 +79,10 @@ exports.main = async (event) => {
       }
     }
     await db.collection('todoteamaccount').add({
-      teamId: team.teamId,
+      teamId: account.teamId,
       userId: userid,
       userName: requestdata.name,
-      password: await bcrypt.hash(userid, 12),
+      password: bcrypt.hashSync(userid, 12),
       userEnabled: requestdata.enabled,
       admin: false,
       permission: [...new Set(requestdata.permission)],

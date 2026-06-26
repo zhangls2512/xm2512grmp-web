@@ -28,16 +28,16 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).count()
     const todores = await db.collection('teamtodo').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).count()
     return {
       code: 0,
       msg: '成功',
       data: {
-        teamId: team.teamId,
+        teamId: account.teamId,
         teamName: team.teamName,
         userCount: accountres.total,
         todoCount: todores.total,

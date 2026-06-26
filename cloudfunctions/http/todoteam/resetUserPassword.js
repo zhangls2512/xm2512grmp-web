@@ -28,7 +28,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (!account.admin) {
       return {
         code: 403,
@@ -36,11 +35,11 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       userId: requestdata.id,
       admin: false
     }).update({
-      password: await bcrypt.hash(requestdata.id, 12)
+      password: bcrypt.hashSync(requestdata.id, 12)
     })
     if (accountres.updated == 0) {
       return {

@@ -27,7 +27,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (!account.admin) {
       return {
         code: 403,
@@ -35,7 +34,7 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       userId: requestdata.id,
       admin: false
     }).get()
@@ -46,7 +45,7 @@ exports.main = async (event) => {
       }
     }
     await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       userId: requestdata.id
     }).update({
       userEnabled: !accountres.data[0].userEnabled

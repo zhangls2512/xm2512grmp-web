@@ -42,10 +42,9 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (requestdata.type == 'complete') {
       const todores = await db.collection('teamtodo').where({
-        teamId: team.teamId,
+        teamId: account.teamId,
         startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         allowCompleteUids: db.command.in([account.userId])
       }).skip(skip).limit(limit).field({
@@ -95,7 +94,7 @@ exports.main = async (event) => {
     }
     if (requestdata.type == 'review') {
       const todores = await db.collection('teamtodo').where({
-        teamId: team.teamId,
+        teamId: account.teamId,
         startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         allowReviewUids: db.command.in([account.userId])
       }).skip(skip).limit(limit).field({
@@ -115,7 +114,7 @@ exports.main = async (event) => {
     if (requestdata.type == 'get') {
       if (!account.admin && !account.permission.includes('getTodo')) {
         const todores = await db.collection('teamtodo').where({
-          teamId: team.teamId,
+          teamId: account.teamId,
           startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
           allowGetUids: db.command.in([account.userId])
         }).skip(skip).limit(limit).field({
@@ -128,7 +127,7 @@ exports.main = async (event) => {
         }
       } else {
         const todores = await db.collection('teamtodo').where({
-          teamId: team.teamId,
+          teamId: account.teamId,
           startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000)
         }).skip(skip).limit(limit).field({
           _id: false
@@ -142,7 +141,7 @@ exports.main = async (event) => {
     }
     if (requestdata.type == 'create') {
       const todores = await db.collection('teamtodo').where({
-        teamId: team.teamId,
+        teamId: account.teamId,
         startTime: requestdata.time === -1 ? db.command.gte(0) : db.command.lt(requestdata.time + 86400000),
         uid: account.userId
       }).skip(skip).limit(limit).field({

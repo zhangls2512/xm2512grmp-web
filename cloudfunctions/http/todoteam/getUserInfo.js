@@ -24,7 +24,7 @@ exports.main = async (event) => {
       code: 0,
       msg: '成功',
       data: {
-        teamId: team.teamId,
+        teamId: account.teamId,
         teamName: team.teamName,
         userId: account.userId,
         userName: account.userName,

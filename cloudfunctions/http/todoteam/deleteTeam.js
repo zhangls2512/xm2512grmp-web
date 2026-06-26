@@ -20,7 +20,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (!account.admin) {
       return {
         code: 403,
@@ -29,7 +28,7 @@ exports.main = async (event) => {
     }
     const viplogres = await db.collection('viplog').where({
       product: 'todoteam',
-      uid: team.teamId
+      uid: account.teamId
     }).count()
     if (viplogres.total > 0) {
       return {
@@ -38,7 +37,7 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       admin: false
     }).count()
     if (accountres.total > 0) {
@@ -48,7 +47,7 @@ exports.main = async (event) => {
       }
     }
     const todores = await db.collection('teamtodo').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).count()
     if (todores.total > 0) {
       return {
@@ -57,7 +56,7 @@ exports.main = async (event) => {
       }
     }
     await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       admin: true
     }).remove()
     return {

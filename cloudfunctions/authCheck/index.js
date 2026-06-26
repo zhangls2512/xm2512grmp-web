@@ -692,8 +692,7 @@ exports.main = async (event) => {
         }
       }
       const account = accountres.data[0]
-      const passwordvalid = await bcrypt.compare(info[2], account.password)
-      if (!passwordvalid) {
+      if (!bcrypt.compareSync(info[2], account.password)) {
         return {
           code: 401,
           msg: '账号密码错误'

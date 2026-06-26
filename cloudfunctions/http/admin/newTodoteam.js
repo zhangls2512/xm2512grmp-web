@@ -88,7 +88,7 @@ exports.main = async (event) => {
       teamSetting: {},
       userId: userid,
       userName: '管理员',
-      password: await bcrypt.hash(userid, 12),
+      password: bcrypt.hashSync(userid, 12),
       admin: true,
       permission: [],
       userSetting: {}

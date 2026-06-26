@@ -26,9 +26,9 @@ exports.main = async (event) => {
   if (res.result.code != 0) {
     return res.result
   } else {
-    const team = res.result.team
+    const account = res.result.account
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       userId: requestdata.id
     }).get()
     if (accountres.data.length == 0) {

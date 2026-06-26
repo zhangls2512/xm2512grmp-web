@@ -27,9 +27,8 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     const todores = await db.collection('teamtodo').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       id: requestdata.id
     }).get()
     if (todores.data.length == 0) {
@@ -90,7 +89,7 @@ exports.main = async (event) => {
       }
     }
     await db.collection('teamtodo').where({
-      teamId: team.teamId,
+      teamId: account.teamId,
       id: requestdata.id
     }).update({
       recentCompleteTime: recentCompleteTime,

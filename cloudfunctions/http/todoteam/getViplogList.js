@@ -29,7 +29,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (!account.admin) {
       return {
         code: 403,
@@ -38,7 +37,7 @@ exports.main = async (event) => {
     }
     const viplogres = await db.collection('viplog').where({
       product: 'todoteam',
-      uid: team.teamId
+      uid: account.teamId
     }).orderBy('date', 'desc').skip(skip).limit(limit).field({
       _id: false
     }).get()

@@ -86,7 +86,7 @@ exports.main = async (event) => {
       }
     }
     const todores = await db.collection('teamtodo').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).count()
     if (todores.total >= team.todoMaxCount) {
       return {
@@ -96,7 +96,7 @@ exports.main = async (event) => {
     }
     await db.collection('teamtodo').add({
       id: crypto.randomUUID(),
-      teamId: team.teamId,
+      teamId: account.teamId,
       content: requestdata.content,
       priority: requestdata.priority,
       startTime: requestdata.startTime,

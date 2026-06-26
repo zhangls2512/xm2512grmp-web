@@ -27,11 +27,12 @@ exports.main = async (event) => {
   if (res.result.code != 0) {
     return res.result
   } else {
+    const account = res.result.account
     await db.collection('todoteamaccount').where({
-      teamId: res.result.team.teamId,
-      userId: res.result.account.userId
+      teamId: account.teamId,
+      userId: account.userId
     }).update({
-      password: await bcrypt.hash(requestdata.password, 12)
+      password: bcrypt.hashSync(requestdata.password, 12)
     })
     return {
       code: 0,

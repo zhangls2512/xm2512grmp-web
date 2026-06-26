@@ -73,7 +73,7 @@ exports.main = async (event) => {
       teamId: requestdata.teamId,
       admin: true
     }).update({
-      password: await bcrypt.hash(accountres.data[0].userId, 12)
+      password: bcrypt.hashSync(accountres.data[0].userId, 12)
     })
     return {
       errCode: 0,

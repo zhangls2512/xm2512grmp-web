@@ -29,7 +29,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    const team = res.result.team
     if (!account.admin && !account.permission.includes('newTodo')) {
       return {
         code: 403,
@@ -37,7 +36,7 @@ exports.main = async (event) => {
       }
     }
     const accountres = await db.collection('todoteamaccount').where({
-      teamId: team.teamId
+      teamId: account.teamId
     }).skip(skip).limit(limit).field({
       _id: false,
       password: false,
