@@ -121,7 +121,6 @@ const tabClick = (data) => {
       events: {
         confirm() {
           cookie.remove('accessToken')
-          cookie.remove('email')
           router.push('/product/account/login?product=admin')
           TinyModal.message({
             message: '已退出登录',

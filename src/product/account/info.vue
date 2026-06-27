@@ -103,7 +103,6 @@ async function get() {
 get()
 function logOut() {
   cookie.remove('accessToken')
-  cookie.remove('email')
   router.push('/product/account/login')
 }
 async function copy(value) {
