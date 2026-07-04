@@ -68,7 +68,7 @@ const tabs = [
     label: '图片处理'
   }
 ]
-const tabClick = (data) => {
+function tabClick(data) {
   router.push('/product/updatelog/' + data.id)
 }
 </script>

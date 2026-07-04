@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('argon2')
+  const bcrypt = require('bcrypt')
   const { sm4 } = require('sm-crypto-v2')
   const validator = require('validator')
   const { nanoid } = await import('nanoid')
@@ -59,7 +59,7 @@ exports.main = async (event) => {
     }
     let passwordhash = password
     if (password) {
-      passwordhash = await argon2.hash(password)
+      passwordhash = bcrypt.hashSync(password, 12)
     }
     const addres = await db.collection('account').add({
       accessKey: [],

@@ -136,7 +136,7 @@ async function resetTodoteamAdminPassword(teamid) {
         </template>
       </tiny-grid-column>
       <tiny-grid-column title="操作" align="center">
-        <template #default="{ row, $rowIndex }">
+        <template #default="{ row }">
           <div class="czsp">
             <tiny-button v-if="row.teamEnabled == true" type="danger"
               @click="updateTodoteamEnabled(row.teamId)">封禁</tiny-button>

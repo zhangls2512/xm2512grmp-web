@@ -42,7 +42,7 @@ exports.main = async (event) => {
       exp: Math.floor(Date.now() / 1000) + 60,
       aid: aid,
       digest: crypto.createHash('sha256').update(JSON.stringify(body)).digest('hex')
-    }, new TextDecoder().decode(fs.readFileSync(__dirname + '/privatekey.txt')), {
+    }, fs.readFileSync(__dirname + '/privatekey.txt', 'utf-8'), {
       algorithm: 'ES256',
       header: {
         kid: '131ad2fc-d07d-4a0d-b09d-aa569c0dbe25',

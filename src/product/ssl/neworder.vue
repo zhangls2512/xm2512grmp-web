@@ -245,6 +245,11 @@ async function newOrder() {
           <tiny-radio label="shortlived">短期</tiny-radio>
           <tiny-radio label="tlsserver">TLS 服务器</tiny-radio>
         </tiny-radio-group>
+        <tiny-alert :closable="false">
+          <template #description>
+            <div>各证书类型特点见<a href="https://letsencrypt.org/zh-cn/docs/profiles" target="_blank">此文档</a>。</div>
+          </template>
+        </tiny-alert>
       </tiny-form-item>
       <tiny-form-item label="自动续期">
         <tiny-radio-group v-model="autoneworder">

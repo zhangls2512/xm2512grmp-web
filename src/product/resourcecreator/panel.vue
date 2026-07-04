@@ -24,7 +24,7 @@ const tabs = [
 if (!cookie.get('accessToken')) {
   router.push('/product/account/login?product=resourcecreator')
 }
-const tabClick = (data) => {
+function tabClick(data) {
   if (data.id == 'logout') {
     TinyModal.confirm({
       status: 'info',

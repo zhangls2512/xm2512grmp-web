@@ -2,7 +2,6 @@
   "main": "index.js",
   "dependencies": {
     "@cloudbase/node-sdk": "latest",
-    "argon2": "0.41.1",
     "axios": "latest",
     "bcrypt": "latest",
     "cidr-js": "latest",

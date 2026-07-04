@@ -20,7 +20,7 @@ const tabs = [
     label: 'SSL 证书'
   }
 ]
-const tabClick = (data) => {
+function tabClick(data) {
   router.push('/product/doc/' + data.id)
 }
 </script>

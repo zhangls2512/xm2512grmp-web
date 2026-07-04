@@ -1,7 +1,6 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('argon2')
   const axios = require('axios')
   const bcrypt = require('bcrypt')
   const crypto = require('crypto')
@@ -156,7 +155,7 @@ exports.main = async (event) => {
             errFix: '无修复建议'
           }
         }
-        if (!await argon2.verify(password, checkdata.code)) {
+        if (!bcrypt.compareSync(checkdata.code, password)) {
           if (data.passwordVerifyTimes == 4) {
             nodemailertransport.sendMail({
               from: 'zhangls2512@vip.qq.com',
@@ -175,7 +174,7 @@ exports.main = async (event) => {
           return {
             errCode: 3030,
             errMsg: '密码错误',
-            errFix: '无修复建议'
+            errFix: '无修复建议。2026年7月4日之前设置的密码已失效，请使用其他验证方式重新设置密码'
           }
         }
         return {

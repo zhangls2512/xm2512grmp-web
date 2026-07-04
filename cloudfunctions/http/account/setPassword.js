@@ -1,7 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
-  const argon2 = require('argon2')
+  const bcrypt = require('bcrypt')
   const validator = require('validator')
   const app = tcb.init()
   const db = app.database()
@@ -87,7 +87,7 @@ exports.main = async (event) => {
     const account = res.result.account
     let passwordhash = requestdata.newPassword
     if (requestdata.newPassword) {
-      passwordhash = await argon2.hash(requestdata.newPassword)
+      passwordhash = bcrypt.hashSync(requestdata.newPassword, 12)
     }
     await db.collection('account').where({
       _id: account._id
