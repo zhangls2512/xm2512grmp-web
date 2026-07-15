@@ -120,7 +120,7 @@ async function resetTodoteamAdminPassword(teamid) {
       <tiny-grid-column title="ID" align="center">
         <template #default="{ row }">
           <tiny-tooltip content="点击复制" placement="top">
-            <div style="cursor: pointer" @click="copy(row.teamId)">{{ row.teamId }}</div>
+            <div style="cursor:pointer" @click="copy(row.teamId)">{{ row.teamId }}</div>
           </tiny-tooltip>
         </template>
       </tiny-grid-column>
@@ -131,7 +131,7 @@ async function resetTodoteamAdminPassword(teamid) {
       <tiny-grid-column title="管理员用户 ID" align="center">
         <template #default="{ row }">
           <tiny-tooltip content="点击复制" placement="top">
-            <div style="cursor: pointer" @click="copy(row.userId)">{{ row.userId }}</div>
+            <div style="cursor:pointer" @click="copy(row.userId)">{{ row.userId }}</div>
           </tiny-tooltip>
         </template>
       </tiny-grid-column>

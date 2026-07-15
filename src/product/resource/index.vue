@@ -63,9 +63,9 @@ function info(id) {
         <div>显示简介</div>
         <tiny-switch v-model="showdesc"></tiny-switch>
       </div>
-      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">无数据</div>
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align:center">无数据</div>
       <div v-if="type == 'grid'" class="grid">
-        <div v-for="item in data" class="kuang" style="cursor: pointer" @click="info(item._id)">
+        <div v-for="item in data" class="kuang" style="cursor:pointer" @click="info(item._id)">
           <div class="cz">
             <div class="bold-text">{{ item.name }}</div>
             <div v-if="item.desc != '' && showdesc == true">{{ item.desc }}</div>
@@ -75,7 +75,7 @@ function info(id) {
           </div>
         </div>
       </div>
-      <div v-for="item in data" v-if="type == 'list'" class="cz" style="cursor: pointer" @click="info(item._id)">
+      <div v-for="item in data" v-if="type == 'list'" class="cz" style="cursor:pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
         <div v-if="item.desc != '' && showdesc == true">{{ item.desc }}</div>

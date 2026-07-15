@@ -137,7 +137,7 @@ function update() {
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <tiny-tooltip v-if="item.type == 'text'" content="点击复制" placement="top">
-            <span style="cursor: pointer" @click="copy(item.value)">{{ item.value }}</span>
+            <span style="cursor:pointer" @click="copy(item.value)">{{ item.value }}</span>
           </tiny-tooltip>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </div>
@@ -152,7 +152,7 @@ function update() {
         <template #description>
           <span v-if="item.name != ''">{{ item.name }}：</span>
           <tiny-tooltip v-if="item.type == 'text'" content="点击复制" placement="top">
-            <span style="cursor: pointer" @click="copy(item.value)">{{ item.value }}</span>
+            <span style="cursor:pointer" @click="copy(item.value)">{{ item.value }}</span>
           </tiny-tooltip>
           <a v-if="item.type == 'url'" :href="item.value" target="_blank">{{ item.value }}</a>
         </template>

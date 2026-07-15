@@ -126,8 +126,8 @@ function inputTag(inputtags) {
         <div class="bold-text">显示简介</div>
         <tiny-switch v-model="showdesc"></tiny-switch>
       </div>
-      <div v-if="data.length == 0" class="large-bold-text" style="text-align: center">无数据</div>
-      <div v-for="item in data" class="cz" style="cursor: pointer" @click="info(item._id)">
+      <div v-if="data.length == 0" class="large-bold-text" style="text-align:center">无数据</div>
+      <div v-for="item in data" class="cz" style="cursor:pointer" @click="info(item._id)">
         <tiny-divider></tiny-divider>
         <div class="bold-text">{{ item.name }}</div>
         <div v-if="item.desc != '' && showdesc == true">{{ item.desc }}</div>

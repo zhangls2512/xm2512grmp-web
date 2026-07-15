@@ -120,7 +120,7 @@ async function deleteVipcode(t) {
       <tiny-grid-column title="兑换码" align="center">
         <template #default="{ row }">
           <tiny-tooltip content="点击复制" placement="top">
-            <div style="cursor: pointer" @click="copy(row._id)">{{ row._id }}</div>
+            <div style="cursor:pointer" @click="copy(row._id)">{{ row._id }}</div>
           </tiny-tooltip>
         </template>
       </tiny-grid-column>

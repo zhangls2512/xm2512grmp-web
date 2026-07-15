@@ -14,7 +14,7 @@ const endyear = new Date().getFullYear()
     <div class="main">
       <div class="cz">
         <div class="title">产品</div>
-        <div class="sp" style="align-items: stretch">
+        <div class="sp" style="align-items:stretch">
           <router-link to="/product/account" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -48,7 +48,7 @@ const endyear = new Date().getFullYear()
             </div>
           </router-link>
         </div>
-        <div class="sp" style="align-items: stretch">
+        <div class="sp" style="align-items:stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/password.png" loading="lazy"></img>
@@ -102,7 +102,7 @@ const endyear = new Date().getFullYear()
             </div>
           </div>
         </div>
-        <div class="sp" style="align-items: stretch">
+        <div class="sp" style="align-items:stretch">
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/logossl.png" loading="lazy"></img>
@@ -141,38 +141,38 @@ const endyear = new Date().getFullYear()
           </a>
         </div>
         <div class="title">成员</div>
-        <div class="sp" style="align-items: stretch">
+        <div class="sp" style="align-items:stretch">
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">张轩铭</div>
               <div>工号：00001</div>
-              <div style="text-align: center">设计、研发、测试、宣传、客服</div>
+              <div style="text-align:center">设计、研发、测试、宣传、客服</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">宋佳懿</div>
               <div>工号：00007</div>
-              <div style="text-align: center">测试</div>
+              <div style="text-align:center">测试</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">朱子轩</div>
               <div>工号：00011</div>
-              <div style="text-align: center">测试</div>
+              <div style="text-align:center">测试</div>
             </div>
           </div>
           <div class="kuang">
             <div class="cz">
               <div class="large-bold-text">郭怡航</div>
               <div>工号：00014</div>
-              <div style="text-align: center">审核</div>
+              <div style="text-align:center">审核</div>
             </div>
           </div>
         </div>
         <div class="title">媒体</div>
-        <div class="sp" style="align-items: stretch">
+        <div class="sp" style="align-items:stretch">
           <router-link to="/qrcodegzh.jpg" target="_blank">
             <div class="kuang">
               <div class="cz">

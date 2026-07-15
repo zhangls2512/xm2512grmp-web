@@ -233,7 +233,7 @@ async function deleteAddResource(resourceid) {
     <tiny-button v-if="data.length > 0" type="success" @click="syncAll">同步此页</tiny-button>
     <div v-if="data.length == 0">
       <tiny-divider></tiny-divider>
-      <div class="large-bold-text" style="text-align: center">无数据</div>
+      <div class="large-bold-text" style="text-align:center">无数据</div>
     </div>
     <div v-for="item in data">
       <div v-if="item.versionUpdate != false || onlyshowversionupdate == false" class="cz">
@@ -241,7 +241,7 @@ async function deleteAddResource(resourceid) {
         <div class="sp">
           <tiny-alert v-if="item.name == null" style="flex-grow:1" type="error" :closable="false"
             description="资源已失效"></tiny-alert>
-          <div v-if="item.name != null" class="cz" style="cursor: pointer;flex-grow:1" @click="info(item.resourceId)">
+          <div v-if="item.name != null" class="cz" style="cursor:pointer;flex-grow:1" @click="info(item.resourceId)">
             <div class="bold-text">{{ item.name }}</div>
             <div v-if="item.version != ''">当前版本：{{ item.version }}</div>
             <div class="sp">
