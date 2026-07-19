@@ -250,7 +250,7 @@ exports.main = async () => {
       })
       const certificatesfileid = await Promise.all(promise)
       function getChain(info) {
-        return info[0].commonName + ' <- ' + info.map(item => item.issuerCommonName).join(' <- ')
+        return (info[0].commonName ? info[0].commonName : '未知') + ' <- ' + info.map(item => item.issuerCommonName).join(' <- ')
       }
       const certificate = certificatesfileid.map((item, index) => {
         return {
