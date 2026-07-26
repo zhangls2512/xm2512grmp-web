@@ -117,8 +117,10 @@ async function deleteResource(id) {
 <template>
   <div class="cz">
     <div>
-      <tiny-dropdown type="success" border>
-        <span>新增</span>
+      <tiny-dropdown :show-icon="false">
+        <template #default>
+          <tiny-button type="success">新增</tiny-button>
+        </template>
         <template #dropdown>
           <tiny-dropdown-menu placement="bottom-start">
             <tiny-dropdown-item @click="newResource('newresourceeasy')">便捷</tiny-dropdown-item>

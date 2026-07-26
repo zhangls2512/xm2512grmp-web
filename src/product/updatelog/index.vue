@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.20',
+    releaseDate: '2026-07-26',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 新增 智能阅卷系统'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.19',
     releaseDate: '2026-05-18',
     logs: [

@@ -131,6 +131,14 @@ const endyear = new Date().getFullYear()
               </div>
             </div>
           </router-link>
+          <a href="https://www.npmjs.com/package/@zhangxm2512/xm2512yuejuan" target="_blank">
+            <div class="kuang">
+              <div class="cz">
+                <img class="image" src="/yuejuan.png" loading="lazy"></img>
+                <div class="large-bold-text">智能阅卷系统</div>
+              </div>
+            </div>
+          </a>
           <a href="https://www.npmjs.com/package/nodejs-acmeclient" target="_blank">
             <div class="kuang">
               <div class="cz">
@@ -242,7 +250,7 @@ const endyear = new Date().getFullYear()
           <a class="footer-text" href="https://gitcode.com/zhangls2512/xm2512-grmpweb" target="_blank">Gitcode上查看此项目</a>
         </div>
         <div class="sp">
-          <div class="footer-text">Version 1.0.19</div>
+          <div class="footer-text">Version 1.0.20</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/index" target="_blank">更新日志</router-link>
         </div>
