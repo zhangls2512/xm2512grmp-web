@@ -81,7 +81,7 @@ function pagesizeChange(t) {
   get()
 }
 function orderinfo(orderid) {
-  window.open('/product/ssl/orderinfo?id=' + orderid, '_blank')
+  open('/product/ssl/orderinfo?id=' + orderid, '_blank')
 }
 function error(error) {
   TinyModal.alert({

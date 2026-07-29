@@ -74,9 +74,9 @@ async function getAccountInfo() {
 }
 getAccountInfo()
 function use(product) {
-  window.open('/product/' + product, '_blank')
+  open('/product/' + product, '_blank')
 }
-async function open(product) {
+async function openb(product) {
   await callfunction({
     functionName: 'openService',
     data: {
@@ -105,7 +105,7 @@ async function close(product) {
   getAccountInfo()
 }
 function openAppDetail(bundleName) {
-  window.open('https://appgallery.huawei.com/app/detail?id=' + bundleName, '_blank')
+  open('https://appgallery.huawei.com/app/detail?id=' + bundleName, '_blank')
 }
 </script>
 
@@ -150,7 +150,7 @@ function openAppDetail(bundleName) {
             <tiny-button v-if="productszt[item.name + 'ktzt'] == true && productszt[item.name + 'fjzt'] == false"
               type="info" @click="use(item.name)">去使用</tiny-button>
             <tiny-button v-if="productszt[item.name + 'ktzt'] == false" type="success"
-              :disabled="productszt[item.name + 'fjzt']" @click="open(item.name)">开通</tiny-button>
+              :disabled="productszt[item.name + 'fjzt']" @click="openb(item.name)">开通</tiny-button>
             <tiny-button v-if="productszt[item.name + 'ktzt'] == true" type="danger"
               @click="close(item.name)">取消开通</tiny-button>
           </div>
@@ -174,7 +174,7 @@ function openAppDetail(bundleName) {
             <tiny-button v-if="productszt.passwordktzt == true && productszt.passwordfjzt == false" type="info"
               @click="openAppDetail('com.zhangxm.aipasswordmemo')">去使用</tiny-button>
             <tiny-button v-if="productszt.passwordktzt == false" type="success" :disabled="productszt.passwordfjzt"
-              @click="open('password')">开通</tiny-button>
+              @click="openb('password')">开通</tiny-button>
             <tiny-button v-if="productszt.passwordktzt == true" type="danger"
               @click="close('password')">取消开通</tiny-button>
           </div>
@@ -198,7 +198,7 @@ function openAppDetail(bundleName) {
             <tiny-button v-if="productszt.todoktzt == true && productszt.todofjzt == false" type="info"
               @click="openAppDetail('com.zhangxm.aitodo')">去使用</tiny-button>
             <tiny-button v-if="productszt.todoktzt == false" type="success" :disabled="productszt.todofjzt"
-              @click="open('todo')">开通</tiny-button>
+              @click="openb('todo')">开通</tiny-button>
             <tiny-button v-if="productszt.todoktzt == true" type="danger" @click="close('todo')">取消开通</tiny-button>
           </div>
         </div>

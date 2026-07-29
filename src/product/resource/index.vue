@@ -27,10 +27,10 @@ async function get() {
 }
 get()
 function search() {
-  window.open('/product/resource/search?keyword=' + keyword.value, '_blank')
+  open('/product/resource/search?keyword=' + keyword.value, '_blank')
 }
 function info(id) {
-  window.open('/product/resource/info?id=' + id, '_blank')
+  open('/product/resource/info?id=' + id, '_blank')
 }
 </script>
 

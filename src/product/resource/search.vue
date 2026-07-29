@@ -67,7 +67,7 @@ function pagesizeChange(t) {
   get()
 }
 function info(id) {
-  window.open('/product/resource/info?id=' + id, '_blank')
+  open('/product/resource/info?id=' + id, '_blank')
 }
 function addTag() {
   if (!tag.value) {

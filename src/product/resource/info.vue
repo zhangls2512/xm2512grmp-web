@@ -114,7 +114,7 @@ async function deleteAdd() {
   get()
 }
 function update() {
-  window.open('/product/resourcecreator/updateresource?id=' + id, '_blank')
+  open('/product/resourcecreator/updateresource?id=' + id, '_blank')
 }
 </script>
 
