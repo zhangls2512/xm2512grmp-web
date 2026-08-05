@@ -2,6 +2,28 @@
 document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
 const data = [
   {
+    versionNumber: '1.0.1.4',
+    releaseDate: '2026-08-05',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 - 自动上传故障日志类型 新增 应用冻屏告警'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 基础 - 转储虚拟机原始堆快照 新增 进程'
+      },
+      {
+        type: 'A',
+        content: '调试 - 设置 - 网络 新增 低电量时进入低功耗模式'
+      },
+      {
+        type: 'U',
+        content: '开启应用级沉浸光感'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.3',
     releaseDate: '2026-05-24',
     logs: [
