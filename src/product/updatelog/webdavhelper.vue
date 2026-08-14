@@ -2,6 +2,24 @@
 document.title = '轩铭2512 - 更新日志 - WebDAV 助手'
 const data = [
   {
+    versionNumber: '1.0.1.9',
+    releaseDate: '2026-08-14',
+    logs: [
+      {
+        type: 'A',
+        content: '音视频播放器焕新，支持全屏播放、超分辨率（非 HDR 且分辨率小于 1080P 的视频可见）、后台播放（可在系统播控中心控制），画中画支持快退、快进'
+      },
+      {
+        type: 'U',
+        content: '图标按钮鼠标悬浮在其上时显示功能提示悬浮气泡（仅电脑端可用）'
+      },
+      {
+        type: 'F',
+        content: '音视频播放器画中画播放、暂停功能未生效'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.8',
     releaseDate: '2026-08-08',
     logs: [
