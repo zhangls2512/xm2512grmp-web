@@ -308,7 +308,7 @@ exports.main = async () => {
     certificateEndDate: db.command.lte(Date.now()),
     status: 'valid'
   }).orderBy('createDate', 'asc').get()
-  validordersres.data.forEach(async (item) => {
+  validordersres.data.filter(item => item.certificateEndDate != 0).forEach(async (item) => {
     const deletefiles = []
     if (item.privateKey) {
       deletefiles.push(item.privateKey)

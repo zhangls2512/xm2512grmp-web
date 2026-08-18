@@ -132,7 +132,7 @@ exports.main = async (event) => {
           status: 'valid'
         })
       }
-      if (data.status == 'valid' && data.certificateEndDate < Date.now()) {
+      if (data.status == 'valid' && data.certificateEndDate != 0 && data.certificateEndDate < Date.now()) {
         const deletefiles = []
         if (data.privateKey) {
           deletefiles.push(data.privateKey)
