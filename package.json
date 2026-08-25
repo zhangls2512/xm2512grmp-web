@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "npm update && vite",
     "build": "npm update && vite build",

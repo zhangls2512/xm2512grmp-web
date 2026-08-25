@@ -73,12 +73,14 @@ exports.main = async (event) => {
         headers[item] = event.headers[item]
       }
     })
-    await nodemailertransport.sendMail({
-      from: 'zhangls2512@vip.qq.com',
-      to: '2300990296@qq.com',
-      subject: '接口内部错误通知',
-      text: '请求路径：' + event.path + '\n错误堆栈：' + err.stack + '\n请求体：' + event.body + '\n请求头：' + JSON.stringify(headers)
-    })
+    if (err.message != 'request timeout') {
+      await nodemailertransport.sendMail({
+        from: 'zhangls2512@vip.qq.com',
+        to: '2300990296@qq.com',
+        subject: '接口内部错误通知',
+        text: '请求路径：' + event.path + '\n错误堆栈：' + err.stack + '\n请求体：' + event.body + '\n请求头：' + JSON.stringify(headers)
+      })
+    }
     if (event.path.startsWith('/todoteam')) {
       return {
         code: 500,
