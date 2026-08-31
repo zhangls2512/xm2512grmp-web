@@ -72,7 +72,7 @@ const endyear = new Date().getFullYear()
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/synologydsmhelper.png" loading="lazy"></img>
-              <div class="large-bold-text">SynDSM 助手</div>
+              <div class="large-bold-text">NAS 管家</div>
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.synologydsmhelper"
                   target="_blank">正式</a>
@@ -83,7 +83,7 @@ const endyear = new Date().getFullYear()
           <div class="kuang">
             <div class="cz">
               <img class="image" src="/homeassistanthelper.png" loading="lazy"></img>
-              <div class="large-bold-text">Home Assistant 助手</div>
+              <div class="large-bold-text">智能家居助手</div>
               <div class="sp">
                 <a href="https://appgallery.huawei.com/app/detail?id=com.songjy.homeassistanthelper"
                   target="_blank">正式</a>

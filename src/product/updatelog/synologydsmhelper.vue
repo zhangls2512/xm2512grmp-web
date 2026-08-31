@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - SynDSM 助手'
+document.title = '轩铭2512 - 更新日志 - NAS 管家'
 const data = [
   {
     versionNumber: '1.1.4.13',
@@ -305,7 +305,7 @@ const data = [
       },
       {
         type: 'U',
-        content: '依次点击系统设置 - 通知和状态栏 - SynDSM 助手 - 前往“SynDSM 助手”管理可拉起“消息通知”页面'
+        content: '依次点击系统设置 - 通知和状态栏 - NAS 管家 - 前往“NAS 管家”管理可拉起“消息通知”页面'
       },
       {
         type: 'U',

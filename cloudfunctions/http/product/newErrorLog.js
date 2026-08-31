@@ -24,8 +24,8 @@ exports.main = async (event) => {
   const productmap = {
     password: '密码智能备忘录',
     todo: '智能待办',
-    synologydsmhelper: 'SynDSM助手',
-    homeassistanthelper: 'Home Assistant助手',
+    synologydsmhelper: 'NAS管家',
+    homeassistanthelper: '智能家居助手',
     webdavhelper: 'WebDAV助手'
   }
   if (typeof (requestdata.product) != 'string' || !productmap[requestdata.product]) {

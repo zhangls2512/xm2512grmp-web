@@ -31,7 +31,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '开发产品 新增 Home Assistant 助手'
+        content: '开发产品 新增 智能家居助手'
       }
     ]
   },
@@ -95,7 +95,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '开发产品 新增 SynDSM 助手'
+        content: '开发产品 新增 NAS 管家'
       },
       {
         type: 'F',

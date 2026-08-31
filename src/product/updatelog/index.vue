@@ -35,11 +35,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品 新增 Home Assistant 助手'
+        content: '产品 新增 智能家居助手'
       },
       {
         type: 'U',
-        content: '更新日志 新增 Home Assistant 助手'
+        content: '更新日志 新增 智能家居助手'
       }
     ]
   },
@@ -63,7 +63,7 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品 - SynDSM 助手 新增 正式'
+        content: '产品 - NAS 管家 新增 正式'
       }
     ]
   },
@@ -87,7 +87,7 @@ const data = [
       },
       {
         type: 'U',
-        content: '产品 - SynDSM 助手 新增 邀请测试'
+        content: '产品 - NAS 管家 新增 邀请测试'
       }
     ]
   },
@@ -97,11 +97,11 @@ const data = [
     logs: [
       {
         type: 'U',
-        content: '产品 新增 SynDSM 助手'
+        content: '产品 新增 NAS 管家'
       },
       {
         type: 'U',
-        content: '更新日志 新增 SynDSM 助手'
+        content: '更新日志 新增 NAS 管家'
       }
     ]
   },

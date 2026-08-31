@@ -1,5 +1,5 @@
 <script setup>
-document.title = '轩铭2512 - 更新日志 - Home Assistant 助手'
+document.title = '轩铭2512 - 更新日志 - 智能家居助手'
 const data = [
   {
     versionNumber: '1.0.1.4',

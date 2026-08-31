@@ -8,7 +8,7 @@ const tabs = [
   {
     id: 'limit',
     label: '额度信息',
-    customIcon: icon.IconTotal()
+    customIcon: icon.IconInfoCircle()
   },
   {
     id: 'acmeaccount',
@@ -21,14 +21,14 @@ const tabs = [
     customIcon: icon.IconCheckedTrue()
   },
   {
-    id: 'dnstask',
-    label: 'DNS 自动配置任务管理',
-    customIcon: icon.IconEditorList()
-  },
-  {
     id: 'templatelist',
     label: '模板管理',
     customIcon: icon.IconText()
+  },
+  {
+    id: 'dnstask',
+    label: 'DNS 自动配置任务管理',
+    customIcon: icon.IconEditorList()
   },
   {
     id: 'notice',

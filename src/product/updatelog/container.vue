@@ -37,11 +37,11 @@ const tabs = [
   },
   {
     id: 'synologydsmhelper',
-    label: 'SynDSM 助手'
+    label: 'NAS 管家'
   },
   {
     id: 'homeassistanthelper',
-    label: 'Home Assistant 助手'
+    label: '智能家居助手'
   },
   {
     id: 'webdavhelper',
