@@ -1,14 +1,8 @@
 exports.main = async (event) => {
+  const tcb = require('@cloudbase/node-sdk')
   const crypto = require('crypto')
-  const nodemailer = require('nodemailer')
-  const nodemailertransport = nodemailer.createTransport({
-    host: 'smtp.qq.com',
-    secure: true,
-    auth: {
-      user: 'zhangls2512@vip.qq.com',
-      pass: process.env.mailtoken
-    }
-  })
+  const app = tcb.init()
+  const db = app.database()
   if (event.httpMethod != 'POST') {
     return {
       errCode: 1000,
@@ -40,12 +34,17 @@ exports.main = async (event) => {
       errFix: '无修复建议'
     }
   }
-  await nodemailertransport.sendMail({
-    from: 'zhangls2512@vip.qq.com',
-    to: '2300990296@qq.com',
-    subject: '收到微信推送通知',
-    text: JSON.stringify(event.body)
-  })
+  const body = JSON.parse(event.body)
+  if (body.Event == 'wxa_media_check') {
+    await db.collection('mediachecklog').where({
+      traceId: body.trace_id
+    }).update({
+      result: body.errcode == 0 ? body.result : {
+        suggest: 'error',
+        errCode: body.errcode
+      }
+    })
+  }
   return {
     errCode: 0,
     errMsg: '成功'

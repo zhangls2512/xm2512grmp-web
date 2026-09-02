@@ -1,6 +1,5 @@
 'use strict'
 exports.main = async (event) => {
-  const axios = require('axios')
   const nodemailer = require('nodemailer')
   const nodemailertransport = nodemailer.createTransport({
     host: 'smtp.qq.com',
