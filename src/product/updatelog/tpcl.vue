@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 图片处理'
 const data = [
   {
+    versionNumber: '1.0.14',
+    releaseDate: '2026-09-03',
+    logs: [
+      {
+        type: 'F',
+        content: '修复了一些已知的问题'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.13',
     releaseDate: '2026-03-19',
     logs: [
