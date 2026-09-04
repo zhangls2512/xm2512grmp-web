@@ -171,6 +171,104 @@ exports.main = async () => {
         status = 'invalid'
       }
     }
+    if (status == 'ready') {
+      const userres = await db.collection('productuser').where({
+        product: 'ssl',
+        uid: item.uid
+      }).get()
+      const userdata = userres.data[0]
+      if (userdata.setting.autoSubmitOrder) {
+        const accountkey = userdata.accountKey[item.environmentType]
+        let csr = ''
+        let privatekey = ''
+        if (item.csr) {
+          csr = item.csr
+        } else {
+          if (item.keyType == 'rsa') {
+            privatekey = acme.crypto.generateRSAKeyPair(item.keySize).privateKey
+          }
+          if (item.keyType == 'ecdsa') {
+            privatekey = acme.crypto.generateECDSAKeyPair(item.keySize).privateKey
+          }
+          csr = acme.crypto.generateCsr({
+            subjectAltName: item.domains,
+            privateKey: privatekey
+          })
+        }
+        try {
+          await acme.api.finalizeOrder({
+            directoryUrl: directoryurl,
+            accountKey: accountkey,
+            orderUrl: item.orderUrl,
+            csr: csr
+          })
+        } catch (err) {
+          if (err.detail) {
+            app.callFunction({
+              name: 'sendEmail',
+              data: {
+                uid: item.uid,
+                noticeName: 'ssl_email_autosubmitorderresult',
+                subject: 'SSL证书自动提交订单结果',
+                text: '您的账号“SSL证书”产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单失败，原因：CA返回错误，错误信息：' + err.detail + '。'
+              }
+            })
+            app.callFunction({
+              name: 'sendWebhook',
+              data: {
+                uid: item.uid,
+                data: {
+                  noticeName: 'ssl_webhook_autosubmitorderresult',
+                  orderId: item._id,
+                  status: 'fail',
+                  reason: 'caerror',
+                  errmsg: err.detail
+                }
+              }
+            })
+          }
+          return
+        }
+        if (privatekey) {
+          const uploadres = await app.uploadFile({
+            cloudPath: 'sslorder/' + item._id + '/' + item.domains[0] + '.key',
+            fileContent: Buffer.from(privatekey)
+          })
+          await db.collection('sslorder').where({
+            _id: item._id
+          }).update({
+            privateKey: uploadres.fileID,
+            status: 'processing'
+          })
+        } else {
+          await db.collection('sslorder').where({
+            _id: item._id
+          }).update({
+            status: 'processing'
+          })
+        }
+        app.callFunction({
+          name: 'sendEmail',
+          data: {
+            uid: item.uid,
+            noticeName: 'ssl_email_autosubmitorderresult',
+            subject: 'SSL证书自动提交订单结果',
+            text: '您的账号“SSL证书”产品首域名/IP地址为“' + item.domains[0] + '”的订单（ID：' + item._id + '）自动提交订单成功。'
+          }
+        })
+        app.callFunction({
+          name: 'sendWebhook',
+          data: {
+            uid: item.uid,
+            data: {
+              noticeName: 'ssl_webhook_autosubmitorderresult',
+              orderId: item._id,
+              status: 'success'
+            }
+          }
+        })
+      }
+    }
     if (status == 'invalid') {
       await db.collection('sslorder').where({
         _id: item._id
