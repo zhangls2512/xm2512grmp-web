@@ -12,7 +12,7 @@ exports.main = async (event) => {
     }
   }
   const requestdata = JSON.parse(event.body)
-  const validtypes = ['emailcode', 'huaweiaipasswordmemoapp']
+  const validtypes = ['emailcode', 'huaweiaipasswordmemoapp', 'huaweiaitodoapp']
   if (!validtypes.includes(requestdata.verifyType)) {
     return {
       errCode: 1001,
@@ -82,7 +82,7 @@ exports.main = async (event) => {
     return res.result
   } else {
     const uid = res.result.account._id
-    const validhuaweitypes = ['huaweiaipasswordmemoapp']
+    const validhuaweitypes = ['huaweiaipasswordmemoapp', 'huaweiaitodoapp']
     if (validhuaweitypes.includes(requestdata.verifyType) && res.result.account.email) {
       return {
         errCode: 8002,

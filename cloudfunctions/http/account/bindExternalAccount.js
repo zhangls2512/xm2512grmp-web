@@ -49,7 +49,7 @@ exports.main = async (event) => {
       errFix: '传递有效的verifyCode参数'
     }
   }
-  const validplatforms = ['passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp']
+  const validplatforms = ['passkey', 'sslwxxcx', 'huaweiaipasswordmemoapp', 'huaweiaitodoapp']
   if (!validplatforms.includes(requestdata.platform)) {
     return {
       errCode: 1001,
