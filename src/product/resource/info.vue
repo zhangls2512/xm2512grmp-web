@@ -21,10 +21,6 @@ async function get() {
       id: id
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   data.value = res.data
   if (accesstoken) {
     const checkres = await request({
@@ -108,7 +104,7 @@ async function deleteAdd() {
     }
   })
   TinyModal.message({
-    message: '取消添加成功',
+    message: '删除成功',
     status: 'success'
   })
   get()

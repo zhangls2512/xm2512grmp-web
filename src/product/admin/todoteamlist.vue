@@ -29,10 +29,6 @@ async function get() {
       limit: pagesize.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   data.value = res.data
 }
 get()
@@ -74,10 +70,6 @@ async function search() {
       uid: teamid.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   data.value = userres.data
 }
 async function updateTodoteamEnabled(id) {
@@ -87,10 +79,6 @@ async function updateTodoteamEnabled(id) {
       accessToken: accesstoken,
       id: id
     }
-  })
-  TinyModal.message({
-    message: '请求成功',
-    status: 'success'
   })
   get()
 }

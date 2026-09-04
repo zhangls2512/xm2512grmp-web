@@ -644,10 +644,6 @@ async function getAccessKeys() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   accesskeys.value = res.data.accessKey
 }
 getAccessKeys()

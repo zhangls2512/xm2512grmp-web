@@ -24,10 +24,6 @@ async function get() {
       id: id
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const resdata = res.data
   resdata.ariEndDate = time(resdata.ariEndDate)
   resdata.ariStartDate = time(resdata.ariStartDate)

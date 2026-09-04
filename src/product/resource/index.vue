@@ -19,10 +19,6 @@ async function get() {
     apiPath: '/resource/getRandomResourceList',
     body: body
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   data.value = res.data
 }
 get()

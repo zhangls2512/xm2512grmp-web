@@ -60,10 +60,6 @@ async function getUserInfo() {
       product: 'ssl'
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   webhookurl.value = res.data.webhookUrl
   webhooktoken.value = res.data.webhookToken
   url.value = res.data.webhookUrl

@@ -75,10 +75,6 @@ async function get() {
       limit: pagesize.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const productmap = {
     password: '密码智能备忘录',
     todo: '智能待办',

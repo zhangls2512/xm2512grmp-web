@@ -20,10 +20,6 @@ async function get() {
       id: id
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   domains.value = res.data.domains
   desc.value = res.data.desc
 }

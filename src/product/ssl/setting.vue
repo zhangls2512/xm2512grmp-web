@@ -36,10 +36,6 @@ async function getUserInfo() {
       product: 'ssl'
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   settings.value = res.data.setting
   const dnslist = res.data.dns
   dnslist.forEach(item => {
@@ -174,7 +170,7 @@ async function updateDns() {
       </tiny-radio-group>
     </div>
     <tiny-alert :closable="false"
-      description="选择“验证通过”，系统将自行验证域名 DNS 解析记录是否生效，验证通过才会提交挑战验证；选择“直接”，系统将不自行验证，直接提交挑战验证；选择“关闭”，系统将不自动提交挑战验证。建议选择“验证通过”，降低因 DNS 解析记录生效延迟导致挑战验证不通过使订单失效浪费额度。开启自动配置 DNS 时此功能才会生效。"></tiny-alert>
+      description="选择“验证通过”，系统将自行验证 DNS 解析记录是否生效，验证通过才会提交挑战验证；选择“直接”，系统将不自行验证，直接提交挑战验证；选择“关闭”，系统将不自动提交挑战验证。建议选择“验证通过”，降低 DNS 解析记录生效延迟导致挑战验证不通过使订单失效浪费额度发生的概率。此功能仅对“待提交挑战验证”状态的 DNS 自动配置任务生效。"></tiny-alert>
     <div class="large-bold-text">清理</div>
     <div class="sp">
       <div>清理无用状态的订单</div>

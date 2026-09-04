@@ -17,10 +17,6 @@ async function get() {
       id: id
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const dataout = res.data
   dataout.createDate = time(dataout.createDate)
   dataout.submitReviewDate = time(dataout.submitReviewDate)

@@ -13,10 +13,6 @@ async function getAcmeAccountInfo() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   production.value = res.production
   staging.value = res.staging
 }

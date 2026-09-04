@@ -12,10 +12,6 @@ async function get() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const typemap = {
     emailcode: '邮箱验证码',
     mfa: 'MFA',

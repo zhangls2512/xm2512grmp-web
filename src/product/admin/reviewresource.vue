@@ -113,10 +113,6 @@ async function get() {
       type: type.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const dataout = res.data
   if (dataout) {
     id.value = dataout._id

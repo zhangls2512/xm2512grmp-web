@@ -61,10 +61,6 @@ async function getAccountInfo() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   Object.keys(res.data).forEach(item => {
     accountinfo.value[item] = res.data[item]
     accountinfo.value.endDate = time(accountinfo.value.endDate)
@@ -77,10 +73,6 @@ async function getExternalAccount() {
     body: {
       accessToken: accesstoken
     }
-  })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
   })
   const platformmap = {
     passkey: '通行密钥',

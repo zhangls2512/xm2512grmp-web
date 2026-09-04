@@ -27,10 +27,6 @@ async function get() {
       baxkNumber: baxknumber.value
     }
   })
-  TinyModal.message({
-    message: '查询成功',
-    status: 'success'
-  })
   const data = res.data
   const maintypemap = {
     '0': '许可',

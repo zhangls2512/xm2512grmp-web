@@ -56,10 +56,6 @@ async function getAccountInfo() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const service = res.data.service
   const permission = res.data.permission
   validproducts.forEach(item => {

@@ -63,10 +63,6 @@ async function get() {
       limit: pagesize.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const changetypemap = {
     add: '加',
     minus: '减'

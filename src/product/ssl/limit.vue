@@ -34,10 +34,6 @@ async function getUserInfo() {
       product: 'ssl'
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   production.value = res.data.productionLimit
   staging.value = res.data.stagingLimit
 }
@@ -68,10 +64,6 @@ async function getLimitChange() {
       skip: (currentpage.value - 1) * pagesize.value,
       limit: pagesize.value
     }
-  })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
   })
   const changetypemap = {
     add: '加',

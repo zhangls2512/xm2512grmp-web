@@ -61,10 +61,6 @@ async function get() {
       limit: pagesize.value
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   const maintypemap = {
     '0': '许可',
     '1': '产品备案',

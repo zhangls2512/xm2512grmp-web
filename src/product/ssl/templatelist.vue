@@ -13,10 +13,6 @@ async function get() {
       accessToken: accesstoken
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   template.value = res.data
 }
 get()

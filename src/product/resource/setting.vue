@@ -18,10 +18,6 @@ async function getUserInfo() {
       product: 'resource'
     }
   })
-  TinyModal.message({
-    message: '获取数据成功',
-    status: 'success'
-  })
   personalizedrecommendation.value = res.data.setting.personalizedRecommendation ? true : false
   tags.value = res.data.setting.tag
   inputtags.value = [...res.data.setting.tag]
