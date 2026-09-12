@@ -169,6 +169,7 @@ exports.main = async (event) => {
         await db.collection('externalaccount').add({
           openid: wxres.data.openid,
           platform: 'sslwxxcx',
+          sessionKey: wxres.data.session_key,
           uid: uid
         })
         return {

@@ -172,6 +172,16 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
+      const payorderres = await db.collection('sslpayorder').where({
+        uid: uid
+      }).count()
+      if (payorderres.total > 0) {
+        return {
+          errCode: 8003,
+          errMsg: '存在支付订单记录',
+          errFix: '无修复建议'
+        }
+      }
       const userres = await db.collection('productuser').where({
         product: 'ssl',
         uid: uid

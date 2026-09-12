@@ -261,6 +261,10 @@ const router = createRouter({
         {
           path: '/product/admin/ssllimitchangelist',
           component: () => import('/src/product/admin/ssllimitchangelist.vue')
+        },
+        {
+          path: '/product/admin/sslpayorderlist',
+          component: () => import('/src/product/admin/sslpayorderlist.vue')
         }
       ]
     },

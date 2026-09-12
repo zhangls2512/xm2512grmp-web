@@ -43,12 +43,12 @@ exports.main = async (event) => {
         msg: '其管理的待办未清空'
       }
     }
-    const accountres = await db.collection('todoteamaccount').where({
+    const deleteres = await db.collection('todoteamaccount').where({
       teamId: account.teamId,
       userId: requestdata.id,
       admin: false
     }).remove()
-    if (accountres.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         code: 400,
         msg: '用户不存在'

@@ -57,10 +57,10 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const banlogres = await db.collection('banlog').where({
+    const deleteres = await db.collection('banlog').where({
       _id: requestdata.id
     }).remove()
-    if (banlogres.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
         errMsg: '违规记录不存在',

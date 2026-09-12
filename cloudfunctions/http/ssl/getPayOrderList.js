@@ -18,6 +18,14 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
+  let skip = 0
+  let limit = 10
+  if (Number.isInteger(requestdata.skip) && requestdata.skip >= 0) {
+    skip = requestdata.skip
+  }
+  if (Number.isInteger(requestdata.limit) && requestdata.limit > 0 && requestdata.limit <= 20) {
+    limit = requestdata.limit
+  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
@@ -43,26 +51,28 @@ exports.main = async (event) => {
         requestIp: event.headers['x-real-ip']
       },
       permission: [],
-      service: ['todo'],
-      apiName: 'todo_clearBackup'
+      service: ['ssl'],
+      apiName: 'ssl_getPayOrderList'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const deleteres = await db.collection('todo').where({
+    const orderres = await db.collection('sslpayorder').where({
       uid: res.result.account._id
-    }).remove()
-    if (deleteres.deleted == 0) {
-      return {
-        errCode: 8000,
-        errMsg: '无数据可清理',
-        errFix: '无修复建议'
-      }
-    }
+    }).orderBy('createTime', 'desc').skip(skip).limit(limit).field({
+      _id: false,
+      uid: false
+    }).get()
     return {
       errCode: 0,
-      errMsg: '成功'
+      errMsg: '成功',
+      data: orderres.data.map(item => {
+        return {
+          productName: '4个正式额度',
+          ...item
+        }
+      })
     }
   }
 }

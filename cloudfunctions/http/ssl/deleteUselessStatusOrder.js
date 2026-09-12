@@ -50,11 +50,11 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const orderres = await db.collection('sslorder').where({
+    const deleteres = await db.collection('sslorder').where({
       status: db.command.in(['invalid', 'expired']),
       uid: res.result.account._id
     }).remove()
-    if (orderres.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
         errMsg: '无订单可清理',

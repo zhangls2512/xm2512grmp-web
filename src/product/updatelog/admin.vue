@@ -2,11 +2,21 @@
 document.title = '轩铭2512 - 更新日志 - 管理后台'
 const data = [
   {
+    versionNumber: '1.4.1',
+    releaseDate: '2026-09-12',
+    logs: [
+      {
+        type: 'A',
+        content: 'SSL 证书管理 新增 支付订单管理'
+      }
+    ]
+  },
+  {
     versionNumber: '1.4.0',
     releaseDate: '2025-09-15',
     logs: [
       {
-        type: 'U',
+        type: 'A',
         content: '新增 产品推送管理'
       }
     ]

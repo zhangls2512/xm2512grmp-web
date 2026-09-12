@@ -536,6 +536,12 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
+      await db.collection('externalaccount').where({
+        openid: wxres.data.openid,
+        platform: 'sslwxxcx'
+      }).update({
+        sessionKey: wxres.data.session_key
+      })
       const uid = externalaccount.data[0].uid
       const accountres = await db.collection('account').where({
         _id: uid

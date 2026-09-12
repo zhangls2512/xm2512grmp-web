@@ -50,11 +50,11 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const dnstaskres = await db.collection('dnstask').where({
+    const deleteres = await db.collection('dnstask').where({
       status: db.command.in(['setfail', 'submitsuccess', 'submitfail', 'manualend', 'autoend', 'timeoutend']),
       uid: res.result.account._id
     }).remove()
-    if (dnstaskres.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
         errMsg: '无任务可清理',

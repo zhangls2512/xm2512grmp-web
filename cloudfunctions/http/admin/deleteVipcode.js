@@ -57,10 +57,10 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const vipcoderes = await db.collection('vipcode').where({
+    const deleteres = await db.collection('vipcode').where({
       _id: requestdata.id
     }).remove()
-    if (vipcoderes.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
         errMsg: '会员兑换码不存在',

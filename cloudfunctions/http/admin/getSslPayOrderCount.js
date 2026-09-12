@@ -18,6 +18,10 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
+  let uid = db.command.neq('')
+  if (typeof (requestdata.uid) == 'string' && requestdata.uid.length == 32) {
+    uid = requestdata.uid
+  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
@@ -42,27 +46,21 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: [],
-      service: ['todo'],
-      apiName: 'todo_clearBackup'
+      permission: ['account', 'admin'],
+      service: ['admin'],
+      apiName: 'admin_getSslPayOrderCount'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const deleteres = await db.collection('todo').where({
-      uid: res.result.account._id
-    }).remove()
-    if (deleteres.deleted == 0) {
-      return {
-        errCode: 8000,
-        errMsg: '无数据可清理',
-        errFix: '无修复建议'
-      }
-    }
+    const countres = await db.collection('sslpayorder').where({
+      uid: uid
+    }).count()
     return {
       errCode: 0,
-      errMsg: '成功'
+      errMsg: '成功',
+      count: countres.total
     }
   }
 }

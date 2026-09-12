@@ -323,6 +323,16 @@ const apis = ref([
     desc: '获取 SSL 证书额度变更列表'
   },
   {
+    product: '管理后台',
+    name: 'admin_getSslPayOrderCount',
+    desc: '获取 SSL 证书支付订单总数'
+  },
+  {
+    product: '管理后台',
+    name: 'admin_getSslPayOrderList',
+    desc: '获取 SSL 证书支付订单列表'
+  },
+  {
     product: '资源',
     name: 'resource_getRandomResourceList',
     desc: '随机获取资源列表'
@@ -426,6 +436,26 @@ const apis = ref([
     product: 'SSL 证书',
     name: 'ssl_getLimitChangeList',
     desc: '获取额度变更列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_newPayOrder',
+    desc: '新增支付订单'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getPayOrderList',
+    desc: '获取支付订单列表'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_getPayOrderData',
+    desc: '获取支付订单支付数据'
+  },
+  {
+    product: 'SSL 证书',
+    name: 'ssl_deletePayOrder',
+    desc: '删除支付订单'
   },
   {
     product: 'SSL 证书',

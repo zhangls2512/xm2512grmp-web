@@ -1,6 +1,7 @@
 'use strict'
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
+  const crypto = require('crypto')
   const app = tcb.init()
   const db = app.database()
   if (event.httpMethod != 'POST') {
@@ -16,6 +17,13 @@ exports.main = async (event) => {
       errCode: 1001,
       errMsg: '请求参数错误',
       errFix: '传递有效的accessToken或accessKey参数'
+    }
+  }
+  if (!Number.isInteger(requestdata.count) || requestdata.count <= 0) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的count参数'
     }
   }
   let type = ''
@@ -42,27 +50,41 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: [],
-      service: ['todo'],
-      apiName: 'todo_clearBackup'
+      permission: ['account', 'ssl'],
+      service: ['ssl'],
+      apiName: 'ssl_newPayOrder'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const deleteres = await db.collection('todo').where({
-      uid: res.result.account._id
-    }).remove()
-    if (deleteres.deleted == 0) {
+    const uid = res.result.account._id
+    const ordergetres = await db.collection('sslpayorder').where({
+      uid: uid,
+      finished: false
+    }).get()
+    if (ordergetres.data.length > 0) {
       return {
         errCode: 8000,
-        errMsg: '无数据可清理',
+        errMsg: '存在未完成的订单',
         errFix: '无修复建议'
       }
     }
+    const orderid = crypto.randomUUID()
+    await db.collection('sslpayorder').add({
+      orderId: orderid,
+      wxOrderId: '',
+      productId: '961e8d7b6f6745f59b2d',
+      count: requestdata.count,
+      finished: false,
+      uid: uid,
+      createTime: Date.now(),
+      finishTime: -1
+    })
     return {
       errCode: 0,
-      errMsg: '成功'
+      errMsg: '成功',
+      id: orderid
     }
   }
 }

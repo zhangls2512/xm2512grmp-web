@@ -18,6 +18,13 @@ exports.main = async (event) => {
       errFix: '传递有效的accessToken或accessKey参数'
     }
   }
+  if (typeof (requestdata.id) != 'string' || requestdata.id.length != 36) {
+    return {
+      errCode: 1001,
+      errMsg: '请求参数错误',
+      errFix: '传递有效的id参数'
+    }
+  }
   let type = ''
   let code = ''
   if (requestdata.accessToken) {
@@ -43,20 +50,22 @@ exports.main = async (event) => {
         requestIp: event.headers['x-real-ip']
       },
       permission: [],
-      service: ['todo'],
-      apiName: 'todo_clearBackup'
+      service: ['ssl'],
+      apiName: 'ssl_deletePayOrder'
     }
   })
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const deleteres = await db.collection('todo').where({
+    const deleteres = await db.collection('sslpayorder').where({
+      orderId: requestdata.id,
+      finished: false,
       uid: res.result.account._id
     }).remove()
     if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
-        errMsg: '无数据可清理',
+        errMsg: '订单不存在',
         errFix: '无修复建议'
       }
     }

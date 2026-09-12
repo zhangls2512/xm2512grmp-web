@@ -1,9 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "npm update && vite",
-    "build": "npm update && vite build",
-    "preview": "npm update && vite build && vite preview",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite build && vite preview",
     "release": "npm update && vite build && tcb hosting delete -e zhangls2512-5ggbio7hc46f4036 && tcb hosting deploy ./dist -e zhangls2512-5ggbio7hc46f4036"
   },
   "dependencies": {

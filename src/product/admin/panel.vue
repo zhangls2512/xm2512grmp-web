@@ -95,6 +95,11 @@ const tabs = [
         id: 'ssllimitchangelist',
         label: '额度管理',
         customIcon: icon.IconTotal()
+      },
+      {
+        id: 'sslpayorderlist',
+        label: '支付订单管理',
+        customIcon: icon.IconPurchasePlannedOrder()
       }
     ]
   },
@@ -156,7 +161,7 @@ function tabClick(data) {
         <div class="sp">
           <a class="footer-text" href="/product/baxk/jqcx?baxknumber=轩铭2512品备3号-W" target="_blank">轩铭2512品备3号-W</a>
           <tiny-divider direction="vertical"></tiny-divider>
-          <div class="footer-text">Version 1.4.0</div>
+          <div class="footer-text">Version 1.4.1</div>
           <tiny-divider direction="vertical"></tiny-divider>
           <router-link class="footer-text" to="/product/updatelog/admin" target="_blank">更新日志</router-link>
         </div>

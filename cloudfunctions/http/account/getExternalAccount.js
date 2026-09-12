@@ -37,7 +37,8 @@ exports.main = async (event) => {
       uid: uid
     }).field({
       _id: false,
-      uid: false
+      uid: false,
+      sessionKey: false
     }).get()
     return {
       errCode: 0,

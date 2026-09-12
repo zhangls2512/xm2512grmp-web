@@ -67,7 +67,7 @@ exports.main = async (event) => {
     const { data } = await axios.post('http://api.chuckfang.com:12580/subscribe/openBroadcast', channelname + '频道有新版本：' + receivedata.newVersion + '。', {
       params: {
         channelId: 'dfe6398536a54e1dad34928d6b812944',
-        unionId: process.env.unionid,
+        unionId: process.env.meowunionid,
         url: 'https://learn.microsoft.com/en-us/windows-insider/about'
       },
       headers: {

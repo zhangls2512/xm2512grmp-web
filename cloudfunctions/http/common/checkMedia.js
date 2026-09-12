@@ -61,7 +61,7 @@ exports.main = async (event) => {
   })
   if (checkres.data.errcode) {
     return {
-      errCode: 8000,
+      errCode: 8001,
       errMsg: '检测任务创建失败，原因：' + tokenres.data.errmsg,
       errFix: '无修复建议'
     }
@@ -94,7 +94,7 @@ exports.main = async (event) => {
   }
   if (result.suggest == 'error') {
     return {
-      errCode: 8000,
+      errCode: 8002,
       errMsg: '检测失败，错误码：' + result.errCode,
       errFix: '无修复建议'
     }
@@ -107,7 +107,7 @@ exports.main = async (event) => {
       21000: '其他'
     }
     return {
-      errCode: 8000,
+      errCode: 8003,
       errMsg: '检测不通过，原因：' + labelmap[result.label],
       errFix: '无修复建议'
     }

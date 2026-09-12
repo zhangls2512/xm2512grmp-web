@@ -58,11 +58,11 @@ exports.main = async (event) => {
   if (res.result.errCode != 0) {
     return res.result
   } else {
-    const passwordres = await db.collection('password').where({
+    const deleteres = await db.collection('password').where({
       type: db.command.in([...new Set(requestdata.types)]),
       uid: res.result.account._id
     }).remove()
-    if (passwordres.deleted == 0) {
+    if (deleteres.deleted == 0) {
       return {
         errCode: 8000,
         errMsg: '无数据可清理',
