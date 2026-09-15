@@ -100,7 +100,7 @@ function pushloglist(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="success" @click="sendpush(row._id)">推送</tiny-button>
-            <tiny-button type="info" @click="pushloglist(row._id)">日志</tiny-button>
+            <div><tiny-button type="info" @click="pushloglist(row._id)">日志</tiny-button></div>
           </div>
         </template>
       </tiny-grid-column>

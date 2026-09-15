@@ -130,7 +130,7 @@ async function resetTodoteamAdminPassword(teamid) {
               @click="updateTodoteamEnabled(row.teamId)">封禁</tiny-button>
             <tiny-button v-if="row.teamEnabled == false" type="success"
               @click="updateTodoteamEnabled(row.teamId)">解封</tiny-button>
-            <tiny-button type="warning" @click="resetTodoteamAdminPassword(row.teamId)">重置密码</tiny-button>
+            <div><tiny-button type="warning" @click="resetTodoteamAdminPassword(row.teamId)">重置密码</tiny-button></div>
           </div>
         </template>
       </tiny-grid-column>

@@ -730,7 +730,7 @@ async function getEmailCodea() {
         <div v-if="accountinfo.mfa == false">未设置</div>
         <div v-if="accountinfo.mfa == true">已设置</div>
         <tiny-button v-if="accountinfo.mfa == false" type="success" @click="setMfaOpen">开启</tiny-button>
-        <tiny-button v-if="accountinfo.mfa == true" type="danger" @click="removeMfaOpen">关闭</tiny-button>
+        <div><tiny-button v-if="accountinfo.mfa == true" type="danger" @click="removeMfaOpen">关闭</tiny-button></div>
       </div>
       <tiny-alert v-if="accountinfo.password == true" :closable="false"
         description="为了保证账号安全，建议设置强密码、定期修改密码，或关闭密码，仅允许将短期有效、更安全的邮箱验证码、MFA 作为允许的登录验证方式。"></tiny-alert>
@@ -740,7 +740,8 @@ async function getEmailCodea() {
         <div v-if="accountinfo.password == true">已设置</div>
         <tiny-button v-if="accountinfo.password == false" type="success" @click="setPasswordOpen">开启</tiny-button>
         <tiny-button v-if="accountinfo.password == true" type="info" @click="setPasswordOpen">修改</tiny-button>
-        <tiny-button v-if="accountinfo.password == true" type="danger" @click="removePasswordOpen">关闭</tiny-button>
+        <div><tiny-button v-if="accountinfo.password == true" type="danger" @click="removePasswordOpen">关闭</tiny-button>
+        </div>
       </div>
       <div class="sp">
         <div class="bold-text">登录保持时长</div>

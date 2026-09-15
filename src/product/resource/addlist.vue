@@ -255,8 +255,8 @@ async function deleteAddResource(resourceid) {
           </div>
           <div class="sp">
             <tiny-button type="success" @click="syncSingle(item._id)">同步</tiny-button>
-            <tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button>
-            <tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button>
+            <div><tiny-button type="info" @click="updateAddResourceOpen(item)">修改</tiny-button></div>
+            <div><tiny-button type="danger" @click="deleteAddResource(item.resourceId)">删除</tiny-button></div>
           </div>
         </div>
       </div>

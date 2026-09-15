@@ -231,7 +231,7 @@ async function getEmailCode() {
               <tiny-form-item>
                 <div class="sp">
                   <tiny-button type="success" @click="login">登录</tiny-button>
-                  <tiny-button type="info" @click="loginByPasskey">通行密钥登录</tiny-button>
+                  <div><tiny-button type="info" @click="loginByPasskey">通行密钥登录</tiny-button></div>
                 </div>
               </tiny-form-item>
             </tiny-form>

@@ -170,11 +170,11 @@ async function deleteResource(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="info(row._id)">详情</tiny-button>
-            <tiny-button v-if="row.releaseStatus == 'unrelease' && row.name != ''" type="success"
-              @click="release(row._id)">上架</tiny-button>
-            <tiny-button v-if="row.releaseStatus == 'release'" type="danger"
-              @click="unrelease(row._id)">下架</tiny-button>
-            <tiny-button type="info" v-if="!row.uid" @click="update(row._id)">修改</tiny-button>
+            <div><tiny-button v-if="row.releaseStatus == 'unrelease' && row.name != ''" type="success"
+                @click="release(row._id)">上架</tiny-button></div>
+            <div><tiny-button v-if="row.releaseStatus == 'release'" type="danger"
+                @click="unrelease(row._id)">下架</tiny-button></div>
+            <div><tiny-button type="info" v-if="!row.uid" @click="update(row._id)">修改</tiny-button></div>
             <tiny-popconfirm v-if="row.releaseStatus == 'unrelease' && !row.uid" title="提示" message="删除成功后无法恢复，确定删除？"
               type="warning" trigger="hover" @confirm="deleteResource(row._id)">
               <template #reference>

@@ -149,12 +149,12 @@ async function deleteResource(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="info(row._id)">详情</tiny-button>
-            <tiny-button v-if="row.reviewStatus != 'processing'" type="success" :disabled="row.disallowUpdate"
-              @click="submitReview(row._id)">提交审核</tiny-button>
-            <tiny-button v-if="row.reviewStatus == 'processing'" type="danger"
-              @click="unsubmitReview(row._id)">撤回审核</tiny-button>
-            <tiny-button v-if="row.reviewStatus != 'processing'" type="info" :disabled="row.disallowUpdate"
-              @click="update(row._id)">修改</tiny-button>
+            <div><tiny-button v-if="row.reviewStatus != 'processing'" type="success" :disabled="row.disallowUpdate"
+                @click="submitReview(row._id)">提交审核</tiny-button></div>
+            <div><tiny-button v-if="row.reviewStatus == 'processing'" type="danger"
+                @click="unsubmitReview(row._id)">撤回审核</tiny-button></div>
+            <div><tiny-button v-if="row.reviewStatus != 'processing'" type="info" :disabled="row.disallowUpdate"
+                @click="update(row._id)">修改</tiny-button></div>
             <tiny-popconfirm v-if="!row.name && row.reviewStatus != 'processing'" title="提示" message="删除成功后无法恢复，确定删除？"
               type="warning" trigger="hover" @confirm="deleteResource(row._id)">
               <template #reference>

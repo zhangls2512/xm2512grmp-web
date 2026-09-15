@@ -866,7 +866,7 @@ async function deleteAccessKey(index) {
                 @click="updateAccessKeyStatus($rowIndex, '启用')">启用</tiny-button>
               <tiny-button v-if="row.status == true" type="danger"
                 @click="updateAccessKeyStatus($rowIndex, '禁用')">禁用</tiny-button>
-              <tiny-button type="info" @click="updateAccessKeyOpen(row, $rowIndex)">编辑</tiny-button>
+              <div><tiny-button type="info" @click="updateAccessKeyOpen(row, $rowIndex)">编辑</tiny-button></div>
               <tiny-popconfirm title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover"
                 @confirm="deleteAccessKey($rowIndex)">
                 <template #reference>

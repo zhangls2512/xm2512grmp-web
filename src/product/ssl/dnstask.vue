@@ -145,12 +145,12 @@ async function deleteDnsTask(id) {
         <template #default="{ row }">
           <div class="czsp">
             <tiny-button type="info" @click="orderinfo(row.orderId)">订单</tiny-button>
-            <tiny-button v-if="row.status == 'setfail' || row.status == 'submitfail'" type="info"
-              @click="error(row.error)">原因</tiny-button>
-            <tiny-button v-if="row.status == 'setpending' || row.status == 'submitpending'" type="danger"
-              @click="endDnsTask(row._id)">结束</tiny-button>
-            <tiny-button v-if="row.status != 'setpending' && row.status != 'submitpending'" type="danger"
-              @click="deleteDnsTask(row._id)">删除</tiny-button>
+            <div><tiny-button v-if="row.status == 'setfail' || row.status == 'submitfail'" type="info"
+                @click="error(row.error)">原因</tiny-button></div>
+            <div><tiny-button v-if="row.status == 'setpending' || row.status == 'submitpending'" type="danger"
+                @click="endDnsTask(row._id)">结束</tiny-button></div>
+            <div><tiny-button v-if="row.status != 'setpending' && row.status != 'submitpending'" type="danger"
+                @click="deleteDnsTask(row._id)">删除</tiny-button></div>
           </div>
         </template>
       </tiny-grid-column>

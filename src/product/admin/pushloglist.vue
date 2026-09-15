@@ -106,8 +106,8 @@ async function deletePush(id) {
           <div class="czsp">
             <tiny-button v-if="row.status == 'fail'" type="info" @click="error(row.error)">原因</tiny-button>
             <tiny-button v-if="row.status == 'success'" type="warning" @click="revokePush(row._id)">撤回</tiny-button>
-            <tiny-button v-if="row.status != 'pending' && row.status != 'success'" type="danger"
-              @click="deletePush(row._id)">删除</tiny-button>
+            <div><tiny-button v-if="row.status != 'pending' && row.status != 'success'" type="danger"
+                @click="deletePush(row._id)">删除</tiny-button></div>
           </div>
         </template>
       </tiny-grid-column>

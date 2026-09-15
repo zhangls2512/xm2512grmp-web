@@ -147,8 +147,8 @@ function openAppDetail(bundleName) {
               type="info" @click="use(item.name)">去使用</tiny-button>
             <tiny-button v-if="productszt[item.name + 'ktzt'] == false" type="success"
               :disabled="productszt[item.name + 'fjzt']" @click="openb(item.name)">开通</tiny-button>
-            <tiny-button v-if="productszt[item.name + 'ktzt'] == true" type="danger"
-              @click="close(item.name)">取消开通</tiny-button>
+            <div><tiny-button v-if="productszt[item.name + 'ktzt'] == true" type="danger"
+                @click="close(item.name)">取消开通</tiny-button></div>
           </div>
         </div>
       </div>
@@ -171,8 +171,8 @@ function openAppDetail(bundleName) {
               @click="openAppDetail('com.zhangxm.aipasswordmemo')">去使用</tiny-button>
             <tiny-button v-if="productszt.passwordktzt == false" type="success" :disabled="productszt.passwordfjzt"
               @click="openb('password')">开通</tiny-button>
-            <tiny-button v-if="productszt.passwordktzt == true" type="danger"
-              @click="close('password')">取消开通</tiny-button>
+            <div><tiny-button v-if="productszt.passwordktzt == true" type="danger"
+                @click="close('password')">取消开通</tiny-button></div>
           </div>
         </div>
       </div>
@@ -195,7 +195,8 @@ function openAppDetail(bundleName) {
               @click="openAppDetail('com.zhangxm.aitodo')">去使用</tiny-button>
             <tiny-button v-if="productszt.todoktzt == false" type="success" :disabled="productszt.todofjzt"
               @click="openb('todo')">开通</tiny-button>
-            <tiny-button v-if="productszt.todoktzt == true" type="danger" @click="close('todo')">取消开通</tiny-button>
+            <div><tiny-button v-if="productszt.todoktzt == true" type="danger" @click="close('todo')">取消开通</tiny-button>
+            </div>
           </div>
         </div>
       </div>

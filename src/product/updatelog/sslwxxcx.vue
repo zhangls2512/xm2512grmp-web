@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（微信小程序）'
 const data = [
   {
+    versionNumber: '2.2.0',
+    releaseDate: '2026-09-14',
+    logs: [
+      {
+        type: 'U',
+        content: '个人中心 新增 1 元购买 4 个正式额度、支付订单记录'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.0',
     releaseDate: '2026-08-31',
     logs: [
