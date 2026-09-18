@@ -76,7 +76,7 @@ exports.main = async (event) => {
         code: code,
         requestIp: event.headers['x-real-ip']
       },
-      permission: ['account', product],
+      permission: [],
       service: [product],
       apiName: 'product_updateNoticeSetting'
     }
