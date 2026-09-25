@@ -139,6 +139,8 @@ exports.main = async (event) => {
         tag: requestdata.tag,
         version: requestdata.version
       },
+      reviewStatus: 'pending',
+      uid: '',
       searchTag: requestdata.tag.map(item => item.value),
       tag: requestdata.tag,
       version: requestdata.version

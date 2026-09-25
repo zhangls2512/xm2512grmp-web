@@ -69,10 +69,10 @@ exports.main = async (event) => {
       }
     }
     const data = orderres.data[0]
-    if (data.status == 'processing') {
+    if (!['invalid', 'expired', 'valid'].includes(data.status)) {
       return {
         errCode: 8001,
-        errMsg: '订单状态为签发中',
+        errMsg: '订单未失效',
         errFix: '无修复建议'
       }
     }

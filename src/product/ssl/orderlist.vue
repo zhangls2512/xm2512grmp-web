@@ -157,8 +157,8 @@ async function deleteOrder(id) {
                 @click="authorization(row._id)">授权</tiny-button></div>
             <div><tiny-button v-if="row.status == 'ready'" type="success" @click="submit(row._id)">提交</tiny-button>
             </div>
-            <tiny-popconfirm v-if="row.status != 'processing'" title="提示" message="删除成功后无法恢复，确定删除？" type="warning"
-              trigger="hover" @confirm="deleteOrder(row._id)">
+            <tiny-popconfirm v-if="row.status != 'pending' && row.status != 'ready' && row.status != 'processing'"
+              title="提示" message="删除成功后无法恢复，确定删除？" type="warning" trigger="hover" @confirm="deleteOrder(row._id)">
               <template #reference>
                 <tiny-button type="danger">删除</tiny-button>
               </template>

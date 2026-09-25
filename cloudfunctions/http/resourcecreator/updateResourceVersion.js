@@ -88,11 +88,13 @@ exports.main = async (event) => {
     await db.collection('resource').where({
       _id: requestdata.id
     }).update({
+      version: requestdata.version,
       reviewInfo: reviewinfo,
+      reviewStatus: 'pending',
       submitReviewDate: Date.now(),
-      version: requestdata.version
+      uid: ''
     })
-    if (requestdata.version && data.version != requestdata.version && data.releaseStatus == 'release') {
+    if (requestdata.version && data.version != requestdata.version) {
       const userres = await db.collection('resourceadd').where({
         resourceId: requestdata.id
       }).get()
