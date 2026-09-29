@@ -198,7 +198,7 @@ async function deleteAddResource(resourceid) {
             <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
             <tiny-button type="success" @click="addTag">添加</tiny-button>
           </div>
-          <div v-for="(item, index) in tags" class="sp">
+          <div v-for="item, index in tags" class="sp">
             <tiny-tag type="info">{{ item }}</tiny-tag>
             <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
           </div>
@@ -206,7 +206,7 @@ async function deleteAddResource(resourceid) {
       </tiny-form-item>
       <tiny-form-item v-if="mytag.length > 0" label="我的标签">
         <div class="cz">
-          <div v-for="(item, index) in mytag">
+          <div v-for="item, index in mytag">
             <div class="sp">
               <div>{{ index + 1 }}.</div>
               <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
@@ -270,7 +270,7 @@ async function deleteAddResource(resourceid) {
           <tiny-input v-model="addtag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addAddTag">添加</tiny-button>
         </div>
-        <div v-for="(item, index) in addtags" class="sp">
+        <div v-for="item, index in addtags" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeAddTag(index)">删除</tiny-button>
         </div>

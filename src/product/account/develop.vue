@@ -899,7 +899,7 @@ async function deleteAccessKey(index) {
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
           <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
-        <div v-for="(item, index) in accesskeyallowip" class="sp">
+        <div v-for="item, index in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
         </div>
@@ -933,7 +933,7 @@ async function deleteAccessKey(index) {
           <tiny-input v-model="ip" clearable placeholder="请输入白名单 IP（CIDR 表达式）"></tiny-input>
           <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
-        <div v-for="(item, index) in accesskeyallowip" class="sp">
+        <div v-for="item, index in accesskeyallowip" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
         </div>

@@ -128,7 +128,7 @@ function update() {
         <div>{{ data.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="(item, index) in data.location" class="sp">
+      <div v-for="item, index in data.location" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
@@ -172,7 +172,7 @@ function update() {
           <tiny-input v-model="tag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addTag">添加</tiny-button>
         </div>
-        <div v-for="(item, index) in tags" class="sp">
+        <div v-for="item, index in tags" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeTag(index)">删除</tiny-button>
         </div>
@@ -181,7 +181,7 @@ function update() {
           <tiny-button type="success" @click="inputTag">添加</tiny-button>
         </div>
         <div v-if="mytag.length > 0" class="bold-text">我的标签</div>
-        <div v-for="(item, index) in mytag">
+        <div v-for="item, index in mytag">
           <div class="sp">
             <div>{{ index + 1 }}.</div>
             <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>

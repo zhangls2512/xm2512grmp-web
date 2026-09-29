@@ -143,7 +143,7 @@ async function reReview() {
         <div v-if="data.uid != ''">{{ data.uid }}</div>
         <tiny-button v-if="!data.uid" type="info" @click="updateAuuOpen">修改</tiny-button>
       </div>
-      <div v-for="(item, index) in data.allowUpdateUser" v-if="data.allowUpdateUser.length > 0 && !data.uid" class="sp">
+      <div v-for="item, index in data.allowUpdateUser" v-if="data.allowUpdateUser.length > 0 && !data.uid" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>{{ item }}</div>
       </div>
@@ -171,7 +171,7 @@ async function reReview() {
         <div>{{ data.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="(item, index) in data.location" class="sp">
+      <div v-for="item, index in data.location" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
@@ -220,7 +220,7 @@ async function reReview() {
         <div>{{ data.reviewInfo.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="(item, index) in data.reviewInfo.location" class="sp">
+      <div v-for="item, index in data.reviewInfo.location" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>
@@ -248,7 +248,7 @@ async function reReview() {
           <tiny-input v-model="auuuser" clearable minlength="32" maxlength="32" placeholder="请输入 UID"></tiny-input>
           <tiny-button type="success" @click="add">添加</tiny-button>
         </div>
-        <div v-for="(item, index) in auu" class="sp">
+        <div v-for="item, index in auu" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
         </div>

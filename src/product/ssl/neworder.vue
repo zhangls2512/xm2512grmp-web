@@ -172,7 +172,7 @@ async function newOrder() {
             <tiny-input v-model="domain" placeholder="请输入域名 / IP 地址"></tiny-input>
             <tiny-button type="success" @click="add">添加</tiny-button>
           </div>
-          <div v-for="(item, index) in domains" class="sp">
+          <div v-for="item, index in domains" class="sp">
             <tiny-tag type="info">{{ item }}</tiny-tag>
             <tiny-button type="danger" @click="remove(index)">删除</tiny-button>
           </div>

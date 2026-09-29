@@ -61,7 +61,7 @@ async function copy() {
         <div>{{ data.reviewInfo.version }}</div>
       </div>
       <div class="bold-text">地址</div>
-      <div v-for="(item, index) in data.reviewInfo.location" class="sp">
+      <div v-for="item, index in data.reviewInfo.location" class="sp">
         <div>{{ index + 1 }}.</div>
         <div>
           <span v-if="item.name != ''">{{ item.name }}：</span>

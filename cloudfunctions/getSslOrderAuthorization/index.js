@@ -85,7 +85,7 @@ exports.main = async (event) => {
         function dnspersist01token(challenge, authorization) {
           const arr = []
           arr.push(challenge['issuer-domain-names'][0])
-          arr.push(acmeaccounturl)
+          arr.push('accounturi=' + acmeaccounturl)
           if (authorization.wildcard) {
             arr.push('policy=wildcard')
           }

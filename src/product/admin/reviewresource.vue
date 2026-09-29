@@ -339,7 +339,7 @@ async function updateReviewResult() {
           <div>{{ version }}</div>
         </div>
         <div class="bold-text">地址</div>
-        <div v-for="(item, index) in location" class="sp">
+        <div v-for="item, index in location" class="sp">
           <div>{{ index + 1 }}.</div>
           <div>
             <span v-if="item.name != ''">{{ item.name }}：</span>

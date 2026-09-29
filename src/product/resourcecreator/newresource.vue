@@ -403,7 +403,7 @@ async function newResource() {
             <tiny-tag type="info">持续更新中</tiny-tag>
           </div>
           <div class="cz">
-            <div v-for="(item, index) in frequentlocationtag" class="sp">
+            <div v-for="item, index in frequentlocationtag" class="sp">
               <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
               <tiny-button type="success" @click="addFrequentLocationTag(index)">添加</tiny-button>
             </div>
@@ -461,7 +461,7 @@ async function newResource() {
                 <div class="bold-text">常用</div>
                 <tiny-tag type="info">持续更新中</tiny-tag>
               </div>
-              <div v-for="(item, index) in frequenttag" class="sp">
+              <div v-for="item, index in frequenttag" class="sp">
                 <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
                 <tiny-button type="success" @click="addFrequentTag(index)">添加</tiny-button>
               </div>
@@ -472,7 +472,7 @@ async function newResource() {
                 <tiny-button type="info" @click="aiGenerate('tag')">生成</tiny-button>
               </div>
               <tiny-alert v-if="aitag.length > 0" :closable="false" description="AI 生成结果仅供参考"></tiny-alert>
-              <div v-for="(item, index) in aitag" class="sp">
+              <div v-for="item, index in aitag" class="sp">
                 <tiny-tag :type="item.type">{{ item.value }}</tiny-tag>
                 <tiny-button type="success" @click="addAiTag(index)">添加</tiny-button>
               </div>

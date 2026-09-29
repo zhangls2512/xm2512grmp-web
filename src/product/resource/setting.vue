@@ -110,7 +110,7 @@ function removeTag(index) {
       <tiny-button type="info" @click="openDialog">编辑</tiny-button>
     </div>
     <tiny-alert :closable="false" description="你可以在搜索等场景中一键添加标签用于搜索。"></tiny-alert>
-    <div v-for="(item, index) in tags">
+    <div v-for="item, index in tags">
       <div class="sp">
         <div>{{ index + 1 }}.</div>
         <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
@@ -122,12 +122,12 @@ function removeTag(index) {
           <tiny-input v-model="inputtag" clearable placeholder="请输入内容"></tiny-input>
           <tiny-button type="success" @click="addIntag">添加单标签</tiny-button>
         </div>
-        <div v-for="(item, index) in tag" class="sp">
+        <div v-for="item, index in tag" class="sp">
           <tiny-tag type="info">{{ item }}</tiny-tag>
           <tiny-button type="danger" @click="removeIntag(index)">删除</tiny-button>
         </div>
         <tiny-button type="success" @click="addTag">添加标签组</tiny-button>
-        <div v-for="(item, index) in inputtags" class="sp">
+        <div v-for="item, index in inputtags" class="sp">
           <div class="sp">
             <tiny-tag v-for="item in item" type="info">{{ item }}</tiny-tag>
           </div>
