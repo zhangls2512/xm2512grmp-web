@@ -1,4 +1,5 @@
 import '@opentiny/vue-theme/dark-theme-index.css'
+import TinyThemeTool from '@opentiny/vue-theme/theme-tool'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -16,6 +17,13 @@ matchMedia('(prefers-color-scheme:dark)').addEventListener('change', (e) => {
   }
   if (darkmode) {
     document.documentElement.classList.add('dark')
+  }
+})
+const themeTool = new TinyThemeTool()
+themeTool.changeTheme({
+  data: {
+    'tv-font-family': 'HarmonyOS_Sans',
+    'tv-font-family-1': 'HarmonyOS_Sans'
   }
 })
 const app = createApp(App)

@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
 import router from '../../router'
-import time from '../../time'
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
 const currentpage = ref(1)
@@ -130,7 +129,7 @@ async function resetTodoteamAdminPassword(teamid) {
               @click="updateTodoteamEnabled(row.teamId)">封禁</tiny-button>
             <tiny-button v-if="row.teamEnabled == false" type="success"
               @click="updateTodoteamEnabled(row.teamId)">解封</tiny-button>
-            <div><tiny-button type="warning" @click="resetTodoteamAdminPassword(row.teamId)">重置密码</tiny-button></div>
+            <tiny-button type="warning" @click="resetTodoteamAdminPassword(row.teamId)">重置密码</tiny-button>
           </div>
         </template>
       </tiny-grid-column>
