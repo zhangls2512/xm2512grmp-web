@@ -35,7 +35,7 @@ exports.main = async (event) => {
       errFix: '无修复建议'
     }
   }
-  let pushToken = pushres.data[0].pushToken
+  const pushToken = pushres.data[0].pushToken
   const index = pushToken.findIndex(item => item == requestdata.pushToken)
   if (index == -1) {
     pushToken.push(requestdata.pushToken)
