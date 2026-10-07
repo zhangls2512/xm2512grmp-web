@@ -45,7 +45,7 @@ exports.main = async (event) => {
     if (err.response) {
       return {
         errCode: err.response.status,
-        errMsg: err.response.data,
+        errMsg: JSON.stringify(err.response.data),
         errFix: '无修复建议'
       }
     } else {
