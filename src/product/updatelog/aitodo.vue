@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 智能待办'
 const data = [
   {
+    versionNumber: '1.1.1.2',
+    releaseDate: '2026-10-08',
+    logs: [
+      {
+        type: 'U',
+        content: '透明图标按钮添加柔和点光源效果'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.1.1',
     releaseDate: '2026-08-11',
     logs: [

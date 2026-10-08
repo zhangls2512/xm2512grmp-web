@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 密码智能备忘录'
 const data = [
   {
+    versionNumber: '2.1.2.2',
+    releaseDate: '2026-10-08',
+    logs: [
+      {
+        type: 'U',
+        content: '透明图标按钮添加柔和点光源效果'
+      }
+    ]
+  },
+  {
     versionNumber: '2.1.2.1',
     releaseDate: '2026-08-05',
     logs: [
