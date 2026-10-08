@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 个人名片（微信小程序）'
 const data = [
   {
+    versionNumber: '1.0.17',
+    releaseDate: '2026-10-08',
+    logs: [
+      {
+        type: 'U',
+        content: '开发产品 新增 智能阅卷系统'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.16',
     releaseDate: '2026-08-31',
     logs: [
