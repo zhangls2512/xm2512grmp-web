@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 智能家居助手'
 const data = [
   {
+    versionNumber: '1.0.1.5',
+    releaseDate: '2026-10-09',
+    logs: [
+      {
+        type: 'U',
+        content: '透明图标按钮添加柔和点光源效果'
+      },
+      {
+        type: 'U',
+        content: '网络连接信息变化时刷新最佳地址'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.4',
     releaseDate: '2026-08-05',
     logs: [
