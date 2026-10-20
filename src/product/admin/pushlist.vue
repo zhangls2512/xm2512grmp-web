@@ -24,6 +24,10 @@ const products = ref([
     label: '智能待办'
   },
   {
+    value: 'yuejuan',
+    label: '阅卷'
+  },
+  {
     value: 'synologydsmhelper',
     label: 'NAS 管家'
   },
@@ -57,7 +61,9 @@ async function get() {
   const productmap = {
     password: '密码智能备忘录',
     todo: '智能待办',
+    yuejuan: '阅卷',
     synologydsmhelper: 'NAS 管家',
+    homeassistanthelper: '智能家居助手',
     webdavhelper: 'WebDAV 助手'
   }
   data.value = res.data.map(item => ({

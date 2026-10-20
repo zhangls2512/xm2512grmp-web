@@ -77,6 +77,10 @@ const router = createRouter({
           component: () => import('/src/product/updatelog/aitodo.vue')
         },
         {
+          path: 'yuejuan',
+          component: () => import('/src/product/updatelog/yuejuan.vue')
+        },
+        {
           path: 'synologydsmhelper',
           component: () => import('/src/product/updatelog/synologydsmhelper.vue')
         },

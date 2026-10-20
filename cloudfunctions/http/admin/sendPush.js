@@ -142,6 +142,11 @@ exports.main = async (event) => {
       kid = 'd04acf08bf054f73bf998018d6f34ef5'
       projectid = '461323198429859089'
     }
+    if (product == 'yuejuan') {
+      iss = '119438577'
+      kid = '6a49ff017d9f4797a261d82c063413f8'
+      projectid = '101653523865249416'
+    }
     if (product == 'synologydsmhelper') {
       iss = '115494321'
       kid = '3ab377fe42ec40738b03316abdb7aa76'

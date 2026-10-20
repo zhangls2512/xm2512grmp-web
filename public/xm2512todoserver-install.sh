@@ -9,7 +9,7 @@ if [ $(id -u) -eq 0 ]
     apt install -y mongodb-org
     echo 'MongoDB数据库安装成功，请前往/etc/mongod.conf配置'
     echo '开始安装Nodejs...'
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
     nvm install node
     echo 'Nodejs安装成功'
     echo '开始安装xm2512todoserver...'

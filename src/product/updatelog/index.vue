@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 官网'
 const data = [
   {
+    versionNumber: '1.0.21',
+    releaseDate: '2026-10-20',
+    logs: [
+      {
+        type: 'U',
+        content: '产品 - 智能阅卷系统 新增 鸿蒙 App'
+      },
+      {
+        type: 'U',
+        content: '更新日志 新增 阅卷'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.20',
     releaseDate: '2026-07-26',
     logs: [

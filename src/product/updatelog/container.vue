@@ -36,6 +36,10 @@ const tabs = [
     label: '智能待办'
   },
   {
+    id: 'yuejuan',
+    label: '阅卷'
+  },
+  {
     id: 'synologydsmhelper',
     label: 'NAS 管家'
   },
