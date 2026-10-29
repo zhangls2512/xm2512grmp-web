@@ -5,15 +5,16 @@ import cookie from 'js-cookie'
 import request from '../../request'
 import router from '../../router'
 const accesstoken = cookie.get('accessToken')
-const template = ref([])
+const data = ref([])
 async function get() {
+  data.value = []
   const res = await request({
     apiPath: '/ssl/getTemplateList',
     body: {
       accessToken: accesstoken
     }
   })
-  template.value = res.data
+  data.value = res.data
 }
 get()
 function newTemplate() {
@@ -42,7 +43,7 @@ async function deleteTemplate(id) {
   <div class="cz">
     <tiny-alert :closable="false" description="可将常用域名、IP 地址组合存为模板，新增订单时可快速填入。目前支持保存最多 10 个。"></tiny-alert>
     <div><tiny-button type="success" @click="newTemplate">新增</tiny-button></div>
-    <tiny-grid :data="template">
+    <tiny-grid :data="data">
       <tiny-grid-column field="domains" title="域名、IP 地址" align="center" show-overflow></tiny-grid-column>
       <tiny-grid-column field="desc" title="备注" align="center"></tiny-grid-column>
       <tiny-grid-column field="updateDate" title="更新时间" align="center" format-text="longDateTime"></tiny-grid-column>

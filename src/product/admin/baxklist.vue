@@ -42,6 +42,7 @@ const maintypes = ref([
   }
 ])
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getBaxkCount',
     body: {

@@ -668,6 +668,7 @@ function formatEnddate(t) {
   return time(enddate)
 }
 async function getAccessKeys() {
+  accesskeys.value = []
   const res = await request({
     apiPath: '/account/getAccountInfo',
     body: {

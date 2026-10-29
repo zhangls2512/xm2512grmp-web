@@ -41,6 +41,7 @@ const products = ref([
   }
 ])
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getPushCount',
     body: {

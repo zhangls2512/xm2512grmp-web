@@ -11,6 +11,7 @@ const pagesize = ref(10)
 const total = ref(0)
 const teamid = ref('')
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getProductUserCount',
     body: {
@@ -61,7 +62,10 @@ async function search() {
     })
     return
   }
-  const userres = await request({
+  currentpage.value = 1
+  total.value = 0
+  data.value = []
+  const res = await request({
     apiPath: '/admin/searchProductUser',
     body: {
       accessToken: accesstoken,
@@ -69,7 +73,8 @@ async function search() {
       uid: teamid.value
     }
   })
-  data.value = userres.data
+  total.value = res.data.length
+  data.value = res.data
 }
 async function updateTodoteamEnabled(id) {
   await request({

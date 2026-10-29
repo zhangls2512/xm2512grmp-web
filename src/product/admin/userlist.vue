@@ -28,6 +28,7 @@ const smdztjdate = ref('')
 const ssldate = ref('')
 const tododate = ref('')
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getUserCount',
     body: {
@@ -66,14 +67,18 @@ async function search() {
     })
     return
   }
-  const userres = await request({
+  currentpage.value = 1
+  total.value = 0
+  data.value = []
+  const res = await request({
     apiPath: '/admin/searchUser',
     body: {
       accessToken: accesstoken,
       uid: uid.value
     }
   })
-  data.value = userres.data
+  total.value = res.data.length
+  data.value = res.data
 }
 function openDialog(t) {
   dialog.value = true
@@ -200,11 +205,11 @@ async function updateUserPermission() {
       permission: permission
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '修改成功',
     status: 'success'
   })
+  closeDialog()
   get()
 }
 </script>

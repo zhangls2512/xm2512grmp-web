@@ -19,6 +19,7 @@ const addtags = ref([])
 const addtag = ref('')
 const mytag = ref([])
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/resource/getAddResourceCount',
     body: {

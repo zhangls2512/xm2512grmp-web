@@ -48,6 +48,7 @@ const statuss = ref([
   }
 ])
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/ssl/getDnsTaskCount',
     body: {

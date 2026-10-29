@@ -47,11 +47,11 @@ async function set() {
       settingValue: inputtags.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '设置成功',
     status: 'success'
   })
+  closeDialog()
   getUserInfo()
 }
 function openDialog() {

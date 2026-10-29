@@ -52,6 +52,7 @@ async function get() {
     startdate = date.value[0].getTime()
     enddate = date.value[1].getTime()
   }
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getViplogCount',
     body: {

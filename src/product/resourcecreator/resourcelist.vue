@@ -29,6 +29,7 @@ const reviewstatuss = ref([
   }
 ])
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/resourcecreator/getResourceCount',
     body: {

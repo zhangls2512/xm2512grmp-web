@@ -137,11 +137,11 @@ async function updateDns() {
       domains: domains.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '保存成功',
     status: 'success'
   })
+  closeDialog()
   getUserInfo()
 }
 </script>

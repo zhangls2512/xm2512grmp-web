@@ -26,6 +26,7 @@ async function get() {
     })
     return
   }
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getBanlogCount',
     body: {

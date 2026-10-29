@@ -42,6 +42,7 @@ function formatEnddate(t) {
   return time(enddate)
 }
 async function get() {
+  data.value = []
   const countres = await request({
     apiPath: '/admin/getVipcodeCount',
     body: {

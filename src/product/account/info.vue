@@ -179,11 +179,11 @@ async function updateEmail() {
     name: newemail.value,
     displayName: newemail.value
   })
-  closeDialog()
   TinyModal.message({
     message: '修改成功',
     status: 'success'
   })
+  closeDialog()
   getAccountInfo()
 }
 function setMfaOpen() {
@@ -246,11 +246,11 @@ async function removeMfa() {
       verifyCode: code.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '关闭成功',
     status: 'success'
   })
+  closeDialog()
   getAccountInfo()
 }
 function setPasswordOpen() {
@@ -304,11 +304,11 @@ async function setPassword() {
       newPassword: newpassworda.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '修改成功',
     status: 'success'
   })
+  closeDialog()
   getAccountInfo()
 }
 function removePasswordOpen() {
@@ -348,11 +348,11 @@ async function removePassword() {
       newPassword: ''
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '修改成功',
     status: 'success'
   })
+  closeDialog()
   getAccountInfo()
 }
 function updateDurationOpen() {
@@ -393,11 +393,11 @@ async function updateDuration() {
       duration: durationvalue
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '设置成功，将在下次登录账号后生效',
     status: 'success'
   })
+  closeDialog()
   getAccountInfo()
 }
 function freezeOpen() {
@@ -429,11 +429,11 @@ async function freeze() {
       verifyCode: code.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '冻结成功',
     status: 'success'
   })
+  closeDialog()
   logOut()
 }
 function refreshOpen() {
@@ -465,11 +465,11 @@ async function refresh() {
       verifyCode: code.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '强制登出成功',
     status: 'success'
   })
+  closeDialog()
   logOut()
 }
 function deleteAccountOpen() {
@@ -501,11 +501,11 @@ async function deleteAccount() {
       verifyCode: code.value
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '注销成功',
     status: 'success'
   })
+  closeDialog()
   logOut()
 }
 async function newPasskeyOpen() {
@@ -572,11 +572,11 @@ async function newPasskey() {
       publicKey: publickey
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '新增成功',
     status: 'success'
   })
+  closeDialog()
   getExternalAccount()
 }
 function deletePasskeyOpen(openid) {
@@ -615,11 +615,11 @@ async function deletePasskey() {
     rpId: 'www.zhangls2512.cn',
     credentialId: credentialid
   })
-  closeDialog()
   TinyModal.message({
     message: '删除成功',
     status: 'success'
   })
+  closeDialog()
   getExternalAccount()
 }
 function unbindExternalAccountOpen(platforminput) {
@@ -653,11 +653,11 @@ async function unbindExternalAccount() {
       platform: platform
     }
   })
-  closeDialog()
   TinyModal.message({
     message: '解绑成功',
     status: 'success'
   })
+  closeDialog()
   getExternalAccount()
 }
 async function getEmailCode() {

@@ -44,6 +44,7 @@ async function getLimitChange() {
     startdate = date.value[0].getTime()
     enddate = date.value[1].getTime()
   }
+  data.value = []
   const countres = await request({
     apiPath: '/ssl/getLimitChangeCount',
     body: {
