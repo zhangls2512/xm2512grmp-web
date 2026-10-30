@@ -884,10 +884,10 @@ async function deleteAccessKey(index) {
         <tiny-input v-model="accesskeyname" clearable show-word-limit minlength="1" maxlength="10"
           placeholder="请输入备注"></tiny-input>
         <div class="sp">
-          <tiny-date-picker v-model="accesskeyenddate" type="datetime" align="center"
-            placeholder="请选择到期时间"></tiny-date-picker>
           <div>永久</div>
           <tiny-switch v-model="accesskeyforever"></tiny-switch>
+          <tiny-date-picker v-if="!accesskeyforever" v-model="accesskeyenddate" type="datetime" align="center"
+            placeholder="请选择到期时间"></tiny-date-picker>
         </div>
         <div>请勾选允许调用的 API</div>
         <tiny-grid :data="apis" @select-change="chooseApi" @select-all="chooseApi">
@@ -918,10 +918,10 @@ async function deleteAccessKey(index) {
         <tiny-input v-model="accesskeyname" clearable show-word-limit minlength="1" maxlength="10"
           placeholder="请输入备注"></tiny-input>
         <div class="sp">
-          <tiny-date-picker v-model="accesskeyenddate" type="datetime" align="center"
-            placeholder="请选择到期时间"></tiny-date-picker>
           <div>永久</div>
           <tiny-switch v-model="accesskeyforever"></tiny-switch>
+          <tiny-date-picker v-if="!accesskeyforever" v-model="accesskeyenddate" type="datetime" align="center"
+            placeholder="请选择到期时间"></tiny-date-picker>
         </div>
         <div>请勾选允许调用的 API</div>
         <tiny-grid :data="apis" :select-config="selectconfig" @select-change="chooseApi" @select-all="chooseApi">

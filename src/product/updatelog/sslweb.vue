@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - SSL 证书（网页）'
 const data = [
   {
+    versionNumber: '1.0.9',
+    releaseDate: '2026-10-30',
+    logs: [
+      {
+        type: 'U',
+        content: '“授权”页面显示验证名'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.8',
     releaseDate: '2026-06-06',
     logs: [

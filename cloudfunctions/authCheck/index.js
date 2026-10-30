@@ -174,7 +174,7 @@ exports.main = async (event) => {
           return {
             errCode: 3030,
             errMsg: '密码错误',
-            errFix: '无修复建议。2026年7月4日之前设置的密码已失效，请使用其他验证方式重新设置密码'
+            errFix: '无修复建议'
           }
         }
         return {
@@ -197,7 +197,7 @@ exports.main = async (event) => {
         return {
           errCode: 3040,
           errMsg: '无效的accessToken',
-          errFix: '无修复建议'
+          errFix: '在https://www.zhangls2512.cn/product/account/unfreeze解冻成功后重新登录'
         }
       }
       const uid = accesstoken[0]
@@ -251,7 +251,7 @@ exports.main = async (event) => {
       return {
         errCode: 3040,
         errMsg: '无效的accessToken',
-        errFix: '无修复建议'
+        errFix: '在https://www.zhangls2512.cn/product/account/unfreeze解冻成功后重新登录'
       }
     }
     if (event.type == 'accesskey') {
@@ -262,7 +262,7 @@ exports.main = async (event) => {
         return {
           errCode: 3050,
           errMsg: '无效的accessKey',
-          errFix: '无修复建议'
+          errFix: '新增新的accessKey并使用'
         }
       }
       const uid = accesskey[0]
@@ -350,7 +350,7 @@ exports.main = async (event) => {
       return {
         errCode: 3050,
         errMsg: '无效的accessKey',
-        errFix: '无修复建议'
+        errFix: '新增新的accessKey并使用'
       }
     }
     if (event.type == 'cloudfunction') {

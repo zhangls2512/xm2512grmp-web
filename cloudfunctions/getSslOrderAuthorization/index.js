@@ -81,7 +81,7 @@ exports.main = async (event) => {
           accountKey: accountkey
         })
         const acmeorderres = await acme.api.getOrderInfo(orderres.data[0].orderUrl)
-        let authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
+        const authorization = await acme.api.getOrderAuthorization(orderres.data[0].orderUrl)
         function dnspersist01token(challenge, authorization) {
           const arr = []
           arr.push(challenge['issuer-domain-names'][0])
@@ -91,24 +91,54 @@ exports.main = async (event) => {
           }
           return arr.join(';')
         }
-        authorization = authorization.map((aitem, index) => ({
-          ...aitem,
-          url: acmeorderres.authorizations[index],
-          identifier: aitem.identifier.value,
-          expires: new Date(aitem.expires).getTime(),
-          challenges: aitem.challenges.map(item => ({
-            ...item,
-            token: item.type != 'dns-persist-01' ? acme.api.getChallengeKeyAuthorization({
-              challenge: item,
-              accountKey: accountkey
-            }) : dnspersist01token(item, aitem),
-            validated: new Date(item.validated).getTime()
-          }))
-        }))
+        const result = []
+        authorization.forEach((aitem, aindex) => {
+          const challenges = []
+          aitem.challenges.forEach(citem => {
+            const challenge = {
+              type: citem.type,
+              url: citem.url,
+              status: citem.status
+            }
+            if (citem.validated) {
+              challenge.validated = new Date(citem.validated).getTime()
+            }
+            if (citem.error) {
+              challenge.error = citem.error.detail
+            }
+            if (citem.type == 'http-01') {
+              challenge.name = 'http://' + aitem.identifier.value + '/.well-known/acme-challenge/' + citem.token
+            }
+            if (citem.type == 'dns-01') {
+              challenge.name = '_acme-challenge.' + aitem.identifier.value
+            }
+            if (citem.type == 'tls-alpn-01') {
+              challenge.name = aitem.identifier.value
+            }
+            if (citem.type == 'dns-persist-01') {
+              challenge.name = '_validation-persist.' + aitem.identifier.value
+              challenge.value = dnspersist01token(citem, aitem)
+            }
+            if (citem.type != 'dns-persist-01') {
+              challenge.value = acme.api.getChallengeKeyAuthorization({
+                challenge: citem,
+                accountKey: accountkey
+              })
+            }
+            challenges.push(challenge)
+          })
+          result.push({
+            url: acmeorderres.authorizations[aindex],
+            identifier: aitem.identifier.value,
+            status: aitem.status,
+            expires: new Date(aitem.expires).getTime(),
+            challenges: challenges
+          })
+        })
         return {
           errCode: 0,
           errMsg: '成功',
-          authorization: authorization
+          authorization: result
         }
       } catch (err) {
         if (err.detail) {

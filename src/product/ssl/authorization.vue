@@ -10,6 +10,7 @@ const id = route.query.id
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
 async function get() {
+  data.value = []
   const res = await callfunction({
     functionName: 'getSslOrderAuthorization',
     data: {
@@ -19,11 +20,7 @@ async function get() {
   })
   data.value = res.authorization.map(item => ({
     ...item,
-    expires: time(item.expires),
-    challenges: item.challenges.map(item => ({
-      ...item,
-      validated: time(item.expires)
-    }))
+    expires: time(item.expires)
   }))
 }
 get()
@@ -79,7 +76,11 @@ function error(error) {
       <tiny-breadcrumb-item :to="{ path: '/product/ssl/orderlist' }" label="订单管理"></tiny-breadcrumb-item>
       <tiny-breadcrumb-item :to="{ path: '/product/ssl/authorization' }" label="授权"></tiny-breadcrumb-item>
     </tiny-breadcrumb>
-    <tiny-alert :closable="false" description="请联系客服获取授权操作步骤。"></tiny-alert>
+    <tiny-alert :closable="false">
+      <template #description>
+        <div>授权操作步骤见<a href="https://letsencrypt.org/zh-cn/docs/challenge-types" target="_blank">此文档</a>。</div>
+      </template>
+    </tiny-alert>
     <div><tiny-button type="info" @click="get">刷新</tiny-button></div>
     <div v-for="item in data">
       <div class="cz">
@@ -113,10 +114,17 @@ function error(error) {
         </div>
         <tiny-grid :data="item.challenges">
           <tiny-grid-column field="type" title="类型" align="center"></tiny-grid-column>
+          <tiny-grid-column title="验证名" align="center">
+            <template #default="{ row }">
+              <tiny-tooltip content="点击复制" placement="top">
+                <div style="cursor:pointer" @click="copy(row.name)">{{ row.name }}</div>
+              </tiny-tooltip>
+            </template>
+          </tiny-grid-column>
           <tiny-grid-column title="验证值" align="center">
             <template #default="{ row }">
               <tiny-tooltip content="点击复制" placement="top">
-                <div style="cursor:pointer" @click="copy(row.token)">{{ row.token }}</div>
+                <div style="cursor:pointer" @click="copy(row.value)">{{ row.value }}</div>
               </tiny-tooltip>
             </template>
           </tiny-grid-column>
@@ -137,8 +145,7 @@ function error(error) {
                     <tiny-button type="info">验证</tiny-button>
                   </template>
                 </tiny-popconfirm>
-                <tiny-button v-if="row.status == 'invalid'" type="info"
-                  @click="error(row.error.detail)">原因</tiny-button>
+                <tiny-button v-if="row.status == 'invalid'" type="info" @click="error(row.error)">原因</tiny-button>
               </div>
             </template>
           </tiny-grid-column>

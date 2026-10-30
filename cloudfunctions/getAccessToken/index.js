@@ -216,7 +216,7 @@ exports.main = async (event) => {
         ip: requestip,
         ipAddress: ipaddress,
         verifyType: verifytype,
-        ua: event.userAgent,
+        ua: typeof (event.userAgent) == 'string' && event.userAgent ? event.userAgent : '未知',
         uid: account._id
       })
       if (account.email) {

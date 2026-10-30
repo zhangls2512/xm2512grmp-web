@@ -216,7 +216,7 @@ exports.main = async (event) => {
       ip: event.headers['x-real-ip'],
       ipAddress: ipaddress,
       verifyType: verifytype,
-      ua: event.headers['user-agent'],
+      ua: typeof (event.headers['user-agent']) == 'string' && event.headers['user-agent'] ? event.headers['user-agent'] : '未知',
       uid: account._id
     })
     if (account.email) {
