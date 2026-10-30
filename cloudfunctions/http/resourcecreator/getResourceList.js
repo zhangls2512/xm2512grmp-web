@@ -67,7 +67,16 @@ exports.main = async (event) => {
       reviewStatus: reviewstatus,
       uid: res.result.account._id
     }).orderBy('createDate', 'desc').skip(skip).limit(limit).field({
-      uid: false
+      allowUpdateUser: false,
+      desc: false,
+      info: false,
+      location: false,
+      releaseStatus: false,
+      searchTag: false,
+      tag: false,
+      uid: false,
+      updateVersionWithoutReview: false,
+      version: false
     }).get()
     return {
       errCode: 0,

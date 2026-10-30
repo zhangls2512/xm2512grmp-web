@@ -65,13 +65,6 @@ exports.main = async (event) => {
     return res.result
   } else {
     const account = res.result.account
-    if (requestdata.unfreeze === true && account.accessToken != '已冻结') {
-      return {
-        errCode: 8000,
-        errMsg: '账号未冻结',
-        errFix: '无修复建议'
-      }
-    }
     const enddate = Date.now() + account.duration * 86400000
     const outaccesstoken = account._id + '\0' + nanoid(60)
     const accesstoken = sm4.encrypt(outaccesstoken, process.env.key)

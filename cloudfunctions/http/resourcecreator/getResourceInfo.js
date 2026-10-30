@@ -59,6 +59,15 @@ exports.main = async (event) => {
   } else {
     const resourceres = await db.collection('resource').where({
       _id: requestdata.id
+    }).field({
+      desc: false,
+      info: false,
+      location: false,
+      releaseStatus: false,
+      searchTag: false,
+      tag: false,
+      updateVersionWithoutReview: false,
+      version: false
     }).get()
     if (resourceres.data.length == 0) {
       return {
@@ -69,10 +78,11 @@ exports.main = async (event) => {
     }
     const data = resourceres.data[0]
     if (data.uid == res.result.account._id) {
+      delete data.allowUpdateUser
       return {
         errCode: 0,
         errMsg: '成功',
-        data: resourceres.data[0]
+        data: data
       }
     }
     if (!data.uid) {
@@ -90,10 +100,12 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
+      const data = resourceres.data[0]
+      delete data.allowUpdateUser
       return {
         errCode: 0,
         errMsg: '成功',
-        data: resourceres.data[0]
+        data: data
       }
     }
     return {

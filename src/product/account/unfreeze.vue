@@ -37,8 +37,7 @@ async function unfreeze() {
     body: {
       email: email.value,
       verifyType: type.value,
-      verifyCode: code.value,
-      unfreeze: true
+      verifyCode: code.value
     }
   })
   router.push('/product/account/login')
