@@ -147,4 +147,9 @@
 .qrcode {
   width: 200px;
 }
+
+.copy {
+  color: #576B95;
+  cursor: pointer;
+}
 </style>

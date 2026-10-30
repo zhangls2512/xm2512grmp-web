@@ -119,7 +119,7 @@ exports.main = async (event) => {
             challenge.name = '_acme-challenge.' + aitem.identifier.value
           }
           if (citem.type == 'tls-alpn-01') {
-            challenge.name = aitem.identifier.value
+            challenge.name = aitem.wildcard ? '*.' + aitem.identifier.value : aitem.identifier.value
           }
           if (citem.type == 'dns-persist-01') {
             challenge.name = '_validation-persist.' + aitem.identifier.value
@@ -136,6 +136,7 @@ exports.main = async (event) => {
         result.push({
           url: acmeorderres.authorizations[aindex],
           identifier: aitem.identifier.value,
+          wildcard: aitem.wildcard ? true : false,
           status: aitem.status,
           expires: new Date(aitem.expires).getTime(),
           challenges: challenges

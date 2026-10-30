@@ -94,18 +94,16 @@ exports.main = async (event) => {
         errFix: '等待DNS自动配置任务全部结束或手动结束全部DNS自动配置任务'
       }
     }
+    let deletefiles = []
     if (data.privateKey) {
-      await app.deleteFile({
-        fileList: [data.privateKey]
-      })
+      deletefiles.push(data.privateKey)
     }
-    if (data.certificate.length > 0) {
-      const promise = data.certificate.map(async (item) => {
-        await app.deleteFile({
-          fileList: [item.value]
-        })
+    const certificatefiles = data.certificate.map(item => item.value)
+    deletefiles = deletefiles.concat(certificatefiles)
+    if (deletefiles.length != 0) {
+      await app.deleteFile({
+        fileList: deletefiles
       })
-      await Promise.all(promise)
     }
     await db.collection('sslorder').where({
       _id: requestdata.id

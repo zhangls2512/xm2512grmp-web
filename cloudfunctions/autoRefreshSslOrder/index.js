@@ -407,14 +407,12 @@ exports.main = async () => {
     status: 'valid'
   }).orderBy('createDate', 'asc').get()
   validordersres.data.filter(item => item.certificateEndDate != 0).forEach(async (item) => {
-    const deletefiles = []
+    let deletefiles = []
     if (item.privateKey) {
       deletefiles.push(item.privateKey)
     }
     const certificatefiles = item.certificate.map(item => item.value)
-    certificatefiles.forEach(item => {
-      deletefiles.push(item)
-    })
+    deletefiles = deletefiles.concat(certificatefiles)
     if (deletefiles.length != 0) {
       await app.deleteFile({
         fileList: deletefiles

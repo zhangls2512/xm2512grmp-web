@@ -139,14 +139,12 @@ exports.main = async (event) => {
       })
     }
     if (data.status == 'valid' && data.certificateEndDate != 0 && data.certificateEndDate < Date.now()) {
-      const deletefiles = []
+      let deletefiles = []
       if (data.privateKey) {
         deletefiles.push(data.privateKey)
       }
       const certificatefiles = data.certificate.map(item => item.value)
-      certificatefiles.forEach(item => {
-        deletefiles.push(item)
-      })
+      deletefiles = deletefiles.concat(certificatefiles)
       if (deletefiles.length != 0) {
         await app.deleteFile({
           fileList: deletefiles

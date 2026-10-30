@@ -109,22 +109,22 @@ function error(error) {
         </div>
         <div class="sp">
           <div class="bold-text">通配符域名</div>
-          <div v-if="item.wildcard === true">是</div>
-          <div v-if="item.wildcard !== true">否</div>
+          <div v-if="item.wildcard">是</div>
+          <div v-if="!item.wildcard">否</div>
         </div>
         <tiny-grid :data="item.challenges">
           <tiny-grid-column field="type" title="类型" align="center"></tiny-grid-column>
           <tiny-grid-column title="验证名" align="center">
             <template #default="{ row }">
               <tiny-tooltip content="点击复制" placement="top">
-                <div style="cursor:pointer" @click="copy(row.name)">{{ row.name }}</div>
+                <div class="copy" @click="copy(row.name)">{{ row.name }}</div>
               </tiny-tooltip>
             </template>
           </tiny-grid-column>
           <tiny-grid-column title="验证值" align="center">
             <template #default="{ row }">
               <tiny-tooltip content="点击复制" placement="top">
-                <div style="cursor:pointer" @click="copy(row.value)">{{ row.value }}</div>
+                <div class="copy" @click="copy(row.value)">{{ row.value }}</div>
               </tiny-tooltip>
             </template>
           </tiny-grid-column>
