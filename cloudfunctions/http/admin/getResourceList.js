@@ -84,7 +84,20 @@ exports.main = async (event) => {
       name: keyword,
       releaseStatus: releasestatus,
       reviewStatus: reviewstatus
-    }).orderBy('createDate', 'desc').skip(skip).limit(limit).get()
+    }).orderBy('createDate', 'desc').skip(skip).limit(limit).field({
+      allowUpdateUser: false,
+      desc: false,
+      disallowUpdate: false,
+      info: false,
+      location: false,
+      reviewInfo: false,
+      reviewInvalidReason: false,
+      searchTag: false,
+      submitReviewDate: false,
+      tag: false,
+      updateVersionWithoutReview: false,
+      version: false
+    }).get()
     return {
       errCode: 0,
       errMsg: '成功',

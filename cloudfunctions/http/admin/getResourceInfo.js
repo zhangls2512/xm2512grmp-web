@@ -59,6 +59,8 @@ exports.main = async (event) => {
   } else {
     const resourceres = await db.collection('resource').where({
       _id: requestdata.id
+    }).field({
+      searchTag: false
     }).get()
     if (resourceres.data.length == 0) {
       return {

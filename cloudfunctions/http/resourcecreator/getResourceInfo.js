@@ -79,6 +79,7 @@ exports.main = async (event) => {
     const data = resourceres.data[0]
     if (data.uid == res.result.account._id) {
       delete data.allowUpdateUser
+      delete data.uid
       return {
         errCode: 0,
         errMsg: '成功',
@@ -102,6 +103,7 @@ exports.main = async (event) => {
       }
       const data = resourceres.data[0]
       delete data.allowUpdateUser
+      delete data.uid
       return {
         errCode: 0,
         errMsg: '成功',
