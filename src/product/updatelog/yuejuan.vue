@@ -2,6 +2,20 @@
 document.title = '轩铭2512 - 更新日志 - 阅卷'
 const data = [
   {
+    versionNumber: '1.0.0.1',
+    releaseDate: '2026-11-06',
+    logs: [
+      {
+        type: 'U',
+        content: '学生按科目搜索成绩'
+      },
+      {
+        type: 'U',
+        content: '原卷支持导出'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.0',
     releaseDate: '2026-10-20',
     logs: [
