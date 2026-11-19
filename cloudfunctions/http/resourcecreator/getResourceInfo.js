@@ -101,7 +101,6 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      const data = resourceres.data[0]
       delete data.allowUpdateUser
       delete data.uid
       return {
