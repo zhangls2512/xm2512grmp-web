@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 智能家居助手'
 const data = [
   {
+    versionNumber: '1.0.1.6',
+    releaseDate: '2026-11-20',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 应用 - 沙箱文件管理器支持新建文件夹、上传文件、复制、移动、重命名、压缩文件夹、解压缩 zip 格式文件'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.1.5',
     releaseDate: '2026-10-09',
     logs: [

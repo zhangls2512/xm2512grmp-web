@@ -45,7 +45,7 @@ exports.main = async () => {
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: 'e23fc3b267e67ee0001253ba509d864e',
-      version: json5.parse(wxandroidtestres.data.substring(3, wxandroidtestres.data.length - 2)).arm64.versionName
+      version: json5.parse(wxandroidtestres.data.slice(3, wxandroidtestres.data.length - 2)).arm64.versionName
     })
     const wxwindowsres = await axios.get('https://pc.weixin.qq.com')
     const wxwindowsversions = [...new Set(wxwindowsres.data.match(/(\d+\.\d+\.\d+)/g))]
@@ -97,12 +97,12 @@ exports.main = async () => {
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: 'f9fbf60c6997f7c60128e4a5635f3deb',
-      version: link1.substring(link1.lastIndexOf('-') + 1).slice(0, -4)
+      version: link1.slice(link1.lastIndexOf('-') + 1, -4)
     })
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: 'f9fbf60c6997fa4901290d054a26fc3e',
-      version: link2.substring(link2.lastIndexOf('-') + 1).slice(0, -4)
+      version: link2.slice(link2.lastIndexOf('-') + 1, -4)
     })
     const minecraftbedrockandroidres = await axios.get('https://mcapks.com/api/get-vslist.php')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
@@ -152,11 +152,11 @@ exports.main = async () => {
       version: rufusres.data.match(/rufus-(.+?)\.exe/)[1]
     })
     const rssres = await axios.get('https://letsencrypt.org/feed.xml')
-    const latestitem = rssres.data.substring(rssres.data.indexOf('<item>') + 6, rssres.data.indexOf('</item>'))
+    const latestitem = rssres.data.slice(rssres.data.indexOf('<item>') + 6, rssres.data.indexOf('</item>'))
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
       accessKey: process.env.accesskey,
       id: '9f5d149069ce2d690298fcad5db418da',
-      version: latestitem.substring(latestitem.indexOf('<title>') + 7, latestitem.indexOf('</title>'))
+      version: latestitem.slice(latestitem.indexOf('<title>') + 7, latestitem.indexOf('</title>'))
     })
     const msysres = await axios.get('https://www.msys2.org')
     await axios.post('https://api.zhangls2512.cn/resourcecreator/updateResourceVersion', {
