@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - NAS 管家'
 const data = [
   {
+    versionNumber: '1.1.4.15',
+    releaseDate: '2026-11-21',
+    logs: [
+      {
+        type: 'A',
+        content: '调试 - 设置 - 应用 - 沙箱文件管理器支持新建文件夹、上传文件、复制、移动、重命名、压缩文件夹、解压缩 zip 格式文件'
+      }
+    ]
+  },
+  {
     versionNumber: '1.1.4.14',
     releaseDate: '2026-10-09',
     logs: [
