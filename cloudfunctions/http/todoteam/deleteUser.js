@@ -36,8 +36,8 @@ exports.main = async (event) => {
     const todores = await db.collection('teamtodo').where({
       teamId: account.teamId,
       uid: requestdata.id
-    }).count()
-    if (todores.total > 0) {
+    }).limit(1).get()
+    if (todores.data.length > 0) {
       return {
         code: 400,
         msg: '其管理的待办未清空'

@@ -64,8 +64,8 @@ exports.main = async (event) => {
       const orderres = await db.collection('sslorder').where({
         environmentType: event.accountType,
         uid: uid
-      }).count()
-      if (orderres.total > 0) {
+      }).limit(1).get()
+      if (orderres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: 'ACME账户存在订单',

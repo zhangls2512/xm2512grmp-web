@@ -4,7 +4,7 @@ const endyear = new Date().getFullYear()
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import request from '../../request'
-import time from '../../time'
+import { time } from '../../util'
 const route = useRoute()
 const baxknumber = ref('')
 const visible = ref(false)

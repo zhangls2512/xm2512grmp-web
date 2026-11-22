@@ -177,6 +177,11 @@ exports.main = async (event) => {
             errFix: '无修复建议'
           }
         }
+        db.collection('account').where({
+          _id: data._id
+        }).update({
+          passwordVerifyTimes: 0
+        })
         return {
           errCode: 0,
           errMsg: '成功',
@@ -387,17 +392,6 @@ exports.main = async (event) => {
       }
     }
     if (event.type == 'passkey') {
-      const passkeyres = await db.collection('externalaccount').where({
-        openid: checkdata.credentialid,
-        platform: 'passkey'
-      }).get()
-      if (passkeyres.data.length == 0) {
-        return {
-          errCode: 3061,
-          errMsg: 'ID为credentialId的passkey未绑定账号',
-          errFix: '无修复建议'
-        }
-      }
       const authenticatordatabuffer = Buffer.from(checkdata.authenticatordata, 'base64url')
       if (authenticatordatabuffer.length < 37) {
         return {
@@ -406,16 +400,66 @@ exports.main = async (event) => {
           errFix: '无修复建议'
         }
       }
-      const rpidhash = authenticatordatabuffer.subarray(0, 32)
-      if (!crypto.timingSafeEqual(rpidhash, crypto.createHash('sha256').update('www.zhangls2512.cn').digest())) {
+      const rpidhash = authenticatordatabuffer.subarray(0, 32).toString('hex')
+      const validrpids = ['zhangls2512.cn', 'www.zhangls2512.cn']
+      const validrpidhashs = validrpids.map(item => crypto.createHash('sha256').update(item).digest().toString('hex'))
+      if (!validrpidhashs.includes(rpidhash)) {
         return {
           errCode: 3060,
           errMsg: 'rpIdHash校验失败',
           errFix: '无修复建议'
         }
       }
+      const flags = authenticatordatabuffer[32].toString(2).padStart(8, '0').split('').reverse().join('')
+      if (flags[0] != '1') {
+        return {
+          errCode: 3060,
+          errMsg: 'flagsUP位校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (flags[1] != '0' || flags[5] != '0') {
+        return {
+          errCode: 3060,
+          errMsg: 'flagsRFU位校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (flags[2] != '1') {
+        return {
+          errCode: 3060,
+          errMsg: 'flagsUV位校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (flags[6] != '0') {
+        return {
+          errCode: 3060,
+          errMsg: 'flagsAT位校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (flags[7] != '0') {
+        return {
+          errCode: 3060,
+          errMsg: 'flagsED位校验失败',
+          errFix: '无修复建议'
+        }
+      }
       const signcount = authenticatordatabuffer.subarray(33, 37).readUInt32BE()
-      if (!Number.isInteger(signcount) || (signcount <= passkeyres.data[0].signCount && passkeyres.data[0].signCount != 0)) {
+      const passkeyres = await db.collection('externalaccount').where({
+        openid: checkdata.credentialid,
+        platform: 'passkey',
+        uid: checkdata.userhandle
+      }).get()
+      if (passkeyres.data.length == 0) {
+        return {
+          errCode: 3061,
+          errMsg: '通行密钥不存在',
+          errFix: '无修复建议'
+        }
+      }
+      if (signcount <= passkeyres.data[0].signCount && passkeyres.data[0].signCount != 0) {
         return {
           errCode: 3060,
           errMsg: 'signCount校验失败',
@@ -423,7 +467,23 @@ exports.main = async (event) => {
         }
       }
       const clientdatajsonbuffer = Buffer.from(checkdata.clientdatajson, 'base64url')
-      const clientdatajson = JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer)))
+      let clientdatajson
+      try {
+        clientdatajson = JSON.parse(new TextDecoder().decode(new Uint8Array(clientdatajsonbuffer)))
+      } catch {
+        return {
+          errCode: 3060,
+          errMsg: 'clientDataJson校验失败',
+          errFix: '无修复建议'
+        }
+      }
+      if (clientdatajson.type != 'webauthn.get') {
+        return {
+          errCode: 3060,
+          errMsg: 'type校验失败',
+          errFix: '无修复建议'
+        }
+      }
       if (clientdatajson.challenge != Buffer.from(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')).toString('base64url')) {
         return {
           errCode: 3060,
@@ -431,7 +491,8 @@ exports.main = async (event) => {
           errFix: '请重试'
         }
       }
-      if (clientdatajson.origin != 'https://www.zhangls2512.cn' && !clientdatajson.origin.startsWith('ohos:app-id:')) {
+      const derpublickey = ['0417c119785874762ccab8e46a2365a4b878e08c0f740c691a425f028961ca5d9eaa03c7775ba6bb70a8aec1c224b9b71cc19a01a42e37070ce40a78469949afcb', '04a2fb712934bfab9fd7772a184d699db7cd4f68af43f6d4ad832528ccc61d0312c063f41011fbd61367f8064d40e9df77253980bd28fb75ab43a558bcb781b6bd']
+      if (clientdatajson.origin != 'https://www.zhangls2512.cn' && (!clientdatajson.origin.startsWith('ohos:app-id:') || !derpublickey.includes(Buffer.from(clientdatajson.origin.slice(12), 'base64').toString('hex')))) {
         return {
           errCode: 3060,
           errMsg: 'origin校验失败',
@@ -447,15 +508,13 @@ exports.main = async (event) => {
       }
       const publickey = crypto.createPublicKey({
         key: Buffer.from(passkeyres.data[0].publicKey, 'base64url'),
-        format: 'der',
-        type: 'spki'
+        type: 'spki',
+        format: 'der'
       })
+      const clientdatajsonhash = crypto.createHash('sha256').update(clientdatajsonbuffer).digest()
+      const databuffer = Buffer.concat([authenticatordatabuffer, clientdatajsonhash])
       const signaturebuffer = Buffer.from(checkdata.signature, 'base64url')
-      const clientdatahash = crypto.createHash('sha256').update(clientdatajsonbuffer).digest()
-      const datatoverify = Buffer.concat([authenticatordatabuffer, clientdatahash])
-      const verify = crypto.createVerify('sha256')
-      verify.update(datatoverify)
-      if (!verify.verify(publickey, signaturebuffer)) {
+      if (!crypto.createVerify('sha256').update(databuffer).verify(publickey, signaturebuffer)) {
         return {
           errCode: 3060,
           errMsg: 'signature校验失败',
@@ -464,11 +523,12 @@ exports.main = async (event) => {
       }
       await db.collection('externalaccount').where({
         openid: checkdata.credentialid,
-        platform: 'passkey'
+        platform: 'passkey',
+        uid: checkdata.userhandle
       }).update({
         signCount: signcount
       })
-      const uid = passkeyres.data[0].uid
+      const uid = checkdata.userhandle
       const accountres = await db.collection('account').where({
         _id: uid
       }).get()

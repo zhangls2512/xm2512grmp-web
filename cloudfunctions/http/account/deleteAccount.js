@@ -72,8 +72,8 @@ exports.main = async (event) => {
     }
     const banres = await db.collection('banlog').where({
       uid: account._id
-    }).count()
-    if (banres.total > 0) {
+    }).limit(1).get()
+    if (banres.data.length > 0) {
       return {
         errCode: 8001,
         errMsg: '存在违规记录',

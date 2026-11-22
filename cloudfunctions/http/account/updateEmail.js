@@ -106,8 +106,8 @@ exports.main = async (event) => {
     } else {
       const accountres = await db.collection('account').where({
         email: requestdata.newEmail
-      }).count()
-      if (accountres.total > 0) {
+      }).limit(1).get()
+      if (accountres.data.length > 0) {
         return {
           errCode: 8001,
           errMsg: '新邮箱已注册',

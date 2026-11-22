@@ -3,7 +3,7 @@ document.title = '轩铭2512 - 统一账号 - 账号管理 - 开发管理'
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
-import time from '../../time'
+import { time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 const accesskeys = ref([])
 const newaccesskeydialog = ref(false)

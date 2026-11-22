@@ -5,7 +5,7 @@ import cookie from 'js-cookie'
 import sortable from 'sortablejs'
 import request from '../../request'
 import router from '../../router'
-import time from '../../time'
+import { time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 let date = ''
 const total = ref(0)

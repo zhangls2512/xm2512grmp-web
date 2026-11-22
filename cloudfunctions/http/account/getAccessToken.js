@@ -59,6 +59,7 @@ exports.main = async (event) => {
   }
   let verifycode = ''
   let credentialid = ''
+  let userhandle = ''
   let authenticatordata = ''
   let clientdatajson = ''
   let signature = ''
@@ -68,6 +69,13 @@ exports.main = async (event) => {
         errCode: 1001,
         errMsg: '请求参数错误',
         errFix: '传递有效的credentialId参数'
+      }
+    }
+    if (typeof (requestdata.userHandle) != 'string' || requestdata.userHandle.length != 32) {
+      return {
+        errCode: 1001,
+        errMsg: '请求参数错误',
+        errFix: '传递有效的userHandle参数'
       }
     }
     if (typeof (requestdata.authenticatorData) != 'string' || !requestdata.authenticatorData) {
@@ -92,6 +100,7 @@ exports.main = async (event) => {
       }
     }
     credentialid = requestdata.credentialId
+    userhandle = requestdata.userHandle
     authenticatordata = requestdata.authenticatorData
     clientdatajson = requestdata.clientDataJSON
     signature = requestdata.signature
@@ -153,6 +162,7 @@ exports.main = async (event) => {
         email: email,
         code: verifycode,
         credentialid: credentialid,
+        userhandle: userhandle,
         authenticatordata: authenticatordata,
         clientdatajson: clientdatajson,
         signature: signature

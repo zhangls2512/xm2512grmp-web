@@ -3,7 +3,7 @@ document.title = '轩铭2512 - 管理后台 - 产品用户列表 - 密码智能�
 import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
-import time from '../../time'
+import { time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
 const currentpage = ref(1)

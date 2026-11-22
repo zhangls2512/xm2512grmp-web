@@ -23,16 +23,16 @@ exports.main = async () => {
     const countares = await db.collection('dnstask').where({
       domain: item.domain,
       status: 'submitpending'
-    }).count()
-    if (countares.total > 0) {
+    }).limit(1).get()
+    if (countares.data.length > 0) {
       return
     }
     const countbres = await db.collection('dnstask').where({
       domain: item.domain,
       status: 'submitsuccess',
       updateDate: db.command.gte(Date.now() + 60000)
-    }).count()
-    if (countbres.total > 0) {
+    }).limit(1).get()
+    if (countbres.data.length > 0) {
       return
     }
     const challenge = item.authorization.challenges.find(item => item.type = 'dns-01')

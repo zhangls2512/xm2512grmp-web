@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import cookie from 'js-cookie'
 import callfunction from '../../callfunction'
 import request from '../../request'
-import time from '../../time'
+import { time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 const products = [
   {

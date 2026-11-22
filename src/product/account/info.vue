@@ -6,7 +6,7 @@ import qrcode from 'qrcode'
 import validator from 'validator'
 import request from '../../request'
 import router from '../../router'
-import time from '../../time'
+import { base64url, time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 const accountinfo = ref({})
 const passkey = ref([])
@@ -23,8 +23,8 @@ const newpassworda = ref('')
 const newpasswordb = ref('')
 const duration = ref('')
 let platform = ''
-let credentialid = ''
-let publickey = ''
+let attestationobject = ''
+let clientdatajson = ''
 const updateemailbutton = ref(false)
 const setmfabutton = ref(false)
 const removemfabutton = ref(false)
@@ -46,14 +46,6 @@ const buttontexta = ref('获取验证码')
 const qrcodedialog = ref(false)
 const qrcodeimg = ref('')
 const secret = ref('')
-function base64url(buffer) {
-  let binary = ''
-  const bytes = new Uint8Array(buffer)
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i])
-  }
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-}
 async function getAccountInfo() {
   const res = await request({
     apiPath: '/account/getAccountInfo',
@@ -116,6 +108,9 @@ function closeDialog() {
   newpassworda.value = ''
   newpasswordb.value = ''
   duration.value = String(accountinfo.value.duration)
+  platform = ''
+  attestationobject = ''
+  clientdatajson = ''
   updateemailbutton.value = false
   setmfabutton.value = false
   removemfabutton.value = false
@@ -128,6 +123,12 @@ function closeDialog() {
   newpasskeybutton.value = false
   deletepasskeybutton.value = false
   unbindexternalaccountbutton.value = false
+  countdown.value = 60
+  buttondisabled.value = false
+  buttontext.value = '获取验证码'
+  countdowna.value = 60
+  buttondisableda.value = false
+  buttontexta.value = '获取验证码'
 }
 function closeQrcodeDialog() {
   qrcodedialog.value = false
@@ -511,21 +512,6 @@ async function deleteAccount() {
 async function newPasskeyOpen() {
   const res = await navigator.credentials.create({
     publicKey: {
-      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
-      pubKeyCredParams: [
-        {
-          type: 'public-key',
-          alg: -8
-        },
-        {
-          type: 'public-key',
-          alg: -7
-        },
-        {
-          type: 'public-key',
-          alg: -257
-        }
-      ],
       rp: {
         name: 'www.zhangls2512.cn'
       },
@@ -534,13 +520,20 @@ async function newPasskeyOpen() {
         name: accountinfo.value.email,
         displayName: accountinfo.value.email
       },
+      challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
+      pubKeyCredParams: [
+        {
+          type: 'public-key',
+          alg: -7
+        }
+      ],
       authenticatorSelection: {
         residentKey: 'preferred'
       }
     }
   })
-  credentialid = res.id
-  publickey = base64url(res.response.getPublicKey())
+  attestationobject = base64url(res.response.attestationObject)
+  clientdatajson = base64url(res.response.clientDataJSON)
   dialog.value = true
   yzmmfatext.value = true
   newpasskeybutton.value = true
@@ -568,8 +561,8 @@ async function newPasskey() {
       verifyType: type.value,
       verifyCode: code.value,
       platform: 'passkey',
-      credentialId: credentialid,
-      publicKey: publickey
+      attestationObject: attestationobject,
+      clientDataJSON: clientdatajson
     }
   })
   TinyModal.message({

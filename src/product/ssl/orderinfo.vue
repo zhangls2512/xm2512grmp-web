@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import cookie from 'js-cookie'
 import callfunction from '../../callfunction'
 import request from '../../request'
-import time from '../../time'
+import { time } from '../../util'
 const route = useRoute()
 const id = route.query.id
 const accesstoken = cookie.get('accessToken')

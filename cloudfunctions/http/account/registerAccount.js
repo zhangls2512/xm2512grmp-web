@@ -49,8 +49,8 @@ exports.main = async (event) => {
   } else {
     const accountres = await db.collection('account').where({
       email: requestdata.email
-    }).count()
-    if (accountres.total > 0) {
+    }).limit(1).get()
+    if (accountres.data.length > 0) {
       return {
         errCode: 8000,
         errMsg: '邮箱已注册',

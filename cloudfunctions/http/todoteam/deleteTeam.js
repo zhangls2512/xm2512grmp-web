@@ -29,8 +29,8 @@ exports.main = async (event) => {
     const viplogres = await db.collection('viplog').where({
       product: 'todoteam',
       uid: account.teamId
-    }).count()
-    if (viplogres.total > 0) {
+    }).limit(1).get()
+    if (viplogres.data.length > 0) {
       return {
         code: 400,
         msg: '存在付费开通记录'
@@ -39,8 +39,8 @@ exports.main = async (event) => {
     const accountres = await db.collection('todoteamaccount').where({
       teamId: account.teamId,
       admin: false
-    }).count()
-    if (accountres.total > 0) {
+    }).limit(1).get()
+    if (accountres.data.length > 0) {
       return {
         code: 400,
         msg: '用户未清空'
@@ -48,8 +48,8 @@ exports.main = async (event) => {
     }
     const todores = await db.collection('teamtodo').where({
       teamId: account.teamId
-    }).count()
-    if (todores.total > 0) {
+    }).limit(1).get()
+    if (todores.data.length > 0) {
       return {
         code: 400,
         msg: '待办未清空'

@@ -4,6 +4,7 @@
     "@cloudbase/node-sdk": "latest",
     "axios": "latest",
     "bcrypt": "latest",
+    "cbor2": "latest",
     "cidr-js": "latest",
     "jsonwebtoken": "latest",
     "moment-timezone": "latest",

@@ -38,7 +38,7 @@ exports.main = async (event) => {
       return {
         errCode: 8000,
         errMsg: '获取验证码过于频繁',
-        errFix: (((data.timeStamp + 60000) - Date.now()) / 1000).toFixed(0) + '秒后再试'
+        errFix: (((data.timeStamp + 60000) - Date.now()) / 1000).toFixed(0) + '秒后重试'
       }
     }
     const random = customAlphabet('0123456789', 8)

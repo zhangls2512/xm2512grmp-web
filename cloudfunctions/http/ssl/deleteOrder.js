@@ -86,8 +86,8 @@ exports.main = async (event) => {
     const dnstaskres = await db.collection('dnstask').where({
       orderId: requestdata.id,
       status: db.command.in(['setpending', 'submitpending'])
-    }).count()
-    if (dnstaskres.total > 0) {
+    }).limit(1).get()
+    if (dnstaskres.data.length > 0) {
       return {
         errCode: 8003,
         errMsg: '存在未结束的DNS自动配置任务',

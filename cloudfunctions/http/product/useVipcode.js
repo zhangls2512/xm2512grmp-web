@@ -89,8 +89,8 @@ exports.main = async (event) => {
         product: vipcodeinfo.product,
         type: 'vipcode',
         uid: uid
-      }).count()
-      if (viplogres.total > 0) {
+      }).limit(1).get()
+      if (viplogres.data.length > 0) {
         return {
           errCode: 8003,
           errMsg: '会员兑换码已使用',
@@ -104,8 +104,8 @@ exports.main = async (event) => {
         product: vipcodeinfo.product,
         type: 'vipcode',
         uid: uid
-      }).count()
-      if (viplogres.total > 0) {
+      }).limit(1).get()
+      if (viplogres.data.length > 0) {
         return {
           errCode: 8002,
           errMsg: '会员兑换码已使用',

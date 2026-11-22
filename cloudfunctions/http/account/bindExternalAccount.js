@@ -2,6 +2,8 @@
 exports.main = async (event) => {
   const tcb = require('@cloudbase/node-sdk')
   const axios = require('axios')
+  const cbor2 = await import('cbor2')
+  const crypto = require('crypto')
   const validator = require('validator')
   const app = tcb.init()
   const db = app.database()
@@ -57,19 +59,250 @@ exports.main = async (event) => {
       errFix: '传递有效的platform参数'
     }
   }
+  const passkeyresult = {
+    credentialId: '',
+    publicKey: ''
+  }
   if (requestdata.platform == 'passkey') {
-    if (typeof (requestdata.credentialId) != 'string' || !requestdata.credentialId) {
+    if (typeof (requestdata.attestationObject) != 'string' || !requestdata.attestationObject) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的credentialId参数'
+        errFix: '传递有效的attestationObject参数'
       }
     }
-    if (typeof (requestdata.publicKey) != 'string' || !requestdata.publicKey) {
+    if (typeof (requestdata.clientDataJSON) != 'string' || !requestdata.clientDataJSON) {
       return {
         errCode: 1001,
         errMsg: '请求参数错误',
-        errFix: '传递有效的publicKey参数'
+        errFix: '传递有效的clientDataJSON参数'
+      }
+    }
+    let attestationobject
+    try {
+      attestationobject = cbor2.decode(Buffer.from(requestdata.attestationObject, 'base64url'))
+    } catch {
+      return {
+        errCode: 8000,
+        errMsg: 'attestationObject校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (!Buffer.isBuffer(attestationobject.authData)) {
+      return {
+        errCode: 8000,
+        errMsg: 'authData校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const authdata = attestationobject.authData
+    if (authdata.length <= 56) {
+      return {
+        errCode: 8000,
+        errMsg: 'authData校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const rpidhash = authdata.subarray(0, 32).toString('hex')
+    const validrpids = ['zhangls2512.cn', 'www.zhangls2512.cn']
+    const validrpidhashs = validrpids.map(item => crypto.createHash('sha256').update(item).digest().toString('hex'))
+    if (!validrpidhashs.includes(rpidhash)) {
+      return {
+        errCode: 8000,
+        errMsg: 'rpIdHash校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const flags = authdata[32].toString(2).padStart(8, '0').split('').reverse().join('')
+    if (flags[0] != '1') {
+      return {
+        errCode: 8000,
+        errMsg: 'flagsUP位校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (flags[1] != '0' || flags[5] != '0') {
+      return {
+        errCode: 8000,
+        errMsg: 'flagsRFU位校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (flags[2] != '1') {
+      return {
+        errCode: 8000,
+        errMsg: 'flagsUV位校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (flags[6] != '1') {
+      return {
+        errCode: 8000,
+        errMsg: 'flagsAT位校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (flags[7] != '0') {
+      return {
+        errCode: 8000,
+        errMsg: 'flagsED位校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const signcount = authdata.subarray(33, 37).readUInt32BE()
+    if (signcount > 1) {
+      return {
+        errCode: 8000,
+        errMsg: 'signCount校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const idlength = authdata.subarray(53, 55).readUInt16BE()
+    if (idlength == 0) {
+      return {
+        errCode: 8000,
+        errMsg: 'credentialId校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const offset = 55 + idlength
+    const credentialidbuffer = authdata.subarray(55, offset)
+    if (credentialidbuffer.length != idlength) {
+      return {
+        errCode: 8000,
+        errMsg: 'credentialId校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    passkeyresult.credentialId = credentialidbuffer.toString('base64url')
+    const cosepublickeybuffer = authdata.subarray(offset, authdata.length)
+    if (cosepublickeybuffer.length != 77) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    let cosepublickey
+    try {
+      cosepublickey = cbor2.decode(cosepublickeybuffer)
+    } catch {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (!cosepublickey instanceof Map) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (cosepublickey.get(3) != -7) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (cosepublickey.get(-1) != 1) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const publickeyx = cosepublickey.get(-2)
+    if (!Buffer.isBuffer(publickeyx)) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (publickeyx.length != 32) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const publickeyy = cosepublickey.get(-3)
+    if (!Buffer.isBuffer(publickeyy)) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    if (publickeyy.length != 32) {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    const jwk = {
+      kty: 'EC',
+      alg: 'ES256',
+      crv: 'P-256',
+      x: Buffer.from(publickeyx).toString('base64url'),
+      y: Buffer.from(publickeyy).toString('base64url')
+    }
+    try {
+      passkeyresult.publicKey = crypto.createPublicKey({
+        key: jwk,
+        format: 'jwk',
+      }).export({
+        type: 'spki',
+        format: 'der'
+      }).toString('base64url')
+    } catch {
+      return {
+        errCode: 8000,
+        errMsg: 'publicKey校验失败',
+        errFix: '传递有效的attestationObject参数'
+      }
+    }
+    let clientdatajson
+    try {
+      clientdatajson = JSON.parse(Buffer.from(requestdata.clientDataJSON, 'base64url').toString())
+    } catch {
+      return {
+        errCode: 8000,
+        errMsg: 'clientDataJson校验失败',
+        errFix: '传递有效的clientDataJson参数'
+      }
+    }
+    if (clientdatajson.type != 'webauthn.create') {
+      return {
+        errCode: 8000,
+        errMsg: 'type校验失败',
+        errFix: '传递有效的clientDataJson参数'
+      }
+    }
+    if (clientdatajson.challenge != Buffer.from(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')).toString('base64url')) {
+      return {
+        errCode: 8000,
+        errMsg: 'challenge校验失败',
+        errFix: '请重试'
+      }
+    }
+    const derpublickey = ['0417c119785874762ccab8e46a2365a4b878e08c0f740c691a425f028961ca5d9eaa03c7775ba6bb70a8aec1c224b9b71cc19a01a42e37070ce40a78469949afcb', '04a2fb712934bfab9fd7772a184d699db7cd4f68af43f6d4ad832528ccc61d0312c063f41011fbd61367f8064d40e9df77253980bd28fb75ab43a558bcb781b6bd']
+    if (clientdatajson.origin != 'https://www.zhangls2512.cn' && (!clientdatajson.origin.startsWith('ohos:app-id:') || !derpublickey.includes(Buffer.from(clientdatajson.origin.slice(12), 'base64').toString('hex')))) {
+      return {
+        errCode: 8000,
+        errMsg: 'origin校验失败',
+        errFix: '传递有效的clientDataJson参数'
+      }
+    }
+    if (clientdatajson.crossOrigin) {
+      return {
+        errCode: 8000,
+        errMsg: 'crossOrigin校验失败',
+        errFix: '传递有效的clientDataJson参数'
       }
     }
   } else {
@@ -99,31 +332,27 @@ exports.main = async (event) => {
     let platform = requestdata.platform
     if (platform == 'passkey') {
       const passkeyres = await db.collection('externalaccount').where({
-        openid: requestdata.credentialId,
-        platform: 'passkey'
-      }).count()
-      if (passkeyres.total > 0) {
-        return {
-          errCode: 8000,
-          errMsg: '已存在openid为credentialId的passkey',
-          errFix: '使用新的通行密钥再试'
-        }
-      }
-      const externalaccountres = await db.collection('externalaccount').where({
         platform: 'passkey',
         uid: uid
       }).get()
-      if (externalaccountres.data.length >= 5) {
+      if (passkeyres.data.length >= 5) {
         return {
-          errCode: 8001,
+          errCode: 8002,
           errMsg: '暂仅支持最多5个passkey',
           errFix: '无修复建议'
         }
       }
+      if (passkeyres.data.find(item => item.openid == passkeyresult.credentialId)) {
+        return {
+          errCode: 8003,
+          errMsg: '已存在openid为credentialId的passkey',
+          errFix: '使用新的通行密钥重试'
+        }
+      }
       await db.collection('externalaccount').add({
-        openid: requestdata.credentialId,
+        openid: passkeyresult.credentialId,
         platform: 'passkey',
-        publicKey: requestdata.publicKey,
+        publicKey: passkeyresult.publicKey,
         signCount: 0,
         uid: uid
       })
@@ -138,8 +367,8 @@ exports.main = async (event) => {
       const externalaccountres = await db.collection('externalaccount').where({
         platform: platform,
         uid: uid
-      }).count()
-      if (externalaccountres.total > 0) {
+      }).limit(1).get()
+      if (externalaccountres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '账号已绑定此外部平台',
@@ -158,8 +387,8 @@ exports.main = async (event) => {
         const externalaccountres = await db.collection('externalaccount').where({
           openid: wxres.data.openid,
           platform: 'sslwxxcx'
-        }).count()
-        if (externalaccountres.total > 0) {
+        }).limit(1).get()
+        if (externalaccountres.data.length > 0) {
           return {
             errCode: 8002,
             errMsg: '此外部平台账号已绑定其他账号',
@@ -210,8 +439,8 @@ exports.main = async (event) => {
           const externalaccountres = await db.collection('externalaccount').where({
             openid: huaweitokeninfores.data.union_id,
             platform: 'huawei'
-          }).count()
-          if (externalaccountres.total > 0) {
+          }).limit(1).get()
+          if (externalaccountres.data.length > 0) {
             return {
               errCode: 8002,
               errMsg: '此外部平台账号已绑定其他账号',

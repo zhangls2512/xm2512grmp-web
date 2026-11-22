@@ -8,6 +8,7 @@ import validator from 'validator'
 import callfunction from '../../callfunction'
 import request from '../../request'
 import router from '../../router'
+import { base64url } from '../../util'
 const route = useRoute()
 const product = route.query.product
 const type = ref('password')
@@ -19,14 +20,6 @@ const buttontext = ref('获取验证码')
 let ticket = ''
 const qrcodeimg = ref('')
 const ticketexpired = ref(true)
-function base64url(buffer) {
-  let binary = ''
-  const bytes = new Uint8Array(buffer)
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i])
-  }
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-}
 function routePush() {
   const products = ['account', 'admin', 'resource', 'resourcecreator', 'ssl']
   if (products.includes(product)) {
@@ -103,7 +96,7 @@ async function login() {
   })
 }
 async function loginByPasskey() {
-  const resa = await navigator.credentials.get({
+  const res = await navigator.credentials.get({
     publicKey: {
       challenge: new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000'),
       timeout: 100000
@@ -113,10 +106,11 @@ async function loginByPasskey() {
     functionName: 'getAccessToken',
     data: {
       verifyType: 'passkey',
-      credentialId: resa.id,
-      authenticatorData: base64url(resa.response.authenticatorData),
-      clientDataJSON: base64url(resa.response.clientDataJSON),
-      signature: base64url(resa.response.signature),
+      credentialId: res.id,
+      userHandle: new TextDecoder().decode(res.response.userHandle),
+      authenticatorData: base64url(res.response.authenticatorData),
+      clientDataJSON: base64url(res.response.clientDataJSON),
+      signature: base64url(res.response.signature),
       userAgent: navigator.userAgent
     }
   })

@@ -61,8 +61,8 @@ exports.main = async (event) => {
   } else {
     const accountres = await db.collection('todoteamaccount').where({
       teamName: requestdata.name
-    }).count()
-    if (accountres.total > 0) {
+    }).limit(1).get()
+    if (accountres.data.length > 0) {
       return {
         errCode: 8000,
         errMsg: '名称已存在',

@@ -94,8 +94,8 @@ exports.main = async (event) => {
     if (requestdata.service == 'resource') {
       const resourceaddres = await db.collection('resourceadd').where({
         uid: uid
-      }).count()
-      if (resourceaddres.total > 0) {
+      }).limit(1).get()
+      if (resourceaddres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '我的资源未清空',
@@ -119,8 +119,8 @@ exports.main = async (event) => {
     if (requestdata.service == 'resourcecreator') {
       const resourceres = await db.collection('resource').where({
         uid: uid
-      }).count()
-      if (resourceres.total > 0) {
+      }).limit(1).get()
+      if (resourceres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '存在投稿资源',
@@ -144,8 +144,8 @@ exports.main = async (event) => {
     if (requestdata.service == 'ssl') {
       const orderres = await db.collection('sslorder').where({
         uid: uid
-      }).count()
-      if (orderres.total > 0) {
+      }).limit(1).get()
+      if (orderres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '存在订单',
@@ -154,8 +154,8 @@ exports.main = async (event) => {
       }
       const dnstaskres = await db.collection('dnstask').where({
         uid: uid
-      }).count()
-      if (dnstaskres.total > 0) {
+      }).limit(1).get()
+      if (dnstaskres.data.length > 0) {
         return {
           errCode: 8001,
           errMsg: '存在DNS自动配置任务',
@@ -164,8 +164,8 @@ exports.main = async (event) => {
       }
       const limitchangeres = await db.collection('ssllimitchange').where({
         uid: uid
-      }).count()
-      if (limitchangeres.total > 0) {
+      }).limit(1).get()
+      if (limitchangeres.data.length > 0) {
         return {
           errCode: 8002,
           errMsg: '存在额度变更记录',
@@ -174,8 +174,8 @@ exports.main = async (event) => {
       }
       const payorderres = await db.collection('sslpayorder').where({
         uid: uid
-      }).count()
-      if (payorderres.total > 0) {
+      }).limit(1).get()
+      if (payorderres.data.length > 0) {
         return {
           errCode: 8003,
           errMsg: '存在支付订单记录',
@@ -220,8 +220,8 @@ exports.main = async (event) => {
     if (requestdata.service == 'password') {
       const passwordres = await db.collection('password').where({
         uid: uid
-      }).count()
-      if (passwordres.total > 0) {
+      }).limit(1).get()
+      if (passwordres.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '存在云备份',
@@ -231,8 +231,8 @@ exports.main = async (event) => {
       const viplogres = await db.collection('viplog').where({
         product: 'password',
         uid: uid
-      }).count()
-      if (viplogres.total > 0) {
+      }).limit(1).get()
+      if (viplogres.data.length > 0) {
         return {
           errCode: 8001,
           errMsg: '存在会员开通记录',
@@ -256,8 +256,8 @@ exports.main = async (event) => {
     if (requestdata.service == 'todo') {
       const todores = await db.collection('todo').where({
         uid: uid
-      }).count()
-      if (todores.total > 0) {
+      }).limit(1).get()
+      if (todores.data.length > 0) {
         return {
           errCode: 8000,
           errMsg: '存在云备份',
@@ -267,8 +267,8 @@ exports.main = async (event) => {
       const viplogres = await db.collection('viplog').where({
         product: 'todo',
         uid: uid
-      }).count()
-      if (viplogres.total > 0) {
+      }).limit(1).get()
+      if (viplogres.data.length > 0) {
         return {
           errCode: 8001,
           errMsg: '存在会员开通记录',

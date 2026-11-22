@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import cookie from 'js-cookie'
 import request from '../../request'
 import router from '../../router'
-import time from '../../time'
+import { time } from '../../util'
 const accesstoken = cookie.get('accessToken')
 const data = ref([])
 const currentpage = ref(1)
