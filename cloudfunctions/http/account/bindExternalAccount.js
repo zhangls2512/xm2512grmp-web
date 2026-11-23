@@ -272,15 +272,15 @@ exports.main = async (event) => {
     } catch {
       return {
         errCode: 8000,
-        errMsg: 'clientDataJson校验失败',
-        errFix: '传递有效的clientDataJson参数'
+        errMsg: 'clientDataJSON校验失败',
+        errFix: '传递有效的clientDataJSON参数'
       }
     }
     if (clientdatajson.type != 'webauthn.create') {
       return {
         errCode: 8000,
         errMsg: 'type校验失败',
-        errFix: '传递有效的clientDataJson参数'
+        errFix: '传递有效的clientDataJSON参数'
       }
     }
     if (clientdatajson.challenge != Buffer.from(new TextEncoder().encode(String(Date.now()).slice(0, -5) + '00000')).toString('base64url')) {
@@ -295,14 +295,14 @@ exports.main = async (event) => {
       return {
         errCode: 8000,
         errMsg: 'origin校验失败',
-        errFix: '传递有效的clientDataJson参数'
+        errFix: '传递有效的clientDataJSON参数'
       }
     }
     if (clientdatajson.crossOrigin) {
       return {
         errCode: 8000,
         errMsg: 'crossOrigin校验失败',
-        errFix: '传递有效的clientDataJson参数'
+        errFix: '传递有效的clientDataJSON参数'
       }
     }
   } else {

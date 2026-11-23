@@ -473,7 +473,7 @@ exports.main = async (event) => {
       } catch {
         return {
           errCode: 3060,
-          errMsg: 'clientDataJson校验失败',
+          errMsg: 'clientDataJSON校验失败',
           errFix: '无修复建议'
         }
       }
