@@ -2,6 +2,16 @@
 document.title = '轩铭2512 - 更新日志 - 阅卷'
 const data = [
   {
+    versionNumber: '1.0.0.3',
+    releaseDate: '2026-11-25',
+    logs: [
+      {
+        type: 'A',
+        content: '学生考试 - 作答主观题支持删除已选择的图片'
+      }
+    ]
+  },
+  {
     versionNumber: '1.0.0.2',
     releaseDate: '2026-11-19',
     logs: [

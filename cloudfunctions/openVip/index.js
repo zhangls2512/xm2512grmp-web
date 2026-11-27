@@ -81,18 +81,18 @@ exports.main = async (event) => {
       }
       const payload = jsonwebtoken.decode(jws)
       let productid = ''
-      let purchaseOrderid = ''
+      let purchaseorderid = ''
       let uid = ''
       let typewz = ''
       let duration = -1
       if (event.notificationMetaData.type == 2) {
         productid = payload.lastSubscriptionStatus.lastPurchaseOrder.productId
-        purchaseOrderid = payload.lastSubscriptionStatus.lastPurchaseOrder.purchaseOrderId
+        purchaseorderid = payload.lastSubscriptionStatus.lastPurchaseOrder.purchaseOrderId
         uid = payload.lastSubscriptionStatus.lastPurchaseOrder.developerPayload
         typewz = '自动续订'
       } else {
         productid = payload.productId
-        purchaseOrderid = payload.purchaseOrderId
+        purchaseorderid = payload.purchaseOrderId
         uid = payload.developerPayload
         typewz = '开通'
       }
@@ -161,7 +161,7 @@ exports.main = async (event) => {
           await db.collection('viplog').add({
             date: Date.now(),
             duration: duration,
-            info: purchaseOrderid,
+            info: purchaseorderid,
             product: product,
             type: 'pay',
             uid: uid
@@ -175,7 +175,7 @@ exports.main = async (event) => {
               from: 'zhangls2512@vip.qq.com',
               to: email,
               subject: '会员' + typewz + '成功通知',
-              text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseOrderid
+              text: '您的账号“' + productwz + '”产品会员' + typewz + '成功。\n到期时间：' + vipenddatewz + '\n订单号：' + purchaseorderid
             })
           }
           return {
@@ -214,7 +214,7 @@ exports.main = async (event) => {
             await db.collection('viplog').add({
               date: Date.now(),
               duration: duration,
-              info: purchaseOrderid,
+              info: purchaseorderid,
               product: product,
               type: 'pay',
               uid: uid
@@ -228,7 +228,7 @@ exports.main = async (event) => {
                 from: 'zhangls2512@vip.qq.com',
                 to: email,
                 subject: '永久云备份空间到账成功通知',
-                text: '您的账号“' + productwz + '”产品永久云备份空间到账成功。\n个数：' + duration + '\n订单号：' + purchaseOrderid
+                text: '您的账号“' + productwz + '”产品永久云备份空间到账成功。\n个数：' + duration + '\n订单号：' + purchaseorderid
               })
             }
             return {
@@ -267,7 +267,7 @@ exports.main = async (event) => {
             await db.collection('viplog').add({
               date: Date.now(),
               duration: duration,
-              info: purchaseOrderid,
+              info: purchaseorderid,
               product: 'todoteam',
               type: 'pay',
               uid: uid
